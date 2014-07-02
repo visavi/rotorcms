@@ -11,6 +11,24 @@ if (!defined('BASEDIR')) {
 	exit(header('Location:../index.php'));
 }
 
+/* Создание новой таблицы с друзьями */
+$check = DB::run() -> querySingle("SHOW TABLES LIKE 'friends';");
+if (empty($check)) {
+	DB::run() -> exec("
+	CREATE TABLE IF NOT EXISTS `friends` (
+		`id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+		`user` varchar(20) NOT NULL,
+		`friend` varchar(20) NOT NULL,
+		`status` tinyint(1) unsigned NOT NULL DEFAULT '0',
+		`time` int(11) unsigned NOT NULL,
+		PRIMARY KEY (`id`),
+		KEY `userfriend` (`user`, `friend`),
+		KEY `time` (`time`)
+	) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+	");
+	echo 'Создана новая таблица friends<br />';
+}
+
 /* Добавление нового поля в таблицу пользователей для хранения времени получения бонуса */
 $check = DB::run() -> querySingle("SHOW COLUMNS FROM `users` LIKE 'users_timebonus';");
 if (empty($check)) {

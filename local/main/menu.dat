@@ -7,6 +7,10 @@ if (isset($act) && $act=='menu'){
 <div class="b"><img src="/images/img/mail.gif" alt="image" /> <b>Почта / Контакты</b></div>
 <img src="/images/img/act.png" alt="image" /> <a href="/pages/private.php">Сообщения</a> (<?=user_mail($log)?>)<br />
 <img src="/images/img/act.png" alt="image" /> <a href="/pages/private.php?act=submit">Отправить письмо</a><br />
+
+<img src="/images/img/act.png" alt="image" /> <a href="/pages/friends.php">Мои друзья</a><br />
+<img src="/images/img/act.png" alt="image" /> <a href="/pages/blacklist.php">Черный список</a><br />
+
 <img src="/images/img/act.png" alt="image" /> <a href="/pages/ignore.php">Игнор-лист</a> (<?=user_ignore($log)?>)<br />
 <img src="/images/img/act.png" alt="image" /> <a href="/pages/contact.php">Контакт-лист</a> (<?=user_contact($log)?>)<br />
 

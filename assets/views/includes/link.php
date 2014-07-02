@@ -11,7 +11,12 @@
 				}
 			} ?>
 			<?php if (!empty($key)) echo '/'; ?>
-			<a href="<?= $link['url'] ?>"<?= $params ?>><?= $link['label'] ?></a>
+
+			<?php if (isset($link['url'])): ?>
+				<a href="<?= $link['url'] ?>"<?= $params ?>><?= $link['label'] ?></a>
+			<?php else: ?>
+				<span<?= $params ?>><?= $link['label'] ?></span>
+			<?php endif; ?>
 
 		<?php endforeach; ?>
 	</div>
