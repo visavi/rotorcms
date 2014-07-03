@@ -1697,15 +1697,7 @@ function show_title($header, $subheader = false) {
 
 // ------------------------- Функция вывода ошибок ------------------------//
 function show_error($errors) {
-	if (is_array($errors)){
-		echo '<div class="info">';
-		foreach ($errors as $error) {
-			echo '<img src="/images/img/error.gif" alt="Ошибка" /> <b>'.$error.'</b><br />';
-		}
-		echo '</div><br />';
-	} else {
-		echo '<div class="info"><img src="/images/img/error.gif" alt="Ошибка" /> <b>'.$errors.'</b></div><br />';
-	}
+	render('includes/error', compact('errors'));
 }
 
 // ------------------------- Функция вывода предупреждения ------------------------//
@@ -2574,8 +2566,10 @@ function render($view, $params = array(), $return = false){
 
 	if (file_exists(BASEDIR.'/themes/'.$config['themes'].'/views/'.$view.'.php')){
 		include (BASEDIR.'/themes/'.$config['themes'].'/views/'.$view.'.php');
-	} else {
+	} elseif (file_exists(BASEDIR.'/assets/views/'.$view.'.php')){
 		include (BASEDIR.'/assets/views/'.$view.'.php');
+	} else {
+		show_error('Не удалось найти требуемый шаблон "'.$view.'"');
 	}
 
 	if ($return) {
