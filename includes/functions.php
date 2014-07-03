@@ -1702,7 +1702,7 @@ function show_error($errors) {
 
 // ------------------------- Функция вывода предупреждения ------------------------//
 function show_login($notice) {
-	render ('includes/login', array('notice' => $notice));
+	render ('includes/login', compact('notice'));
 }
 
 // ------------------------- Функция замены заголовков ------------------------//
