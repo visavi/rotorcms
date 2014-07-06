@@ -40,6 +40,16 @@ function autoloader($class) {
 
 spl_autoload_register('autoloader');
 
+
+include_once (BASEDIR.'/includes/classes/ActiveRecord.php');
+ActiveRecord\Config::initialize(function($cfg) {
+
+	$cfg->set_model_directory(BASEDIR.'/models');
+	$cfg->set_connections(array(
+		'development' => 'mysql://root:root@localhost/rotorcms;charset=utf8'
+	));
+});
+
 if (!file_exists(DATADIR.'/temp/setting.dat')) {
 	$queryset = DB::run() -> query("SELECT `setting_name`, `setting_value` FROM `setting`;");
 	$config = $queryset -> fetchAssoc();

@@ -23,7 +23,7 @@ switch ($act):
 ############################################################################################
 case 'index':
 
-	$total = DB::run()->querySingle("SELECT count(*) FROM `guest`;");
+	$total = Guest::count();
 
 	if ($total > 0 && $start >= $total) {
 		$start = last_page($total, $config['bookpost']);
@@ -32,10 +32,9 @@ case 'index':
 	$page = floor(1 + $start / $config['bookpost']);
 	$config['newtitle'] = 'Гостевая книга (Стр. '.$page.')';
 
-	$queryguest = DB::run()->query("SELECT * FROM `guest` ORDER BY `guest_time` DESC LIMIT ".$start.", ".$config['bookpost'].";");
-	$posts = $queryguest->fetchAll();
-
-	render('book/index', array('posts' => $posts, 'start' => $start, 'total' => $total));
+	$posts = Guest::all(array('limit' => $config['bookpost'], 'offset' => $start, 'order' => 'time desc'));
+var_dump($posts);
+	render('book/index', compact('posts', 'start', 'total'));
 
 break;
 
