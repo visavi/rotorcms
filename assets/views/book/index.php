@@ -12,7 +12,7 @@
 	<?php foreach ($posts as $data): ?>
 
 		<div class="b">
-			<div class="img"><?= user_avatars($data->user->getLogin()) ?></div>
+			<div class="img"><?= $data->user->getAvatar() ?></div>
 
 			<?php if ($data->user->getLogin() == $config['guestsuser']): ?>
 				<b><?= $data->user->getLogin() ?></b> <small>(<?= date_fixed($data->time) ?>)</small>
