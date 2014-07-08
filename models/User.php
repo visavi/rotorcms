@@ -4,6 +4,12 @@ class User extends ActiveRecord\Model {
 	static $table_name = 'users';
 	static $primary_key = 'users_id';
 
+	static $alias_attribute = array(
+		'first_name' => 'person_first_name',
+		'last_name' => 'person_last_name');
+	}
+
+
 	public function getLogin(){
 		return $this->users_login ? $this->users_login : 'Пользователь удален';
 	}

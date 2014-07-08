@@ -34,13 +34,11 @@ session_start();
 include_once (BASEDIR.'/includes/connect.php');
 
 // -------- Автозагрузка классов ---------- //
-function autoloader($class) {
+spl_autoload_register(function ($class) {
 	include_once BASEDIR.'/includes/classes/'.$class.'.php';
-}
+});
 
-spl_autoload_register('autoloader');
-
-
+// ------------ ActiveRecord -------------- //
 include_once (BASEDIR.'/includes/classes/ActiveRecord.php');
 ActiveRecord\Config::initialize(function($cfg) {
 

@@ -32,8 +32,8 @@ case 'index':
 	$page = floor(1 + $start / $config['bookpost']);
 	$config['newtitle'] = 'Гостевая книга (Стр. '.$page.')';
 
-	$posts = Guest::all(array('limit' => $config['bookpost'], 'offset' => $start, 'order' => 'time desc'));
-var_dump($posts);
+	$posts = Guest::all(array('offset' => $start, 'limit' => $config['bookpost'], 'order' => 'created_at desc', 'include' => array('user')));
+//var_dump($posts);
 	render('book/index', compact('posts', 'start', 'total'));
 
 break;
@@ -52,20 +52,22 @@ case 'add':
 				if (is_quarantine($log) || $config['bookadds'] == 1) {
 					if (is_flood($log)) {
 
-						$msg = no_br($msg);
-						$msg = antimat($msg);
-						$msg = smiles($msg);
+						$msg = smiles(antimat(no_br($msg)));
 
 						$bookscores = ($config['bookscores']) ? 1 : 0;
 
 						DB::run()->query("UPDATE `users` SET `users_allguest`=`users_allguest`+1, `users_point`=`users_point`+?, `users_money`=`users_money`+5 WHERE `users_login`=?;", array($bookscores, $log));
 
-						DB::run()->query("INSERT INTO `guest` (`guest_user`, `guest_text`, `guest_ip`, `guest_brow`, `guest_time`) VALUES (?, ?, ?, ?, ?);", array($log, $msg, $ip, $brow, SITETIME));
+						$attributes = array('user_id' => 1, 'text' => $msg, 'ip' => $ip, 'brow' => $brow);
+						$post = Guest::create($attributes);
 
-						DB::run()->query("DELETE FROM `guest` WHERE `guest_time` < (SELECT MIN(`guest_time`) FROM (SELECT `guest_time` FROM `guest` ORDER BY `guest_time` DESC LIMIT ".$config['maxpostbook'].") AS del);");
+						// Удаляем старые сообщения
+						//$posts = Guest::all(array('offset' => $config['maxpostbook'], 'limit' => 10, 'order' => 'created_at desc'));
+						//$delete = ActiveRecord\collect($posts, 'id');
+						//Guest::table()->delete(array('id' => array($delete)));
 
-						$_SESSION['note'] = 'Сообщение успешно добавлено!';
-						redirect("index.php");
+						notice('Сообщение успешно добавлено!');
+						//redirect("index.php");
 
 					} else {
 						show_error('Антифлуд! Разрешается отправлять сообщения раз в '.flood_period().' секунд!');

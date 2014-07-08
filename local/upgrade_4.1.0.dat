@@ -10,6 +10,21 @@
 if (!defined('BASEDIR')) {
 	exit(header('Location:../index.php'));
 }
+/*
+CREATE TABLE IF NOT EXISTS `guest` (
+	`id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+	`user_id` int(11) NOT NULL,
+	`text` text NOT NULL,
+	`ip` varchar(20) NOT NULL,
+	`brow` varchar(25) NOT NULL,
+	`reply` text NOT NULL,
+	`edit_user_id` int(11) DEFAULT NULL,
+	`updated_at` datetime NOT NULL,
+	`created_at` datetime NOT NULL,
+	PRIMARY KEY (`id`),
+	KEY `created_at` (`created_at`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+*/
 
 /* Создание новой таблицы с друзьями */
 $check = DB::run() -> querySingle("SHOW TABLES LIKE 'friends';");

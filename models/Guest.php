@@ -6,4 +6,8 @@ class Guest extends ActiveRecord\Model {
 	static $belongs_to = array(
 		array('user')
 	);
+
+	static $delegate = array(
+		array('users_login', 'to' => 'user')
+	);
 }
