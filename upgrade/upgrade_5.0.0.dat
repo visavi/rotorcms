@@ -1,0 +1,99 @@
+<?php
+#---------------------------------------------#
+#      ********* RotorCMS *********           #
+#           Author  :  Vantuz                 #
+#            Email  :  visavi.net@mail.ru     #
+#             Site  :  http://visavi.net      #
+#              ICQ  :  36-44-66               #
+#            Skype  :  vantuzilla             #
+#---------------------------------------------#
+if (!defined('BASEDIR')) {
+	exit(header('Location: /index.php'));
+}
+?>
+
+
+CREATE TABLE IF NOT EXISTS `guest2` (
+	`id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+	`user_id` int(11) NOT NULL,
+	`text` text NOT NULL,
+	`ip` varchar(15) NOT NULL,
+	`brow` varchar(25) NOT NULL,
+	`reply` text NOT NULL,
+	`edit_user_id` int(11) DEFAULT NULL,
+	`updated_at` datetime NOT NULL,
+	`created_at` datetime NOT NULL,
+	PRIMARY KEY (`id`),
+	KEY `created_at` (`created_at`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `users2` (
+	`id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+	`login` varchar(20) NOT NULL,
+	`password` varchar(40) NOT NULL,
+	`email` varchar(50) NOT NULL,
+	`gender` tinyint(1) unsigned NOT NULL DEFAULT '0',
+	`level` smallint(4) unsigned NOT NULL DEFAULT '107',
+	`name` varchar(20) NOT NULL DEFAULT '',
+	`country` varchar(30) NOT NULL DEFAULT '',
+	`city` varchar(50) NOT NULL DEFAULT '',
+	`info` text NOT NULL,
+	`site` varchar(50) NOT NULL DEFAULT '',
+	`icq` varchar(10) NOT NULL DEFAULT '',
+	`skype` varchar(32) NOT NULL DEFAULT '',
+	`jabber` varchar(50) NOT NULL DEFAULT '',
+	`birthday` varchar(10) NOT NULL DEFAULT '',
+	`visits` int(11) unsigned NOT NULL DEFAULT '0',
+	`newprivat` smallint(4) unsigned NOT NULL DEFAULT '0',
+	`newwall` smallint(4) unsigned NOT NULL DEFAULT '0',
+	`allforum` int(11) unsigned NOT NULL DEFAULT '0',
+	`allguest` int(11) unsigned NOT NULL DEFAULT '0',
+	`allcomments` int(11) unsigned NOT NULL DEFAULT '0',
+	`themes` varchar(20) NOT NULL DEFAULT '',
+	`postguest` smallint(4) unsigned NOT NULL DEFAULT '0',
+	`postnews` smallint(4) unsigned NOT NULL DEFAULT '0',
+	`postprivat` smallint(4) unsigned NOT NULL DEFAULT '0',
+	`postforum` smallint(4) unsigned NOT NULL DEFAULT '0',
+	`themesforum` smallint(4) unsigned NOT NULL DEFAULT '0',
+	`postboard` smallint(4) unsigned NOT NULL DEFAULT '0',
+	`users_timezone` varchar(3) NOT NULL DEFAULT '0',
+	`users_point` int(11) unsigned NOT NULL DEFAULT '0',
+	`users_money` int(11) unsigned NOT NULL DEFAULT '0',
+	`users_ban` tinyint(1) unsigned NOT NULL DEFAULT '0',
+	`users_timeban` int(11) unsigned NOT NULL DEFAULT '0',
+	`users_timelastban` int(11) unsigned NOT NULL DEFAULT '0',
+	`users_reasonban` text NOT NULL,
+	`users_loginsendban` varchar(20) NOT NULL DEFAULT '',
+	`users_totalban` tinyint(2) unsigned NOT NULL DEFAULT '0',
+	`users_explainban` tinyint(1) unsigned NOT NULL DEFAULT '0',
+	`users_status` varchar(50) NOT NULL DEFAULT '',
+	`users_avatar` varchar(50) NOT NULL DEFAULT '',
+	`users_picture` varchar(50) NOT NULL DEFAULT '',
+	`users_rating` mediumint(8) NOT NULL DEFAULT '0',
+	`users_posrating` mediumint(8) unsigned NOT NULL DEFAULT '0',
+	`users_negrating` mediumint(8) unsigned NOT NULL DEFAULT '0',
+	`users_keypasswd` varchar(20) NOT NULL DEFAULT '',
+	`users_timepasswd` int(11) unsigned NOT NULL DEFAULT '0',
+	`users_timelastlogin` int(11) unsigned NOT NULL DEFAULT '0',
+	`users_timebonus` int(11) NOT NULL DEFAULT '0',
+	`users_confirmreg` tinyint(1) unsigned NOT NULL DEFAULT '0',
+	`users_confirmregkey` varchar(30) NOT NULL DEFAULT '',
+	`users_secquest` varchar(50) NOT NULL DEFAULT '',
+	`users_secanswer` varchar(40) NOT NULL DEFAULT '',
+	`users_timenickname` int(11) unsigned NOT NULL DEFAULT '0',
+	`users_ipbinding` tinyint(1) unsigned NOT NULL DEFAULT '0',
+	`users_navigation` tinyint(1) unsigned NOT NULL DEFAULT '0',
+	`users_newchat` int(11) unsigned NOT NULL DEFAULT '0',
+	`users_privacy` tinyint(1) unsigned NOT NULL DEFAULT '0',
+	`users_apikey` varchar(32) NOT NULL DEFAULT '',
+	PRIMARY KEY (`users_id`),
+	UNIQUE KEY `users_login` (`users_login`),
+	KEY `users_level` (`users_level`),
+	KEY `users_email` (`users_email`),
+	KEY `users_nickname` (`users_nickname`),
+	KEY `users_themes` (`users_themes`),
+	KEY `users_point` (`users_point`),
+	KEY `users_money` (`users_money`),
+	KEY `users_rating` (`users_rating`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;

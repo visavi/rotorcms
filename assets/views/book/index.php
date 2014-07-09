@@ -15,7 +15,7 @@
 			<div class="img"><?= $data->user->getAvatar() ?></div>
 
 			<?php if ($data->user->getLogin() == $config['guestsuser']): ?>
-				<b><?= $data->user->getLogin() ?></b> <small>(<?= $data->created_at ?>)</small>
+				<b><?= $data->user->getLogin() ?></b> <small>(<?= $data->created_at->format('long') ?>)</small>
 			<?php else: ?>
 				<b><?= profile($data->user->getLogin()) ?></b> <small>(<?= $data->created_at->format('long') ?>)</small><br />
 				<?= user_title($data->user->getLogin())?> <?= user_online($data->user->getLogin())?>
@@ -24,8 +24,9 @@
 
 		<?php if (!empty($log) && $log != $data->user->getLogin()): ?>
 			<div class="right">
-			<a href="index.php?act=reply&amp;id=<?= $data->id ?>&amp;start=<?= $start ?>">Отв</a> /
-			<a href="index.php?act=quote&amp;id=<?= $data->id ?>&amp;start=<?= $start ?>">Цит</a> /
+			<a href="#" onclick="return reply('<?= $data->user->getLogin() ?>')">Отв</a> /
+			<a href="#" onclick="return quote(this)">Цит</a> /
+
 			<noindex><a href="index.php?act=spam&amp;id=<?= $data->id ?>&amp;start=<?= $start ?>&amp;uid=<?= $_SESSION['token'] ?>" onclick="return confirm('Вы подтверждаете факт спама?')" rel="nofollow">Спам</a></noindex></div>
 		<?php endif; ?>
 
@@ -34,10 +35,10 @@
 		<?php endif; ?>
 
 		<div>
-			<?= bb_code($data->text) ?><br />
+			<span class="message"><?= bb_code($data->text) ?></span><br />
 
-			<?php if (!empty($data->edit)): ?>
-				<img src="/images/img/exclamation_small.gif" alt="image" /> <small>Отредактировано: <?= nickname($data->edit)?> (<?= date_fixed($data->updated_at) ?>)</small><br />
+			<?php if (!empty($data->edit_user_id)): ?>
+				<img src="/images/img/exclamation_small.gif" alt="image" /> <small>Отредактировано: <?= $data->user->getLogin() ?> (<?= $data->updated_at->format('long') ?>)</small><br />
 			<?php endif; ?>
 
 			<?php if (is_admin() || empty($config['anonymity'])): ?>

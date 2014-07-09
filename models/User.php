@@ -6,8 +6,8 @@ class User extends ActiveRecord\Model {
 
 	static $alias_attribute = array(
 		'first_name' => 'person_first_name',
-		'last_name' => 'person_last_name');
-	}
+		'last_name' => 'person_last_name',
+	);
 
 
 	public function getLogin(){

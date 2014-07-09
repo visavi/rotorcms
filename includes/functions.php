@@ -2285,7 +2285,7 @@ function format_num($num = 0){
 // ------------- Подключение javascript -------------//
 function include_javascript(){
 
-	echo '<script type="text/javascript" src="/assets/jquery-2.1.0.min.js"></script>'."\r\n";
+	echo '<script type="text/javascript" src="/assets/jquery-2.1.1.min.js"></script>'."\r\n";
 	echo '<script type="text/javascript" src="/assets/markitup/jquery.markitup.js"></script>'."\r\n";
 	echo '<script type="text/javascript" src="/assets/markitup/markitup.set.js"></script>'."\r\n";
 	echo '<script type="text/javascript" src="/assets/js/app.js"></script>'."\r\n";
