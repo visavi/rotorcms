@@ -92,9 +92,7 @@ case 'add':
 				if (utf_strlen($msg) >= 5 && utf_strlen($msg) < $config['guesttextlength']) {
 					if (is_flood($log)) {
 
-						$msg = no_br($msg);
-						$msg = antimat($msg);
-						$msg = smiles($msg);
+						$msg = smiles(antimat(no_br($msg)));
 
 						DB::run()->query("INSERT INTO `guest` (`guest_user`, `guest_text`, `guest_ip`, `guest_brow`, `guest_time`) VALUES (?, ?, ?, ?, ?);", array($config['guestsuser'], $msg, $ip, $brow, SITETIME));
 
@@ -158,32 +156,6 @@ case 'spam':
 		}
 	} else {
 		show_login('Вы не авторизованы, чтобы подать жалобу, необходимо');
-	}
-
-	render('includes/back', array('link' => 'index.php?start='.$start, 'title' => 'Вернуться'));
-break;
-
-############################################################################################
-##                                   Цитирование сообщения                                ##
-############################################################################################
-case 'quote':
-
-	$id = abs(intval($_GET['id']));
-
-	if (is_user()) {
-		$post = DB::run()->queryFetch("SELECT * FROM `guest` WHERE `guest_id`=? LIMIT 1;", array($id));
-
-		if (!empty($post)) {
-			$post['guest_text'] = preg_replace('|\[q\](.*?)\[/q\](<br />)?|', '', $post['guest_text']);
-			$post['guest_text'] = yes_br(nosmiles($post['guest_text']));
-
-			render ('book/quote', array('post' => $post));
-
-		} else {
-			show_error('Ошибка! Выбранное вами сообщение для цитирования не существует!');
-		}
-	} else {
-		show_login('Вы не авторизованы, чтобы цитировать сообщения, необходимо');
 	}
 
 	render('includes/back', array('link' => 'index.php?start='.$start, 'title' => 'Вернуться'));

@@ -28,12 +28,17 @@ function reply(name){
 
 /* Цитирование сообщения */
 function quote(el){
-	alert($(el).closest('.right').find('.message').text());
-	$('#markItUp').focus().val(data);
+	var msg = $(el).closest('#post').find('.message').text();
+	$('#markItUp').focus().val(msg);
 
 	$('html, body').animate({
 		scrollTop: ($('.form').offset().top)
 	}, 500);
 
 	return false;
+}
+
+/* Жалоба на спам */
+function spam(el){
+
 }

@@ -11,6 +11,7 @@
 <?php if ($total > 0): ?>
 	<?php foreach ($posts as $data): ?>
 
+		<div id="post">
 		<div class="b">
 			<div class="img"><?= $data->user->getAvatar() ?></div>
 
@@ -25,7 +26,6 @@
 		<?php if (!empty($log) && $log != $data->user->getLogin()): ?>
 			<div class="right">
 			<a href="#" onclick="return reply('<?= $data->user->getLogin() ?>')">Отв</a> /
-			<a href="#" onclick="return quote(this)">Цит</a> /
 
 			<noindex><a href="index.php?act=spam&amp;id=<?= $data->id ?>&amp;start=<?= $start ?>&amp;uid=<?= $_SESSION['token'] ?>" onclick="return confirm('Вы подтверждаете факт спама?')" rel="nofollow">Спам</a></noindex></div>
 		<?php endif; ?>
@@ -49,6 +49,7 @@
 				<br /><span style="color:#ff0000">Ответ: <?= $data->reply ?></span>
 			<?php endif; ?>
 
+		</div>
 		</div>
 	<?php endforeach; ?>
 
