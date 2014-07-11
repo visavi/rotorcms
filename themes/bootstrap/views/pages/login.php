@@ -15,7 +15,7 @@
     <div class="col-sm-offset-2 col-sm-5">
       <div class="checkbox">
         <label>
-          <input name="cookie" type="checkbox" checked="checked"> Запомнить меня
+          <input name="haunter" type="checkbox"> Чужой компьютер
         </label>
       </div>
     </div>

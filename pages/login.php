@@ -30,20 +30,21 @@ var_dump($_REQUEST);
 
 			$login = isset($_REQUEST['login']) ? check(utf_lower($_REQUEST['login'])) : '';
 			$pass = isset($_REQUEST['password']) ? md5(md5(trim($_REQUEST['password']))) : '';
-			//$cookietrue = isset($_REQUEST['cookietrue']) ? 0 : 1;
+			$haunter = isset($_POST['haunter']) ? 1 : 0;
 
 			if (!empty($login) && !empty($pass)) {
 
-				$udata = DB::run() -> queryFetch("SELECT `users_login`, `users_pass` FROM `users` WHERE LOWER(`users_login`)=? OR LOWER(`users_nickname`)=? LIMIT 1;", array($login, $login));
+				$udata = DB::run() -> queryFetch("SELECT `users_id`, `users_login`, `users_pass` FROM `users` WHERE LOWER(`users_login`)=? OR LOWER(`users_nickname`)=? LIMIT 1;", array($login, $login));
 
 				if (!empty($udata)) {
 					if ($pass == $udata['users_pass']) {
 
-						if (!empty($cookietrue)) {
+						if (!empty($haunter)) {
 							setcookie('cooklog', $udata['users_login'], time() + 3600 * 24 * 365, '/', $domain);
 							setcookie('cookpar', md5($pass.$config['keypass']), time() + 3600 * 24 * 365, '/', $domain, null, true);
 						}
 
+						$_SESSION['id'] = $udata['users_id'];
 						$_SESSION['log'] = $udata['users_login'];
 						$_SESSION['par'] = md5($config['keypass'].$pass);
 						$_SESSION['my_ip'] = $ip;
@@ -62,7 +63,9 @@ var_dump($_REQUEST);
 					}
 				}
 			}
+
 			notice('Ошибка авторизации. Неправильный логин или пароль!');
+			redirect('login.php');
 		}
 
 
