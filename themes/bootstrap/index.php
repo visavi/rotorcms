@@ -46,7 +46,7 @@ header("Content-type:text/html; charset=utf-8");
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="/"><?= $config['home'] ?></a>
+				<a class="navbar-brand" href="/"><?= $config['title'] ?></a>
 			</div>
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
