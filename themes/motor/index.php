@@ -62,7 +62,7 @@ header('Content-type:text/html; charset=utf-8');
 	<?php endif; ?>
 
 	<a href="/pages/index.php?act=menu">Меню</a>
-	<a href="/input.php?act=exit" onclick="return confirm('Вы действительно хотите выйти?')">Выход</a>
+	<a href="/pages/login.php?act=exit" onclick="return confirm('Вы действительно хотите выйти?')">Выход</a>
 
 <?php else: ?>
 	<a href="/pages/login.php">Авторизация</a>/

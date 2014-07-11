@@ -158,7 +158,7 @@ if ($config['openreg'] == 1) {
 						}
 
 						// ------------------------- Уведомление о регистрации на E-mail --------------------------//
-						$regmessage = "Добро пожаловать, ".$logs." \nТеперь вы зарегистрированный пользователь сайта ".$config['home']." , сохраните ваш пароль и логин в надежном месте, они вам еще пригодятся. \nВаши данные для входа на сайт \nЛогин: ".$logs." \nПароль: ".$pars." \n\nСсылка для автоматического входа на сайт: \n".$config['home']."/input.php?login=".$logs."&pass=".$pars." \nНадеемся вам понравится на нашем портале! \nС уважением администрация сайта \nЕсли это письмо попало к вам по ошибке, то просто проигнорируйте его \n\n";
+						$regmessage = "Добро пожаловать, ".$logs." \nТеперь вы зарегистрированный пользователь сайта ".$config['home']." , сохраните ваш пароль и логин в надежном месте, они вам еще пригодятся. \nВаши данные для входа на сайт \nЛогин: ".$logs." \nПароль: ".$pars." \n\nСсылка для автоматического входа на сайт: \n".$config['home']."/pages/login.php?login=".$logs."&password=".$pars." \nНадеемся вам понравится на нашем портале! \nС уважением администрация сайта \nЕсли это письмо попало к вам по ошибке, то просто проигнорируйте его \n\n";
 
 						if ($config['regkeys'] == 1) {
 							$registration_key = generate_password();
@@ -200,11 +200,11 @@ if ($config['openreg'] == 1) {
 
 						echo 'Теперь вы можете войти<br />';
 						echo '<br /><img src="/images/img/open.gif" alt="image" /> ';
-						echo '<b><a href="/input.php?login='.$logs.'&amp;pass='.$pars.'">Вход на сайт</a></b><br /><br />';
+						echo '<b><a href="/pages/login.php?login='.$logs.'&amp;password='.$pars.'">Вход на сайт</a></b><br /><br />';
 
 						echo 'Вы можете сделать закладку для быстрого входа:<br />';
-						echo '<span style="color:#ff0000">'.$config['home'].'/input.php?login='.$logs.'&amp;pass='.$pars.'</span><br /><br />';
-						echo 'Cкопировать: <br /><input name="avtovhod" size="60" value="'.$config['home'].'/input.php?login='.$logs.'&amp;pass='.$pars.'"/><br /><br />';
+						echo '<span style="color:#ff0000">'.$config['home'].'/pages/login.php?login='.$logs.'&amp;password='.$pars.'</span><br /><br />';
+						echo 'Cкопировать: <br /><input name="avtovhod" size="60" value="'.$config['home'].'/pages/login.php?login='.$logs.'&amp;password='.$pars.'"/><br /><br />';
 
 						echo 'Если у вас включены cookies, то делать такую закладку не обязательно<br /><br />';
 

@@ -39,7 +39,7 @@ header("Content-type:text/html; charset=utf-8");
 			<a title="Скрипты для wap-мастеров" class="menu" href="/load/?">Скрипты</a> |
 			<?php if (is_user()): ?>
 				<a title="Управление настройками" class="menu" href="/pages/?act=menu">Мое меню</a> |
-				<a title="Выход" class="menu" href="/input.php?act=exit"
+				<a title="Выход" class="menu" href="/pages/login.php?act=exit"
 				   onclick="return confirm('Вы действительно хотите выйти?')">Выход</a>
 			<?php else: ?>
 				<a title="Страница авторизации" class="menu" href="/pages/login.php?">Вход</a> |

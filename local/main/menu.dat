@@ -28,4 +28,4 @@ if (isset($act) && $act=='menu'){
 <img src="/images/img/act.png" alt="image" /> <a href="/pages/authlog.php">История авторизаций</a><br />
 
 <div class="b"><img src="/images/img/exit.gif" alt="image" /> <b>Выход</b></div>
-<img src="/images/img/act.png" alt="image" /> <a href="/input.php?act=exit">Выход [Exit]</a><br />
+<img src="/images/img/act.png" alt="image" /> <a href="/pages/login.php?act=exit">Выход [Exit]</a><br />

@@ -162,7 +162,7 @@ if ($udata = is_user()) {
 	}
 
 	if ($config['regkeys'] > 0 && $udata['users_confirmreg'] > 0 && empty($udata['users_ban'])) {
-		if (!strsearch($php_self, array('/pages/key.php', '/input.php'))) {
+		if (!strsearch($php_self, array('/pages/key.php', '/pages/login.php'))) {
 			redirect('/pages/key.php?log='.$log);
 		}
 	}

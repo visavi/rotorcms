@@ -473,7 +473,7 @@ define ('DBPASS', '$dbpass');
 											echo 'Поздравляем Вас, RotorCMS был успешно установлен на Ваш сервер. Вы можете перейти на главную страницу вашего сайта и посмотреть возможности скрипта<br />
 Приятной Вам работы<br /><br />';
 
-											echo '<img src="../images/img/reload.gif" alt="image" /> <b><a href="../input.php?login=' . $login . '&amp;pass=' . $password . '">Войти на сайт</a></b><br /><br />';
+											echo '<img src="../images/img/reload.gif" alt="image" /> <b><a href="/pages/login.php?login=' . $login . '&amp;password=' . $password . '">Войти на сайт</a></b><br /><br />';
 
 											echo 'Обязательно удалите директорию <b>install</b> со всем содержимым, эта папка больше не потребуется для работы движка<br /><br />';
 										} else {

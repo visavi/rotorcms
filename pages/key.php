@@ -42,7 +42,7 @@ if (is_user()) {
 						echo 'Пока вы не подтвердите регистрацию вы не сможете войти на сайт<br />';
 						echo 'Ваш профиль будет ждать активации в течении 24 часов, после чего автоматически удален<br /><br />';
 
-						echo '<img src="/images/img/error.gif" alt="image" /> <a href="/input.php?act=exit">Выход</a><br />';
+						echo '<img src="/images/img/error.gif" alt="image" /> <a href="/pages/login.php?act=exit">Выход</a><br />';
 					break;
 
 					############################################################################################
@@ -79,7 +79,7 @@ if (is_user()) {
 				echo 'Добро пожаловать, <b>'.check($log).'!</b><br />';
 				echo 'Ваш аккаунт еще не прошел проверку администрацией<br />';
 				echo 'Если после авторизации вы видите эту страницу, значит ваш профиль еще не активирован!<br /><br />';
-				echo '<img src="/images/img/error.gif" alt="image" /> <a href="/input.php?act=exit">Выход</a><br />';
+				echo '<img src="/images/img/error.gif" alt="image" /> <a href="/pages/login.php?act=exit">Выход</a><br />';
 			}
 		} else {
 			show_error('Ошибка! Вашему профилю не требуется подтверждение регистрации!');

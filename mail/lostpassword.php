@@ -173,14 +173,14 @@ case 'restore':
 			echo 'Пароль: <b>'.$newpass.'</b><br /><br />';
 
 			echo '<img src="/images/img/open.gif" alt="image" /> ';
-			echo '<b><a href="/input.php?login='.$user['users_login'].'&amp;pass='.$newpass.'">Вход на сайт</a></b><br /><br />';
+			echo '<b><a href="/pages/login.php?login='.$user['users_login'].'&amp;password='.$newpass.'">Вход на сайт</a></b><br /><br />';
 
-			echo 'Запомните и постарайтесь больше не забывать данные, а лучше сделайте сразу закладку на наш сайт '.$config['home'].'/input.php?login='.$user['users_login'].'&amp;pass='.$newpass.'<br /><br />';
+			echo 'Запомните и постарайтесь больше не забывать данные, а лучше сделайте сразу закладку на наш сайт '.$config['home'].'/pages/login.php?login='.$user['users_login'].'&amp;password='.$newpass.'<br /><br />';
 
 			echo 'Пароль вы сможете поменять в своем профиле<br /><br />';
 
 			// --------------------------- Восстановлению пароля на E-mail --------------------------//
-			addmail($user['users_email'], "Восстановление пароля на сайте ".$config['title'], "Здравствуйте, ".nickname($user['users_login'])." \nВаши новые данные для входа на на сайт ".$config['home']." \nЛогин: ".$user['users_login']." \nПароль: ".$newpass." \n\nЗапомните и постарайтесь больше не забывать данные, а лучше сделайте сразу закладку на наш сайт \n".$config['home']."/input.php?login=".$user['users_login']."&pass=".$newpass." \nПароль вы сможете поменять в своем профиле \nВсего наилучшего!");
+			addmail($user['users_email'], "Восстановление пароля на сайте ".$config['title'], "Здравствуйте, ".nickname($user['users_login'])." \nВаши новые данные для входа на на сайт ".$config['home']." \nЛогин: ".$user['users_login']." \nПароль: ".$newpass." \n\nЗапомните и постарайтесь больше не забывать данные, а лучше сделайте сразу закладку на наш сайт \n".$config['home']."/pages/login.php?login=".$user['users_login']."&password=".$newpass." \nПароль вы сможете поменять в своем профиле \nВсего наилучшего!");
 
 		} else {
 			show_error($validation->errors);
@@ -224,9 +224,9 @@ case 'answer':
 			echo 'Пароль: <b>'.$newpass.'</b><br /><br />';
 
 			echo '<img src="/images/img/open.gif" alt="image" /> ';
-			echo '<b><a href="/input.php?login='.$user['users_login'].'&amp;pass='.$newpass.'">Вход на сайт</a></b><br /><br />';
+			echo '<b><a href="/pages/login.php?login='.$user['users_login'].'&amp;password='.$newpass.'">Вход на сайт</a></b><br /><br />';
 
-			echo 'Запомните и постарайтесь больше не забывать данные, а лучше сделайте сразу закладку на наш сайт '.$config['home'].'/input.php?login='.$user['users_login'].'&amp;pass='.$newpass.'<br /><br />';
+			echo 'Запомните и постарайтесь больше не забывать данные, а лучше сделайте сразу закладку на наш сайт '.$config['home'].'/pages/login.php?login='.$user['users_login'].'&amp;password='.$newpass.'<br /><br />';
 
 			echo 'Пароль вы сможете поменять в своем профиле<br /><br />';
 

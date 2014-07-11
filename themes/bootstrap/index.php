@@ -50,7 +50,6 @@ header("Content-type:text/html; charset=utf-8");
 			</div>
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
-				<li<?= ($php_self == '/index.php') ? ' class="active"' : '' ?>><a href="/">Главная</a></li>
 				<li><a href="#about">About</a></li>
 				<li><a href="#contact">Contact</a></li>
 				<li class="dropdown">
@@ -68,7 +67,7 @@ header("Content-type:text/html; charset=utf-8");
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<?php if (is_user()): ?>
-						<li><a href="/input.php?act=exit">(Выход)</a></li>
+						<li><a href="/pages/login.php?act=exit">(Выход)</a></li>
 					<?php else: ?>
 						<li<?= ($php_self == '/pages/login.php') ? ' class="active"' : '' ?>><a href="/pages/login.php">Вход</a></li>
 						<li<?= ($php_self == '/pages/registration.php') ? ' class="active"' : '' ?>><a href="/pages/registration.php">Регистрация</a></li>

@@ -37,11 +37,11 @@ if (!is_user() || empty($config['themes'])) {
 	}
 }
 
-if ($config['closedsite'] == 2 && !is_admin() && !strsearch($php_self, array('/pages/closed.php', '/input.php'))) {
+if ($config['closedsite'] == 2 && !is_admin() && !strsearch($php_self, array('/pages/closed.php', '/pages/login.php'))) {
 	redirect('/pages/closed.php');
 }
 
-if ($config['closedsite'] == 1 && !is_user() && !strsearch($php_self, array('/pages/login.php', '/pages/registration.php', '/mail/lostpassword.php', '/input.php'))) {
+if ($config['closedsite'] == 1 && !is_user() && !strsearch($php_self, array('/pages/login.php', '/pages/registration.php', '/mail/lostpassword.php'))) {
 	notice('Для входа на сайт необходимо авторизоваться!');
 	redirect('/pages/login.php');
 }

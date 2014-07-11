@@ -24,8 +24,8 @@ switch ($act):
 ############################################################################################
 case 'index':
 
-	if (!is_user()){
-var_dump($_REQUEST);
+	if (!is_user()) {
+
 		if (isset($_REQUEST['login']) && isset($_REQUEST['password'])) {
 
 			$login = isset($_REQUEST['login']) ? check(utf_lower($_REQUEST['login'])) : '';
@@ -39,7 +39,7 @@ var_dump($_REQUEST);
 				if (!empty($udata)) {
 					if ($pass == $udata['users_pass']) {
 
-						if (!empty($haunter)) {
+						if (empty($haunter)) {
 							setcookie('cooklog', $udata['users_login'], time() + 3600 * 24 * 365, '/', $domain);
 							setcookie('cookpar', md5($pass.$config['keypass']), time() + 3600 * 24 * 365, '/', $domain, null, true);
 						}
@@ -67,9 +67,6 @@ var_dump($_REQUEST);
 			notice('Ошибка авторизации. Неправильный логин или пароль!');
 			redirect('login.php');
 		}
-
-
-
 
 		render('pages/login', compact('cooklog'));
 	} else {

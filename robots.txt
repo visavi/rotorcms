@@ -2,7 +2,6 @@ User-agent: *
 Allow: /
 Crawl-delay: 1
 Clean-param: rand
-Disallow: /input.php
 Disallow: /pages/login.php
 Disallow: /pages/registration.php
 Disallow: /pages/index.php?act=menu
