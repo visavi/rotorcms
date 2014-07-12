@@ -30,7 +30,6 @@ $arrfile = array(
 	'load/files',
 	'load/screen',
 	'load/loader',
-	'local/antidos',
 	'local/backup',
 	//'local/main',
 	'local/temp'

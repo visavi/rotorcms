@@ -15,8 +15,7 @@ $ip = real_ip();
 $php_self = (isset($_SERVER['PHP_SELF'])) ? check($_SERVER['PHP_SELF']) : '';
 $request_uri = (isset($_SERVER['REQUEST_URI'])) ? check(urldecode($_SERVER['REQUEST_URI'])) : '/index.php';
 $http_referer = (isset($_SERVER['HTTP_REFERER'])) ? check(urldecode($_SERVER['HTTP_REFERER'])) : 'Не определено';
-$username = (empty($_SESSION['log'])) ? $config['guestsuser'] : $_SESSION['log'];
-$brow = (empty($_SESSION['brow'])) ? $_SESSION['brow'] = get_user_agent() : $_SESSION['brow'];
+$brow = (empty($_SESSION['browser'])) ? $_SESSION['browser'] = get_user_agent() : $_SESSION['browser'];
 ############################################################################################
 ##                                 Проверка на ip-бан                                     ##
 ############################################################################################
@@ -43,46 +42,7 @@ if (is_array($arrbanip) && count($arrbanip) > 0) {
 		} //бан по IP
 	}
 }
-############################################################################################
-##                                 Счетчик запросов                                       ##
-############################################################################################
-if (!empty($config['doslimit'])) {
-	if (is_writeable(DATADIR.'/antidos')) {
-		$dosfiles = glob(DATADIR.'/antidos/*.dat');
-		foreach ($dosfiles as $filename) {
-			$array_filemtime = @filemtime($filename);
-			if ($array_filemtime < (time() - 60)) {
-				@unlink($filename);
-			}
-		}
-		// -------------------------- Проверка на время -----------------------------//
-		if (file_exists(DATADIR.'/antidos/'.$ip.'.dat')) {
-			$file_dos = file(DATADIR.'/antidos/'.$ip.'.dat');
-			$file_str = explode('|', $file_dos[0]);
-			if ($file_str[0] < (time() - 60)) {
-				@unlink(DATADIR.'/antidos/'.$ip.'.dat');
-			}
-		}
-		// ------------------------------ Запись логов -------------------------------//
-		$write = time().'|'.$request_uri.'|'.$http_referer.'|'.$brow.'|'.$username.'|';
-		write_files(DATADIR.'/antidos/'.$ip.'.dat', $write."\r\n", 0, 0666);
-		// ----------------------- Автоматическая блокировка ------------------------//
-		if (counter_string(DATADIR.'/antidos/'.$ip.'.dat') > $config['doslimit']) {
 
-			if (!empty($config['errorlog'])){
-				$banip = DB::run() -> querySingle("SELECT `ban_id` FROM `ban` WHERE `ban_ip`=? LIMIT 1;", array($ip));
-				if (empty($banip)) {
-					DB::run() -> query("INSERT INTO `error` (`error_num`, `error_request`, `error_referer`, `error_username`, `error_ip`, `error_brow`, `error_time`) VALUES (?, ?, ?, ?, ?, ?, ?);", array(666, $request_uri, $http_referer, $username, $ip, $brow, SITETIME));
-
-					DB::run() -> query("INSERT IGNORE INTO ban (`ban_ip`, `ban_time`) VALUES (?, ?);", array($ip, SITETIME));
-					save_ipban();
-				}
-			}
-
-			unlink(DATADIR.'/antidos/'.$ip.'.dat');
-		}
-	}
-}
 ############################################################################################
 ##                            Сжатие и буферизация данныx                                 ##
 ############################################################################################
@@ -93,42 +53,31 @@ if (!empty($config['gzip'])) {
 ############################################################################################
 ##                               Авторизация по cookies                                   ##
 ############################################################################################
-if (empty($_SESSION['log']) && empty($_SESSION['par'])) {
-	if (isset($_COOKIE['cooklog']) && isset($_COOKIE['cookpar'])) {
-		$unlog = check($_COOKIE['cooklog']);
-		$unpar = check($_COOKIE['cookpar']);
+if (empty($_SESSION['id']) && empty($_SESSION['password'])) {
+	if (isset($_COOKIE['id']) && isset($_COOKIE['password'])) {
 
-		$checkuser = DB::run() -> queryFetch("SELECT * FROM `users` WHERE `users_login`=? LIMIT 1;", array($unlog));
 
-		if (!empty($checkuser)) {
-			if ($unlog == $checkuser['users_login'] && $unpar == md5($checkuser['users_pass'].$config['keypass'])) {
+		$id = intval($_COOKIE['id']);
+		$password = check($_COOKIE['password']);
+
+		$user = User::first($id);
+
+		if ($user) {
+			if ($password == md5($user->password.$config['keypass'])) {
 				session_regenerate_id(1);
 
-				$_SESSION['my_ip'] = $ip;
-				$_SESSION['log'] = $unlog;
-				$_SESSION['par'] = md5($config['keypass'].$checkuser['users_pass']);
+				$_SESSION['id'] = $user->id;
+				$_SESSION['password'] = md5($config['keypass'].$user->password);
+				$_SESSION['ip'] = $ip;
 
-				$authorization = DB::run() -> querySingle("SELECT `login_id` FROM `login` WHERE `login_user`=? AND `login_time`>? LIMIT 1;", array($unlog, SITETIME-30));
-
-				if (empty($authorization)) {
-					DB::run() -> query("INSERT INTO `login` (`login_user`, `login_ip`, `login_brow`, `login_time`) VALUES (?, ?, ?, ?);", array($unlog, $ip, $brow, SITETIME));
-					DB::run() -> query("DELETE FROM `login` WHERE `login_user`=? AND `login_time` < (SELECT MIN(`login_time`) FROM (SELECT `login_time` FROM `login` WHERE `login_user`=? ORDER BY `login_time` DESC LIMIT 50) AS del);", array($unlog, $unlog));
-				}
-
-				DB::run() -> query("UPDATE `users` SET `users_visits`=`users_visits`+1, `users_timelastlogin`=? WHERE `users_login`=? LIMIT 1;", array(SITETIME, $unlog));
+				$user->visits = $user->visits + 1;
+				$user->timelastlogin = new DateTime();
+				$user->save();
 			}
 		}
 	}
 }
 
-// ---------------------- Установка сессионных переменных -----------------------//
-$log = '';
-if (empty($_SESSION['counton'])) {
-	$_SESSION['counton'] = 0;
-}
-if (empty($_SESSION['currs'])) {
-	$_SESSION['currs'] = SITETIME;
-}
 if (!isset($_SESSION['token'])) {
 	if (!empty($config['session'])){
 		$_SESSION['token'] = generate_password(6);
@@ -136,13 +85,13 @@ if (!isset($_SESSION['token'])) {
 		$_SESSION['token'] = 0;
 	}
 }
+
 ob_start('mc');
 ob_start('ob_processing');
-$_SESSION['timeon'] = maketime(SITETIME - $_SESSION['currs']);
 ############################################################################################
 ##                                     Авторизация                                        ##
 ############################################################################################
-if ($udata = is_user()) {
+/*if ($udata = is_user()) {
 
 	$log = $udata['users_login'];
 	// ---------------------- Переопределение глобальных настроек -------------------------//
@@ -191,5 +140,5 @@ if ($udata = is_user()) {
 	}
 	// -------------------------- Дайджест ------------------------------------//
 	DB::run() -> query("INSERT INTO `visit` (`visit_user`, `visit_self`, `visit_ip`, `visit_nowtime`)  VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE `visit_self`=?, `visit_ip`=?, `visit_count`=?, `visit_nowtime`=?;", array($log, $php_self, $ip, SITETIME, $php_self, $ip, $_SESSION['counton'], SITETIME));
-}
+}*/
 ?>

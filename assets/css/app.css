@@ -5,13 +5,13 @@
 	margin: 5px 0;
 }
 
-.open {
+.news-open {
 	background: url("/images/img/plus.gif") no-repeat scroll left center transparent;
 	padding-left: 14px;
 	display: block;
 }
 
-.closed {
+.news-closed {
 	background: url("/images/img/minus.gif") no-repeat scroll left center transparent;
 	display: block;
 	padding-left: 14px;

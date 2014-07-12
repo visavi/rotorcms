@@ -50,8 +50,8 @@ header("Content-type:text/html; charset=utf-8");
 			</div>
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
-				<li><a href="#about">About</a></li>
-				<li><a href="#contact">Contact</a></li>
+				<li<?= ($php_self == '/book/index.php') ? ' class="active"' : '' ?>><a href="/book">Гостевая</a></li>
+				<li<?= ($php_self == '/forum/index.php') ? ' class="active"' : '' ?>><a href="/forum">Форум</a></li>
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
 					<ul class="dropdown-menu">

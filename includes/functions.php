@@ -291,51 +291,10 @@ function check($msg) {
 
 // ------------------ Функция определения браузера --------------------//
 function get_user_agent() {
-	if (isset($_SERVER['HTTP_USER_AGENT'])) {
-		$agent = check($_SERVER['HTTP_USER_AGENT']);
-
-		if (stripos($agent, 'Avant Browser') !== false) {
-			return 'Avant Browser';
-		} elseif (stripos($agent, 'Acoo Browser') !== false) {
-			return 'Acoo Browser';
-		} elseif (stripos($agent, 'MyIE2') !== false) {
-			return 'MyIE2';
-		} elseif (preg_match('|Iron/([0-9a-z\.]*)|i', $agent, $pocket)) {
-			return 'SRWare Iron '.subtok($pocket[1], '.', 0, 2);
-		} elseif (preg_match('|Chrome/([0-9a-z\.]*)|i', $agent, $pocket)) {
-			return 'Chrome '.subtok($pocket[1], '.', 0, 2);
-		} elseif (preg_match('#(Maxthon|NetCaptor)( [0-9a-z\.]*)?#i', $agent, $pocket)) {
-			return $pocket[1] . $pocket[2];
-		} elseif (stripos($agent, 'Safari') !== false && preg_match('|Version/([0-9]{1,2}.[0-9]{1,2})|i', $agent, $pocket)) {
-			return 'Safari '.subtok($pocket[1], '.', 0, 2);
-		} elseif (preg_match('#(NetFront|K-Meleon|Netscape|Galeon|Epiphany|Konqueror|Safari|Opera Mini|Opera Mobile)/([0-9a-z\.]*)#i', $agent, $pocket)) {
-			return $pocket[1].' '.subtok($pocket[2], '.', 0, 2);
-		} elseif (stripos($agent, 'Opera') !== false && preg_match('|Version/([0-9]{1,2}.[0-9]{1,2})|i', $agent, $pocket)) {
-			return 'Opera '.$pocket[1];
-		} elseif (preg_match('|Opera[/ ]([0-9a-z\.]*)|i', $agent, $pocket)) {
-			return 'Opera '.subtok($pocket[1], '.', 0, 2);
-		} elseif (preg_match('|Orca/([ 0-9a-z\.]*)|i', $agent, $pocket)) {
-			return 'Orca '.subtok($pocket[1], '.', 0, 2);
-		} elseif (preg_match('#(SeaMonkey|Firefox|GranParadiso|Minefield|Shiretoko)/([0-9a-z\.]*)#i', $agent, $pocket)) {
-			return $pocket[1].' '.subtok($pocket[2], '.', 0, 2);
-		} elseif (preg_match('|rv:([0-9a-z\.]*)|i', $agent, $pocket) && strpos($agent, 'Mozilla/') !== false) {
-			return 'Mozilla '.subtok($pocket[1], '.', 0, 2);
-		} elseif (preg_match('|Lynx/([0-9a-z\.]*)|i', $agent, $pocket)) {
-			return 'Lynx '.subtok($pocket[1], '.', 0, 2);
-		} elseif (preg_match('|MSIE ([0-9a-z\.]*)|i', $agent, $pocket)) {
-			return 'IE '.subtok($pocket[1], '.', 0, 2);
-		} else {
-			$agent = preg_replace('|http://|i', '', $agent);
-			$agent = strtok($agent, '( ');
-			$agent = substr($agent, 0, 22);
-			$agent = subtok($agent, '.', 0, 2);
-
-			if (!empty($agent)) {
-				return $agent;
-			}
-		}
-	}
-	return 'Unknown';
+	$browser = new Browser();
+	$brow = $browser->getBrowser();
+	$version = $browser->getVersion();
+	return $version == 'unknown' ? $brow : $brow.' '.subtok($browser->getVersion(), '.', 0, 2);
 }
 
 // ----------------------- Функция обрезки строки с условием -------------------------//
@@ -1646,21 +1605,22 @@ function check_user($login) {
 // ------------------------- Функция проверки авторизации  ------------------------//
 function is_user() {
 	global $config;
-	static $user = 0;
+	static $result = false;
 
-	if (empty($user)) {
-		if (isset($_SESSION['log']) && isset($_SESSION['par'])) {
-			$udata = DB::run() -> queryFetch("SELECT * FROM `users` WHERE `users_login`=? LIMIT 1;", array(check($_SESSION['log'])));
+	if (empty($result)) {
+		if (isset($_SESSION['id']) && isset($_SESSION['password'])) {
 
-			if (!empty($udata)) {
-				if ($_SESSION['log'] == $udata['users_login'] && $_SESSION['par'] == md5($config['keypass'].$udata['users_pass'])) {
-					$user = $udata;
+			$user = User::first($_SESSION['id']);
+			if ($user) {
+
+				if ($_SESSION['password'] == md5($config['keypass'].$user->password)) {
+					$result = $user;
 				}
 			}
 		}
 	}
 
-	return $user;
+	return $result;
 }
 
 // ------------------------- Функция проверки администрации  ------------------------//

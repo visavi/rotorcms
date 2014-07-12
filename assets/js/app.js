@@ -2,7 +2,7 @@ $(document).ready(function(){
 	/* Вывод спойлера */
 	$(".spoiler-body").hide();
 	$(".spoiler-head").click(function(){
-		$(this).toggleClass("open").toggleClass("closed").next().slideToggle();
+		$(this).toggleClass("news-open").toggleClass("news-closed").next().slideToggle();
 	});
 
 	/* Показ новостей на главной */

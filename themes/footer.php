@@ -21,8 +21,6 @@ if (isset($_SESSION['note'])) {
 	unset($_SESSION['note']);
 }
 
-$_SESSION['counton']++;
-
 // Определяет точное название страницы где находится пользователь
 if (is_user() && !empty($config['newtitle'])){
 	DB::run()->query("UPDATE `visit` SET `visit_page`=? WHERE `visit_user`=? LIMIT 1;", array($config['newtitle'], $log));

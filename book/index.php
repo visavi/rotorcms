@@ -56,7 +56,12 @@ case 'add':
 
 						$bookscores = ($config['bookscores']) ? 1 : 0;
 
-						DB::run()->query("UPDATE `users` SET `users_allguest`=`users_allguest`+1, `users_point`=`users_point`+?, `users_money`=`users_money`+5 WHERE `users_login`=?;", array($bookscores, $log));
+						$user = User::find(1);
+
+						$user->allguest = $user->allguest + 1;
+						$user->point = $user->point + $bookscores;
+						$user->money = $user->money + 20;
+						$user->save();
 
 						$attributes = array('user_id' => 1, 'text' => $msg, 'ip' => $ip, 'brow' => $brow);
 						$post = Guest::create($attributes);
