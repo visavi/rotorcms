@@ -48,6 +48,8 @@ ActiveRecord\Config::initialize(function($cfg) {
 	));
 });
 
+$config = Setting::all();
+
 if (!file_exists(DATADIR.'/temp/setting.dat')) {
 	$queryset = DB::run() -> query("SELECT `setting_name`, `setting_value` FROM `setting`;");
 	$config = $queryset -> fetchAssoc();

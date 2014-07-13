@@ -89,7 +89,7 @@ if (!isset($_SESSION['token'])) {
 ob_start('mc');
 ob_start('ob_processing');
 ############################################################################################
-##                                     Авторизация                                        ##
+##                            Получение данных пользователя                               ##
 ############################################################################################
 if ($user = is_user()) {
 $log  = $user->id; // Временно
@@ -123,18 +123,16 @@ $log  = $user->id; // Временно
 			redirect(html_entity_decode($request_uri));
 		}
 	}
-var_dump($user);
+
 	// ---------------------- Получение ежедневного бонуса -----------------------//
-	//if ($user->timebonus->getTimestamp()  < SITETIME - 82800) {  // Получение бонуса каждые 23 часа
+	if (!$user->timebonus || $user->timebonus->getTimestamp()  < SITETIME - 82800) {
 
-		//$user->visits = $user->visits + 1;
-		//$user->timelastlogin = new DateTime();
-		//$user->save();
+		$user->timebonus = new DateTime();
+		$user->money = $user->money + $config['bonusmoney'];
+		$user->save();
 
-
-		//DB::run() -> query("UPDATE `users` SET `users_timebonus`=?, `users_money`=`users_money`+? WHERE `users_login`=? LIMIT 1;", array(SITETIME, $config['bonusmoney'], $log));
-		//notice('Получен ежедневный бонус '.moneys($config['bonusmoney']).'!');
-	//}
+		notice('Получен ежедневный бонус '.moneys($config['bonusmoney']).'!');
+	}
 
 	// ------------------ Запись текущей страницы для админов --------------------//
 /*	if (strstr($php_self, '/admin')) {
