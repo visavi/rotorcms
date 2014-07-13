@@ -15,7 +15,7 @@ include_once ('themes/header.php');
 include_once (DATADIR.'/advert/top.dat');
 
 render ('index');
-var_dump($_SESSION);
+
 include_once (DATADIR.'/advert/bottom.dat');
 
 include_once ('themes/footer.php');

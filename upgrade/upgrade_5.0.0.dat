@@ -21,11 +21,11 @@ CREATE TABLE IF NOT EXISTS `guest2` (
 	`brow` varchar(25) NOT NULL,
 	`reply` text NOT NULL,
 	`edit_user_id` int(11) DEFAULT NULL,
-	`updated_at` datetime NOT NULL,
-	`created_at` datetime NOT NULL,
+	`created_at` timestamp NOT NULL,
+	`updated_at` timestamp NOT NULL,
 	PRIMARY KEY (`id`),
 	KEY `created_at` (`created_at`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 CREATE TABLE IF NOT EXISTS `users2` (
@@ -56,13 +56,12 @@ CREATE TABLE IF NOT EXISTS `users2` (
 	`postprivat` smallint(4) unsigned NOT NULL DEFAULT '0',
 	`postforum` smallint(4) unsigned NOT NULL DEFAULT '0',
 	`themesforum` smallint(4) unsigned NOT NULL DEFAULT '0',
-	`postboard` smallint(4) unsigned NOT NULL DEFAULT '0',
 	`timezone` varchar(3) NOT NULL DEFAULT '0',
 	`point` int(11) unsigned NOT NULL DEFAULT '0',
 	`money` int(11) unsigned NOT NULL DEFAULT '0',
 	`ban` tinyint(1) unsigned NOT NULL DEFAULT '0',
 	`timeban` int(11) unsigned NOT NULL DEFAULT '0',
-	`timelastban` datetime DEFAULT NULL,
+	`timelastban` timestamp NULL DEFAULT NULL,
 	`reasonban` text NOT NULL,
 	`loginsendban` varchar(20) NOT NULL DEFAULT '',
 	`totalban` tinyint(2) unsigned NOT NULL DEFAULT '0',
@@ -74,9 +73,9 @@ CREATE TABLE IF NOT EXISTS `users2` (
 	`posrating` mediumint(8) unsigned NOT NULL DEFAULT '0',
 	`negrating` mediumint(8) unsigned NOT NULL DEFAULT '0',
 	`keypasswd` varchar(20) NOT NULL DEFAULT '',
-	`timepasswd` datetime DEFAULT NULL,
-	`timelastlogin` datetime DEFAULT NULL,
-	`timebonus` datetime DEFAULT NULL,
+	`timepasswd` timestamp NULL DEFAULT NULL,
+	`timelastlogin` timestamp NULL DEFAULT NULL,
+	`timebonus` timestamp NULL DEFAULT NULL,
 	`confirmreg` tinyint(1) unsigned NOT NULL DEFAULT '0',
 	`confirmregkey` varchar(30) NOT NULL DEFAULT '',
 	`secquest` varchar(50) NOT NULL DEFAULT '',
@@ -86,8 +85,8 @@ CREATE TABLE IF NOT EXISTS `users2` (
 	`newchat` int(11) unsigned NOT NULL DEFAULT '0',
 	`privacy` tinyint(1) unsigned NOT NULL DEFAULT '0',
 	`apikey` varchar(32) NOT NULL DEFAULT '',
-	`updated_at` datetime NOT NULL,
-	`created_at` datetime NOT NULL,
+	`created_at` timestamp NOT NULL,
+	`updated_at` timestamp NOT NULL,
 	PRIMARY KEY (`id`),
 	UNIQUE KEY `login` (`login`),
 	UNIQUE KEY `email` (`email`),
@@ -95,4 +94,4 @@ CREATE TABLE IF NOT EXISTS `users2` (
 	KEY `point` (`point`),
 	KEY `money` (`money`),
 	KEY `rating` (`rating`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;

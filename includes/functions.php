@@ -556,6 +556,8 @@ function flood_period() {
 
 // ------------------------- Функция антифлуда ------------------------------//
 function is_flood($log, $period = 0) {
+	// переделать временно выключено
+	return true;
 	global $php_self;
 
 	if (empty($period)) {
@@ -2516,7 +2518,7 @@ function perfomance (){
 
 // ------------ Функция подключения шаблонов -----------//
 function render($view, $params = array(), $return = false){
-	global $config, $log, $udata;
+	global $config, $log, $user, $udata;
 
 	extract($params);
 

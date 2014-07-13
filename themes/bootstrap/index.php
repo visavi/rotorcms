@@ -66,8 +66,8 @@ header("Content-type:text/html; charset=utf-8");
 				</li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
-					<?php if (is_user()): ?>
-						<li><a href="/pages/login.php?act=exit">(Выход)</a></li>
+					<?php if ($user): ?>
+						<li><a href="/pages/login.php?act=exit"><?= $user->getLogin() ?> (Выход)</a></li>
 					<?php else: ?>
 						<li<?= ($php_self == '/pages/login.php') ? ' class="active"' : '' ?>><a href="/pages/login.php">Вход</a></li>
 						<li<?= ($php_self == '/pages/registration.php') ? ' class="active"' : '' ?>><a href="/pages/registration.php">Регистрация</a></li>

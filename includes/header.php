@@ -91,54 +91,58 @@ ob_start('ob_processing');
 ############################################################################################
 ##                                     Авторизация                                        ##
 ############################################################################################
-/*if ($udata = is_user()) {
-
-	$log = $udata['users_login'];
+if ($user = is_user()) {
+$log  = $user->id; // Временно
 	// ---------------------- Переопределение глобальных настроек -------------------------//
-	$config['themes']     = $udata['users_themes'];      # Скин/тема по умолчанию
-	$config['bookpost']   = $udata['users_postguest'];   # Вывод сообщений в гостевой
-	$config['postnews']   = $udata['users_postnews'];    # Новостей на страницу
-	$config['forumpost']  = $udata['users_postforum'];   # Вывод сообщений в форуме
-	$config['forumtem']   = $udata['users_themesforum']; # Вывод тем в форуме
-	$config['boardspost'] = $udata['users_postboard'];   # Вывод объявлений
-	$config['privatpost'] = $udata['users_postprivat'];  # Вывод писем в привате
-	$config['navigation'] = $udata['users_navigation'];  # Быстрый переход
+	$config['themes']     = $user->themes;      # Скин/тема по умолчанию
+	$config['bookpost']   = $user->postguest;   # Вывод сообщений в гостевой
+	$config['postnews']   = $user->postnews;    # Новостей на страницу
+	$config['forumpost']  = $user->postforum;   # Вывод сообщений в форуме
+	$config['forumtem']   = $user->themesforum; # Вывод тем в форуме
+	$config['privatpost'] = $user->postprivat;  # Вывод писем в привате
+	$config['navigation'] = $user->navigation;  # Быстрый переход
 
-	if ($udata['users_ban'] == 1) {
+	if ($user->ban) {
 		if (!strsearch($php_self, array('/pages/ban.php', '/pages/rules.php'))) {
 			redirect('/pages/ban.php?log='.$log);
 		}
 	}
 
-	if ($config['regkeys'] > 0 && $udata['users_confirmreg'] > 0 && empty($udata['users_ban'])) {
+	if ($config['regkeys'] > 0 && $user->confirmreg > 0 && empty($user->ban)) {
 		if (!strsearch($php_self, array('/pages/key.php', '/pages/login.php'))) {
 			redirect('/pages/key.php?log='.$log);
 		}
 	}
 
 	// --------------------- Проверка соответствия ip-адреса ---------------------//
-	if (!empty($udata['users_ipbinding'])) {
-		if ($_SESSION['my_ip'] != $ip) {
+	if (!empty($user->ipbinding)) {
+		if ($_SESSION['ip'] != $ip) {
 			$_SESSION = array();
 			setcookie(session_name(), '', 0, '/', '');
 			session_destroy();
 			redirect(html_entity_decode($request_uri));
 		}
 	}
-
+var_dump($user);
 	// ---------------------- Получение ежедневного бонуса -----------------------//
-	if (isset($udata['users_timebonus']) && $udata['users_timebonus'] < time() - 82800) {  // Получение бонуса каждые 23 часа
-		DB::run() -> query("UPDATE `users` SET `users_timebonus`=?, `users_money`=`users_money`+? WHERE `users_login`=? LIMIT 1;", array(SITETIME, $config['bonusmoney'], $log));
-		notice('Получен ежедневный бонус '.moneys($config['bonusmoney']).'!');
-	}
+	//if ($user->timebonus->getTimestamp()  < SITETIME - 82800) {  // Получение бонуса каждые 23 часа
+
+		//$user->visits = $user->visits + 1;
+		//$user->timelastlogin = new DateTime();
+		//$user->save();
+
+
+		//DB::run() -> query("UPDATE `users` SET `users_timebonus`=?, `users_money`=`users_money`+? WHERE `users_login`=? LIMIT 1;", array(SITETIME, $config['bonusmoney'], $log));
+		//notice('Получен ежедневный бонус '.moneys($config['bonusmoney']).'!');
+	//}
 
 	// ------------------ Запись текущей страницы для админов --------------------//
-	if (strstr($php_self, '/admin')) {
+/*	if (strstr($php_self, '/admin')) {
 		DB::run() -> query("INSERT INTO `admlog` (`admlog_user`, `admlog_request`, `admlog_referer`, `admlog_ip`, `admlog_brow`, `admlog_time`) VALUES (?, ?, ?, ?, ?, ?);", array($log, $request_uri, $http_referer, $ip, $brow, SITETIME));
 
 		DB::run() -> query("DELETE FROM `admlog` WHERE `admlog_time` < (SELECT MIN(`admlog_time`) FROM (SELECT `admlog_time` FROM `admlog` ORDER BY `admlog_time` DESC LIMIT 500) AS del);");
 	}
 	// -------------------------- Дайджест ------------------------------------//
-	DB::run() -> query("INSERT INTO `visit` (`visit_user`, `visit_self`, `visit_ip`, `visit_nowtime`)  VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE `visit_self`=?, `visit_ip`=?, `visit_count`=?, `visit_nowtime`=?;", array($log, $php_self, $ip, SITETIME, $php_self, $ip, $_SESSION['counton'], SITETIME));
-}*/
+	DB::run() -> query("INSERT INTO `visit` (`visit_user`, `visit_self`, `visit_ip`, `visit_nowtime`)  VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE `visit_self`=?, `visit_ip`=?, `visit_count`=?, `visit_nowtime`=?;", array($log, $php_self, $ip, SITETIME, $php_self, $ip, $_SESSION['counton'], SITETIME));*/
+}
 ?>

@@ -1,4 +1,3 @@
-local/antidos/
 local/backup/
 local/temp/
 upload/avatars/
@@ -9,3 +8,4 @@ upload/news
 upload/photos
 upload/pictures
 upload/thumbnail
+.DS_Store
