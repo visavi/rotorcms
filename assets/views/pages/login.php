@@ -1,7 +1,7 @@
 <div class="form">
 	<form method="post" action="/pages/login.php">
-		Email / Логин:<br /><input name="login" value="<?= $cooklog ?>" maxlength="20" /><br />
-		Пароль:<br /><input name="password" type="password" maxlength="20" /><br />
+		Email / Логин:<br /><input name="login" maxlength="20" /><br />
+		Пароль:<br /><input name="password" type="password" maxlength="30" /><br />
 		Чужой компьютер:
 		<input name="haunter" type="checkbox" value="1" /><br />
 

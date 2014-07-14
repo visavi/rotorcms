@@ -20,5 +20,6 @@
 
 	<?= include_javascript() ?>
 	<script src="/themes/bootstrap/js/bootstrap.min.js"></script>
+	<script src="/themes/bootstrap/js/app.js"></script>
 </body>
 </html>

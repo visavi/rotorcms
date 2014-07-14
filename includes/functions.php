@@ -2252,8 +2252,8 @@ function include_javascript(){
 	echo '<script type="text/javascript" src="/assets/markitup/markitup.set.js"></script>'."\r\n";
 	echo '<script type="text/javascript" src="/assets/js/app.js"></script>'."\r\n";
 
-	echo '<link rel="stylesheet" type="text/css" href="/assets/markitup/style.css" />'."\r\n";
-	echo '<link rel="stylesheet" type="text/css" href="/assets/css/app.css" />'."\r\n";
+	echo '<link href="/assets/markitup/style.css" rel="stylesheet" type="text/css" />'."\r\n";
+	echo '<link href="/assets/css/app.css" rel="stylesheet" type="text/css" />'."\r\n";
 }
 
 // ------------- Вывод спонсорских сайтов -------------//

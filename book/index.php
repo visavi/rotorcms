@@ -44,10 +44,10 @@ break;
 case 'add':
 
 	$msg = check($_POST['msg']);
-	$uid = check($_GET['uid']);
+	$token = check($_GET['token']);
 
 	if (is_user()) {
-		if ($uid == $_SESSION['token']) {
+		if ($token == $_SESSION['token']) {
 			if (utf_strlen($msg) >= 5 && utf_strlen($msg) < $config['guesttextlength']) {
 				if (is_quarantine($log) || $config['bookadds'] == 1) {
 					if (is_flood($log)) {
@@ -56,14 +56,14 @@ case 'add':
 
 						$bookscores = ($config['bookscores']) ? 1 : 0;
 
-						$user = User::find(1);
+						$user = User::find($user->id);
 
 						$user->allguest = $user->allguest + 1;
 						$user->point = $user->point + $bookscores;
 						$user->money = $user->money + 20;
 						$user->save();
 
-						$attributes = array('user_id' => 1, 'text' => $msg, 'ip' => $ip, 'brow' => $brow);
+						$attributes = array('user_id' => $user->id, 'text' => $msg, 'ip' => $ip, 'brow' => $brow);
 						$post = Guest::create($attributes);
 
 						// Удаляем старые сообщения
@@ -72,7 +72,7 @@ case 'add':
 						//Guest::table()->delete(array('id' => array($delete)));
 
 						notice('Сообщение успешно добавлено!');
-						//redirect("index.php");
+						redirect("index.php");
 
 					} else {
 						show_error('Антифлуд! Разрешается отправлять сообщения раз в '.flood_period().' секунд!');
@@ -92,19 +92,18 @@ case 'add':
 	} elseif ($config['bookadds'] == 1) {
 		$provkod = check(strtolower($_POST['provkod']));
 
-		if ($uid == $_SESSION['token']) {
+		if ($token == $_SESSION['token']) {
 			if ($provkod == $_SESSION['protect']) {
 				if (utf_strlen($msg) >= 5 && utf_strlen($msg) < $config['guesttextlength']) {
 					if (is_flood($log)) {
 
 						$msg = smiles(antimat(no_br($msg)));
 
-						DB::run()->query("INSERT INTO `guest` (`guest_user`, `guest_text`, `guest_ip`, `guest_brow`, `guest_time`) VALUES (?, ?, ?, ?, ?);", array($config['guestsuser'], $msg, $ip, $brow, SITETIME));
+						$attributes = array('user_id' => 0, 'text' => $msg, 'ip' => $ip, 'brow' => $brow);
+						$post = Guest::create($attributes);
 
-						DB::run()->query("DELETE FROM `guest` WHERE `guest_time` < (SELECT MIN(`guest_time`) FROM (SELECT `guest_time` FROM `guest` ORDER BY `guest_time` DESC LIMIT ".$config['maxpostbook'].") AS del);");
-
-						$_SESSION['note'] = 'Сообщение успешно добавлено!';
-						redirect("index.php");
+						notice('Сообщение успешно добавлено!');
+						//redirect("index.php");
 
 					} else {
 						show_error('Антифлуд! Разрешается отправлять сообщения раз в '.flood_period().' секунд!');
@@ -130,11 +129,11 @@ break;
 ############################################################################################
 case 'spam':
 
-	$uid = check($_GET['uid']);
+	$token = check($_GET['token']);
 	$id = abs(intval($_GET['id']));
 
 	if (is_user()) {
-		if ($uid == $_SESSION['token']) {
+		if ($token == $_SESSION['token']) {
 			$data = DB::run()->queryFetch("SELECT * FROM `guest` WHERE `guest_id`=? LIMIT 1;", array($id));
 
 			if (!empty($data)) {
@@ -201,12 +200,12 @@ break;
 ############################################################################################
 case 'editpost':
 
-	$uid = check($_GET['uid']);
+	$token = check($_GET['token']);
 	$id = abs(intval($_GET['id']));
 	$msg = check($_POST['msg']);
 
 	if (is_user()) {
-		if ($uid == $_SESSION['token']) {
+		if ($token == $_SESSION['token']) {
 			if (utf_strlen($msg) >= 5 && utf_strlen($msg) < $config['guesttextlength']) {
 				$post = DB::run()->queryFetch("SELECT * FROM `guest` WHERE `guest_id`=? AND `guest_user`=? LIMIT 1;", array($id, $log));
 

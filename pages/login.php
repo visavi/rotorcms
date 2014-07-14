@@ -13,7 +13,6 @@ require_once ('../includes/header.php');
 include_once ('../themes/header.php');
 
 $act = (isset($_GET['act'])) ? check($_GET['act']) : 'index';
-$cooklog = (isset($_COOKIE['cooklog'])) ? check($_COOKIE['cooklog']): '';
 $domain = check_string($config['home']);
 
 show_title('Авторизация');
@@ -62,7 +61,7 @@ case 'index':
 			redirect('login.php');
 		}
 
-		render('pages/login', compact('cooklog'));
+		render('pages/login');
 	} else {
 		redirect('/index.php');
 	}

@@ -79,11 +79,7 @@ if (empty($_SESSION['id']) && empty($_SESSION['password'])) {
 }
 
 if (!isset($_SESSION['token'])) {
-	if (!empty($config['session'])){
-		$_SESSION['token'] = generate_password(6);
-	} else {
-		$_SESSION['token'] = 0;
-	}
+	$_SESSION['token'] = empty($config['session']) ? 0 : generate_password(6);
 }
 
 ob_start('mc');

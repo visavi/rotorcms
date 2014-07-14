@@ -48,14 +48,19 @@ ActiveRecord\Config::initialize(function($cfg) {
 	));
 });
 
-$config = Setting::all();
 
 if (!file_exists(DATADIR.'/temp/setting.dat')) {
-	$queryset = DB::run() -> query("SELECT `setting_name`, `setting_value` FROM `setting`;");
-	$config = $queryset -> fetchAssoc();
+	$settings = Setting::all();
+
+	$config = array();
+	foreach($settings as $setting) {
+		$config[$setting->name] = $setting->value;
+	}
 	file_put_contents(DATADIR.'/temp/setting.dat', serialize($config), LOCK_EX);
 }
+
 $config = unserialize(file_get_contents(DATADIR.'/temp/setting.dat'));
+
 
 date_default_timezone_set($config['timezone']);
 ?>

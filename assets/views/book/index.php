@@ -27,7 +27,7 @@
 			<div class="right">
 			<a href="#" onclick="return reply('<?= $data->user->getLogin() ?>')">Отв</a> /
 
-			<noindex><a href="index.php?act=spam&amp;id=<?= $data->id ?>&amp;start=<?= $start ?>&amp;uid=<?= $_SESSION['token'] ?>" onclick="return confirm('Вы подтверждаете факт спама?')" rel="nofollow">Спам</a></noindex></div>
+			<noindex><a href="index.php?act=spam&amp;id=<?= $data->id ?>&amp;start=<?= $start ?>&amp;token=<?= $_SESSION['token'] ?>" onclick="return confirm('Вы подтверждаете факт спама?')" rel="nofollow">Спам</a></noindex></div>
 		<?php endif; ?>
 
 		<?php if ($user->id == $data->user->getLogin() && $data->created_at->getTimestamp() + 600 > SITETIME): ?>
@@ -62,7 +62,7 @@
 
 <?php if (is_user()): ?>
 	<div class="form">
-		<form action="index.php?act=add&amp;uid=<?= $_SESSION['token'] ?>" method="post">
+		<form action="index.php?act=add&amp;token=<?= $_SESSION['token'] ?>" method="post">
 
 		<textarea id="markItUp" cols="25" rows="5" name="msg"></textarea><br />
 		<input type="submit" value="Написать" /></form>
@@ -71,7 +71,7 @@
 <?php elseif ($config['bookadds'] == 1): ?>
 
 	<div class="form">
-		<form action="index.php?act=add&amp;uid=<?= $_SESSION['token'] ?>" method="post">
+		<form action="index.php?act=add&amp;token=<?= $_SESSION['token'] ?>" method="post">
 		Сообщение:<br />
 		<textarea cols="25" rows="5" name="msg"></textarea><br />
 
