@@ -88,7 +88,7 @@ ob_start('ob_processing');
 ##                            Получение данных пользователя                               ##
 ############################################################################################
 if ($user = is_user()) {
-$log  = $user->id; // Временно
+	$log  = $user->id; // Временно
 	// ---------------------- Переопределение глобальных настроек -------------------------//
 	$config['themes']     = $user->themes;      # Скин/тема по умолчанию
 	$config['bookpost']   = $user->postguest;   # Вывод сообщений в гостевой
@@ -131,11 +131,25 @@ $log  = $user->id; // Временно
 	}
 
 	// ------------------ Запись текущей страницы для админов --------------------//
-/*	if (strstr($php_self, '/admin')) {
-		DB::run() -> query("INSERT INTO `admlog` (`admlog_user`, `admlog_request`, `admlog_referer`, `admlog_ip`, `admlog_brow`, `admlog_time`) VALUES (?, ?, ?, ?, ?, ?);", array($log, $request_uri, $http_referer, $ip, $brow, SITETIME));
+	if (strstr($php_self, '/admin')) {
 
-		DB::run() -> query("DELETE FROM `admlog` WHERE `admlog_time` < (SELECT MIN(`admlog_time`) FROM (SELECT `admlog_time` FROM `admlog` ORDER BY `admlog_time` DESC LIMIT 500) AS del);");
+		$attributes = array(
+			'user_id' => $user->id,
+			'request' => $request_uri,
+			'referer' => $http_referer,
+			'ip' => $ip,
+			'brow' => $brow,
+		);
+
+		Log::create($attributes);
+
+		$logs = Log::all(array('offset' => 500, 'limit' => 10, 'order' => 'created_at desc'));
+		if ($logs){
+			$delete = ActiveRecord\collect($logs, 'id');
+			Log::table()->delete(array('id' => $delete));
+		}
 	}
+	/*
 	// -------------------------- Дайджест ------------------------------------//
 	DB::run() -> query("INSERT INTO `visit` (`visit_user`, `visit_self`, `visit_ip`, `visit_nowtime`)  VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE `visit_self`=?, `visit_ip`=?, `visit_count`=?, `visit_nowtime`=?;", array($log, $php_self, $ip, SITETIME, $php_self, $ip, $_SESSION['counton'], SITETIME));*/
 }

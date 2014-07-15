@@ -1632,8 +1632,8 @@ function is_admin($access = array()) {
 	}
 
 	if (is_user()) {
-		global $udata;
-		if (in_array($udata['users_level'], $access)) {
+		global $user;
+		if (in_array($user->level, $access)) {
 			return true;
 		}
 	}
