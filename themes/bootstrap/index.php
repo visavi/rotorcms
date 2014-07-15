@@ -66,8 +66,20 @@ header("Content-type:text/html; charset=utf-8");
 				</li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
+
 					<?php if ($user): ?>
-						<li><a href="/pages/login.php?act=exit"><?= $user->getLogin() ?> (Выход)</a></li>
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><?= $user->getLogin() ?> <b class="caret"></b></a>
+							<ul class="dropdown-menu">
+
+								<?php if (is_admin()): ?>
+									<li><a href="/admin">Админ-панель</a></li>
+								<?php endif; ?>
+								<li><a href="/pages/user.php?id=<?= $user->id ?>">Профиль</a></li>
+								<li><a href="/pages/login.php?act=exit">Выход</a></li>
+							</ul>
+						</li>
+
 					<?php else: ?>
 						<li<?= ($php_self == '/pages/login.php') ? ' class="active"' : '' ?>><a href="/pages/login.php">Вход</a></li>
 						<li<?= ($php_self == '/pages/registration.php') ? ' class="active"' : '' ?>><a href="/pages/registration.php">Регистрация</a></li>
