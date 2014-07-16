@@ -103,7 +103,7 @@ case 'add':
 						$post = Guest::create($attributes);
 
 						notice('Сообщение успешно добавлено!');
-						//redirect("index.php");
+						redirect("index.php");
 
 					} else {
 						show_error('Антифлуд! Разрешается отправлять сообщения раз в '.flood_period().' секунд!');
