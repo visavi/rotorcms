@@ -4,7 +4,7 @@ class User extends ActiveRecord\Model {
 	static $table_name = 'users2';
 
 	public function getLogin(){
-		return $this->login ? $this->login : 'Пользователь удален';
+		return $this->login ? $this->login : 'Гость';
 	}
 
 	public function getAvatar(){

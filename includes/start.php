@@ -48,6 +48,7 @@ ActiveRecord\Config::initialize(function($cfg) {
 	));
 });
 
+ActiveRecord\DateTime::$DEFAULT_FORMAT = 'd.m.y / H:i';
 
 if (!file_exists(DATADIR.'/temp/setting.dat')) {
 	$settings = Setting::all();
@@ -60,6 +61,7 @@ if (!file_exists(DATADIR.'/temp/setting.dat')) {
 }
 
 $config = unserialize(file_get_contents(DATADIR.'/temp/setting.dat'));
+
 
 date_default_timezone_set($config['timezone']);
 ?>

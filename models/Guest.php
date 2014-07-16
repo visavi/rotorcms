@@ -7,7 +7,7 @@ class Guest extends ActiveRecord\Model {
 		array('user')
 	);
 
-	//static $delegate = array(
-		//array('login', 'to' => 'user')
-	//);
+	static $delegate = array(
+		array('login', 'avatar', 'to' => 'user')
+	);
 }

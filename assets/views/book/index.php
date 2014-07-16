@@ -13,24 +13,23 @@
 
 		<div id="post">
 		<div class="b">
-			<div class="img"><?= $data->user->getAvatar() ?></div>
-
-			<?php if ($data->user->getLogin() == $config['guestsuser']): ?>
-				<b><?= $data->user->getLogin() ?></b> <small>(<?= $data->created_at->format('long') ?>)</small>
+			<div class="img"><?= $data->avatar ?></div>
+			<?php if ($data->login == $config['guestsuser']): ?>
+				<b><?= $data->login ?></b> <small>(<?= $data->created_at ?>)</small>
 			<?php else: ?>
-				<b><?= profile($data->user->getLogin()) ?></b> <small>(<?= $data->created_at->format('long') ?>)</small><br />
-				<?= user_title($data->user->getLogin())?> <?= user_online($data->user->getLogin())?>
+				<b><?= profile($data->login) ?></b> <small>(<?= $data->created_at ?>)</small><br />
+				<?= user_title($data->login)?> <?= user_online($data->login)?>
 			<?php endif; ?>
 		</div>
 
-		<?php if (!empty($user) && $user->id != $data->user->getLogin()): ?>
+		<?php if (!empty($user) && $user->id != $data->login): ?>
 			<div class="right">
-			<a href="#" onclick="return reply('<?= $data->user->getLogin() ?>')">Отв</a> /
+			<a href="#" onclick="return reply('<?= $data->login ?>')">Отв</a> /
 
 			<noindex><a href="index.php?act=spam&amp;id=<?= $data->id ?>&amp;start=<?= $start ?>&amp;token=<?= $_SESSION['token'] ?>" onclick="return confirm('Вы подтверждаете факт спама?')" rel="nofollow">Спам</a></noindex></div>
 		<?php endif; ?>
 
-		<?php if ($user->id == $data->user->getLogin() && $data->created_at->getTimestamp() + 600 > SITETIME): ?>
+		<?php if ($user->id == $data->login && $data->created_at->getTimestamp() + 600 > SITETIME): ?>
 			<div class="right"><a href="index.php?act=edit&amp;id=<?= $data->id ?>&amp;start=<?= $start ?>">Редактировать</a></div>
 		<?php endif; ?>
 
@@ -38,7 +37,7 @@
 			<span class="message"><?= bb_code($data->text) ?></span><br />
 
 			<?php if (!empty($data->edit_user_id)): ?>
-				<img src="/images/img/exclamation_small.gif" alt="image" /> <small>Отредактировано: <?= $data->user->getLogin() ?> (<?= $data->updated_at->format('long') ?>)</small><br />
+				<img src="/images/img/exclamation_small.gif" alt="image" /> <small>Отредактировано: <?= $data->login ?> (<?= $data->updated_at->format('long') ?>)</small><br />
 			<?php endif; ?>
 
 			<?php if (is_admin() || empty($config['anonymity'])): ?>
