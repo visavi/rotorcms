@@ -884,8 +884,8 @@ function show_counter() {
 // --------------- Функция вывода количества зарегистрированных ---------------//
 function stats_users() {
 	if (@filemtime(DATADIR."/temp/statusers.dat") < time()-3600) {
-		$total = DB::run() -> querySingle("SELECT count(*) FROM `users`;");
-		$new = DB::run() -> querySingle("SELECT count(*) FROM `users` WHERE `users_joined`>UNIX_TIMESTAMP(CURDATE());");
+		$total = User::count();
+		$new = User::count(array('conditions' => 'DATE(created_at) = DATE(NOW())'));
 
 		if (empty($new)) {
 			$stat = $total;
@@ -902,7 +902,7 @@ function stats_users() {
 // --------------- Функция вывода количества админов и модеров --------------------//
 function stats_admins() {
 	if (@filemtime(DATADIR."/temp/statadmins.dat") < time()-3600) {
-		$stat = DB::run() -> querySingle("SELECT count(*) FROM `users` WHERE `users_level`>=? AND `users_level`<=?;", array(101, 105));
+		$stat = User::count(array('conditions' => 'level BETWEEN 101 AND 105'));
 
 		file_put_contents(DATADIR."/temp/statadmins.dat", $stat, LOCK_EX);
 	}
@@ -937,8 +937,9 @@ function stats_ipbanned() {
 // --------------- Функция вывода количества фотографий --------------------//
 function stats_gallery() {
 	if (@filemtime(DATADIR."/temp/statgallery.dat") < time()-900) {
-		$total = DB::run() -> querySingle("SELECT count(*) FROM `photo`;");
-		$totalnew = DB::run() -> querySingle("SELECT count(*) FROM `photo` WHERE `photo_time`>?;", array(SITETIME-86400 * 3));
+
+		$total = Photo::count();
+		$totalnew = Photo::count(array('conditions' => 'created_at > NOW()-INTERVAL 3 DAY'));
 
 		if (empty($totalnew)) {
 			$stat = $total;
@@ -1361,14 +1362,16 @@ function photo_navigation($id) {
 
 // --------------------- Функция вывода статистики блогов ------------------------//
 function stats_blog() {
+
 	if (@filemtime(DATADIR."/temp/statblog.dat") < time()-900) {
-		$totalblog = DB::run() -> querySingle("SELECT SUM(`cats_count`) FROM `catsblog`;");
-		$totalnew = DB::run() -> querySingle("SELECT count(*) FROM `blogs` WHERE `blogs_time`>?;", array(SITETIME-86400 * 3));
+
+		$totalblog = BlogCategory::find(array('select' => 'sum(count) as sum'));
+		$totalnew = Blog::count(array('conditions' => 'created_at > NOW()-INTERVAL 3 DAY'));
 
 		if (empty($totalnew)) {
-			$stat = (int)$totalblog;
+			$stat = intval($totalblog->sum);
 		} else {
-			$stat = $totalblog.'/+'.$totalnew;
+			$stat = intval($totalblog->sum).'/+'.intval($totalnew);
 		}
 
 		file_put_contents(DATADIR."/temp/statblog.dat", $stat, LOCK_EX);
@@ -1380,10 +1383,9 @@ function stats_blog() {
 // --------------------- Функция вывода статистики форума ------------------------//
 function stats_forum() {
 	if (@filemtime(DATADIR."/temp/statforum.dat") < time()-600) {
-		$queryforum = DB::run() -> query("SELECT SUM(`forums_topics`) FROM `forums` UNION ALL SELECT SUM(`forums_posts`) FROM `forums`;");
-		$total = $queryforum -> fetchAll(PDO::FETCH_COLUMN);
 
-		file_put_contents(DATADIR."/temp/statforum.dat", (int)$total[0].'/'.(int)$total[1], LOCK_EX);
+		$forums = Forum::find(array('select' => 'sum(topics) as topics, sum(posts) as posts'));
+		file_put_contents(DATADIR."/temp/statforum.dat", intval($forums->topics).'/'.intval($forums->posts), LOCK_EX);
 	}
 
 	return file_get_contents(DATADIR."/temp/statforum.dat");
@@ -1393,10 +1395,11 @@ function stats_forum() {
 function stats_guest() {
 	if (@filemtime(DATADIR."/temp/statguest.dat") < time()-600) {
 		global $config;
-		$total = DB::run() -> querySingle("SELECT count(*) FROM `guest`;");
+
+		$total = Guest::count();
 
 		if ($total > ($config['maxpostbook']-10)) {
-			$stat = DB::run() -> querySingle("SELECT MAX(`guest_id`) FROM `guest`;");
+			$stat = Guest::find(array('select' => 'MAX(id)'));
 		} else {
 			$stat = $total;
 		}
@@ -1426,49 +1429,29 @@ function stats_newchat() {
 }
 
 // --------------------- Функция вывода статистики загрузок ------------------------//
-function stats_load($cats=0) {
-	if (empty($cats)){
+function stats_load() {
 
-		if (@filemtime(DATADIR."/temp/statload.dat") < time()-900) {
-			$totalloads = DB::run() -> querySingle("SELECT SUM(`cats_count`) FROM `cats`;");
-			$totalnew = DB::run() -> querySingle("SELECT count(*) FROM `downs` WHERE `downs_active`=? AND `downs_time`>?;", array(1, SITETIME-86400 * 5));
+	if (@filemtime(DATADIR."/temp/statload.dat") < time()-900) {
 
-			if (empty($totalnew)) {
-				$stat = intval($totalloads);
-			} else {
-				$stat = $totalloads.'/+'.$totalnew;
-			}
-			file_put_contents(DATADIR."/temp/statload.dat", $stat, LOCK_EX);
+		$total = Down::count();
+		$totalnew = Down::count(array('conditions' => 'active = 1 and created_at > NOW()-INTERVAL 5 DAY'));
+
+		if (empty($totalnew)) {
+			$stat = intval($total);
+		} else {
+			$stat = $total.'/+'.$totalnew;
 		}
-
-		return file_get_contents(DATADIR."/temp/statload.dat");
-
-	} else {
-
-		if (@filemtime(DATADIR."/temp/statloadcats.dat") < time()-900) {
-
-		$querydown = DB::run()->query("SELECT `c`.*, (SELECT SUM(`cats_count`) FROM `cats` WHERE `cats_parent`=`c`.`cats_id`) AS `subcnt`, (SELECT COUNT(*) FROM `downs` WHERE `downs_cats_id`=`cats_id` AND `downs_active`=? AND `downs_time` > ?) AS `new` FROM `cats` `c` ORDER BY `cats_order` ASC;", array(1, SITETIME-86400*5));
-		$downs = $querydown->fetchAll();
-
-			if (!empty($downs)){
-				foreach ($downs as $data){
-					$subcnt = (empty($data['subcnt'])) ? '' : '/'.$data['subcnt'];
-					$new = (empty($data['new'])) ? '' : '/<span style="color:#ff0000">+'.$data['new'].'</span>';
-					$stat[$data['cats_id']] = $data['cats_count'].$subcnt.$new;
-				}
-			}
-			file_put_contents(DATADIR."/temp/statloadcats.dat", serialize($stat), LOCK_EX);
-		}
-
-		$statcats = unserialize(file_get_contents(DATADIR."/temp/statloadcats.dat"));
-		return (isset($statcats[$cats])) ? $statcats[$cats] : 0;
+		file_put_contents(DATADIR."/temp/statload.dat", $stat, LOCK_EX);
 	}
+
+	return file_get_contents(DATADIR."/temp/statload.dat");
 }
 
 // --------------------- Функция подсчета непроверенных файлов ------------------------//
 function stats_newload() {
-	$totalnew = DB::run() -> querySingle("SELECT count(*) FROM `downs` WHERE `downs_active`=?;", array(0));
-	$totalcheck = DB::run() -> querySingle("SELECT count(*) FROM `downs` WHERE `downs_active`=? AND `downs_app`=?;", array(0, 1));
+
+	$totalnew = Down::count(array('conditions' => 'active = 0'));
+	$totalcheck = Down::count(array('conditions' => 'active = 0 and app = 1'));
 
 	if (empty($totalcheck)) {
 		return intval($totalnew);
@@ -1499,7 +1482,7 @@ function intar($string) {
 }
 
 // ------------------- Функция подсчета голосований --------------------//
-function stats_votes() {
+function stats_votes() {  //Удалить функцию
 	if (@filemtime(DATADIR."/temp/statvote.dat") < time()-900) {
 		$data = DB::run() -> queryFetch("SELECT count(*) AS `count`, SUM(`vote_count`) AS `sum` FROM `vote` WHERE `vote_closed`=?;", array(0));
 
@@ -1518,11 +1501,12 @@ function stats_news() {
 	if (@filemtime(DATADIR."/temp/statnews.dat") < time()-900) {
 		$stat = 0;
 
-		$data = DB::run() -> queryFetch("SELECT `news_time` FROM `news` ORDER BY `news_id` DESC LIMIT 1;");
+		$news = News::last(array('select' => 'created_at'));
 
-		if ($data > 0) {
-			$stat = date_fixed($data['news_time'], "d.m.y");
-			if ($stat == 'Сегодня') {
+		if ($news) {
+			$date = $news->created_at->format('Ymd');
+
+			if (date('Ymd') == $date) {
 				$stat = '<span style="color:#ff0000">Сегодня</span>';
 			}
 		}
@@ -1539,19 +1523,17 @@ function last_news() {
 
 	if ($config['lastnews'] > 0) {
 
-		$query = DB::run()->query("SELECT * FROM `news` WHERE `news_top`=? ORDER BY `news_time` DESC LIMIT ".$config['lastnews'].";", array(1));
-		$news = $query->fetchAll();
-
+		$news = News::all(array('conditions' => 'top = 1', 'limit' => $config['lastnews'], 'order' => 'created_at desc'));
 		$total = count($news);
 
 		if ($total > 0) {
 			foreach ($news as $data) {
-				$data['news_text'] = str_replace('[cut]', '', $data['news_text']);
-				echo '<img src="/images/img/act.png" alt="Новость" /> <a href="/news/index.php?act=read&amp;id='.$data['news_id'].'">'.$data['news_title'].'</a> ('.$data['news_comments'].') <img class="news-title" src="/images/img/downs.gif" alt="Открыть" /><br />';
+				$data->text = str_replace('[cut]', '', $data->text);
+				echo '<img src="/images/img/act.png" alt="Новость" /> <a href="/news/index.php?act=read&amp;id='.$data->id.'">'.$data->title.'</a> ('.$data->comments.') <img class="news-title" src="/images/img/downs.gif" alt="Открыть" /><br />';
 
-				echo '<div class="news-text">'.bb_code($data['news_text']).'<br />';
-				echo '<a href="/news/index.php?act=comments&amp;id='.$data['news_id'].'">Комментарии</a> ';
-				echo '<a href="/news/index.php?act=end&amp;id='.$data['news_id'].'">&raquo;</a></div>';
+				echo '<div class="news-text">'.bb_code($data->text).'<br />';
+				echo '<a href="/news/index.php?act=comments&amp;id='.$data->id.'">Комментарии</a> ';
+				echo '<a href="/news/index.php?act=end&amp;id='.$data->id.'">&raquo;</a></div>';
 			}
 		}
 	}
@@ -1752,6 +1734,8 @@ function strip_str($str, $words = 20) {
 
 // ------------------ Функция вывода админской рекламы --------------------//
 function show_advertadmin() {
+
+	return false; // Временно
 	if (@filemtime(DATADIR."/temp/rekadmin.dat") < time()-1800) {
 		save_advertadmin();
 	}
@@ -1786,6 +1770,8 @@ function save_advertadmin() {
 
 // ------------------ Функция вывода пользовательской рекламы --------------------//
 function show_advertuser() {
+
+	return false; // Временно
 	global $config;
 
 	if (!empty($config['rekusershow'])) {
@@ -1947,7 +1933,7 @@ function curl_connect($url, $user_agent = 'Mozilla/5.0', $proxy = null) {
 }
 
 // --------------- Функция кэширования последних тем форума -------------------//
-function recenttopics($show = 5) {
+function recenttopics($show = 5) { return false;
 	if (@filemtime(DATADIR."/temp/recenttopics.dat") < time()-180) {
 		$querytopic = DB::run() -> query("SELECT * FROM `topics` ORDER BY `topics_last_time` DESC LIMIT ".$show.";");
 		$recent = $querytopic -> fetchAll();
@@ -1969,7 +1955,7 @@ function recenttopics($show = 5) {
 }
 
 // ------------- Функция кэширования последних файлов в загрузках -----------------//
-function recentfiles($show = 5) {
+function recentfiles($show = 5) {  return false;
 	if (@filemtime(DATADIR."/temp/recentfiles.dat") < time()-600) {
 		$queryfiles = DB::run() -> query("SELECT * FROM `downs` WHERE `downs_active`=? ORDER BY `downs_time` DESC LIMIT ".$show.";", array(1));
 		$recent = $queryfiles -> fetchAll();
@@ -1990,7 +1976,7 @@ function recentfiles($show = 5) {
 }
 
 // ------------- Функция кэширования последних статей в блогах -----------------//
-function recentblogs() {
+function recentblogs() {  return false;
 	if (@filemtime(DATADIR."/temp/recentblog.dat") < time()-600) {
 		$queryblogs = DB::run() -> query("SELECT * FROM `blogs` ORDER BY `blogs_time` DESC LIMIT 5;");
 		$recent = $queryblogs -> fetchAll();

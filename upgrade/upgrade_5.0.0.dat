@@ -21,11 +21,11 @@ CREATE TABLE IF NOT EXISTS `guest2` (
   `brow` varchar(25) NOT NULL,
   `reply` text NOT NULL,
   `edit_user_id` int(11) DEFAULT NULL,
-  `created_at` timestamp NOT NULL,
   `updated_at` timestamp NOT NULL,
+  `created_at` timestamp NOT NULL,
   PRIMARY KEY (`id`),
   KEY `created_at` (`created_at`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 CREATE TABLE IF NOT EXISTS `users2` (
@@ -61,7 +61,7 @@ CREATE TABLE IF NOT EXISTS `users2` (
   `money` int(11) unsigned NOT NULL DEFAULT '0',
   `ban` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `timeban` int(11) unsigned NOT NULL DEFAULT '0',
-  `timelastban` timestamp NULL DEFAULT NULL,
+  `timelastban` timestamp DEFAULT NULL,
   `reasonban` text NOT NULL,
   `loginsendban` varchar(20) NOT NULL DEFAULT '',
   `totalban` tinyint(2) unsigned NOT NULL DEFAULT '0',
@@ -73,9 +73,9 @@ CREATE TABLE IF NOT EXISTS `users2` (
   `posrating` mediumint(8) unsigned NOT NULL DEFAULT '0',
   `negrating` mediumint(8) unsigned NOT NULL DEFAULT '0',
   `keypasswd` varchar(20) NOT NULL DEFAULT '',
-  `timepasswd` timestamp NULL DEFAULT NULL,
-  `timelastlogin` timestamp NULL DEFAULT NULL,
-  `timebonus` timestamp NULL DEFAULT NULL,
+  `timepasswd` timestamp DEFAULT NULL,
+  `timelastlogin` timestamp DEFAULT NULL,
+  `timebonus` timestamp DEFAULT NULL,
   `confirmreg` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `confirmregkey` varchar(30) NOT NULL DEFAULT '',
   `secquest` varchar(50) NOT NULL DEFAULT '',
@@ -85,8 +85,8 @@ CREATE TABLE IF NOT EXISTS `users2` (
   `newchat` int(11) unsigned NOT NULL DEFAULT '0',
   `privacy` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `apikey` varchar(32) NOT NULL DEFAULT '',
-  `created_at` timestamp NOT NULL,
   `updated_at` timestamp NOT NULL,
+  `created_at` timestamp NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `login` (`login`),
   UNIQUE KEY `email` (`email`),
@@ -94,13 +94,13 @@ CREATE TABLE IF NOT EXISTS `users2` (
   KEY `point` (`point`),
   KEY `money` (`money`),
   KEY `rating` (`rating`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `setting2` (
   `name` varchar(25) NOT NULL,
   `value` varchar(255) NOT NULL,
   PRIMARY KEY (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 CREATE TABLE IF NOT EXISTS `blacklist2` (
@@ -108,26 +108,26 @@ CREATE TABLE IF NOT EXISTS `blacklist2` (
   `type` tinyint(1) unsigned NOT NULL,
   `value` varchar(100) NOT NULL,
   `user_id` int(11) unsigned NOT NULL,
-  `created_at` timestamp NOT NULL,
   `updated_at` timestamp NOT NULL,
+  `created_at` timestamp NOT NULL,
   PRIMARY KEY (`id`),
   KEY `type` (`type`,`value`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 CREATE TABLE IF NOT EXISTS `invite2` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `invite` varchar(20) NOT NULL,
   `user_id` int(11) unsigned NOT NULL,
-  `invited_user_id` int(11) unsigned NULL DEFAULT NULL,
+  `invited_user_id` int(11) unsigned DEFAULT NULL,
   `used` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `created_at` timestamp NOT NULL,
   `updated_at` timestamp NOT NULL,
+  `created_at` timestamp NOT NULL,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   KEY `used` (`used`),
   KEY `created_at` (`created_at`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `logs2` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -138,5 +138,113 @@ CREATE TABLE IF NOT EXISTS `logs2` (
   `brow` varchar(25) NOT NULL DEFAULT '',
   `created_at` timestamp NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+CREATE TABLE IF NOT EXISTS `news2` (
+  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) unsigned NOT NULL,
+  `title` varchar(100) NOT NULL,
+  `text` text NOT NULL,
+  `image` varchar(30) NOT NULL DEFAULT '',
+  `comments` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `closed` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `top` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `updated_at` timestamp NOT NULL,
+  `created_at` timestamp NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `created_at` (`created_at`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+CREATE TABLE IF NOT EXISTS `photo2` (
+  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) unsigned NOT NULL,
+  `title` varchar(50) NOT NULL,
+  `text` text NOT NULL,
+  `link` varchar(30) NOT NULL,
+  `rating` mediumint(8) NOT NULL DEFAULT '0',
+  `closed` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `comments` int(11) unsigned NOT NULL DEFAULT '0',
+  `updated_at` timestamp NOT NULL,
+  `created_at` timestamp NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`),
+  KEY `created_at` (`created_at`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+CREATE TABLE IF NOT EXISTS `forums2` (
+  `id` smallint(4) unsigned NOT NULL AUTO_INCREMENT,
+  `order` smallint(4) unsigned NOT NULL DEFAULT '0',
+  `parent` smallint(4) unsigned NOT NULL DEFAULT '0',
+  `title` varchar(50) NOT NULL,
+  `desc` varchar(100) NOT NULL DEFAULT '',
+  `topics` int(11) unsigned NOT NULL DEFAULT '0',
+  `posts` int(11) unsigned NOT NULL DEFAULT '0',
+  `last_id` int(11) unsigned NOT NULL DEFAULT '0',
+  `last_themes` varchar(50) NOT NULL DEFAULT '',
+  `forums_last_user_id` int(11) unsigned DEFAULT NULL,
+  `closed` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `updated_at` timestamp NOT NULL,
+  `created_at` timestamp NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+CREATE TABLE IF NOT EXISTS `downs2` (
+  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+  `cats_id` smallint(4) unsigned NOT NULL DEFAULT '0',
+  `title` varchar(100) NOT NULL,
+  `text` text NOT NULL,
+  `link` varchar(50) NOT NULL,
+  `user_id` int(11) unsigned NOT NULL,
+  `author` varchar(50) NOT NULL,
+  `site` varchar(50) NOT NULL DEFAULT '',
+  `screen` varchar(50) NOT NULL DEFAULT '',
+  `comments` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `raiting` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `rated` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `load` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `loaded_at` timestamp NULL DEFAULT NULL,
+  `app` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `notice` text NOT NULL,
+  `active` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `updated_at` timestamp NOT NULL,
+  `created_at` timestamp NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `cats_id` (`cats_id`),
+  KEY `created_at` (`created_at`),
+  FULLTEXT KEY `text` (`text`),
+  FULLTEXT KEY `title` (`title`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+CREATE TABLE IF NOT EXISTS `blog_categories2` (
+  `id` smallint(4) unsigned NOT NULL AUTO_INCREMENT,
+  `order` smallint(4) unsigned NOT NULL DEFAULT '0',
+  `name` varchar(100) NOT NULL,
+  `count` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+CREATE TABLE IF NOT EXISTS `blogs2` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `cats_id` smallint(4) unsigned NOT NULL DEFAULT '0',
+  `user_id` int(11) unsigned NOT NULL,
+  `title` varchar(50) NOT NULL,
+  `text` text NOT NULL,
+  `tags` varchar(100) NOT NULL,
+  `rating` mediumint(8) NOT NULL DEFAULT '0',
+  `read` int(11) unsigned NOT NULL DEFAULT '0',
+  `comments` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `updated_at` timestamp NOT NULL,
+  `created_at` timestamp NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `cats_id` (`cats_id`),
+  KEY `user_id` (`user_id`),
+  KEY `created_at` (`created_at`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
 

@@ -44,10 +44,10 @@ ActiveRecord\Config::initialize(function($cfg) {
 
 	$cfg->set_model_directory(BASEDIR.'/models');
 	$cfg->set_connections(array(
-		'development' => 'mysql://root:root@localhost/rotorcms;charset=utf8'
+		'development' => 'mysql://'.DBUSER.':'.DBPASS.'@'.DBHOST.':'.DBPORT.'/'.DBNAME.';charset=utf8'
 	));
 });
-
+//'development' => 'mysql://'.DBUSER.':'.DBPASS.'@'.DBHOST.'[:'.DBPORT.']/'.DBNAME.';charset=utf8'
 ActiveRecord\DateTime::$DEFAULT_FORMAT = 'd.m.y / H:i';
 
 if (!file_exists(DATADIR.'/temp/setting.dat')) {
