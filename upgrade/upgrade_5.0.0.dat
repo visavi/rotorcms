@@ -61,7 +61,7 @@ CREATE TABLE IF NOT EXISTS `users2` (
   `money` int(11) unsigned NOT NULL DEFAULT '0',
   `ban` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `timeban` int(11) unsigned NOT NULL DEFAULT '0',
-  `timelastban` timestamp DEFAULT NULL,
+  `timelastban` timestamp NULL DEFAULT NULL,
   `reasonban` text NOT NULL,
   `loginsendban` varchar(20) NOT NULL DEFAULT '',
   `totalban` tinyint(2) unsigned NOT NULL DEFAULT '0',
@@ -73,9 +73,9 @@ CREATE TABLE IF NOT EXISTS `users2` (
   `posrating` mediumint(8) unsigned NOT NULL DEFAULT '0',
   `negrating` mediumint(8) unsigned NOT NULL DEFAULT '0',
   `keypasswd` varchar(20) NOT NULL DEFAULT '',
-  `timepasswd` timestamp DEFAULT NULL,
-  `timelastlogin` timestamp DEFAULT NULL,
-  `timebonus` timestamp DEFAULT NULL,
+  `timepasswd` timestamp NULL DEFAULT NULL,
+  `timelastlogin` timestamp NULL DEFAULT NULL,
+  `timebonus` timestamp NULL DEFAULT NULL,
   `confirmreg` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `confirmregkey` varchar(30) NOT NULL DEFAULT '',
   `secquest` varchar(50) NOT NULL DEFAULT '',
@@ -220,7 +220,7 @@ CREATE TABLE IF NOT EXISTS `downs2` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
-CREATE TABLE IF NOT EXISTS `blog_categories2` (
+CREATE TABLE IF NOT EXISTS `blogs_categories2` (
   `id` smallint(4) unsigned NOT NULL AUTO_INCREMENT,
   `order` smallint(4) unsigned NOT NULL DEFAULT '0',
   `name` varchar(100) NOT NULL,

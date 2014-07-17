@@ -51,23 +51,50 @@ if ($online[1] < 150 || is_user()) {
 
 	} else {
 		$queryonline = DB::run() -> querySingle("SELECT `online_id` FROM `online` WHERE `online_ip`=? LIMIT 1;", array($ip));
-		if (empty($queryonline)) {
-			DB::run() -> query("INSERT INTO `online` (`online_ip`, `online_brow`, `online_time`) VALUES (?, ?, ?);", array($ip, $brow, SITETIME));
-			$newhost = 1;
+
+		$online = Online::first(array('conditions' => array('ip = ?', $ip)));
+
+		if ($online) {
+
+			$online->ip = $ip;
+			$online->brow = $brow;
+			$online->save();
+
+			//DB::run() -> query("UPDATE `online` SET `online_brow`=?, `online_time`=?, `online_user`=? WHERE `online_id`=? LIMIT 1;", array($brow, SITETIME, '', $queryonline));
 		} else {
-			DB::run() -> query("UPDATE `online` SET `online_brow`=?, `online_time`=?, `online_user`=? WHERE `online_id`=? LIMIT 1;", array($brow, SITETIME, '', $queryonline));
+
+			$attributes = array(
+				'ip' => $ip,
+				'brow' => $brow
+			);
+			Online::create($attributes);
+
+			//DB::run() -> query("INSERT INTO `online` (`online_ip`, `online_brow`, `online_time`) VALUES (?, ?, ?);", array($ip, $brow, SITETIME));
+			$newhost = 1;
 		}
 	}
 	// -----------------------------------------------------------//
-	$counts = DB::run() -> queryFetch("SELECT * FROM `counter`;");
+	$counts = Counter::first();
 
-	if ($counts['count_hours'] != $hours) {
+	//$counts = DB::run() -> queryFetch("SELECT * FROM `counter`;");
+
+	if ($counts->hours != $hours) {
+
+		/*$attributes = array(
+			'hour' => $hours,
+			'hosts' => $counts->hosts24,
+			'hits' => $counts->hits24,
+		);
+		Counter24::create($attributes);
+
 		DB::run() -> query("INSERT IGNORE INTO `counter24` (`count_hour`, `count_hosts`, `count_hits`) VALUES (?, ?, ?);", array($hours, $counts['count_hosts24'], $counts['count_hits24']));
 		DB::run() -> query("UPDATE `counter` SET `count_hours`=?, `count_hosts24`=?, `count_hits24`=?;", array($hours, 0, 0));
 		DB::run() -> query("DELETE FROM `counter24` WHERE `count_hour` < (SELECT MIN(`count_hour`) FROM (SELECT `count_hour` FROM `counter24` ORDER BY `count_hour` DESC LIMIT 24) AS del);");
+		*/
 	}
 
-	if ($counts['count_days'] != $days) {
+	if ($counts->days != $days) {
+		/*
 		DB::run() -> query("INSERT IGNORE INTO `counter31` (`count_days`, `count_hosts`, `count_hits`) VALUES (?, ?, ?);", array($days, $counts['count_dayhosts'], $counts['count_dayhits']));
 		DB::run() -> query("UPDATE `counter` SET `count_days`=?, `count_dayhosts`=?, `count_dayhits`=?;", array($days, 0, 0));
 		DB::run() -> query("DELETE FROM `counter31` WHERE `count_days` < (SELECT MIN(`count_days`) FROM (SELECT `count_days` FROM `counter31` ORDER BY `count_days` DESC LIMIT 31) AS del);");
@@ -81,12 +108,30 @@ if ($online[1] < 150 || is_user()) {
 		}
 
 		file_put_contents(DATADIR.'/temp/counter7.dat', serialize($host_data), LOCK_EX);
+		*/
 	}
 	// -----------------------------------------------------------//
-	if (!empty($newhost)) {
-		DB::run() -> query("UPDATE `counter` SET `count_allhosts`=`count_allhosts`+1, `count_allhits`=`count_allhits`+1, `count_dayhosts`=`count_dayhosts`+1, `count_dayhits`=`count_dayhits`+1, `count_hosts24`=`count_hosts24`+1, `count_hits24`=`count_hits24`+1;");
+	if ($newhost) {
+
+		$counter = Counter::first();
+		$counter->allhits = $counter->allhits + 1;
+		$counter->dayhits = $counter->dayhits + 1;
+		$counter->hits24 = $counter->hits24 + 1;
+		$counter->save();
+
+		//DB::run() -> query("UPDATE `counter` SET `count_allhits`=`count_allhits`+1, `count_dayhits`=`count_dayhits`+1, `count_hits24`=`count_hits24`+1;");
 	} else {
-		DB::run() -> query("UPDATE `counter` SET `count_allhits`=`count_allhits`+1, `count_dayhits`=`count_dayhits`+1, `count_hits24`=`count_hits24`+1;");
+
+		$counter = Counter::first();
+		$counter->allhosts = $counter->allhosts + 1;
+		$counter->allhits = $counter->allhits + 1;
+		$counter->dayhosts = $counter->dayhosts + 1;
+		$counter->dayhits = $counter->dayhits + 1;
+		$counter->hosts24 = $counter->hosts24 + 1;
+		$counter->hits24 = $counter->hits24 + 1;
+		$counter->save();
+
+		//DB::run() -> query("UPDATE `counter` SET `count_allhosts`=`count_allhosts`+1, `count_allhits`=`count_allhits`+1, `count_dayhosts`=`count_dayhosts`+1, `count_dayhits`=`count_dayhits`+1, `count_hosts24`=`count_hosts24`+1, `count_hits24`=`count_hits24`+1;");
 	}
 }
 

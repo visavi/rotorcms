@@ -23,7 +23,7 @@ if (isset($_SESSION['note'])) {
 
 // Определяет точное название страницы где находится пользователь
 if (is_user() && !empty($config['newtitle'])){
-	DB::run()->query("UPDATE `visit` SET `visit_page`=? WHERE `visit_user`=? LIMIT 1;", array($config['newtitle'], $log));
+	//DB::run()->query("UPDATE `visit` SET `visit_page`=? WHERE `visit_user`=? LIMIT 1;", array($config['newtitle'], $log));
 }
 ?>
 

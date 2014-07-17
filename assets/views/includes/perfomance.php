@@ -1,7 +1,5 @@
 <div class="hide" style="text-align: left;"><b>Статистика производительности</b><br />
 
-MySQL запросов: <?= DB::run() -> queryCounter() ?><br />
-
 Потребление ОЗУ: <?= formatsize(memory_get_usage()) ?><br />
 
 <?php if (function_exists('sys_getloadavg')): ?>

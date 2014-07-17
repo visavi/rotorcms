@@ -1,6 +1,4 @@
-<div class="hide" style="text-align: left;"><b>Статистика производительности</b><br />
-
-MySQL запросов: <?= DB::run() -> queryCounter() ?><br />
+<div style="text-align: left;"><b>Статистика производительности</b><br />
 
 Потребление ОЗУ: <?= formatsize(memory_get_usage()) ?><br />
 
