@@ -837,12 +837,13 @@ function user_wall($login) {
 // ------------------ Функция подсчета пользователей онлайн -----------------//
 function stats_online($cache = 30) {
 	if (@filemtime(DATADIR."/temp/online.dat") < time()-$cache) {
-		$queryonline = DB::run() -> query("SELECT count(*) FROM `online` WHERE `online_user`<>? UNION ALL SELECT count(*) FROM `online`;", array(''));
-		$online = $queryonline -> fetchAll(PDO::FETCH_COLUMN);
+
+		$total = Online::count();
+		$online = Online::count(array('conditions' => 'user_id IS NOT NULL'));
 
 		include_once(BASEDIR.'/includes/count.php');
 
-		file_put_contents(DATADIR."/temp/online.dat", serialize($online), LOCK_EX);
+		file_put_contents(DATADIR."/temp/online.dat", serialize(array($online, $total)), LOCK_EX);
 	}
 
 	return unserialize(file_get_contents(DATADIR."/temp/online.dat"));
@@ -861,7 +862,8 @@ function show_online() {
 // ------------------ Функция подсчета посещений -----------------//
 function stats_counter() {
 	if (@filemtime(DATADIR."/temp/counter.dat") < time()-10) {
-		$counts = DB::run() -> queryFetch("SELECT * FROM `counter`;");
+
+		$counts = Counter::first();
 
 		file_put_contents(DATADIR."/temp/counter.dat", serialize($counts), LOCK_EX);
 	}

@@ -247,4 +247,31 @@ CREATE TABLE IF NOT EXISTS `blogs2` (
   KEY `created_at` (`created_at`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+CREATE TABLE IF NOT EXISTS `online2` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `ip` varchar(15) NOT NULL,
+  `brow` varchar(25) NOT NULL,
+  `user_id` int(11) unsigned NULL DEFAULT NULL,
+  `created_at` timestamp NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `ip` (`ip`),
+  KEY `user_id` (`user_id`),
+  KEY `created_at` (`created_at`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `counter2` (
+  `id` tinyint(1) unsigned NOT NULL AUTO_INCREMENT,
+  `hours` mediumint(8) unsigned NOT NULL,
+  `days` mediumint(8) unsigned NOT NULL,
+  `allhosts` int(11) unsigned NOT NULL,
+  `allhits` int(11) unsigned NOT NULL,
+  `dayhosts` mediumint(8) unsigned NOT NULL,
+  `dayhits` mediumint(8) unsigned NOT NULL,
+  `hosts24` mediumint(8) unsigned NOT NULL,
+  `hits24` mediumint(8) unsigned NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+
 

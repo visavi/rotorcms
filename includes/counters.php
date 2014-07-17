@@ -15,20 +15,40 @@ if (!defined('BASEDIR')) {
 $days = floor((gmmktime(0, 0, 0, date("m"), date("d"), date("Y")) - gmmktime(0, 0, 0, 1, 1, 1970)) / 86400);
 $hours = floor((gmmktime(date("H"), 0, 0, date("m"), date("d"), date("Y")) - gmmktime((date("Z") / 3600), 0, 0, 1, 1, 1970)) / 3600);
 
-DB::run() -> query("DELETE FROM `online` WHERE `online_time`<?;", array(SITETIME-600));
+Online::delete_all(array('conditions' => 'created_at > NOW()-INTERVAL 10 MINUTE'));
 
 $online = stats_online();
 if ($online[1] < 150 || is_user()) {
 	$newhost = 0;
 
 	if (is_user()) {
-		$queryonline = DB::run() -> querySingle("SELECT `online_id` FROM `online` WHERE `online_ip`=? OR `online_user`=? LIMIT 1;", array($ip, $log));
-		if (empty($queryonline)) {
-			DB::run() -> query("INSERT INTO `online` (`online_ip`, `online_brow`, `online_time`, `online_user`) VALUES (?, ?, ?, ?);", array($ip, $brow, SITETIME, $log));
-			$newhost = 1;
+
+		$online = Online::first(array('conditions' => array('user_id = ? OR ip = ?', $user->id, $ip)));
+
+		//$queryonline = DB::run() -> querySingle("SELECT `online_id` FROM `online` WHERE `online_ip`=? OR `online_user`=? LIMIT 1;", array($ip, $log));
+		if ($online) {
+
+			$online->user_id = $user->id;
+			$online->ip = $ip;
+			$online->brow = $brow;
+			$online->save();
+
+			//DB::run() -> query("UPDATE `online` SET `online_ip`=?, `online_brow`=?, `online_time`=?, `online_user`=? WHERE `online_id`=? LIMIT 1;", array($ip, $brow, SITETIME, $log, $queryonline));
+
 		} else {
-			DB::run() -> query("UPDATE `online` SET `online_ip`=?, `online_brow`=?, `online_time`=?, `online_user`=? WHERE `online_id`=? LIMIT 1;", array($ip, $brow, SITETIME, $log, $queryonline));
+
+			$attributes = array(
+				'user_id' => $user->id,
+				'ip' => $ip,
+				'brow' => $brow
+			);
+			Online::create($attributes);
+
+			//DB::run() -> query("INSERT INTO `online` (`online_ip`, `online_brow`, `online_time`, `online_user`) VALUES (?, ?, ?, ?);", array($ip, $brow, SITETIME, $log));
+			$newhost = 1;
 		}
+
+
 	} else {
 		$queryonline = DB::run() -> querySingle("SELECT `online_id` FROM `online` WHERE `online_ip`=? LIMIT 1;", array($ip));
 		if (empty($queryonline)) {
