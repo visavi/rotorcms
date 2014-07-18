@@ -15,8 +15,9 @@ if (!file_exists($imagecache) || date_fixed(@filemtime($imagecache), "dmYH") != 
 
 	$hours = floor((gmmktime(date("H"), 0, 0, date("m"), date("d"), date("Y")) - gmmktime((date("Z") / 3600), 0, 0, 1, 1, 1970)) / 3600);
 
-	$querycount = DB::run() -> query("SELECT * FROM `counter24` ORDER BY `count_hour` DESC;");
-	$counts = $querycount -> fetchAll();
+	//$querycount = DB::run() -> query("SELECT * FROM `counter24` ORDER BY `count_hour` DESC;");
+	//$counts = $querycount -> fetchAll();
+	$counts = Counter24::all(array('order' => 'hour desc'));
 
 	$arrhits = array();
 	$arrhosts = array();
@@ -24,8 +25,8 @@ if (!file_exists($imagecache) || date_fixed(@filemtime($imagecache), "dmYH") != 
 	$host_data = array();
 
 	foreach ($counts as $val) {
-		$arrhits[$val['count_hour']] = $val['count_hits'];
-		$arrhosts[$val['count_hour']] = $val['count_hosts'];
+		$arrhits[$val->hour] = $val->hits;
+		$arrhosts[$val->hour] = $val->hosts;
 	}
 
 	for ($i = 0, $tekhours = $hours; $i < 24; $tekhours -= 1, $i++) {

@@ -13,10 +13,11 @@ require_once ('../includes/functions.php');
 $imagecache = '/upload/counters/counter31.gif';
 if (!file_exists($imagecache) || date_fixed(@filemtime($imagecache), "dmY") != date_fixed(SITETIME, "dmY")){
 
-	$days = floor((gmmktime(0, 0, 0, date("m"), date("d"), date("Y")) - gmmktime(0, 0, 0, 1, 1, 1970)) / 86400);
+	$day = floor((gmmktime(0, 0, 0, date("m"), date("d"), date("Y")) - gmmktime(0, 0, 0, 1, 1, 1970)) / 86400);
 
-	$querycount = DB::run() -> query("SELECT * FROM `counter31` ORDER BY `count_days` DESC;");
-	$counts = $querycount -> fetchAll();
+	//$querycount = DB::run() -> query("SELECT * FROM `counter31` ORDER BY `count_days` DESC;");
+	//$counts = $querycount -> fetchAll();
+	$counts = Counter31::all(array('order' => 'day desc'));
 
 	$arrhits = array();
 	$arrhosts = array();
@@ -24,11 +25,11 @@ if (!file_exists($imagecache) || date_fixed(@filemtime($imagecache), "dmY") != d
 	$host_data = array();
 
 	foreach ($counts as $val) {
-		$arrhits[$val['count_days']] = $val['count_hits'];
-		$arrhosts[$val['count_days']] = $val['count_hosts'];
+		$arrhits[$val->day] = $val->hits;
+		$arrhosts[$val->day] = $val->hosts;
 	}
 
-	for ($i = 0, $tekdays = $days; $i < 31; $tekdays -= 1, $i++) {
+	for ($i = 0, $tekdays = $day; $i < 31; $tekdays -= 1, $i++) {
 		if (isset($arrhits[$tekdays])) {
 			$hits_data[] = $arrhits[$tekdays];
 		} else {

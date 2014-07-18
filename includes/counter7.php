@@ -15,13 +15,17 @@ if (!file_exists($imagecache) || date_fixed(@filemtime($imagecache), "dmY") != d
 
 	$week_day = date("w") - 1;
 	$arr_week = array('вс', 'пн', 'вт', 'ср', 'чт', 'пт', 'сб');
-	$days = floor((gmmktime(0, 0, 0, date("m"), date("d"), date("Y")) - gmmktime(0, 0, 0, 1, 1, 1970)) / 86400);
+	$day = floor((gmmktime(0, 0, 0, date("m"), date("d"), date("Y")) - gmmktime(0, 0, 0, 1, 1, 1970)) / 86400);
 
-	$querycount = DB::run() -> query("SELECT `count_days`, `count_hosts` FROM `counter31` ORDER BY `count_days` DESC LIMIT 7;");
-	$counts = $querycount -> fetchAssoc();
+	$allcounts = Counter31::all(array('order' => 'day desc', 'limit' => 7));
+
+	$counts = array();
+	foreach($allcounts as $count) {
+		$counts[$count->day] = $count->hosts;
+	}
 
 	$host_data = array();
-	for ($i = 0, $tekdays = $days; $i < 7; $tekdays--, $i++) {
+	for ($i = 0, $tekdays = $day; $i < 7; $tekdays--, $i++) {
 		$host_data[] = (isset($counts[$tekdays])) ? $counts[$tekdays] : 0;
 	}
 

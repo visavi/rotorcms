@@ -74,6 +74,7 @@ function unlink_image($dir, $image) {
 // ------------------- Функция полного удаления юзера --------------------//
 function delete_users($user) {
 	if (!empty($user)){
+	/*
 		$userpic = DB::run() -> querySingle("SELECT `users_picture` FROM `users` WHERE `users_login`=? LIMIT 1;", array($user));
 
 		unlink_image('upload/photos/', $userpic);
@@ -94,6 +95,7 @@ function delete_users($user) {
 		DB::run() -> query("DELETE FROM `login` WHERE `login_user`=?;", array($user));
 		DB::run() -> query("DELETE FROM `invite` WHERE `user`=? OR `invited`=?;", array($user, $user));
 		DB::run() -> query("DELETE FROM `users` WHERE `users_login`=?;", array($user));
+	*/
 	}
 }
 
@@ -319,16 +321,19 @@ function yes_br($msg) {
 function smiles($str) {
 	global $config;
 
-	$query = DB::run()->query("SELECT `smiles_name`, `smiles_code` FROM `smiles` ORDER BY LENGTH(`smiles_code`) DESC;");
-	$smiles = $query->fetchAll();
+	$smiles = Smile::all(array('order' => 'LENGTH(code) desc'));
 
-	$count = 0;
+	//$query = DB::run()->query("SELECT `smiles_name`, `smiles_code` FROM `smiles` ORDER BY LENGTH(`smiles_code`) DESC;");
+	//$smiles = $query->fetchAll();
+
+	//$count = 0;
 	foreach($smiles as $smile) {
-		$str = preg_replace('|'.preg_quote($smile['smiles_code']).'|', '<img src="/images/smiles/'.$smile['smiles_name'].'" alt="smile" /> ', $str, $config['resmiles'] - $count, $cnt);
+		$str = str_replace($smile->code, '<img src="/images/smiles/'.$smile->name.'" alt="smile" /> ', $str);
+/*		$str = preg_replace('|'.preg_quote($smile['smiles_code']).'|', '<img src="/images/smiles/'.$smile['smiles_name'].'" alt="smile" /> ', $str, $config['resmiles'] - $count, $cnt);
 		$count += $cnt;
 		if ($count >= $config['resmiles']) {
 			break;
-		}
+		}*/
 	}
 
 	return $str;
@@ -401,12 +406,14 @@ function formattime($file_time, $round = 1) {
 
 // ------------------ Функция антимата --------------------//
 function antimat($str) {
-	$querymat = DB::run() -> query("SELECT `mat_string` FROM `antimat` ORDER BY LENGTH(`mat_string`) DESC;");
-	$arrmat = $querymat -> fetchAll(PDO::FETCH_COLUMN);
 
-	if (count($arrmat) > 0) {
-		foreach($arrmat as $val) {
-			$str = preg_replace('|'.preg_quote($val).'|iu', '***', $str);
+	$badwords = Antimat::all(array('order' => 'LENGTH(string) desc'));
+	//$querymat = DB::run() -> query("SELECT `mat_string` FROM `antimat` ORDER BY LENGTH(`mat_string`) DESC;");
+	//$arrmat = $querymat -> fetchAll(PDO::FETCH_COLUMN);
+
+	if (count($badwords) > 0) {
+		foreach($badwords as $word) {
+			$str = preg_replace('|'.preg_quote($word).'|iu', '***', $str);
 		}
 	}
 
@@ -841,7 +848,8 @@ function stats_online($cache = 30) {
 		$total = Online::count();
 		$online = Online::count(array('conditions' => 'user_id IS NOT NULL'));
 
-		include_once(BASEDIR.'/includes/count.php');
+
+		//include_once(BASEDIR.'/includes/count.php');
 
 		file_put_contents(DATADIR."/temp/online.dat", serialize(array($online, $total)), LOCK_EX);
 	}
@@ -1372,7 +1380,7 @@ function stats_blog() {
 
 	if (@filemtime(DATADIR."/temp/statblog.dat") < time()-900) {
 
-		$totalblog = BlogCategory::find(array('select' => 'sum(count) as sum'));
+		$totalblog = BlogCategory::find(array('select' => 'SUM(count) as sum'));
 		$totalnew = Blog::count(array('conditions' => 'created_at > NOW()-INTERVAL 3 DAY'));
 
 		if (empty($totalnew)) {
@@ -1391,7 +1399,7 @@ function stats_blog() {
 function stats_forum() {
 	if (@filemtime(DATADIR."/temp/statforum.dat") < time()-600) {
 
-		$forums = Forum::find(array('select' => 'sum(topics) as topics, sum(posts) as posts'));
+		$forums = Forum::find(array('select' => 'SUM(topics) as topics, SUM(posts) as posts'));
 		file_put_contents(DATADIR."/temp/statforum.dat", intval($forums->topics).'/'.intval($forums->posts), LOCK_EX);
 	}
 
@@ -1565,7 +1573,7 @@ function stats_events() { // Удалить
 }
 
 // --------------------------- Функция показа событий---------------------------//
-function show_events() { // Удалить
+/*function show_events() { // Удалить
 	$config['showevents'] = 5;
 
 	if ($config['showevents'] > 0) {
@@ -1580,7 +1588,7 @@ function show_events() { // Удалить
 			}
 		}
 	}
-}
+}*/
 
 // ------------------------- Функция проверки аккаунта  ------------------------//
 function check_user($id) {
