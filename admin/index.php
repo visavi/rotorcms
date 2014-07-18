@@ -22,7 +22,7 @@ if (is_admin()) {
 	<img src="/images/img/act.png" alt="image" /> <a href="forum.php">Форум</a> (<?=stats_forum()?>)<br />
 	<img src="/images/img/act.png" alt="image" /> <a href="gallery.php">Галерея</a> (<?=stats_gallery()?>)<br />
 	<img src="/images/img/act.png" alt="image" /> <a href="blog.php">Блоги</a> (<?=stats_blog()?>)<br />
-	<img src="/images/img/act.png" alt="image" /> <a href="events.php">События</a> (<?=stats_events()?>)<br />
+	<?php /*<img src="/images/img/act.png" alt="image" /> <a href="events.php">События</a> (<?=stats_events()?>)<br /> */ ?>
 	<img src="/images/img/act.png" alt="image" /> <a href="newload.php">Новые публикации</a> (<?=stats_newload()?>)<br />
 	<img src="/images/img/act.png" alt="image" /> <a href="changes.php">Новости RotorCMS</a><br />
 	<?=show_admin_links(105);?>
@@ -34,7 +34,7 @@ if (is_admin()) {
 		<img src="/images/img/act.png" alt="image" /> <a href="spam.php">Список жалоб</a> (<?=stats_spam()?>)<br />
 		<img src="/images/img/act.png" alt="image" /> <a href="adminlist.php">Список старших</a> (<?=stats_admins()?>)<br />
 		<img src="/images/img/act.png" alt="image" /> <a href="reglist.php">Список ожидающих</a> (<?=stats_reglist()?>)<br />
-		<img src="/images/img/act.png" alt="image" /> <a href="votes.php">Голосования</a> (<?=stats_votes()?>)<br />
+		<?php /*<img src="/images/img/act.png" alt="image" /> <a href="votes.php">Голосования</a> (<?=stats_votes()?>)<br /> */ ?>
 		<?=show_admin_links(103);?>
 	<?php }?>
 
@@ -61,7 +61,7 @@ if (is_admin()) {
 		<?php }?>
 	<?php }?>
 
-	<?php if (check_user($config['nickname'])) {?>
+	<?php /*if (check_user($config['nickname'])) {?>
 		<?php $adminlevel = DB::run() -> querySingle("SELECT `users_level` FROM `users` WHERE `users_login`=? LIMIT 1;", array($config['nickname']));?>
 
 		<?php if ($adminlevel != 101) {?>
@@ -83,7 +83,7 @@ if (is_admin()) {
 		<br /><div class="b"><b><span style="color:#ff0000">Внимание!!! Необходимо удалить директорию install</span></b><br />
 		Наличие этой директории может нарушить безопасность сайта. Удалите ее прямо сейчас!</div>
 
-	<?php }?>
+	<?php }*/?>
 
 <?php
 } else {

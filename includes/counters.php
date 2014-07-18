@@ -15,7 +15,7 @@ if (!defined('BASEDIR')) {
 $days = floor((gmmktime(0, 0, 0, date("m"), date("d"), date("Y")) - gmmktime(0, 0, 0, 1, 1, 1970)) / 86400);
 $hours = floor((gmmktime(date("H"), 0, 0, date("m"), date("d"), date("Y")) - gmmktime((date("Z") / 3600), 0, 0, 1, 1, 1970)) / 3600);
 
-Online::delete_all(array('conditions' => 'created_at > NOW()-INTERVAL 10 MINUTE'));
+Online::delete_all(array('conditions' => 'updated_at > NOW()-INTERVAL 10 MINUTE'));
 
 $online = stats_online();
 if ($online[1] < 150 || is_user()) {
@@ -50,7 +50,7 @@ if ($online[1] < 150 || is_user()) {
 
 
 	} else {
-		$queryonline = DB::run() -> querySingle("SELECT `online_id` FROM `online` WHERE `online_ip`=? LIMIT 1;", array($ip));
+		//$queryonline = DB::run() -> querySingle("SELECT `online_id` FROM `online` WHERE `online_ip`=? LIMIT 1;", array($ip));
 
 		$online = Online::first(array('conditions' => array('ip = ?', $ip)));
 

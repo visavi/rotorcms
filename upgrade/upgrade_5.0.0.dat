@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS `guest2` (
   `created_at` timestamp NOT NULL,
   PRIMARY KEY (`id`),
   KEY `created_at` (`created_at`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 CREATE TABLE IF NOT EXISTS `users2` (
@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `users2` (
   `point` int(11) unsigned NOT NULL DEFAULT '0',
   `money` int(11) unsigned NOT NULL DEFAULT '0',
   `ban` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `timeban` int(11) unsigned NOT NULL DEFAULT '0',
+  `timeban` timestamp NULL DEFAULT NULL,
   `timelastban` timestamp NULL DEFAULT NULL,
   `reasonban` text NOT NULL,
   `loginsendban` varchar(20) NOT NULL DEFAULT '',
@@ -94,13 +94,13 @@ CREATE TABLE IF NOT EXISTS `users2` (
   KEY `point` (`point`),
   KEY `money` (`money`),
   KEY `rating` (`rating`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `setting2` (
   `name` varchar(25) NOT NULL,
   `value` varchar(255) NOT NULL,
   PRIMARY KEY (`name`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 CREATE TABLE IF NOT EXISTS `blacklist2` (
@@ -112,7 +112,7 @@ CREATE TABLE IF NOT EXISTS `blacklist2` (
   `created_at` timestamp NOT NULL,
   PRIMARY KEY (`id`),
   KEY `type` (`type`,`value`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 CREATE TABLE IF NOT EXISTS `invite2` (
@@ -127,18 +127,18 @@ CREATE TABLE IF NOT EXISTS `invite2` (
   KEY `user_id` (`user_id`),
   KEY `used` (`used`),
   KEY `created_at` (`created_at`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `logs2` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` int(11) unsigned NOT NULL,
   `request` varchar(255) NOT NULL DEFAULT '',
   `referer` varchar(255) NOT NULL DEFAULT '',
-  `ip` varchar(20) NOT NULL DEFAULT '',
+  `ip` varchar(15) NOT NULL DEFAULT '',
   `brow` varchar(25) NOT NULL DEFAULT '',
-  `created_at` timestamp NOT NULL,
+  `updated_at` timestamp NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 CREATE TABLE IF NOT EXISTS `news2` (
@@ -154,7 +154,7 @@ CREATE TABLE IF NOT EXISTS `news2` (
   `created_at` timestamp NOT NULL,
   PRIMARY KEY (`id`),
   KEY `created_at` (`created_at`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 CREATE TABLE IF NOT EXISTS `photo2` (
@@ -171,7 +171,7 @@ CREATE TABLE IF NOT EXISTS `photo2` (
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   KEY `created_at` (`created_at`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 CREATE TABLE IF NOT EXISTS `forums2` (
@@ -189,7 +189,7 @@ CREATE TABLE IF NOT EXISTS `forums2` (
   `updated_at` timestamp NOT NULL,
   `created_at` timestamp NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 CREATE TABLE IF NOT EXISTS `downs2` (
@@ -217,7 +217,7 @@ CREATE TABLE IF NOT EXISTS `downs2` (
   KEY `created_at` (`created_at`),
   FULLTEXT KEY `text` (`text`),
   FULLTEXT KEY `title` (`title`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 CREATE TABLE IF NOT EXISTS `blogs_categories2` (
@@ -226,7 +226,7 @@ CREATE TABLE IF NOT EXISTS `blogs_categories2` (
   `name` varchar(100) NOT NULL,
   `count` mediumint(8) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 CREATE TABLE IF NOT EXISTS `blogs2` (
@@ -245,19 +245,70 @@ CREATE TABLE IF NOT EXISTS `blogs2` (
   KEY `cats_id` (`cats_id`),
   KEY `user_id` (`user_id`),
   KEY `created_at` (`created_at`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `chat2` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) unsigned NOT NULL,
+  `text` text NOT NULL,
+  `ip` varchar(15) NOT NULL,
+  `brow` varchar(25) NOT NULL,
+  `edit_user_id` int(11) DEFAULT NULL,
+  `updated_at` timestamp NOT NULL,
+  `created_at` timestamp NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `created_at` (`created_at`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `visit2` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) unsigned NOT NULL,
+  `self` varchar(100) NOT NULL DEFAULT '',
+  `page` varchar(100) NOT NULL DEFAULT '',
+  `ip` varchar(15) NOT NULL DEFAULT '',
+  `count` int(11) unsigned NOT NULL DEFAULT '0',
+  `updated_at` timestamp NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `user_id` (`user_id`),
+  KEY `updated_at` (`updated_at`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `spam2` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `key` tinyint(1) unsigned NOT NULL,
+  `idnum` int(11) unsigned NOT NULL,
+  `user_id` int(11) unsigned NOT NULL,
+  `spam_user_id` int(11) unsigned NOT NULL,
+  `text` text NOT NULL,
+  `link` varchar(100) NOT NULL,
+  `sent_at` timestamp NOT NULL,
+  `created_at` timestamp NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `key` (`key`),
+  KEY `created_at` (`created_at`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `ban2` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `ip` varchar(15) NOT NULL,
+  `user_id` int(11) unsigned NULL DEFAULT NULL,
+  `created_at` timestamp NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `ip` (`ip`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
 
 CREATE TABLE IF NOT EXISTS `online2` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `ip` varchar(15) NOT NULL,
   `brow` varchar(25) NOT NULL,
   `user_id` int(11) unsigned NULL DEFAULT NULL,
-  `created_at` timestamp NOT NULL,
+  `updated_at` timestamp NOT NULL,
   PRIMARY KEY (`id`),
   KEY `ip` (`ip`),
   KEY `user_id` (`user_id`),
-  KEY `created_at` (`created_at`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  KEY `updated_at` (`updated_at`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `counter2` (
   `id` tinyint(1) unsigned NOT NULL AUTO_INCREMENT,
@@ -270,8 +321,15 @@ CREATE TABLE IF NOT EXISTS `counter2` (
   `hosts24` mediumint(8) unsigned NOT NULL,
   `hits24` mediumint(8) unsigned NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-
+CREATE TABLE IF NOT EXISTS `counter24_2` (
+  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+  `hour` mediumint(8) unsigned NOT NULL,
+  `hosts` mediumint(8) unsigned NOT NULL,
+  `hits` mediumint(8) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `hour` (`hour`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 

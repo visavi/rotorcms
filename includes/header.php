@@ -143,14 +143,11 @@ if ($user = is_user()) {
 
 		Log::create($attributes);
 
-		$logs = Log::all(array('offset' => 500, 'limit' => 10, 'order' => 'created_at desc'));
+		$logs = Log::all(array('offset' => 500, 'limit' => 10, 'order' => 'updated_at desc'));
 		if ($logs){
 			$delete = ActiveRecord\collect($logs, 'id');
 			Log::table()->delete(array('id' => $delete));
 		}
 	}
-	/*
-	// -------------------------- Дайджест ------------------------------------//
-	DB::run() -> query("INSERT INTO `visit` (`visit_user`, `visit_self`, `visit_ip`, `visit_nowtime`)  VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE `visit_self`=?, `visit_ip`=?, `visit_count`=?, `visit_nowtime`=?;", array($log, $php_self, $ip, SITETIME, $php_self, $ip, $_SESSION['counton'], SITETIME));*/
 }
 ?>

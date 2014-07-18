@@ -914,11 +914,13 @@ function stats_admins() {
 
 // --------------- Функция вывода количества жалоб --------------------//
 function stats_spam() {
-	return DB::run() -> querySingle("SELECT count(*) FROM `spam`;");
+	return Spam::count();
+	//return DB::run() -> querySingle("SELECT count(*) FROM `spam`;");
 }
 // --------------- Функция вывода количества забаненных --------------------//
 function stats_banned() {
-	return DB::run() -> querySingle("SELECT count(*) FROM `users` WHERE `users_ban`=? AND `users_timeban`>?;", array(1, SITETIME));
+	return User::count(array('conditions' => 'ban = 1 and timeban > NOW()'));
+	//return DB::run() -> querySingle("SELECT count(*) FROM `users` WHERE `users_ban`=? AND `users_timeban`>?;", array(1, SITETIME));
 }
 
 // --------------- Функция вывода истории банов --------------------//
@@ -928,12 +930,14 @@ function stats_banhist() {
 
 // ------------ Функция вывода количества ожидающих регистрации -----------//
 function stats_reglist() {
-	return DB::run() -> querySingle("SELECT count(*) FROM `users` WHERE `users_confirmreg`>?;", array(0));
+	return User::count(array('conditions' => 'confirmreg > 0'));
+	//return DB::run() -> querySingle("SELECT count(*) FROM `users` WHERE `users_confirmreg`>?;", array(0));
 }
 
 // --------------- Функция вывода количества забаненных IP --------------------//
 function stats_ipbanned() {
-	return DB::run() -> querySingle("SELECT count(*) FROM `ban`;");
+	return Ban::count();
+	//return DB::run() -> querySingle("SELECT count(*) FROM `ban`;");
 }
 
 // --------------- Функция вывода количества фотографий --------------------//
@@ -957,7 +961,8 @@ function stats_gallery() {
 
 // --------------- Функция вывода количества новостей--------------------//
 function stats_allnews() {
-	return DB::run() -> querySingle("SELECT count(*) FROM `news`;");
+	return News::count();
+	//return DB::run() -> querySingle("SELECT count(*) FROM `news`;");
 }
 
 // ---------- Функция вывода записей в черном списке ------------//
@@ -1416,10 +1421,10 @@ function stats_guest() {
 function stats_chat() {
 	global $config;
 
-	$total = DB::run() -> querySingle("SELECT count(*) FROM `chat`;");
+	$total = Chat::count();
 
 	if ($total > ($config['chatpost']-10)) {
-		$total = DB::run() -> querySingle("SELECT MAX(`chat_id`) FROM `chat`;");
+		$total = Chat::find(array('select' => 'MAX(id)'));
 	}
 
 	return $total;
@@ -1542,7 +1547,7 @@ function last_news() {
 }
 
 // --------------------- Функция вывода статистики событий ------------------------//
-function stats_events() {
+function stats_events() { // Удалить
 	if (@filemtime(DATADIR."/temp/statevents.dat") < time()-900) {
 		$total = DB::run() -> querySingle("SELECT count(*) FROM `events`;");
 		$totalnew = DB::run() -> querySingle("SELECT count(*) FROM `events` WHERE `event_time`>?;", array(SITETIME-86400 * 3));
@@ -1560,7 +1565,7 @@ function stats_events() {
 }
 
 // --------------------------- Функция показа событий---------------------------//
-function show_events() {
+function show_events() { // Удалить
 	$config['showevents'] = 5;
 
 	if ($config['showevents'] > 0) {
@@ -1578,10 +1583,11 @@ function show_events() {
 }
 
 // ------------------------- Функция проверки аккаунта  ------------------------//
-function check_user($login) {
-	if (!empty($login)) {
-		$user = DB::run() -> querySingle("SELECT `users_id` FROM `users` WHERE `users_login`=? LIMIT 1;", array($login));
-		if (!empty($user)) {
+function check_user($id) {
+	if (!empty($id)) {
+		$user = User::find($id);
+		//$user = DB::run() -> querySingle("SELECT `users_id` FROM `users` WHERE `users_login`=? LIMIT 1;", array($login));
+		if ($user) {
 			return true;
 		}
 	}

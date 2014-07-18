@@ -8,8 +8,7 @@
 #            Skype  :  vantuzilla             #
 #---------------------------------------------#
 if (!defined('BASEDIR')) {
-	header('Location: /index.php');
-	exit;
+	exit(header('Location: /index.php'));
 }
 
 include_once (BASEDIR."/includes/counters.php");
@@ -21,9 +20,19 @@ if (isset($_SESSION['note'])) {
 	unset($_SESSION['note']);
 }
 
-// Определяет точное название страницы где находится пользователь
-if (is_user() && !empty($config['newtitle'])){
-	//DB::run()->query("UPDATE `visit` SET `visit_page`=? WHERE `visit_user`=? LIMIT 1;", array($config['newtitle'], $log));
+if (is_user()) {
+	// -------------------------- Дайджест ------------------------------------//
+	$visit = Visit::first(array('conditions' => array('user_id=?', $user->id)));
+	if (!$visit) {
+		$visit = new Visit();
+		$visit->user_id = $user->id;
+	}
+
+	$visit->ip = $ip;
+	$visit->self = $php_self;
+	$visit->page = isset($config['newtitle']) ? $config['newtitle'] : '';
+	$visit->count = ($visit->updated_at->format('Ymd') == date('Ymd')) ? $visit->count + 1 : 0;
+	$visit->save();
 }
 ?>
 
@@ -35,6 +44,4 @@ if (is_user() && !empty($config['newtitle'])){
 
 <?php
 include_once (BASEDIR.'/themes/'.$config['themes'].'/foot.php');
-ob_end_flush();
-exit();
 ?>
