@@ -26,12 +26,14 @@ if (is_user()) {
 	if (!$visit) {
 		$visit = new Visit();
 		$visit->user_id = $user->id;
+		$visit->count = 1;
+	} else {
+		$visit->count = ($visit->updated_at->format('Ymd') == date('Ymd')) ? $visit->count + 1 : 0;
 	}
 
 	$visit->ip = $ip;
 	$visit->self = $php_self;
 	$visit->page = isset($config['newtitle']) ? $config['newtitle'] : '';
-	$visit->count = ($visit->updated_at->format('Ymd') == date('Ymd')) ? $visit->count + 1 : 0;
 	$visit->save();
 }
 ?>

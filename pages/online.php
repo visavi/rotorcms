@@ -12,21 +12,15 @@ require_once ('../includes/functions.php');
 require_once ('../includes/header.php');
 include_once ('../themes/header.php');
 
-if (isset($_GET['act'])) {
-	$act = check($_GET['act']);
-} else {
-	$act = 'index';
-}
-if (isset($_GET['start'])) {
-	$start = abs(intval($_GET['start']));
-} else {
-	$start = 0;
-}
+$act = (isset($_GET['act'])) ? check($_GET['act']) : 'index';
+$start = (isset($_GET['start'])) ? abs(intval($_GET['start'])) : 0;
 
-echo'<img src="/images/img/group.png" alt="image" /> <b>Кто в онлайне</b><br /><br />';
+show_title('Кто в онлайне');
+//$total_all = DB::run() -> querySingle("SELECT count(*) FROM `online`;");
+//$total = DB::run() -> querySingle("SELECT count(*) FROM `online` WHERE `online_user`<>?;", array(''));
 
-$total_all = DB::run() -> querySingle("SELECT count(*) FROM `online`;");
-$total = DB::run() -> querySingle("SELECT count(*) FROM `online` WHERE `online_user`<>?;", array(''));
+$total_all = Online::count();
+$total = Online::count(array('conditions' => 'user_id IS NOT NULL'));
 
 echo 'Всего на сайте: <b>'.$total_all.'</b><br />';
 echo 'Зарегистрированных:  <b>'.$total.'</b><br /><br />';

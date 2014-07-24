@@ -12,6 +12,14 @@ if (!defined('BASEDIR')) {
 }
 ?>
 
+CREATE TABLE IF NOT EXISTS `status2` (
+  `id` int(11) unsigned NOT NULL,
+  `point` mediumint(8) unsigned NOT NULL,
+  `topoint` mediumint(8) unsigned NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `color` varchar(10) NOT NULL DEFAULT ''
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
 
 CREATE TABLE IF NOT EXISTS `guest2` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,

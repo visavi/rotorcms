@@ -18,7 +18,7 @@
 				<b><?= $data->login ?></b> <small>(<?= $data->created_at ?>)</small>
 			<?php else: ?>
 				<b><?= profile($data->login) ?></b> <small>(<?= $data->created_at ?>)</small><br />
-				<?= user_title($data->login)?> <?= user_online($data->login)?>
+				<?= user_title($data->login) ?> <?= user_online($data->login)?>
 			<?php endif; ?>
 		</div>
 

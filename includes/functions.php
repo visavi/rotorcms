@@ -444,22 +444,27 @@ function user_status($level) {
 // ---------------- Функция кэширования статусов ------------------//
 function save_title($time = 0) {
 	if (empty($time) || @filemtime(DATADIR.'/temp/status.dat') < time() - $time) {
-		$querylevel = DB::run() -> query("SELECT `users_login`, `users_status`, `status_name`, `status_color`
-FROM `users` LEFT JOIN `status` ON `users_point` BETWEEN `status_topoint` AND `status_point` WHERE `users_point`>?;", array(0));
+
+		$users = User::all(array(
+			'select' => 'u.login, u.status, s.name, s.color',
+			'from' => 'users2 u',
+			'conditions' => 'u.point > 0',
+			'joins' => 'LEFT JOIN status2 s ON u.point BETWEEN s.point AND s.topoint')
+		);
 
 		$allstat = array();
-		while ($row = $querylevel -> fetch()) {
-			if (!empty($row['users_status'])) {
-				$allstat[$row['users_login']] = '<span style="color:#ff0000">'.$row['users_status'].'</span>';
+		foreach ($users as $user) {
+			if (!empty($user->status)) {
+				$allstat[$user->login] = '<span style="color:#ff0000">'.$user->status.'</span>';
 				continue;
 			}
 
-			if (!empty($row['status_color'])) {
-				$allstat[$row['users_login']] = '<span style="color:'.$row['status_color'].'">'.$row['status_name'].'</span>';
+			if (!empty($user->color)) {
+				$allstat[$user->login] = '<span style="color:'.$user->color.'">'.$user->name.'</span>';
 				continue;
 			}
 
-			$allstat[$row['users_login']] = $row['status_name'];
+			$allstat[$user->login] = $user->name;
 		}
 
 		file_put_contents(DATADIR.'/temp/status.dat', serialize($allstat), LOCK_EX);
@@ -516,10 +521,11 @@ function save_navigation() {
 
 // --------------- Функция кэширования забаненных IP -------------------//
 function save_ipban() {
-	$querybanip = DB::run() -> query("SELECT `ban_ip` FROM `ban`;");
-	$arrbanip = $querybanip -> fetchAll(PDO::FETCH_COLUMN);
-	file_put_contents(DATADIR."/temp/ipban.dat", serialize($arrbanip), LOCK_EX);
-	return $arrbanip;
+	$query = Ban::all(array('select' => 'ip'));
+	$banip = ActiveRecord\collect($query, 'ip');
+
+	file_put_contents(DATADIR."/temp/ipban.dat", serialize($banip), LOCK_EX);
+	return $banip;
 }
 
 // ------------------------- Функция карантина ------------------------------//
@@ -1063,8 +1069,10 @@ function user_online($login) {
 
 	if (empty($arrvisit)) {
 		if (@filemtime(DATADIR."/temp/visit.dat") < time()-10) {
-			$queryvisit = DB::run() -> query("SELECT `visit_user` FROM `visit` WHERE `visit_nowtime`>?;", array(SITETIME-600));
-			$allvisits = $queryvisit -> fetchAll(PDO::FETCH_COLUMN);
+
+			$query = Visit::all(array('conditions' => 'updated_at > NOW()-INTERVAL 10 MINUTE'));
+			$allvisits = ActiveRecord\collect($query, 'login');
+
 			file_put_contents(DATADIR."/temp/visit.dat", serialize($allvisits), LOCK_EX);
 		}
 
@@ -2220,15 +2228,15 @@ function redirect($url, $permanent = false){
 }
 
 // ------------- Функция вывода ссылки на анкету -------------//
-function profile($login, $color = false, $nickname = true){
+function profile($login, $color = false/*, $nickname = true*/){
 	global $config;
 
 	if (!empty($login)){
-		$nickname = ($nickname) ? nickname($login) : $login;
+		//$nickname = ($nickname) ? nickname($login) : $login;
 		if ($color){
-			return '<a href="/pages/user.php?uz='.$login.'"><span style="color:'.$color.'">'.$nickname.'</span></a>';
+			return '<a href="/pages/user.php?uz='.$login.'"><span style="color:'.$color.'">'.$login.'</span></a>';
 		} else {
-			return '<a href="/pages/user.php?uz='.$login.'">'.$nickname.'</a>';
+			return '<a href="/pages/user.php?uz='.$login.'">'.$login.'</a>';
 		}
 	}
 	return $config['guestsuser'];
