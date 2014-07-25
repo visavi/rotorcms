@@ -1,6 +1,6 @@
 <?php
-class Spam extends ActiveRecord\Model {
+class Smile extends ActiveRecord\Model {
 
-	static $table_name = 'spam2';
+	static $table_name = 'smiles2';
 
 }

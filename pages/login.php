@@ -65,7 +65,6 @@ case 'index':
 	} else {
 		redirect('/index.php');
 	}
-
 break;
 
 ############################################################################################
@@ -79,7 +78,6 @@ case 'exit':
 
 	redirect('/index.php');
 break;
-
 
 default:
 	redirect("login.php");

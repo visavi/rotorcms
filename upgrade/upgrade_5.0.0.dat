@@ -75,7 +75,7 @@ CREATE TABLE IF NOT EXISTS `users2` (
   `totalban` tinyint(2) unsigned NOT NULL DEFAULT '0',
   `explainban` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `status` varchar(50) NOT NULL DEFAULT '',
-  `avatar` varchar(50) NOT NULL DEFAULT '',
+  `avatar` varchar(50) NULL DEFAULT NULL,
   `picture` varchar(50) NOT NULL DEFAULT '',
   `rating` mediumint(8) NOT NULL DEFAULT '0',
   `posrating` mediumint(8) unsigned NOT NULL DEFAULT '0',
@@ -306,7 +306,7 @@ CREATE TABLE IF NOT EXISTS `ban2` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
-CREATE TABLE IF NOT EXISTS `smiles` (
+CREATE TABLE IF NOT EXISTS `smiles2` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(25) NOT NULL,
   `code` varchar(20) NOT NULL,

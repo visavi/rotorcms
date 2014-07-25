@@ -783,8 +783,14 @@ function user_mail($login) {
 // --------------- Функция кэширования аватаров -------------------//
 function save_avatar($time = 0) {
 	if (empty($time) || @filemtime(DATADIR."/temp/avatars.dat") < time() - $time) {
-		$queryavat = DB::run() -> query("SELECT `users_login`, `users_avatar` FROM `users` WHERE `users_avatar`<>?;", array(''));
-		$allavat = $queryavat -> fetchAssoc();
+
+		$allavat = array();
+		$avatars = User::all(array('select' => 'login, avatar', 'conditions' => 'avatar IS NOT NULL'));
+
+		foreach ($avatars as $avatar) {
+			$allavat[$avatar->login] = $avatar->avatar;
+		}
+
 		file_put_contents(DATADIR."/temp/avatars.dat", serialize($allavat), LOCK_EX);
 	}
 }
@@ -989,22 +995,22 @@ function stats_blacklist() {
 
 // --------------- Функция вывода количества заголовков ----------------//
 function stats_navigation() {
-	return DB::run() -> querySingle("SELECT count(*) FROM `navigation`;");
+	return Navigation::count();
 }
 
 // --------------- Функция вывода количества заголовков ----------------//
 function stats_antimat() {
-	return DB::run() -> querySingle("SELECT count(*) FROM `antimat`;");
+	return Antimat::count();
 }
 
 // --------------- Функция вывода количества смайлов ----------------//
 function stats_smiles() {
-	return DB::run() -> querySingle("SELECT count(*) FROM `smiles`;");
+	return Smile::count();
 }
 
 // --------------- Функция вывода количества аватаров ----------------//
 function stats_avatars() {
-	return DB::run() -> querySingle("SELECT count(*) FROM `avatars`;");
+	return Avatar::count();;
 }
 
 // ----------- Функция вывода даты последнего сканирования -------------//

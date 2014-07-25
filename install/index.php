@@ -254,8 +254,6 @@ switch ($act):
 		echo '<form method="post" action="index.php?act=3">';
 		echo 'Сервер MySQL:<br />';
 		echo '<input name="dbhost" value="localhost" /><br />';
-		echo 'Порт MySQL:<br />';
-		echo '<input name="dbport" value="3306" /><br />';
 		echo 'Имя базы данных:<br />';
 		echo '<input name="dbname" /><br />';
 		echo 'Имя пользователя:<br />';
@@ -274,15 +272,14 @@ switch ($act):
 	case '3':
 		echo '<img src="../images/img/setting.png" alt="img" /> <b>ИМПОРТ ТАБЛИЦ</b><br /><br />';
 
-		if (!empty($_POST['dbhost']) && !empty($_POST['dbport']) && !empty($_POST['dbname']) && !empty($_POST['dbuser'])) {
+		if (!empty($_POST['dbhost']) && !empty($_POST['dbname']) && !empty($_POST['dbuser'])) {
 			$dbhost = htmlspecialchars(trim($_POST['dbhost']));
-			$dbport = htmlspecialchars(trim($_POST['dbport']));
 			$dbname = htmlspecialchars(trim($_POST['dbname']));
 			$dbuser = htmlspecialchars(trim($_POST['dbuser']));
 			$dbpass = htmlspecialchars(trim($_POST['dbpass']));
 
 			try {
-				$db = new PDO('mysql:host=' . $dbhost . ';port=' . $dbport . ';dbname=' . $dbname, $dbuser, $dbpass);
+				$db = new PDO('mysql:host=' . $dbhost . ';dbname=' . $dbname, $dbuser, $dbpass);
 				$db -> setAttribute(PDO :: ATTR_ERRMODE, PDO :: ERRMODE_EXCEPTION);
 				$db -> setAttribute(PDO :: ATTR_DEFAULT_FETCH_MODE, PDO :: FETCH_ASSOC);
 				$db -> exec('SET CHARACTER SET utf8');
@@ -292,7 +289,6 @@ switch ($act):
 
 $dbconfig = "<?php
 define ('DBHOST', '$dbhost');
-define ('DBPORT', '$dbport');
 define ('DBNAME', '$dbname');
 define ('DBUSER', '$dbuser');
 define ('DBPASS', '$dbpass');
@@ -426,7 +422,7 @@ define ('DBPASS', '$dbpass');
 							if (preg_match('#^([a-z0-9_\-\.])+\@([a-z0-9_\-\.])+(\.([a-z0-9])+)+$#', $mail)) {
 								if (preg_match('#^http://([а-яa-z0-9_\-\.])+(\.([а-яa-z0-9\/])+)+$#u', $site)) {
 									try {
-										$db = new PDO('mysql:host=' . DBHOST . ';port=' . DBPORT . ';dbname=' . DBNAME, DBUSER, DBPASS);
+										$db = new PDO('mysql:host=' . DBHOST . ';dbname=' . DBNAME, DBUSER, DBPASS);
 										$db -> setAttribute(PDO :: ATTR_ERRMODE, PDO :: ERRMODE_EXCEPTION);
 										$db -> setAttribute(PDO :: ATTR_DEFAULT_FETCH_MODE, PDO :: FETCH_ASSOC);
 										$db -> exec('SET CHARACTER SET utf8');
