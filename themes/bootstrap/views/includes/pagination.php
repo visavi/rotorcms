@@ -1,12 +1,11 @@
-<div class="nav">
-	Страницы:
+<ul class="pagination">
 	<?php foreach($pages as $page): ?>
 		<?php if(isset($page['separator'])): ?>
-			<?= $page['name'] ?>
+			<li><?= $page['name'] ?></li>
 		<?php elseif(isset($page['current'])): ?>
-			<span class="navcurrent"><?= $page['name'] ?></span>
+			<li class="active"><span><?= $page['name'] ?></span></li>
 		<?php else: ?>
-			<a href="<?= $url ?>start=<?= $page['start'] ?>" title="<?= $page['title'] ?>"><?= $page['name'] ?></a>
+			<li><a href="<?= $url ?>start=<?= $page['start'] ?>" title="<?= $page['title'] ?>"><?= $page['name'] ?></a></li>
 		<?php endif; ?>
 	<?php endforeach; ?>
-</div>
+</ul>

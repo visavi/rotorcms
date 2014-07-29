@@ -11,43 +11,76 @@
 
 
 <?php if ($total > 0): ?>
-	<?php foreach ($posts as $data): ?>
+	<?php foreach ($posts as $post): ?>
+
+<?php
+//var_dump($post);
+$date = new DateTime();
+var_dump($date);
+echo date('Y-m-d H:i:s', $date->getTimestamp());
+
+?>
+		<div class="media" id="post">
+
+			<?= user_avatars($post->user_login) ?>
+
+			<div class="media-body">
+				<ul class="list-inline pull-right small">
+
+				<?php if ($user && $user->id != $post->user_id): ?>
+
+					<li><a href="#" onclick="return reply('<?= $post->user_login ?>')">Отв</a></li>
+
+					<li><noindex><a href="index.php?act=spam&amp;id=<?= $post->id ?>&amp;start=<?= $start ?>&amp;token=<?= $_SESSION['token'] ?>" onclick="return confirm('Вы подтверждаете факт спама?')" rel="nofollow">Спам</a></noindex></li>
+				<?php endif; ?>
+<?php
+var_dump($post, date('Y-m-d H:i:s',strtotime($post->created_at->format('long'))), date('Y-m-d H:i:s', $post->created_at->getTimestamp()));
+?>
+				<?php if ($user->id == $post->user_id && $post->created_at->getTimestamp() > time() - 600): ?>
+					<li><a href="index.php?act=edit&amp;id=<?= $post->id ?>&amp;start=<?= $start ?>">Редактировать</a></li>
+				<?php endif; ?>
+
+					<li><?= $post->created_at ?></li>
+				</ul>
+				<h4 class="media-heading"><?= profile($post->user_login) ?></h4>
+				<span class="message"><?= bb_code($post->text) ?></span>
+			</div>
+		</div>
+
+
+
+
+
+
+
+
 
 		<div id="post">
 		<div class="b">
-			<div class="img"><?= user_avatars($data->user_login) ?></div>
-			<?php if ($data->user_login == $config['guestsuser']): ?>
-				<b><?= $data->user_login ?></b> <small>(<?= $data->created_at ?>)</small>
+			<div class="img"><?= user_avatars($post->user_login) ?></div>
+			<?php if ($post->user_login == $config['guestsuser']): ?>
+				<b><?= $post->user_login ?></b> <small>(<?= $post->created_at ?>)</small>
 			<?php else: ?>
-				<b><?= profile($data->user_login) ?></b> <small>(<?= $data->created_at ?>)</small><br />
-				<?= user_title($data->user_login) ?> <?= user_online($data->user_login) ?>
+				<b><?= profile($post->user_login) ?></b> <small>(<?= $post->created_at ?>)</small><br />
+				<?= user_title($post->user_login) ?> <?= user_online($post->user_login) ?>
 			<?php endif; ?>
 		</div>
 
-		<?php if (!empty($user) && $user->id != $data->user_login): ?>
-			<div class="right">
-			<a href="#" onclick="return reply('<?= $data->user_login ?>')">Отв</a> /
 
-			<noindex><a href="index.php?act=spam&amp;id=<?= $data->id ?>&amp;start=<?= $start ?>&amp;token=<?= $_SESSION['token'] ?>" onclick="return confirm('Вы подтверждаете факт спама?')" rel="nofollow">Спам</a></noindex></div>
-		<?php endif; ?>
-
-		<?php if ($user->id == $data->user_login && $data->created_at->getTimestamp() + 600 > SITETIME): ?>
-			<div class="right"><a href="index.php?act=edit&amp;id=<?= $data->id ?>&amp;start=<?= $start ?>">Редактировать</a></div>
-		<?php endif; ?>
 
 		<div>
-			<span class="message"><?= bb_code($data->text) ?></span><br />
+			<span class="message"><?= bb_code($post->text) ?></span><br />
 
-			<?php if (!empty($data->edit_user_id)): ?>
-				<img src="/images/img/exclamation_small.gif" alt="image" /> <small>Отредактировано: <?= $data->user_login ?> (<?= $data->updated_at->format('long') ?>)</small><br />
+			<?php if (!empty($post->edit_user_id)): ?>
+				<img src="/images/img/exclamation_small.gif" alt="image" /> <small>Отредактировано: <?= $post->user_login ?> (<?= $post->updated_at->format('long') ?>)</small><br />
 			<?php endif; ?>
 
 			<?php if (is_admin() || empty($config['anonymity'])): ?>
-				<span class="data">(<?= $data->brow ?>, <?= $data->ip ?>)</span>
+				<span class="data">(<?= $post->brow ?>, <?= $post->ip ?>)</span>
 			<?php endif; ?>
 
-			<?php if (!empty($data->reply)): ?>
-				<br /><span style="color:#ff0000">Ответ: <?= $data->reply ?></span>
+			<?php if (!empty($post->reply)): ?>
+				<br /><span style="color:#ff0000">Ответ: <?= $post->reply ?></span>
 			<?php endif; ?>
 
 		</div>
@@ -62,19 +95,19 @@
 
 
 <?php if (is_user()): ?>
-	<div class="form">
+	<div class="well">
 		<form action="index.php?act=add&amp;token=<?= $_SESSION['token'] ?>" method="post">
 
-		<textarea id="markItUp" cols="25" rows="5" name="msg"></textarea><br />
+		<textarea class="form-control" id="markItUp" cols="25" rows="5" name="msg"></textarea><br />
 		<input type="submit" value="Написать" /></form>
 	</div><br />
 
 <?php elseif ($config['bookadds'] == 1): ?>
 
-	<div class="form">
+	<div class="well">
 		<form action="index.php?act=add&amp;token=<?= $_SESSION['token'] ?>" method="post">
 		Сообщение:<br />
-		<textarea cols="25" rows="5" name="msg"></textarea><br />
+		<textarea class="form-control" cols="25" rows="5" name="msg"></textarea><br />
 
 		Проверочный код:<br />
 		<img src="/gallery/protect.php" alt="" /><br />

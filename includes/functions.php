@@ -800,8 +800,8 @@ function user_avatars($login) {
 	global $config;
 	static $arravat;
 
-	if ($login == $config['guestsuser']) {
-		return '<img src="/images/avatars/guest.gif" alt="" /> ';
+	if (empty($login) || $login == $config['guestsuser']) {
+		return '<img class="pull-left media-object" src="/images/avatars/guest.gif" alt="" /> ';
 	}
 
 	if (empty($arravat)) {
@@ -810,10 +810,10 @@ function user_avatars($login) {
 	}
 
 	if (isset($arravat[$login]) && file_exists(BASEDIR.'/'.$arravat[$login])) {
-		return '<a href="/pages/user.php?uz='.$login.'"><img src="/'.$arravat[$login].'" alt="" /></a> ';
+		return '<a class="pull-left" href="/pages/user.php?uz='.$login.'"><img class="media-object" src="/'.$arravat[$login].'" alt="" /></a> ';
 	}
 
-	return '<a href="/pages/user.php?uz='.$login.'"><img src="/images/avatars/noavatar.gif" alt="" /></a> ';
+	return '<a class="pull-left" href="/pages/user.php?uz='.$login.'"><img class="media-object" src="/images/avatars/noavatar.png" alt="" /></a> ';
 }
 
 // --------------- Функция подсчета карт в игре ---------------//
