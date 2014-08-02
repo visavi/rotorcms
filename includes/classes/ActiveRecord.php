@@ -16,6 +16,7 @@ require __DIR__.'/ActiveRecord/Table.php';
 require __DIR__.'/ActiveRecord/ConnectionManager.php';
 require __DIR__.'/ActiveRecord/Connection.php';
 require __DIR__.'/ActiveRecord/Serialization.php';
+require __DIR__.'/ActiveRecord/Expressions.php';
 require __DIR__.'/ActiveRecord/SQLBuilder.php';
 require __DIR__.'/ActiveRecord/Reflections.php';
 require __DIR__.'/ActiveRecord/Inflector.php';
@@ -28,9 +29,8 @@ if (!defined('PHP_ACTIVERECORD_AUTOLOAD_DISABLE'))
 
 function activerecord_autoload($class_name)
 {
-	$path = ActiveRecord\Config::instance()->get_model_directory();
-	$root = realpath(isset($path) ? $path : '.');
-
+	$paths = ActiveRecord\Config::instance()->get_model_directories();
+	$namespace_directory = '';
 	if (($namespaces = ActiveRecord\get_namespaces($class_name)))
 	{
 		$class_name = array_pop($namespaces);
@@ -39,11 +39,19 @@ function activerecord_autoload($class_name)
 		foreach ($namespaces as $directory)
 			$directories[] = $directory;
 
-		$root .= DIRECTORY_SEPARATOR . implode($directories, DIRECTORY_SEPARATOR);
+		$namespace_directory = DIRECTORY_SEPARATOR . implode($directories, DIRECTORY_SEPARATOR);
 	}
+	$paths = count($paths) ? $paths : array('.');
 
-	$file = "$root/$class_name.php";
+	foreach($paths as $path)
+	{
+		$root = realpath($path);
+		$file = "{$root}{$namespace_directory}/{$class_name}.php";
 
-	if (file_exists($file))
-		require_once $file;
+		if (file_exists($file))
+		{
+			require $file;
+			return;
+		}
+	}
 }

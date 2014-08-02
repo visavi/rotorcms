@@ -34,7 +34,7 @@ echo date('Y-m-d H:i:s', $date->getTimestamp());
 					<li><noindex><a href="index.php?act=spam&amp;id=<?= $post->id ?>&amp;start=<?= $start ?>&amp;token=<?= $_SESSION['token'] ?>" onclick="return confirm('Вы подтверждаете факт спама?')" rel="nofollow">Спам</a></noindex></li>
 				<?php endif; ?>
 <?php
-var_dump($post, date('Y-m-d H:i:s',strtotime($post->created_at->format('long'))), date('Y-m-d H:i:s', $post->created_at->getTimestamp()));
+var_dump(date('Y-m-d H:i:s',strtotime($post->created_at->format('Y-m-d H:i:s'))), date('Y-m-d H:i:s', $post->created_at->getTimestamp()));
 ?>
 				<?php if ($user->id == $post->user_id && $post->created_at->getTimestamp() > time() - 600): ?>
 					<li><a href="index.php?act=edit&amp;id=<?= $post->id ?>&amp;start=<?= $start ?>">Редактировать</a></li>

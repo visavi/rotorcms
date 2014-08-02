@@ -1428,7 +1428,8 @@ function stats_guest() {
 		$total = Guest::count();
 
 		if ($total > ($config['maxpostbook']-10)) {
-			$stat = Guest::find(array('select' => 'MAX(id)'));
+			$guest = Guest::find(array('select' => 'MAX(id) AS max'));
+			$stat = $guest->max;
 		} else {
 			$stat = $total;
 		}
