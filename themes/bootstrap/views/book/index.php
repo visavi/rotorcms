@@ -35,8 +35,9 @@ echo date('Y-m-d H:i:s', $date->getTimestamp());
 				<?php endif; ?>
 <?php
 var_dump(date('Y-m-d H:i:s',strtotime($post->created_at->format('Y-m-d H:i:s'))), date('Y-m-d H:i:s', $post->created_at->getTimestamp()));
+var_dump($post);
 ?>
-				<?php if ($user->id == $post->user_id && $post->created_at->getTimestamp() > time() - 600): ?>
+				<?php if ($user->id == $post->user_id && strtotime($post->created_at->format('db')) > time() - 600): ?>
 					<li><a href="index.php?act=edit&amp;id=<?= $post->id ?>&amp;start=<?= $start ?>">Редактировать</a></li>
 				<?php endif; ?>
 

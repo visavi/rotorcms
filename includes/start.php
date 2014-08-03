@@ -62,6 +62,6 @@ if (!file_exists(DATADIR.'/temp/setting.dat')) {
 
 $config = unserialize(file_get_contents(DATADIR.'/temp/setting.dat'));
 
-date_default_timezone_set($config['timezone']);
-$MNTTZ = new DateTimeZone($config['timezone']);
+date_default_timezone_set('Europe/Moscow');
+//Guest::query("SET @@session.time_zone='+02:00'");
 ?>
