@@ -12,12 +12,19 @@ if (!defined('BASEDIR')) {
 }
 ?>
 
+CREATE TABLE IF NOT EXISTS `migrations` (
+  `migration` varchar(255) NOT NULL,
+  `updated_at` timestamp NOT NULL,
+   UNIQUE KEY `migration` (`migration`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
 CREATE TABLE IF NOT EXISTS `status2` (
-  `id` int(11) unsigned NOT NULL,
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `point` mediumint(8) unsigned NOT NULL,
   `topoint` mediumint(8) unsigned NOT NULL,
   `name` varchar(50) NOT NULL,
-  `color` varchar(10) NOT NULL DEFAULT ''
+  `color` varchar(10) NOT NULL DEFAULT '',
+   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 

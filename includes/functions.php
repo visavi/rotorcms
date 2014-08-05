@@ -801,7 +801,7 @@ function user_avatars($login) {
 	static $arravat;
 
 	if (empty($login) || $login == $config['guestsuser']) {
-		return '<img class="pull-left media-object" src="/images/avatars/guest.gif" alt="" /> ';
+		return '<img class="pull-left media-object" src="/images/avatars/guest.png" alt="" /> ';
 	}
 
 	if (empty($arravat)) {

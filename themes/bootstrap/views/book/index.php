@@ -13,13 +13,6 @@
 <?php if ($total > 0): ?>
 	<?php foreach ($posts as $post): ?>
 
-<?php
-//var_dump($post);
-$date = new DateTime();
-var_dump($date);
-echo date('Y-m-d H:i:s', $date->getTimestamp());
-
-?>
 		<div class="media" id="post">
 
 			<?= user_avatars($post->user_login) ?>
@@ -33,59 +26,37 @@ echo date('Y-m-d H:i:s', $date->getTimestamp());
 
 					<li><noindex><a href="index.php?act=spam&amp;id=<?= $post->id ?>&amp;start=<?= $start ?>&amp;token=<?= $_SESSION['token'] ?>" onclick="return confirm('Вы подтверждаете факт спама?')" rel="nofollow">Спам</a></noindex></li>
 				<?php endif; ?>
-<?php
-var_dump(date('Y-m-d H:i:s',strtotime($post->created_at->format('Y-m-d H:i:s'))), date('Y-m-d H:i:s', $post->created_at->getTimestamp()));
-var_dump($post);
-?>
+
 				<?php if ($user->id == $post->user_id && strtotime($post->created_at->format('db')) > time() - 600): ?>
 					<li><a href="index.php?act=edit&amp;id=<?= $post->id ?>&amp;start=<?= $start ?>">Редактировать</a></li>
 				<?php endif; ?>
 
 					<li><?= $post->created_at ?></li>
 				</ul>
-				<h4 class="media-heading"><?= profile($post->user_login) ?></h4>
+
+				<?php if ($post->user_login): ?>
+					<h4 class="media-heading"><?= profile($post->user_login) ?> <?= user_title($post->user_login) ?> <?= user_online($post->user_login) ?></h4>
+				<?php else: ?>
+					<h4 class="media-heading"><?= $config['guestsuser'] ?></h4>
+				<?php endif; ?>
+
 				<span class="message"><?= bb_code($post->text) ?></span>
+
+
+				<?php if ($post->edit_user_id): ?>
+					<p class="text-warning small">Отредактировано: <?= $post->user_login ?> (<?= $post->updated_at ?>)</p>
+				<?php endif; ?>
+
+				<?php if (is_admin() || empty($config['anonymity'])): ?>
+					<p class="text-warning">(<?= $post->ip ?>, <?= $post->brow ?>)</p>
+				<?php endif; ?>
+
+				<?php if (!empty($post->reply)): ?>
+					<p class="bg-danger">Ответ: <?= $post->reply ?></p>
+				<?php endif; ?>
 			</div>
 		</div>
 
-
-
-
-
-
-
-
-
-		<div id="post">
-		<div class="b">
-			<div class="img"><?= user_avatars($post->user_login) ?></div>
-			<?php if ($post->user_login == $config['guestsuser']): ?>
-				<b><?= $post->user_login ?></b> <small>(<?= $post->created_at ?>)</small>
-			<?php else: ?>
-				<b><?= profile($post->user_login) ?></b> <small>(<?= $post->created_at ?>)</small><br />
-				<?= user_title($post->user_login) ?> <?= user_online($post->user_login) ?>
-			<?php endif; ?>
-		</div>
-
-
-
-		<div>
-			<span class="message"><?= bb_code($post->text) ?></span><br />
-
-			<?php if (!empty($post->edit_user_id)): ?>
-				<img src="/images/img/exclamation_small.gif" alt="image" /> <small>Отредактировано: <?= $post->user_login ?> (<?= $post->updated_at->format('long') ?>)</small><br />
-			<?php endif; ?>
-
-			<?php if (is_admin() || empty($config['anonymity'])): ?>
-				<span class="data">(<?= $post->brow ?>, <?= $post->ip ?>)</span>
-			<?php endif; ?>
-
-			<?php if (!empty($post->reply)): ?>
-				<br /><span style="color:#ff0000">Ответ: <?= $post->reply ?></span>
-			<?php endif; ?>
-
-		</div>
-		</div>
 	<?php endforeach; ?>
 
 	<?php page_strnavigation('index.php?', $config['bookpost'], $start, $total); ?>
