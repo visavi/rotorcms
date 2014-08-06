@@ -1071,7 +1071,7 @@ function mc($str) {
 function user_online($login) {
 	static $arrvisit;
 
-	$statwho = '<img src="/images/img/off.gif" alt="image" />';
+	$statwho = '<span class="label label-danger">Off</span>';
 
 	if (empty($arrvisit)) {
 		if (@filemtime(DATADIR."/temp/visit.dat") < time()-10) {
@@ -1086,7 +1086,7 @@ function user_online($login) {
 	}
 
 	if (is_array($arrvisit) && in_array($login, $arrvisit)) {
-		$statwho = '<img src="/images/img/on.gif" alt="image" />';
+		$statwho = '<span class="label label-success">On</span>';
 	}
 
 	return $statwho;
@@ -2617,4 +2617,3 @@ if (!empty($functions)) {
 		}
 	}
 }
-?>

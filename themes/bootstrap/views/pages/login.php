@@ -28,7 +28,7 @@
 	</div>
 </form>
 
-<div class="bg-info hint">
+<div class="bg-info padding">
 	Вы можете сделать закладку для быстрого входа:<br />
 	<span class="text-danger"><?= $config['home'] ?>/pages/login.php?login=ЛОГИН&amp;pass=ПАРОЛЬ</span>
 </div>

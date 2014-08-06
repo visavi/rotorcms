@@ -27,7 +27,7 @@
 					<li><noindex><a href="index.php?act=spam&amp;id=<?= $post->id ?>&amp;start=<?= $start ?>&amp;token=<?= $_SESSION['token'] ?>" onclick="return confirm('Вы подтверждаете факт спама?')" rel="nofollow">Спам</a></noindex></li>
 				<?php endif; ?>
 
-				<?php if ($user->id == $post->user_id && strtotime($post->created_at->format('db')) > time() - 600): ?>
+				<?php if ($user && $user->id == $post->user_id): ?>
 					<li><a href="index.php?act=edit&amp;id=<?= $post->id ?>&amp;start=<?= $start ?>">Редактировать</a></li>
 				<?php endif; ?>
 
@@ -35,25 +35,24 @@
 				</ul>
 
 				<?php if ($post->user_login): ?>
-					<h4 class="media-heading"><?= profile($post->user_login) ?> <?= user_title($post->user_login) ?> <?= user_online($post->user_login) ?></h4>
+
+					<h4 class="media-heading" style="display: inline;"><?= profile($post->user_login) ?></h4>
+					<?= user_title($post->user_login) ?> <?= user_online($post->user_login) ?>
+
 				<?php else: ?>
 					<h4 class="media-heading"><?= $config['guestsuser'] ?></h4>
 				<?php endif; ?>
 
-				<span class="message"><?= bb_code($post->text) ?></span>
-
-
-				<?php if ($post->edit_user_id): ?>
-					<p class="text-warning small">Отредактировано: <?= $post->user_login ?> (<?= $post->updated_at ?>)</p>
-				<?php endif; ?>
-
-				<?php if (is_admin() || empty($config['anonymity'])): ?>
-					<p class="text-warning">(<?= $post->ip ?>, <?= $post->brow ?>)</p>
-				<?php endif; ?>
+				<div class="message"><?= bb_code($post->text) ?></div>
 
 				<?php if (!empty($post->reply)): ?>
-					<p class="bg-danger">Ответ: <?= $post->reply ?></p>
+					<div class="bg-danger padding">Ответ: <?= $post->reply ?></div>
 				<?php endif; ?>
+
+				<?php if (is_admin()): ?>
+					<div class="small text-danger"><?= $post->ip ?>, <?= $post->brow ?></div>
+				<?php endif; ?>
+
 			</div>
 		</div>
 
@@ -83,7 +82,7 @@
 
 		Проверочный код:<br />
 		<img src="/gallery/protect.php" alt="" /><br />
-		<input name="provkod" size="6" maxlength="6" /><br />
+		<input name="provkod" class="form-control" maxlength="6" /><br />
 
 		<input type="submit" value="Написать" /></form>
 	</div><br />

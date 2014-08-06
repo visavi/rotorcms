@@ -33,7 +33,7 @@ case 'index':
 	$config['newtitle'] = 'Гостевая книга (Стр. '.$page.')';
 
 	$posts = Guest::all(array('offset' => $start, 'limit' => $config['bookpost'], 'order' => 'created_at desc', 'include' => array('user')));
-//var_dump($posts);
+
 	render('book/index', compact('posts', 'start', 'total'));
 
 break;

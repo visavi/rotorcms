@@ -35,7 +35,6 @@ CREATE TABLE IF NOT EXISTS `guest2` (
   `ip` varchar(15) NOT NULL,
   `brow` varchar(25) NOT NULL,
   `reply` text NOT NULL,
-  `edit_user_id` int(11) DEFAULT NULL,
   `updated_at` timestamp NOT NULL,
   `created_at` timestamp NOT NULL,
   PRIMARY KEY (`id`),
