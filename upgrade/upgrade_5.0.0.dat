@@ -14,7 +14,7 @@ if (!defined('BASEDIR')) {
 
 CREATE TABLE IF NOT EXISTS `migrations` (
   `migration` varchar(255) NOT NULL,
-  `updated_at` timestamp NOT NULL,
+  `created_at` timestamp NOT NULL,
    UNIQUE KEY `migration` (`migration`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -74,8 +74,8 @@ CREATE TABLE IF NOT EXISTS `users2` (
   `point` int(11) unsigned NOT NULL DEFAULT '0',
   `money` int(11) unsigned NOT NULL DEFAULT '0',
   `ban` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `timeban` timestamp NULL DEFAULT NULL,
-  `timelastban` timestamp NULL DEFAULT NULL,
+  `timeban` datetime NULL DEFAULT NULL,
+  `timelastban` datetime NULL DEFAULT NULL,
   `reasonban` text NOT NULL,
   `loginsendban` varchar(20) NOT NULL DEFAULT '',
   `totalban` tinyint(2) unsigned NOT NULL DEFAULT '0',
@@ -87,9 +87,9 @@ CREATE TABLE IF NOT EXISTS `users2` (
   `posrating` mediumint(8) unsigned NOT NULL DEFAULT '0',
   `negrating` mediumint(8) unsigned NOT NULL DEFAULT '0',
   `keypasswd` varchar(20) NOT NULL DEFAULT '',
-  `timepasswd` timestamp NULL DEFAULT NULL,
-  `timelastlogin` timestamp NULL DEFAULT NULL,
-  `timebonus` timestamp NULL DEFAULT NULL,
+  `timepasswd` datetime NULL DEFAULT NULL,
+  `timelastlogin` datetime NULL DEFAULT NULL,
+  `timebonus` datetime NULL DEFAULT NULL,
   `confirmreg` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `confirmregkey` varchar(30) NOT NULL DEFAULT '',
   `secquest` varchar(50) NOT NULL DEFAULT '',
@@ -150,7 +150,7 @@ CREATE TABLE IF NOT EXISTS `logs2` (
   `referer` varchar(255) NOT NULL DEFAULT '',
   `ip` varchar(15) NOT NULL DEFAULT '',
   `brow` varchar(25) NOT NULL DEFAULT '',
-  `updated_at` timestamp NOT NULL,
+  `created_at` timestamp NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -220,7 +220,7 @@ CREATE TABLE IF NOT EXISTS `downs2` (
   `raiting` mediumint(8) unsigned NOT NULL DEFAULT '0',
   `rated` mediumint(8) unsigned NOT NULL DEFAULT '0',
   `load` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `loaded_at` timestamp NULL DEFAULT NULL,
+  `loaded_at` datetime NULL DEFAULT NULL,
   `app` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `notice` text NOT NULL,
   `active` tinyint(1) unsigned NOT NULL DEFAULT '0',
@@ -281,10 +281,10 @@ CREATE TABLE IF NOT EXISTS `visit2` (
   `page` varchar(100) NOT NULL DEFAULT '',
   `ip` varchar(15) NOT NULL DEFAULT '',
   `count` int(11) unsigned NOT NULL DEFAULT '0',
-  `updated_at` timestamp NOT NULL,
+  `created_at` timestamp NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `user_id` (`user_id`),
-  KEY `updated_at` (`updated_at`)
+  KEY `created_at` (`created_at`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `spam2` (
@@ -295,7 +295,7 @@ CREATE TABLE IF NOT EXISTS `spam2` (
   `spam_user_id` int(11) unsigned NOT NULL,
   `text` text NOT NULL,
   `link` varchar(100) NOT NULL,
-  `sent_at` timestamp NOT NULL,
+  `sent_at` datetime NOT NULL,
   `created_at` timestamp NOT NULL,
   PRIMARY KEY (`id`),
   KEY `key` (`key`),
@@ -325,11 +325,11 @@ CREATE TABLE IF NOT EXISTS `online2` (
   `ip` varchar(15) NOT NULL,
   `brow` varchar(25) NOT NULL,
   `user_id` int(11) unsigned NULL DEFAULT NULL,
-  `updated_at` timestamp NOT NULL,
+  `created_at` timestamp NOT NULL,
   PRIMARY KEY (`id`),
   KEY `ip` (`ip`),
   KEY `user_id` (`user_id`),
-  KEY `updated_at` (`updated_at`)
+  KEY `created_at` (`created_at`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `counter2` (

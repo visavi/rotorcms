@@ -27,7 +27,7 @@
 					<li><noindex><a href="index.php?act=spam&amp;id=<?= $post->id ?>&amp;start=<?= $start ?>&amp;token=<?= $_SESSION['token'] ?>" onclick="return confirm('Вы подтверждаете факт спама?')" rel="nofollow">Спам</a></noindex></li>
 				<?php endif; ?>
 
-				<?php if ($user && $user->id == $post->user_id): ?>
+				<?php if ($user && $user->id == $post->user_id && strtotime($post->created_at->format('db')) > time() - 600): ?>
 					<li><a href="index.php?act=edit&amp;id=<?= $post->id ?>&amp;start=<?= $start ?>">Редактировать</a></li>
 				<?php endif; ?>
 
