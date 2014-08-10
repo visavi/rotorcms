@@ -939,7 +939,7 @@ function stats_spam() {
 }
 // --------------- Функция вывода количества забаненных --------------------//
 function stats_banned() {
-	return User::count(array('conditions' => 'ban = 1 and timeban > NOW()'));
+	return User::count(array('conditions' => 'ban = 1 AND timeban > NOW()'));
 	//return DB::run() -> querySingle("SELECT count(*) FROM `users` WHERE `users_ban`=? AND `users_timeban`>?;", array(1, SITETIME));
 }
 
@@ -1464,7 +1464,7 @@ function stats_load() {
 	if (@filemtime(DATADIR."/temp/statload.dat") < time()-900) {
 
 		$total = Down::count();
-		$totalnew = Down::count(array('conditions' => 'active = 1 and created_at > NOW()-INTERVAL 5 DAY'));
+		$totalnew = Down::count(array('conditions' => 'active = 1 AND created_at > NOW()-INTERVAL 5 DAY'));
 
 		if (empty($totalnew)) {
 			$stat = intval($total);
@@ -1481,7 +1481,7 @@ function stats_load() {
 function stats_newload() {
 
 	$totalnew = Down::count(array('conditions' => 'active = 0'));
-	$totalcheck = Down::count(array('conditions' => 'active = 0 and app = 1'));
+	$totalcheck = Down::count(array('conditions' => 'active = 0 AND app = 1'));
 
 	if (empty($totalcheck)) {
 		return intval($totalnew);
@@ -1608,7 +1608,7 @@ function stats_events() { // Удалить
 // ------------------------- Функция проверки аккаунта  ------------------------//
 function check_user($id) {
 	if (!empty($id)) {
-		$user = User::find($id);
+		$user = User::exists($id);
 		//$user = DB::run() -> querySingle("SELECT `users_id` FROM `users` WHERE `users_login`=? LIMIT 1;", array($login));
 		if ($user) {
 			return true;

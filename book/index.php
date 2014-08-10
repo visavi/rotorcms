@@ -63,7 +63,12 @@ case 'add':
 						$user->money = $user->money + 20;
 						$user->save();
 
-						$attributes = array('user_id' => $user->id, 'text' => $msg, 'ip' => $ip, 'brow' => $brow);
+						$attributes = array(
+							'user_id' => $user->id,
+							'text' => $msg,
+							'ip' => $ip,
+							'brow' => $brow
+						);
 						$post = Guest::create($attributes);
 
 						// Удаляем старые сообщения
@@ -170,17 +175,17 @@ break;
 ############################################################################################
 case 'edit':
 
-	$id = abs(intval($_GET['id']));
+	$id = (isset($_GET['id'])) ? abs(intval($_GET['id'])) : 0;
 
 	if (is_user()) {
-		$post = DB::run()->queryFetch("SELECT * FROM `guest` WHERE `guest_id`=? AND `guest_user`=? LIMIT 1;", array($id, $log));
+		$post = Guest::first(array('conditions' => array('id = ? AND user_id = ?', $id, $user->id)));
 
-		if (!empty($post)) {
-			if ($post['guest_time'] + 600 > SITETIME) {
+		if ($post) {
+			if (strtotime($post->created_at->format('db')) > time() - 600) {
 
-				$post['guest_text'] = yes_br(nosmiles($post['guest_text']));
+				$post->text = yes_br(nosmiles($post->text));
 
-				render('book/edit', array('post' => $post, 'id' => $id, 'start' => $start));
+				render('book/edit', compact('post', 'id', 'start'));
 
 			} else {
 				show_error('Ошибка! Редактирование невозможно, прошло более 10 минут!!');
