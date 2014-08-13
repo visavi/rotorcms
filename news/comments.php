@@ -52,7 +52,7 @@ switch ($act):
 
 				echo 'Написал: '.profile($data['commnews_author']).' <small>('.date_fixed($data['commnews_time']).')</small><br />';
 
-				if (is_admin() || empty($config['anonymity'])) {
+				if (is_admin()) {
 					echo '<span class="data">('.$data['commnews_brow'].', '.$data['commnews_ip'].')</span>';
 				}
 

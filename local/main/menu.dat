@@ -19,7 +19,6 @@ if (isset($act) && $act=='menu'){
 <img src="/images/img/act.png" alt="image" /> <a href="/pages/profile.php">Мой профиль</a><br />
 <img src="/images/img/act.png" alt="image" /> <a href="/pages/account.php">Мои данные</a><br />
 <img src="/images/img/act.png" alt="image" /> <a href="/pages/setting.php">Настройки</a><br />
-<img src="/images/img/act.png" alt="image" /> <a href="/pages/wall.php">Моя стена</a> (<?=user_wall($log)?>)<br />
 
 <div class="b"><img src="/images/img/address-book.gif" alt="image" /> <b>Активность</b></div>
 <img src="/images/img/act.png" alt="image" /> <a href="/pages/notebook.php">Блокнот</a><br />

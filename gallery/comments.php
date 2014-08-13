@@ -56,7 +56,7 @@ switch ($act):
 				echo '<div>'.bb_code($data['commphoto_text']).'<br />';
 				echo 'Написал: '.profile($data['commphoto_user']).'</b> <small>('.date_fixed($data['commphoto_time']).')</small><br />';
 
-				if (is_admin() || empty($config['anonymity'])) {
+				if (is_admin()) {
 					echo '<span class="data">('.$data['commphoto_brow'].', '.$data['commphoto_ip'].')</span>';
 				}
 
@@ -102,7 +102,7 @@ switch ($act):
 				echo '<div>'.bb_code($data['commphoto_text']).'<br />';
 				echo 'Написал: '.profile($data['commphoto_user']).'</b> <small>('.date_fixed($data['commphoto_time']).')</small><br />';
 
-				if (is_admin() || empty($config['anonymity'])) {
+				if (is_admin()) {
 					echo '<span class="data">('.$data['commphoto_brow'].', '.$data['commphoto_ip'].')</span>';
 				}
 

@@ -98,7 +98,7 @@ switch ($act):
 
 				echo 'Написал: '.nickname($data['commload_author']).' <small>('.date_fixed($data['commload_time']).')</small><br />';
 
-				if ($is_admin || empty($config['anonymity'])) {
+				if ($is_admin) {
 					echo '<span class="data">('.$data['commload_brow'].', '.$data['commload_ip'].')</span>';
 				}
 

@@ -8,7 +8,7 @@
 		<?=bb_code($data['commblog_text'])?><br />
 		Написал: <?=profile($data['commblog_author'])?> <small>(<?=date_fixed($data['commblog_time'])?>)</small><br />
 
-		<?php if (is_admin() || empty($config['anonymity'])): ?>
+		<?php if (is_admin()): ?>
 			<span class="data">(<?=$data['commblog_brow']?>, <?=$data['commblog_ip']?>)</span>
 		<?php endif; ?>
 	</div>

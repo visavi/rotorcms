@@ -37,11 +37,10 @@ if (is_admin(array(101, 102, 103))) {
 			$total = DB::run() -> querySingle("SELECT count(*) FROM `spam` WHERE `spam_key`=?;", array(1));
 			$totalguest = DB::run() -> querySingle("SELECT count(*) FROM `spam` WHERE `spam_key`=?;", array(2));
 			$totalpriv = DB::run() -> querySingle("SELECT count(*) FROM `spam` WHERE `spam_key`=?;", array(3));
-			$totalwall = DB::run() -> querySingle("SELECT count(*) FROM `spam` WHERE `spam_key`=?;", array(4));
 			$totalload = DB::run() -> querySingle("SELECT count(*) FROM `spam` WHERE `spam_key`=?;", array(5));
 			$totalblog = DB::run() -> querySingle("SELECT count(*) FROM `spam` WHERE `spam_key`=?;", array(6));
 
-			echo '<b>Форум</b> ('.$total.') / <a href="spam.php?act=guest">Гостевая ('.$totalguest.')</a> / <a href="spam.php?act=privat">Приват ('.$totalpriv.')</a> / <a href="spam.php?act=wall">Стена</a> ('.$totalwall.') / <a href="spam.php?act=load">Загрузки</a> ('.$totalload.') / <a href="spam.php?act=blog">Блоги</a> ('.$totalblog.')<br /><br />';
+			echo '<b>Форум</b> ('.$total.') / <a href="spam.php?act=guest">Гостевая ('.$totalguest.')</a> / <a href="spam.php?act=privat">Приват ('.$totalpriv.')</a> / <a href="spam.php?act=load">Загрузки</a> ('.$totalload.') / <a href="spam.php?act=blog">Блоги</a> ('.$totalblog.')<br /><br />';
 
 			if ($total > 0) {
 				if ($start >= $total) {
@@ -84,11 +83,10 @@ if (is_admin(array(101, 102, 103))) {
 			$total = DB::run() -> querySingle("SELECT count(*) FROM `spam` WHERE `spam_key`=?;", array(2));
 			$totalforum = DB::run() -> querySingle("SELECT count(*) FROM `spam` WHERE `spam_key`=?;", array(1));
 			$totalpriv = DB::run() -> querySingle("SELECT count(*) FROM `spam` WHERE `spam_key`=?;", array(3));
-			$totalwall = DB::run() -> querySingle("SELECT count(*) FROM `spam` WHERE `spam_key`=?;", array(4));
 			$totalload = DB::run() -> querySingle("SELECT count(*) FROM `spam` WHERE `spam_key`=?;", array(5));
 			$totalblog = DB::run() -> querySingle("SELECT count(*) FROM `spam` WHERE `spam_key`=?;", array(6));
 
-			echo '<a href="spam.php?act=forum">Форум ('.$totalforum.')</a> / <b>Гостевая</b> ('.$total.') / <a href="spam.php?act=privat">Приват ('.$totalpriv.')</a> / <a href="spam.php?act=wall">Стена</a> ('.$totalwall.') / <a href="spam.php?act=load">Загрузки</a> ('.$totalload.') / <a href="spam.php?act=blog">Блоги</a> ('.$totalblog.')<br /><br />';
+			echo '<a href="spam.php?act=forum">Форум ('.$totalforum.')</a> / <b>Гостевая</b> ('.$total.') / <a href="spam.php?act=privat">Приват ('.$totalpriv.')</a> / <a href="spam.php?act=load">Загрузки</a> ('.$totalload.') / <a href="spam.php?act=blog">Блоги</a> ('.$totalblog.')<br /><br />';
 
 			if ($total > 0) {
 				if ($start >= $total) {
@@ -131,11 +129,10 @@ if (is_admin(array(101, 102, 103))) {
 			$total = DB::run() -> querySingle("SELECT count(*) FROM `spam` WHERE `spam_key`=?;", array(3));
 			$totalforum = DB::run() -> querySingle("SELECT count(*) FROM `spam` WHERE `spam_key`=?;", array(1));
 			$totalguest = DB::run() -> querySingle("SELECT count(*) FROM `spam` WHERE `spam_key`=?;", array(2));
-			$totalwall = DB::run() -> querySingle("SELECT count(*) FROM `spam` WHERE `spam_key`=?;", array(4));
 			$totalload = DB::run() -> querySingle("SELECT count(*) FROM `spam` WHERE `spam_key`=?;", array(5));
 			$totalblog = DB::run() -> querySingle("SELECT count(*) FROM `spam` WHERE `spam_key`=?;", array(6));
 
-			echo '<a href="spam.php?act=forum">Форум ('.$totalforum.')</a> / <a href="spam.php?act=guest">Гостевая</a> ('.$totalguest.') / <b>Приват ('.$total.')</b> / <a href="spam.php?act=wall">Стена</a> ('.$totalwall.') / <a href="spam.php?act=load">Загрузки</a> ('.$totalload.') / <a href="spam.php?act=blog">Блоги</a> ('.$totalblog.')<br /><br />';
+			echo '<a href="spam.php?act=forum">Форум ('.$totalforum.')</a> / <a href="spam.php?act=guest">Гостевая</a> ('.$totalguest.') / <b>Приват ('.$total.')</b> / <a href="spam.php?act=load">Загрузки</a> ('.$totalload.') / <a href="spam.php?act=blog">Блоги</a> ('.$totalblog.')<br /><br />';
 
 			if ($total > 0) {
 				if ($start >= $total) {
@@ -170,53 +167,6 @@ if (is_admin(array(101, 102, 103))) {
 		break;
 
 		############################################################################################
-		##                                    Стена сообщений                                     ##
-		############################################################################################
-		case 'wall':
-
-			$total = DB::run() -> querySingle("SELECT count(*) FROM `spam` WHERE `spam_key`=?;", array(4));
-			$totalforum = DB::run() -> querySingle("SELECT count(*) FROM `spam` WHERE `spam_key`=?;", array(1));
-			$totalguest = DB::run() -> querySingle("SELECT count(*) FROM `spam` WHERE `spam_key`=?;", array(2));
-			$totalpriv = DB::run() -> querySingle("SELECT count(*) FROM `spam` WHERE `spam_key`=?;", array(3));
-			$totalload = DB::run() -> querySingle("SELECT count(*) FROM `spam` WHERE `spam_key`=?;", array(5));
-			$totalblog = DB::run() -> querySingle("SELECT count(*) FROM `spam` WHERE `spam_key`=?;", array(6));
-
-			echo '<a href="spam.php?act=forum">Форум ('.$totalforum.')</a> / <a href="spam.php?act=guest">Гостевая</a> ('.$totalguest.') / <a href="spam.php?act=privat">Приват</a> ('.$totalpriv.') / <b>Стена</b> ('.$total.') / <a href="spam.php?act=load">Загрузки</a> ('.$totalload.') / <a href="spam.php?act=blog">Блоги</a> ('.$totalblog.')<br /><br />';
-
-			if ($total > 0) {
-				if ($start >= $total) {
-					$start = 0;
-				}
-
-				$queryban = DB::run() -> query("SELECT * FROM `spam` WHERE `spam_key`=? ORDER BY `spam_addtime` DESC LIMIT ".$start.", ".$config['spamlist'].";", array(4));
-
-				echo '<form action="spam.php?act=del&amp;ref=wall&amp;start='.$start.'&amp;uid='.$_SESSION['token'].'" method="post">';
-				echo '<div class="form">';
-				echo '<input type="checkbox" id="all" onchange="var o=this.form.elements;for(var i=0;i&lt;o.length;i++)o[i].checked=this.checked" /> <b><label for="all">Отметить все</label></b>';
-				echo '</div>';
-
-				while ($data = $queryban -> fetch()) {
-					echo '<div class="b">';
-					echo '<input type="checkbox" name="del[]" value="'.$data['spam_id'].'" /> ';
-					echo '<img src="/images/img/files.gif" alt="image" /> <b>'.profile($data['spam_login']).'</b> <small>('.date_fixed($data['spam_time'], "d.m.y / H:i:s").')</small></div>';
-					echo '<div>Сообщение: '.bb_code($data['spam_text']).'<br />';
-
-					echo '<a href="'.$data['spam_link'].'">Перейти к сообщению</a><br />';
-					echo 'Жалоба: '.profile($data['spam_user']).' ('.date_fixed($data['spam_addtime']).')</div>';
-				}
-				echo '<br /><input type="submit" value="Удалить выбранное" /></form>';
-
-				page_strnavigation('spam.php?act=wall&amp;', $config['spamlist'], $start, $total);
-
-				if (is_admin(array(101, 102))) {
-					echo '<img src="/images/img/error.gif" alt="image" /> <a href="spam.php?act=clear&amp;uid='.$_SESSION['token'].'">Очистить</a><br />';
-				}
-			} else {
-				show_error('Жалоб еще нет!');
-			}
-		break;
-
-		############################################################################################
 		##                                Комментарии в Загрузках                                 ##
 		############################################################################################
 		case 'load':
@@ -225,10 +175,9 @@ if (is_admin(array(101, 102, 103))) {
 			$totalforum = DB::run() -> querySingle("SELECT count(*) FROM `spam` WHERE `spam_key`=?;", array(1));
 			$totalguest = DB::run() -> querySingle("SELECT count(*) FROM `spam` WHERE `spam_key`=?;", array(2));
 			$totalpriv = DB::run() -> querySingle("SELECT count(*) FROM `spam` WHERE `spam_key`=?;", array(3));
-			$totalwall = DB::run() -> querySingle("SELECT count(*) FROM `spam` WHERE `spam_key`=?;", array(4));
 			$totalblog = DB::run() -> querySingle("SELECT count(*) FROM `spam` WHERE `spam_key`=?;", array(6));
 
-			echo '<a href="spam.php?act=forum">Форум ('.$totalforum.')</a> / <a href="spam.php?act=guest">Гостевая</a> ('.$totalguest.') / <a href="spam.php?act=privat">Приват</a> ('.$totalpriv.') / <a href="spam.php?act=wall">Стена</a> ('.$totalwall.') / <b>Загрузки</b> ('.$total.') / <a href="spam.php?act=blog">Блоги</a> ('.$totalblog.')<br /><br />';
+			echo '<a href="spam.php?act=forum">Форум ('.$totalforum.')</a> / <a href="spam.php?act=guest">Гостевая</a> ('.$totalguest.') / <a href="spam.php?act=privat">Приват</a> ('.$totalpriv.') / <b>Загрузки</b> ('.$total.') / <a href="spam.php?act=blog">Блоги</a> ('.$totalblog.')<br /><br />';
 
 			if ($total > 0) {
 				if ($start >= $total) {
@@ -272,10 +221,9 @@ if (is_admin(array(101, 102, 103))) {
 			$totalforum = DB::run() -> querySingle("SELECT count(*) FROM `spam` WHERE `spam_key`=?;", array(1));
 			$totalguest = DB::run() -> querySingle("SELECT count(*) FROM `spam` WHERE `spam_key`=?;", array(2));
 			$totalpriv = DB::run() -> querySingle("SELECT count(*) FROM `spam` WHERE `spam_key`=?;", array(3));
-			$totalwall = DB::run() -> querySingle("SELECT count(*) FROM `spam` WHERE `spam_key`=?;", array(4));
 			$totalload = DB::run() -> querySingle("SELECT count(*) FROM `spam` WHERE `spam_key`=?;", array(5));
 
-			echo '<a href="spam.php?act=forum">Форум ('.$totalforum.')</a> / <a href="spam.php?act=guest">Гостевая</a> ('.$totalguest.') / <a href="spam.php?act=privat">Приват</a> ('.$totalpriv.') / <a href="spam.php?act=wall">Стена</a> ('.$totalwall.') / <a href="spam.php?act=load">Загрузки</a> ('.$totalload.') / <b>Блоги</b> ('.$total.')<br /><br />';
+			echo '<a href="spam.php?act=forum">Форум ('.$totalforum.')</a> / <a href="spam.php?act=guest">Гостевая</a> ('.$totalguest.') / <a href="spam.php?act=privat">Приват</a> ('.$totalpriv.') / <a href="spam.php?act=load">Загрузки</a> ('.$totalload.') / <b>Блоги</b> ('.$total.')<br /><br />';
 
 			if ($total > 0) {
 				if ($start >= $total) {

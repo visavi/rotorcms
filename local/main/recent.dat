@@ -30,20 +30,5 @@ if (count($recentphotos) > 0) {
 } else {
   show_error('Нет фотографий в галерее!');
 }
-
-echo '<div class="b"><img src="/images/img/cup.gif" alt="image" /> <b>Последние события</b></div>';
-
-$queryevents = DB::run() -> query("SELECT * FROM `events` ORDER BY `event_time` DESC LIMIT 5;");
-$recentevents = $queryevents -> fetchAll();
-
-if (count($recentevents) > 0) {
-	foreach ($recentevents as $data) {
-		echo '<img src="/images/img/act.png" alt="image" /> <a href="/events/index.php?act=view&amp;id='.$data['event_id'].'">'.$data['event_title'].'</a> ('.$data['event_comments'].')<br />';
-	}
-
-	echo '<br />';
-} else {
-  show_error('Нет статей в событиях!');
-}
 */
 ?>

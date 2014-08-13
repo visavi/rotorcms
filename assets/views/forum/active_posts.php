@@ -13,7 +13,7 @@
 
 		Написал: <?=nickname($data['posts_user'])?> <small>(<?=date_fixed($data['posts_time'])?>)</small><br />
 
-		<?php if (is_admin() || empty($config['anonymity'])): ?>
+		<?php if (is_admin()): ?>
 			<span class="data">(<?=$data['posts_brow']?>, <?=$data['posts_ip']?>)</span>
 		<?php endif; ?>
 

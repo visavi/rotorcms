@@ -149,7 +149,6 @@ if (is_admin(array(101))) {
 				echo 'Адрес логотипа:<br /><input name="logotip" maxlength="100" value="'.$setting['logotip'].'" /><br />';
 				echo 'Время антифлуда (сек):<br /><input name="floodstime" maxlength="3" value="'.$setting['floodstime'].'" /><br />';
 				echo 'Ключ для паролей:<br /><input name="keypass" maxlength="25" value="'.$setting['keypass'].'" /><br />';
-				echo 'Лимит запросов с IP (0 - Выкл):<br /><input name="doslimit" maxlength="3" value="'.$setting['doslimit'].'" /><br />';
 
 				echo 'Временная зона:<br /><input name="timezone" maxlength="50" value="'.$setting['timezone'].'" /><br />';
 
@@ -248,9 +247,6 @@ if (is_admin(array(101))) {
 				$checked = ($setting['gzip'] == 1) ? ' checked="checked"' : '';
 				echo '<input name="gzip" type="checkbox" value="1"'.$checked.' /> Включить сжатие GZIP<br />';
 
-				$checked = ($setting['anonymity'] == 1) ? ' checked="checked"' : '';
-				echo '<input name="anonymity" type="checkbox" value="1"'.$checked.' /> Анонимность пользователей<br />';
-
 				$checked = ($setting['session'] == 1) ? ' checked="checked"' : '';
 				echo '<input name="session" type="checkbox" value="1"'.$checked.' /> Контроль сессий<br />';
 
@@ -274,14 +270,13 @@ if (is_admin(array(101))) {
 			$cache = (empty($_POST['cache'])) ? 0 : 1;
 			$openreg = (empty($_POST['openreg'])) ? 0 : 1;
 			$gzip = (empty($_POST['gzip'])) ? 0 : 1;
-			$anonymity = (empty($_POST['anonymity'])) ? 0 : 1;
 			$session = (empty($_POST['session'])) ? 0 : 1;
 			$regkeys = (isset($_POST['regkeys'])) ? abs(intval($_POST['regkeys'])) : 0;
 			$closedsite = (isset($_POST['closedsite'])) ? abs(intval($_POST['closedsite'])) : 0;
 
 			if ($log == $config['nickname']) {
 				if ($uid == $_SESSION['token']) {
-					if ($_POST['title'] != "" && $_POST['copy'] != "" && $_POST['home'] != "" && $_POST['logotip'] != "" && $_POST['floodstime'] != "" && $_POST['keypass'] != "" && $_POST['doslimit'] != "" && $_POST['timezone'] != "" && $_POST['themes'] != "" && $_POST['webthemes'] != "" && $_POST['touchthemes'] != "" && $_POST['karantin'] != "") {
+					if ($_POST['title'] != "" && $_POST['copy'] != "" && $_POST['home'] != "" && $_POST['logotip'] != "" && $_POST['floodstime'] != "" && $_POST['keypass'] != "" && $_POST['timezone'] != "" && $_POST['themes'] != "" && $_POST['webthemes'] != "" && $_POST['touchthemes'] != "" && $_POST['karantin'] != "") {
 
 						$dbr = DB::run() -> prepare("UPDATE `setting` SET `setting_value`=? WHERE `setting_name`=?;");
 						$dbr -> execute(check($_POST['title']), 'title');
@@ -291,7 +286,6 @@ if (is_admin(array(101))) {
 						$dbr -> execute(check($_POST['logotip']), 'logotip');
 						$dbr -> execute(intval($_POST['floodstime']), 'floodstime');
 						$dbr -> execute(check($_POST['keypass']), 'keypass');
-						$dbr -> execute(intval($_POST['doslimit']), 'doslimit');
 						$dbr -> execute(check($_POST['timezone']), 'timezone');
 						$dbr -> execute(check($_POST['themes']), 'themes');
 						$dbr -> execute(check($_POST['webthemes']), 'webthemes');
@@ -304,7 +298,6 @@ if (is_admin(array(101))) {
 						$dbr -> execute($cache, 'cache');
 						$dbr -> execute($openreg, 'openreg');
 						$dbr -> execute($gzip, 'gzip');
-						$dbr -> execute($anonymity, 'anonymity');
 						$dbr -> execute($closedsite, 'closedsite');
 						$dbr -> execute($session, 'session');
 
@@ -566,7 +559,7 @@ if (is_admin(array(101))) {
 		############################################################################################
 		case 'setfive':
 
-			echo '<b>Настройки закладок, голосований и привата</b><br /><hr />';
+			echo '<b>Настройки закладок и привата</b><br /><hr />';
 
 			echo '<div class="form">';
 			echo '<form method="post" action="setting.php?act=editfive&amp;uid='.$_SESSION['token'].'">';
@@ -580,7 +573,6 @@ if (is_admin(array(101))) {
 			echo 'Листинг в игнор-листе:<br /><input name="ignorlist" maxlength="2" value="'.$setting['ignorlist'].'" /><br />';
 			echo 'Максимальное кол. в контакт-листе:<br /><input name="limitcontact" maxlength="2" value="'.$setting['limitcontact'].'" /><br />';
 			echo 'Максимальное кол. в игнор-листе:<br /><input name="limitignore" maxlength="2" value="'.$setting['limitignore'].'" /><br />';
-			echo 'Кол-во голосований на стр.:<br /><input name="allvotes" maxlength="2" value="'.$setting['allvotes'].'" /><br />';
 
 			echo '<input value="Изменить" type="submit" /></form></div><br />';
 			echo '<img src="/images/img/back.gif" alt="image" /> <a href="setting.php">Вернуться</a><br />';
@@ -594,7 +586,7 @@ if (is_admin(array(101))) {
 			$uid = check($_GET['uid']);
 
 			if ($uid == $_SESSION['token']) {
-				if ($_POST['limitmail'] != "" && $_POST['limitoutmail'] != "" && $_POST['expiresmail'] != "" && $_POST['privatpost'] != "" && $_POST['privatprotect'] != "" && $_POST['contactlist'] != "" && $_POST['ignorlist'] != "" && $_POST['limitcontact'] != "" && $_POST['limitignore'] != "" && $_POST['allvotes'] != "") {
+				if ($_POST['limitmail'] != "" && $_POST['limitoutmail'] != "" && $_POST['expiresmail'] != "" && $_POST['privatpost'] != "" && $_POST['privatprotect'] != "" && $_POST['contactlist'] != "" && $_POST['ignorlist'] != "" && $_POST['limitcontact'] != "" && $_POST['limitignore'] != "") {
 					$dbr = DB::run() -> prepare("UPDATE `setting` SET `setting_value`=? WHERE `setting_name`=?;");
 					$dbr -> execute(intval($_POST['limitmail']), 'limitmail');
 					$dbr -> execute(intval($_POST['limitoutmail']), 'limitoutmail');
@@ -605,7 +597,6 @@ if (is_admin(array(101))) {
 					$dbr -> execute(intval($_POST['ignorlist']), 'ignorlist');
 					$dbr -> execute(intval($_POST['limitcontact']), 'limitcontact');
 					$dbr -> execute(intval($_POST['limitignore']), 'limitignore');
-					$dbr -> execute(intval($_POST['allvotes']), 'allvotes');
 
 					save_setting();
 
@@ -970,8 +961,6 @@ if (is_admin(array(101))) {
 			echo '<div class="form">';
 			echo '<form method="post" action="setting.php?act=editten&amp;uid='.$_SESSION['token'].'">';
 
-			echo 'Замена смайлов в сообщениях:<br /><input name="resmiles" maxlength="2" value="'.$setting['resmiles'].'" /><br /><hr />';
-
 			echo '<b>Captcha</b><br />';
 			echo 'Допустимые символы [a-z0-9]:<br /><input name="captcha_symbols" maxlength="26" value="'.$setting['captcha_symbols'].'" /><br />';
 
@@ -1007,35 +996,30 @@ if (is_admin(array(101))) {
 			$captcha_credits = (empty($_POST['captcha_credits'])) ? 0 : 1;
 
 			if ($uid == $_SESSION['token']) {
-				if ($_POST['resmiles'] != "") {
-					if (preg_match('|^[a-z0-9]+$|', $captcha_symbols)) {
-						if (preg_match('|^[4-6]{1}+$|', $captcha_maxlength)) {
-							if (preg_match('|^[0-8]{1}+$|', $captcha_amplitude)) {
+				if (preg_match('|^[a-z0-9]+$|', $captcha_symbols)) {
+					if (preg_match('|^[4-6]{1}+$|', $captcha_maxlength)) {
+						if (preg_match('|^[0-8]{1}+$|', $captcha_amplitude)) {
 
-								$dbr = DB::run() -> prepare("UPDATE `setting` SET `setting_value`=? WHERE `setting_name`=?;");
-								$dbr -> execute(intval($_POST['resmiles']), 'resmiles');
-								$dbr -> execute($captcha_symbols, 'captcha_symbols');
-								$dbr -> execute($captcha_maxlength, 'captcha_maxlength');
-								$dbr -> execute($captcha_amplitude, 'captcha_amplitude');
-								$dbr -> execute($captcha_noise, 'captcha_noise');
-								$dbr -> execute($captcha_spaces, 'captcha_spaces');
-								$dbr -> execute($captcha_credits, 'captcha_credits');
-								save_setting();
+							$dbr = DB::run() -> prepare("UPDATE `setting` SET `setting_value`=? WHERE `setting_name`=?;");
+							$dbr -> execute($captcha_symbols, 'captcha_symbols');
+							$dbr -> execute($captcha_maxlength, 'captcha_maxlength');
+							$dbr -> execute($captcha_amplitude, 'captcha_amplitude');
+							$dbr -> execute($captcha_noise, 'captcha_noise');
+							$dbr -> execute($captcha_spaces, 'captcha_spaces');
+							$dbr -> execute($captcha_credits, 'captcha_credits');
+							save_setting();
 
-								notice('Настройки сайта успешно изменены!');
-								redirect("setting.php?act=setten");
+							notice('Настройки сайта успешно изменены!');
+							redirect("setting.php?act=setten");
 
-							} else {
-								show_error('Ошибка! Амплитуда колебаний может быть от 0 до 8!');
-							}
 						} else {
-							show_error('Ошибка! Максимальное количество символов может быть от 4 до 6!');
+							show_error('Ошибка! Амплитуда колебаний может быть от 0 до 8!');
 						}
 					} else {
-						show_error('Ошибка! Недопустимые символы в captcha!');
+						show_error('Ошибка! Максимальное количество символов может быть от 4 до 6!');
 					}
 				} else {
-					show_error('Ошибка! Все поля настроек обязательны для заполнения!');
+					show_error('Ошибка! Недопустимые символы в captcha!');
 				}
 			} else {
 				show_error('Ошибка! Неверный идентификатор сессии, повторите действие!');
@@ -1062,9 +1046,7 @@ if (is_admin(array(101))) {
 			echo 'Актива для перечисления денег: <br /><input name="sendmoneypoint" maxlength="4" value="'.$setting['sendmoneypoint'].'" /><br />';
 			echo 'Актива для изменения авторитета: <br /><input name="editratingpoint" maxlength="4" value="'.$setting['editratingpoint'].'" /><br />';
 			echo 'Актива для изменения тем форума: <br /><input name="editforumpoint" maxlength="4" value="'.$setting['editforumpoint'].'" /><br />';
-			echo 'Актива для скрытия рекламы: <br /><input name="advertpoint" maxlength="4" value="'.$setting['advertpoint'].'" /><br />';
-
-			echo 'Актива для создания предложения или проблемы: <br /><input name="addofferspoint" maxlength="4" value="'.$setting['addofferspoint'].'" /><br /><hr />';
+			echo 'Актива для скрытия рекламы: <br /><input name="advertpoint" maxlength="4" value="'.$setting['advertpoint'].'" /><br /><hr />';
 
 			$checked = ($setting['editstatus'] == 1) ? ' checked="checked"' : '';
 			echo '<input name="editstatus" type="checkbox" value="1"'.$checked.' /> Разрешить менять статус<br />';
@@ -1101,7 +1083,6 @@ if (is_admin(array(101))) {
 					$dbr -> execute(intval($_POST['editratingpoint']), 'editratingpoint');
 					$dbr -> execute(intval($_POST['editforumpoint']), 'editforumpoint');
 					$dbr -> execute(intval($_POST['advertpoint']), 'advertpoint');
-					$dbr -> execute(intval($_POST['addofferspoint']), 'addofferspoint');
 					$dbr -> execute($editstatus, 'editstatus');
 					$dbr -> execute(intval($_POST['editstatuspoint']), 'editstatuspoint');
 					$dbr -> execute(intval($_POST['editstatusmoney']), 'editstatusmoney');

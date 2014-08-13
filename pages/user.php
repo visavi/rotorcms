@@ -134,7 +134,6 @@ case 'index':
 		}
 
 		echo '<div class="act">';
-		echo '<img src="/images/img/wall.gif" alt="Стена" /> <a href="wall.php?uz='.$uz.'">Стена сообщений</a> ('.user_wall($uz).')<br />';
 
 		if ($uz != $log) {
 			echo '<img src="/images/img/users.gif" alt="Добавить" /> Добавить в ';

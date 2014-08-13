@@ -33,7 +33,6 @@ if (!empty($key)){
 			'jabber'    => $user['users_jabber'],
 			'gender'    => $user['users_gender'],
 			'birthday'  => $user['users_birthday'],
-			'newwall'   => $user['users_newwall'],
 			'point'     => $user['users_point'],
 			'money'     => $user['users_money'],
 			'ban'       => $user['users_ban'],

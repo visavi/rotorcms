@@ -15,7 +15,6 @@ RotorCMS 4.0
  * **includes/connect.php (chmod 666)**
  * **upload/avatars (chmod 777)**
  * **upload/counters (chmod 777)**
- * **upload/events (chmod 777)**
  * **upload/forum (chmod 777)**
  * **upload/news (chmod 777)**
  * **upload/photos (chmod 777)**

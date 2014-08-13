@@ -232,25 +232,6 @@ CREATE TABLE IF NOT EXISTS `commblog` (
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `commevents`
---
-
-CREATE TABLE IF NOT EXISTS `commevents` (
-  `commevent_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `commevent_event_id` mediumint(8) unsigned NOT NULL,
-  `commevent_text` text NOT NULL,
-  `commevent_author` varchar(20) NOT NULL,
-  `commevent_time` int(11) unsigned NOT NULL,
-  `commevent_ip` varchar(20) NOT NULL,
-  `commevent_brow` varchar(25) NOT NULL,
-  PRIMARY KEY (`commevent_id`),
-  KEY `commevent_event_id` (`commevent_event_id`),
-  KEY `commevent_time` (`commevent_time`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
 -- Структура таблицы `commload`
 --
 
@@ -285,25 +266,6 @@ CREATE TABLE IF NOT EXISTS `commnews` (
   PRIMARY KEY (`commnews_id`),
   KEY `commnews_news_id` (`commnews_news_id`),
   KEY `commnews_time` (`commnews_time`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Структура таблицы `commoffers`
---
-
-CREATE TABLE IF NOT EXISTS `commoffers` (
-  `comm_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `comm_offers` smallint(4) unsigned NOT NULL,
-  `comm_text` text NOT NULL,
-  `comm_user` varchar(20) NOT NULL,
-  `comm_time` int(11) unsigned NOT NULL DEFAULT '0',
-  `comm_ip` varchar(20) NOT NULL,
-  `comm_brow` varchar(25) NOT NULL,
-  PRIMARY KEY (`comm_id`),
-  KEY `comm_offers` (`comm_offers`),
-  KEY `comm_time` (`comm_time`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -440,26 +402,6 @@ CREATE TABLE IF NOT EXISTS `error` (
   `error_time` int(11) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`error_id`),
   KEY `error_num` (`error_num`,`error_time`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Структура таблицы `events`
---
-
-CREATE TABLE IF NOT EXISTS `events` (
-  `event_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-  `event_title` varchar(100) NOT NULL,
-  `event_text` text NOT NULL,
-  `event_author` varchar(20) NOT NULL,
-  `event_image` varchar(30) NOT NULL DEFAULT '',
-  `event_time` int(11) unsigned NOT NULL DEFAULT '0',
-  `event_comments` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `event_closed` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `event_top` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`event_id`),
-  KEY `event_time` (`event_time`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -728,31 +670,6 @@ CREATE TABLE IF NOT EXISTS `notice` (
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `offers`
---
-
-CREATE TABLE IF NOT EXISTS `offers` (
-  `offers_id` smallint(4) unsigned NOT NULL AUTO_INCREMENT,
-  `offers_type` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `offers_title` varchar(50) NOT NULL,
-  `offers_text` text NOT NULL,
-  `offers_user` varchar(20) NOT NULL,
-  `offers_votes` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `offers_time` int(11) unsigned NOT NULL DEFAULT '0',
-  `offers_status` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `offers_comments` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `offers_closed` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `offers_text_reply` text NOT NULL,
-  `offers_user_reply` varchar(20) NOT NULL DEFAULT '',
-  `offers_time_reply` int(11) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`offers_id`),
-  KEY `offers_votes` (`offers_votes`),
-  KEY `offers_time` (`offers_time`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
 -- Структура таблицы `online`
 --
 
@@ -870,21 +787,6 @@ CREATE TABLE IF NOT EXISTS `rateddown` (
   `rated_user` varchar(20) NOT NULL,
   `rated_time` int(11) unsigned NOT NULL,
   PRIMARY KEY (`rated_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Структура таблицы `ratedoffers`
---
-
-CREATE TABLE IF NOT EXISTS `ratedoffers` (
-  `rated_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `rated_offers` smallint(4) unsigned NOT NULL,
-  `rated_user` varchar(20) NOT NULL,
-  `rated_time` int(11) unsigned NOT NULL,
-  PRIMARY KEY (`rated_id`),
-  KEY `rated_user` (`rated_user`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1116,7 +1018,6 @@ CREATE TABLE IF NOT EXISTS `users` (
   `users_birthday` varchar(10) NOT NULL DEFAULT '',
   `users_visits` int(11) unsigned NOT NULL DEFAULT '0',
   `users_newprivat` smallint(4) unsigned NOT NULL DEFAULT '0',
-  `users_newwall` smallint(4) unsigned NOT NULL DEFAULT '0',
   `users_allforum` int(11) unsigned NOT NULL DEFAULT '0',
   `users_allguest` int(11) unsigned NOT NULL DEFAULT '0',
   `users_allcomments` int(11) unsigned NOT NULL DEFAULT '0',
@@ -1187,60 +1088,3 @@ CREATE TABLE IF NOT EXISTS `visit` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
-
---
--- Структура таблицы `vote`
---
-
-CREATE TABLE IF NOT EXISTS `vote` (
-  `vote_id` smallint(4) unsigned NOT NULL AUTO_INCREMENT,
-  `vote_title` varchar(100) NOT NULL,
-  `vote_count` smallint(4) unsigned NOT NULL DEFAULT '0',
-  `vote_closed` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `vote_time` int(11) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`vote_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Структура таблицы `voteanswer`
---
-
-CREATE TABLE IF NOT EXISTS `voteanswer` (
-  `answer_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-  `answer_vote_id` smallint(4) unsigned NOT NULL,
-  `answer_option` varchar(50) NOT NULL,
-  `answer_result` smallint(4) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`answer_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Структура таблицы `votepoll`
---
-
-CREATE TABLE IF NOT EXISTS `votepoll` (
-  `poll_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `poll_vote_id` smallint(4) unsigned NOT NULL,
-  `poll_user` varchar(20) NOT NULL,
-  `poll_time` int(11) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`poll_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Структура таблицы `wall`
---
-
-CREATE TABLE IF NOT EXISTS `wall` (
-  `wall_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `wall_user` varchar(20) NOT NULL,
-  `wall_login` varchar(20) NOT NULL,
-  `wall_text` text NOT NULL,
-  `wall_time` int(11) unsigned NOT NULL,
-  PRIMARY KEY (`wall_id`),
-  KEY `wall_user` (`wall_user`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;

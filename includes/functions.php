@@ -87,7 +87,6 @@ function delete_users($user) {
 		DB::run() -> query("DELETE FROM `ignore` WHERE `ignore_user`=?;", array($user));
 		DB::run() -> query("DELETE FROM `rating` WHERE `rating_user`=?;", array($user));
 		DB::run() -> query("DELETE FROM `visit` WHERE `visit_user`=?;", array($user));
-		DB::run() -> query("DELETE FROM `wall` WHERE `wall_user`=?;", array($user));
 		DB::run() -> query("DELETE FROM `notebook` WHERE `note_user`=?;", array($user));
 		DB::run() -> query("DELETE FROM `banhist` WHERE `ban_user`=?;", array($user));
 		DB::run() -> query("DELETE FROM `note` WHERE `note_user`=?;", array($user));
@@ -796,7 +795,7 @@ function save_avatar($time = 0) {
 }
 
 // --------------- Функция вывода аватара пользователя ---------------//
-function user_avatars($login) {
+function user_avatars2($login) {
 	global $config;
 	static $arravat;
 
@@ -816,26 +815,37 @@ function user_avatars($login) {
 	return '<a class="pull-left" href="/pages/user.php?uz='.$login.'"><img class="media-object" src="/images/avatars/noavatar.png" alt="" /></a> ';
 }
 
-// --------------- Функция подсчета карт в игре ---------------//
-function cards_score($str) {
-	if ($str > 32) return 11;
-	if ($str > 20) return (int)(($str-1) / 4)-3;
-	return (int)(($str-1) / 4) + 6;
-}
+function user_avatars($login) {
+    global $config;
+    static $arravat;
 
-// --------------- Функция подсчета очков в игре ---------------//
-function cards_points($str) {
-	$str = (int)$str;
+    $params = array(
+        'class' => 'pull-left',
+        'link' => '#',
+        'img_class' => 'media-object',
+        'img' => '/images/avatars/guest.png'
+    );
 
-	$str1 = abs($str) % 100;
-	$str2 = $str % 10;
+    switch ($login) {
+        case $config['guestsuser']:
+            break;
 
-	if ($str1 == 21) return $str.' <b>очко!!!</b>';
-	if ($str1 > 10 && $str1 < 20) return $str.' очков';
-	if ($str2 > 1 && $str2 < 5) return $str.' очка';
-	if ($str2 == 1) return $str.' очко';
+        default:
+            if (empty($arravat)) {
+                save_avatar(3600);
+                $arravat = unserialize(file_get_contents(DATADIR."/temp/avatars.dat"));
+            }
 
-	return $str.' очков';
+            if (isset($arravat[$login]) && file_exists(BASEDIR.'/'.$arravat[$login])) {
+                $params['link'] = '/pages/user.php?uz='.$login;
+                $params['img_'] = '/'.$arravat[$login];
+            } else {
+                $params['link'] = '/pages/user.php?uz='.$login;
+                $params['img'] = '/images/avatars/noavatar.png';
+            }
+    }
+
+    return render('includes/avatar', compact('params'));
 }
 
 // --------------- Функция подсчета человек в контакт-листе ---------------//
@@ -846,11 +856,6 @@ function user_contact($login) {
 // --------------- Функция подсчета человек в игнор-листе ---------------//
 function user_ignore($login) {
 	return DB::run() -> querySingle("SELECT count(*) FROM `ignore` WHERE `ignore_user`=?;", array($login));
-}
-
-// --------------- Функция подсчета записей на стене ---------------//
-function user_wall($login) {
-	return DB::run() -> querySingle("SELECT count(*) FROM `wall` WHERE `wall_user`=?;", array($login));
 }
 
 // ------------------ Функция подсчета пользователей онлайн -----------------//
@@ -1569,42 +1574,6 @@ function last_news() {
 	}
 }
 
-// --------------------- Функция вывода статистики событий ------------------------//
-function stats_events() { // Удалить
-	if (@filemtime(DATADIR."/temp/statevents.dat") < time()-900) {
-		$total = DB::run() -> querySingle("SELECT count(*) FROM `events`;");
-		$totalnew = DB::run() -> querySingle("SELECT count(*) FROM `events` WHERE `event_time`>?;", array(SITETIME-86400 * 3));
-
-		if (empty($totalnew)) {
-			$stat = (int)$total;
-		} else {
-			$stat = $total.'/+'.$totalnew;
-		}
-
-		file_put_contents(DATADIR."/temp/statevents.dat", (int)$stat, LOCK_EX);
-	}
-
-	return file_get_contents(DATADIR."/temp/statevents.dat");
-}
-
-// --------------------------- Функция показа событий---------------------------//
-/*function show_events() { // Удалить
-	$config['showevents'] = 5;
-
-	if ($config['showevents'] > 0) {
-		$query = DB::run()->query("SELECT * FROM `events` WHERE `event_top`=? ORDER BY `event_time` DESC LIMIT ".$config['showevents'].";", array(1));
-		$events = $query->fetchAll();
-		$total = count($events);
-
-		if ($total > 0) {
-			foreach ($events as $data) {
-				echo '<img src="/images/img/act.png" alt="Событие" /> ';
-				echo '<a href="/events/?act=read&amp;id='.$data['event_id'].'">'.$data['event_title'].'</a> ('.$data['event_comments'].')<br />';
-			}
-		}
-	}
-}*/
-
 // ------------------------- Функция проверки аккаунта  ------------------------//
 function check_user($id) {
 	if (!empty($id)) {
@@ -2024,18 +1993,6 @@ function recentblogs() {  return false;
 	}
 }
 
-// ------------- Функция вывода количества предложений и пожеланий -------------//
-function stats_offers() {
-	if (@filemtime(DATADIR."/temp/offers.dat") < time()-10800) {
-		$offers = DB::run() -> querySingle("SELECT count(*) FROM `offers` WHERE `offers_type`=?;", array(0));
-		$problems = DB::run() -> querySingle("SELECT count(*) FROM `offers` WHERE `offers_type`=?;", array(1));
-
-		file_put_contents(DATADIR."/temp/offers.dat", $offers.'/'.$problems, LOCK_EX);
-	}
-
-	return file_get_contents(DATADIR."/temp/offers.dat");
-}
-
 // ------------------------- Функция открытия файла ------------------------//
 function fn_open($name, $mode, $method, $level) {
 	if ($method == 2) {
@@ -2097,10 +2054,6 @@ function restatement($mode) {
 
 		case 'gallery':
 			DB::run() -> query("UPDATE `photo` SET `photo_comments`=(SELECT count(*) FROM `commphoto` WHERE `photo`.`photo_id`=`commphoto`.`commphoto_gid`);");
-			break;
-
-		case 'events':
-			DB::run() -> query("UPDATE `events` SET `event_comments`=(SELECT count(*) FROM `commevents` WHERE `events`.`event_id`=`commevents`.`commevent_event_id`);");
 			break;
 	}
 	return true;

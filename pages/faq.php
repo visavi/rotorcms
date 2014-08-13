@@ -32,9 +32,6 @@ echo '<b>11</b>. Изменять под себя настройки сайта,
 
 echo '<br />При наборе определенного количества актива, пользователю открываются новые возможности:<br />';
 
-if (!empty($config['addofferspoint'])) {
-	echo '<b>'.points($config['addofferspoint']).'</b> - создание тем в "Предложенияx и проблемах"<br />';
-}
 if (!empty($config['avatarpoints'])) {
 	echo '<b>'.points($config['avatarpoints']).'</b> - загрузка персонального аватара<br />';
 }

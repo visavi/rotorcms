@@ -347,7 +347,7 @@ break;
 
 					echo '<div>'.bb_code($data['commphoto_text']).'<br />';
 
-					if (is_admin() || empty($config['anonymity'])) {
+					if (is_admin()) {
 						echo '<span class="data">('.$data['commphoto_brow'].', '.$data['commphoto_ip'].')</span>';
 					}
 

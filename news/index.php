@@ -114,7 +114,7 @@ case 'read':
 
 				echo '<div>'.bb_code($comm['commnews_text']).'<br />';
 
-				if (is_admin() || empty($config['anonymity'])) {
+				if (is_admin()) {
 					echo '<span class="data">('.$comm['commnews_brow'].', '.$comm['commnews_ip'].')</span>';
 				}
 
@@ -199,7 +199,7 @@ case 'comments':
 
 				echo '<div>'.bb_code($data['commnews_text']).'<br />';
 
-				if (is_admin() || empty($config['anonymity'])) {
+				if (is_admin()) {
 					echo '<span class="data">('.$data['commnews_brow'].', '.$data['commnews_ip'].')</span>';
 				}
 
@@ -258,7 +258,7 @@ case 'add':
 			-> addRule('equal', array(is_flood($log), true), 'Антифлуд! Разрешается публиковать события раз в '.flood_period().' сек!')
 			-> addRule('not_empty', $data, 'Выбранного события не существует, возможно оно было удалено!')
 			-> addRule('string', $msg, 'Слишком длинный или короткий комментарий!', true, 5, 1000)
-			-> addRule('empty', $data['event_closed'], 'Комментирование данного события запрещено!');
+			-> addRule('empty', $data['news_closed'], 'Комментирование данной новости запрещено!');
 
 		if ($validation->run(3)) {
 

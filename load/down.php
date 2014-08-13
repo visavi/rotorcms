@@ -419,7 +419,7 @@ switch ($act):
 
 						echo '<div>'.bb_code($data['commload_text']).'<br />';
 
-						if (is_admin() || empty($config['anonymity'])) {
+						if (is_admin()) {
 							echo '<span class="data">('.$data['commload_brow'].', '.$data['commload_ip'].')</span>';
 						}
 						echo '</div>';

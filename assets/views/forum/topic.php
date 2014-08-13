@@ -113,7 +113,7 @@
 			<img src="/images/img/exclamation_small.gif" alt="image" /> <small>Отредактировано: <?=nickname($data['posts_edit'])?> (<?=date_fixed($data['posts_edit_time'])?>)</small><br />
 		<?php endif; ?>
 
-		<?php if (is_admin() || empty($config['anonymity'])): ?>
+		<?php if (is_admin()): ?>
 			<span class="data">(<?=$data['posts_brow']?>, <?=$data['posts_ip']?>)</span>
 		<?php endif; ?>
 

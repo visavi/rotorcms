@@ -19,7 +19,6 @@ $arrfile = array(
 	'includes/connect.php',
 	'upload/avatars',
 	'upload/counters',
-	'upload/events',
 	'upload/forum',
 	'upload/news',
 	'upload/photos',

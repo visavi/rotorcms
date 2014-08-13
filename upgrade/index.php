@@ -13,7 +13,6 @@ require_once ('../includes/functions.php');
 $arrfile = array(
 	'upload/avatars',
 	'upload/counters',
-	'upload/events',
 	'upload/forum',
 	'upload/news',
 	'upload/photos',

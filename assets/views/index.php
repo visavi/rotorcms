@@ -8,13 +8,6 @@
 <img src="/images/img/act.png" alt="image" /> <a href="/book">Гостевая книга</a> (<?=stats_guest()?>)<br />
 <img src="/images/img/act.png" alt="image" /> <a href="/gallery">Фотогалерея</a> (<?=stats_gallery()?>)<br />
 
-<?php /*
-<img src="/images/img/act.png" alt="image" /> <a href="/votes">Голосования</a> (<?=stats_votes()?>)<br />
-<img src="/images/img/act.png" alt="image" /> <a href="/pages/offers.php">Предложения / Проблемы</a> (<?=stats_offers()?>)<br />
-
-<div class="b"><img src="/images/img/cup.gif" alt="image" /> <b><a href="/events">События</a></b> (<?=stats_events()?>)</div>
-<?=show_events()?>
-*/ ?>
 <div class="b"><img src="/images/img/lollipop.gif" alt="image" /> <b><a href="/forum">Форум</a></b> (<?=stats_forum()?>)</div>
 <?=recenttopics()?>
 

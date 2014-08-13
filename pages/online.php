@@ -42,7 +42,7 @@ switch ($act):
 				echo '<div class="b">';
 				echo user_gender($data['online_user']).' <b>'.profile($data['online_user']).'</b> (Время: '.date_fixed($data['online_time'], 'H:i:s').')</div>';
 
-				if (is_admin() || empty($config['anonymity'])) {
+				if (is_admin()) {
 					echo '<div><span class="data">('.$data['online_brow'].', '.$data['online_ip'].')</span></div>';
 				}
 			}
@@ -78,7 +78,7 @@ switch ($act):
 					echo user_gender($data['online_user']).' <b>'.profile($data['online_user']).'</b> (Время: '.date_fixed($data['online_time'], 'H:i:s').')</div>';
 				}
 
-				if (is_admin() || empty($config['anonymity'])) {
+				if (is_admin()) {
 					echo '<div><span class="data">('.$data['online_brow'].', '.$data['online_ip'].')</span></div>';
 				}
 			}

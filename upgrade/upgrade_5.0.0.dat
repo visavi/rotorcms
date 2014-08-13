@@ -60,7 +60,6 @@ CREATE TABLE IF NOT EXISTS `users2` (
   `birthday` varchar(10) NOT NULL DEFAULT '',
   `visits` int(11) unsigned NOT NULL DEFAULT '0',
   `newprivat` smallint(4) unsigned NOT NULL DEFAULT '0',
-  `newwall` smallint(4) unsigned NOT NULL DEFAULT '0',
   `allforum` int(11) unsigned NOT NULL DEFAULT '0',
   `allguest` int(11) unsigned NOT NULL DEFAULT '0',
   `allcomments` int(11) unsigned NOT NULL DEFAULT '0',

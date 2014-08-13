@@ -40,7 +40,7 @@
 				<img src="/images/img/exclamation_small.gif" alt="image" /> <small>Отредактировано: <?= $data->login ?> (<?= $data->updated_at->format('long') ?>)</small><br />
 			<?php endif; ?>
 
-			<?php if (is_admin() || empty($config['anonymity'])): ?>
+			<?php if (is_admin()): ?>
 				<span class="data">(<?= $data->brow ?>, <?= $data->ip ?>)</span>
 			<?php endif; ?>
 
