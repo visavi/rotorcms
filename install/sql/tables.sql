@@ -290,23 +290,6 @@ CREATE TABLE IF NOT EXISTS `commphoto` (
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `contact`
---
-
-CREATE TABLE IF NOT EXISTS `contact` (
-  `contact_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `contact_user` varchar(20) NOT NULL,
-  `contact_name` varchar(20) NOT NULL,
-  `contact_text` text NOT NULL,
-  `contact_time` int(11) unsigned NOT NULL,
-  PRIMARY KEY (`contact_id`),
-  KEY `contact_user` (`contact_user`),
-  KEY `contact_time` (`contact_time`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
 -- Структура таблицы `counter`
 --
 
@@ -481,23 +464,6 @@ CREATE TABLE IF NOT EXISTS `guest` (
   `guest_edit_time` int(11) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`guest_id`),
   KEY `guest_time` (`guest_time`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Структура таблицы `ignore`
---
-
-CREATE TABLE IF NOT EXISTS `ignore` (
-  `ignore_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `ignore_user` varchar(20) NOT NULL,
-  `ignore_name` varchar(20) NOT NULL,
-  `ignore_text` text NOT NULL,
-  `ignore_time` int(11) unsigned NOT NULL,
-  PRIMARY KEY (`ignore_id`),
-  KEY `ignore_user` (`ignore_user`),
-  KEY `ignore_time` (`ignore_time`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------

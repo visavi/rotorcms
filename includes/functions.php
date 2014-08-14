@@ -83,15 +83,13 @@ function delete_users($user) {
 		DB::run() -> query("DELETE FROM `inbox` WHERE `inbox_user`=?;", array($user));
 		DB::run() -> query("DELETE FROM `outbox` WHERE `outbox_author`=?;", array($user));
 		DB::run() -> query("DELETE FROM `trash` WHERE `trash_user`=?;", array($user));
-		DB::run() -> query("DELETE FROM `contact` WHERE `contact_user`=?;", array($user));
-		DB::run() -> query("DELETE FROM `ignore` WHERE `ignore_user`=?;", array($user));
+		DB::run() -> query("DELETE FROM `friends` WHERE `friend_user`=?;", array($user));
 		DB::run() -> query("DELETE FROM `rating` WHERE `rating_user`=?;", array($user));
 		DB::run() -> query("DELETE FROM `visit` WHERE `visit_user`=?;", array($user));
 		DB::run() -> query("DELETE FROM `notebook` WHERE `note_user`=?;", array($user));
 		DB::run() -> query("DELETE FROM `banhist` WHERE `ban_user`=?;", array($user));
 		DB::run() -> query("DELETE FROM `note` WHERE `note_user`=?;", array($user));
 		DB::run() -> query("DELETE FROM `bookmarks` WHERE `book_user`=?;", array($user));
-		DB::run() -> query("DELETE FROM `login` WHERE `login_user`=?;", array($user));
 		DB::run() -> query("DELETE FROM `invite` WHERE `user`=? OR `invited`=?;", array($user, $user));
 		DB::run() -> query("DELETE FROM `users` WHERE `users_login`=?;", array($user));
 	*/
@@ -848,15 +846,6 @@ function user_avatars($login) {
     return render('includes/avatar', compact('params'));
 }
 
-// --------------- Функция подсчета человек в контакт-листе ---------------//
-function user_contact($login) {
-	return DB::run() -> querySingle("SELECT count(*) FROM `contact` WHERE `contact_user`=?;", array($login));
-}
-
-// --------------- Функция подсчета человек в игнор-листе ---------------//
-function user_ignore($login) {
-	return DB::run() -> querySingle("SELECT count(*) FROM `ignore` WHERE `ignore_user`=?;", array($login));
-}
 
 // ------------------ Функция подсчета пользователей онлайн -----------------//
 function stats_online($cache = 30) {
@@ -2376,29 +2365,16 @@ function rename_file($filename, $newname){
 }
 
 // ----- Функция определения входит ли пользователь в контакты -----//
-function is_contact($login, $contact){
+function is_friend($login, $contact){
 
-	if (check_user($contact)) {
+/*	if (check_user($contact)) {
 		$check_contact = DB::run() -> queryFetch("SELECT * FROM `contact` WHERE `contact_user`=? AND `contact_name`=? LIMIT 1;", array($login, $contact));
 
 		if (!empty($check_contact)){
 			return true;
 		}
 	}
-	return false;
-}
-
-// ----- Функция определения входит ли пользователь в игнор -----//
-function is_ignore($login, $ignore){
-
-	if (check_user($ignore)) {
-		$check_ignore = DB::run() -> queryFetch("SELECT * FROM `ignore` WHERE `ignore_user`=? AND `ignore_name`=? LIMIT 1;", array($login, $ignore));
-
-		if (!empty($check_ignore)){
-			return true;
-		}
-	}
-	return false;
+	return false;*/
 }
 
 // ----- Функция определения приватности у пользователя -----//

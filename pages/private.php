@@ -83,8 +83,6 @@ if (is_user()) {
 					echo '<input type="checkbox" name="del[]" value="'.$data['inbox_id'].'" /> ';
 					echo '<a href="private.php?act=submit&amp;uz='.$data['inbox_author'].'">Ответить</a> / ';
 					echo '<a href="private.php?act=history&amp;uz='.$data['inbox_author'].'">История</a> / ';
-					echo '<a href="contact.php?act=add&amp;uz='.$data['inbox_author'].'&amp;uid='.$_SESSION['token'].'">В контакт</a> / ';
-					echo '<a href="ignore.php?act=add&amp;uz='.$data['inbox_author'].'&amp;uid='.$_SESSION['token'].'">Игнор</a> / ';
 					echo '<noindex><a href="private.php?act=spam&amp;id='.$data['inbox_id'].'&amp;start='.$start.'&amp;uid='.$_SESSION['token'].'" onclick="return confirm(\'Вы подтверждаете факт спама?\')" rel="nofollow">Спам</a></noindex></div>';
 				}
 
@@ -182,9 +180,7 @@ if (is_user()) {
 
 					echo '<div>'.bb_code($data['trash_text']).'<br />';
 
-					echo '<a href="private.php?act=submit&amp;uz='.$data['trash_author'].'">Ответить</a> / ';
-					echo '<a href="contact.php?act=add&amp;uz='.$data['trash_author'].'&amp;uid='.$_SESSION['token'].'">В контакт</a> / ';
-					echo '<a href="ignore.php?act=add&amp;uz='.$data['trash_author'].'&amp;uid='.$_SESSION['token'].'">Игнор</a></div>';
+					echo '<a href="private.php?act=submit&amp;uz='.$data['trash_author'].'">Ответить</a></div>';
 				}
 
 				page_strnavigation('private.php?act=trash&amp;', $config['privatpost'], $start, $total);
@@ -211,13 +207,13 @@ if (is_user()) {
 				echo 'Введите логин:<br />';
 				echo '<input type="text" name="uz" maxlength="20" /><br />';
 
-				$querycontact = DB::run() -> query("SELECT `contact_name` FROM `contact` WHERE `contact_user`=? ORDER BY `contact_name` DESC;", array($log));
-				$contact = $querycontact -> fetchAll();
+				//$querycontact = DB::run() -> query("SELECT `contact_name` FROM `contact` WHERE `contact_user`=? ORDER BY `contact_name` DESC;", array($log));
+				//$contact = $querycontact -> fetchAll();
 
 				if (count($contact) > 0) {
 					echo 'Или выберите из списка:<br />';
 					echo '<select name="uzcon">';
-					echo '<option value="0">Список контактов</option>';
+					echo '<option value="0">Список друзей</option>';
 
 					foreach($contact as $data) {
 						echo '<option value="'.$data['contact_name'].'">'.nickname($data['contact_name']).'</option>';
@@ -239,12 +235,13 @@ if (is_user()) {
 				echo 'Введите логин или выберите пользователя из своего контакт-листа<br />';
 
 			} else {
-				if (!user_privacy($uz) || is_admin() || is_contact($uz, $log)){
+				if (!user_privacy($uz) || is_admin() || is_friend($uz, $log)){
 
 					echo '<img src="/images/img/mail.gif" alt="image" /> Сообщение для <b>'.profile($uz).'</b> '.user_visit($uz).':<br />';
 					echo '<img src="/images/img/history.gif" alt="image" /> <a href="private.php?act=history&amp;uz='.$uz.'">История переписки</a><br /><br />';
 
-					$ignorstr = DB::run() -> querySingle("SELECT `ignore_id` FROM `ignore` WHERE `ignore_user`=? AND `ignore_name`=? LIMIT 1;", array($log, $uz));
+					//blacklist
+					//$ignorstr = DB::run() -> querySingle("SELECT `ignore_id` FROM `ignore` WHERE `ignore_user`=? AND `ignore_name`=? LIMIT 1;", array($log, $uz));
 					if (!empty($ignorstr)) {
 						echo '<b>Внимание! Данный пользователь внесен в ваш игнор-лист!</b><br />';
 					}
@@ -287,7 +284,7 @@ if (is_user()) {
 			if ($uid == $_SESSION['token']) {
 				if (!empty($uz)) {
 					if ($uz != $log) {
-						if (!user_privacy($uz) || is_admin() || is_contact($uz, $log)){
+						if (!user_privacy($uz) || is_admin() || is_friend($uz, $log)){
 							if ($udata['users_point'] >= $config['privatprotect'] || $provkod == $_SESSION['protect']) {
 								if (utf_strlen($msg) >= 5 && utf_strlen($msg) < 1000) {
 									$queryuser = DB::run() -> querySingle("SELECT `users_id` FROM `users` WHERE `users_login`=? LIMIT 1;", array($uz));
@@ -556,7 +553,7 @@ if (is_user()) {
 
 						page_strnavigation('private.php?act=history&amp;uz='.$uz.'&amp;', $config['privatpost'], $start, $total);
 
-						if (!user_privacy($uz) || is_admin() || is_contact($uz, $log)){
+						if (!user_privacy($uz) || is_admin() || is_friend($uz, $log)){
 
 							echo '<br /><div class="form">';
 							echo '<form action="private.php?act=send&amp;uz='.$uz.'&amp;uid='.$_SESSION['token'].'" method="post">';
@@ -599,7 +596,6 @@ if (is_user()) {
 
 echo '<img src="/images/img/search.gif" alt="Поиск" /> <a href="searchuser.php">Поиск контактов</a><br />';
 echo '<img src="/images/img/mail.gif" alt="Написать" /> <a href="private.php?act=submit">Написать письмо</a><br />';
-echo '<img src="/images/img/users.gif" alt="Контакт" /> <a href="contact.php">Контакт</a> / <a href="ignore.php">Игнор</a><br />';
 
 include_once ('../themes/footer.php');
 ?>

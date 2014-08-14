@@ -569,10 +569,6 @@ if (is_admin(array(101))) {
 			echo 'Срок хранения удаленных писем:<br /><input name="expiresmail" maxlength="2" value="'.$setting['expiresmail'].'" /><br />';
 			echo 'Писем в привате на стр.:<br /><input name="privatpost" maxlength="2" value="'.$setting['privatpost'].'" /><br />';
 			echo 'Порог выключения защитной картинки:<br /><input name="privatprotect" maxlength="4" value="'.$setting['privatprotect'].'" /><br />';
-			echo 'Листинг в контакт-листе:<br /><input name="contactlist" maxlength="2" value="'.$setting['contactlist'].'" /><br />';
-			echo 'Листинг в игнор-листе:<br /><input name="ignorlist" maxlength="2" value="'.$setting['ignorlist'].'" /><br />';
-			echo 'Максимальное кол. в контакт-листе:<br /><input name="limitcontact" maxlength="2" value="'.$setting['limitcontact'].'" /><br />';
-			echo 'Максимальное кол. в игнор-листе:<br /><input name="limitignore" maxlength="2" value="'.$setting['limitignore'].'" /><br />';
 
 			echo '<input value="Изменить" type="submit" /></form></div><br />';
 			echo '<img src="/images/img/back.gif" alt="image" /> <a href="setting.php">Вернуться</a><br />';
@@ -586,17 +582,13 @@ if (is_admin(array(101))) {
 			$uid = check($_GET['uid']);
 
 			if ($uid == $_SESSION['token']) {
-				if ($_POST['limitmail'] != "" && $_POST['limitoutmail'] != "" && $_POST['expiresmail'] != "" && $_POST['privatpost'] != "" && $_POST['privatprotect'] != "" && $_POST['contactlist'] != "" && $_POST['ignorlist'] != "" && $_POST['limitcontact'] != "" && $_POST['limitignore'] != "") {
+				if ($_POST['limitmail'] != "" && $_POST['limitoutmail'] != "" && $_POST['expiresmail'] != "" && $_POST['privatpost'] != "" && $_POST['privatprotect'] != "") {
 					$dbr = DB::run() -> prepare("UPDATE `setting` SET `setting_value`=? WHERE `setting_name`=?;");
 					$dbr -> execute(intval($_POST['limitmail']), 'limitmail');
 					$dbr -> execute(intval($_POST['limitoutmail']), 'limitoutmail');
 					$dbr -> execute(intval($_POST['expiresmail']), 'expiresmail');
 					$dbr -> execute(intval($_POST['privatpost']), 'privatpost');
 					$dbr -> execute(intval($_POST['privatprotect']), 'privatprotect');
-					$dbr -> execute(intval($_POST['contactlist']), 'contactlist');
-					$dbr -> execute(intval($_POST['ignorlist']), 'ignorlist');
-					$dbr -> execute(intval($_POST['limitcontact']), 'limitcontact');
-					$dbr -> execute(intval($_POST['limitignore']), 'limitignore');
 
 					save_setting();
 

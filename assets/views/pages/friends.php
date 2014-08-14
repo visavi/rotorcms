@@ -24,7 +24,7 @@ render('includes/link', array('links' => $links));
 
 	<?php endforeach; ?>
 
-	<?= page_strnavigation('friends.php?', $config['contactlist'], $start, $total['friends']); ?>
+	<?= page_strnavigation('friends.php?', $config['friendlist'], $start, $total['friends']); ?>
 
 <?php else: ?>
 	<?php show_error('Список друзей пуст!'); ?>

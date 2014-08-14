@@ -23,7 +23,7 @@ render('includes/link', array('links' => $links));
 
 	<?php endforeach; ?>
 
-	<?= page_strnavigation('friends.php?act=offers&amp;', $config['contactlist'], $start, $total['offers']); ?>
+	<?= page_strnavigation('friends.php?act=offers&amp;', $config['friendlist'], $start, $total['offers']); ?>
 
 <?php else: ?>
 	<?php show_error('Список заявок пуст!'); ?>

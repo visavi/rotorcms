@@ -11,9 +11,6 @@ if (isset($act) && $act=='menu'){
 <img src="/images/img/act.png" alt="image" /> <a href="/pages/friends.php">Мои друзья</a><br />
 <img src="/images/img/act.png" alt="image" /> <a href="/pages/blacklist.php">Черный список</a><br />
 
-<img src="/images/img/act.png" alt="image" /> <a href="/pages/ignore.php">Игнор-лист</a> (<?=user_ignore($log)?>)<br />
-<img src="/images/img/act.png" alt="image" /> <a href="/pages/contact.php">Контакт-лист</a> (<?=user_contact($log)?>)<br />
-
 <div class="b"><img src="/images/img/account.gif" alt="image" /> <b>Анкета / Настройки</b></div>
 <img src="/images/img/act.png" alt="image" /> <a href="/pages/user.php">Моя анкета</a><br />
 <img src="/images/img/act.png" alt="image" /> <a href="/pages/profile.php">Мой профиль</a><br />

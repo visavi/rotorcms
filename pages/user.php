@@ -137,8 +137,8 @@ case 'index':
 
 		if ($uz != $log) {
 			echo '<img src="/images/img/users.gif" alt="Добавить" /> Добавить в ';
-			echo '<a href="contact.php?act=add&amp;uz='.$uz.'&amp;uid='.$_SESSION['token'].'">контакт</a> / ';
-			echo '<a href="ignore.php?act=add&amp;uz='.$uz.'&amp;uid='.$_SESSION['token'].'">игнор</a><br />';
+			echo '<a href="friends.php?act=add&amp;uz='.$uz.'&amp;uid='.$_SESSION['token'].'">друзья</a> / ';
+			echo '<a href="blacklist.php?act=add&amp;uz='.$uz.'&amp;uid='.$_SESSION['token'].'">враги</a><br />';
 			echo '<img src="/images/img/mail.gif" alt="Отправить" /> <a href="private.php?act=submit&amp;uz='.$uz.'">Отправить сообщение</a><br />';
 
 			echo '<img src="/images/img/money.gif" alt="Перечислить" /> <a href="/pages/perevod.php?uz='.$uz.'">Перечислить денег</a><br />';
