@@ -1,8 +1,8 @@
-<img src="/images/img/edit.gif" alt="image" /> <b><?= profile($post->user_login) ?></b> <small>(<?= date_fixed($post->created_at) ?>)</small><br /><br />
+<h4 class="media-heading" style="display: inline;"><?= profile($post->user_login) ?></h4> <small>(<?= date_fixed($post->created_at) ?>)</small><br /><br />
 
-<div class="form">
-	<form action="index.php?act=editpost&amp;id=<?=$id?>&amp;start=<?=$start?>&amp;uid=<?=$_SESSION['token']?>" method="post">
-		<textarea id="markItUp" cols="25" rows="5" name="msg"><?=$post->text?></textarea><br />
-		<input value="Редактировать" type="submit" />
+<div class="well">
+	<form action="index.php?act=editpost&amp;id=<?=$id?>&amp;start=<?=$start?>&amp;token=<?=$_SESSION['token']?>" method="post">
+		<textarea class="form-control" id="markItUp" cols="25" rows="5" name="msg"><?=$post->text?></textarea><br />
+		<button type="submit" class="btn btn-action">Редактировать</button>
 	</form>
 </div><br />

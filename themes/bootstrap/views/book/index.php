@@ -68,23 +68,23 @@
 <?php if (is_user()): ?>
 	<div class="well">
 		<form action="index.php?act=add&amp;token=<?= $_SESSION['token'] ?>" method="post">
-
-		<textarea class="form-control" id="markItUp" cols="25" rows="5" name="msg"></textarea><br />
-		<input type="submit" value="Написать" /></form>
+			<textarea class="form-control" id="markItUp" cols="25" rows="5" name="msg"></textarea><br />
+			<button type="submit" class="btn btn-action">Написать</button>
+		</form>
 	</div><br />
 
 <?php elseif ($config['bookadds'] == 1): ?>
 
 	<div class="well">
 		<form action="index.php?act=add&amp;token=<?= $_SESSION['token'] ?>" method="post">
-		Сообщение:<br />
-		<textarea class="form-control" cols="25" rows="5" name="msg"></textarea><br />
+			Сообщение:<br />
+			<textarea class="form-control" cols="25" rows="5" name="msg"></textarea><br />
 
-		Проверочный код:<br />
-		<img src="/gallery/protect.php" alt="" /><br />
-		<input name="provkod" class="form-control" maxlength="6" /><br />
-
-		<input type="submit" value="Написать" /></form>
+			Проверочный код:<br />
+			<img src="/gallery/protect.php" alt="" /><br />
+			<input name="provkod" class="form-control" maxlength="6" /><br />
+			<button type="submit" class="btn btn-action">Написать</button>
+		</form>
 	</div><br />
 
 <?php else: ?>

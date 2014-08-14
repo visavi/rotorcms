@@ -306,7 +306,6 @@ if (is_user()) {
 													DB::run() -> query("INSERT INTO `outbox` (`outbox_user`, `outbox_author`, `outbox_text`, `outbox_time`) VALUES (?, ?, ?, ?);", array($uz, $log, $msg, SITETIME));
 
 													DB::run() -> query("DELETE FROM `outbox` WHERE `outbox_author`=? AND `outbox_time` < (SELECT MIN(`outbox_time`) FROM (SELECT `outbox_time` FROM `outbox` WHERE `outbox_author`=? ORDER BY `outbox_time` DESC LIMIT ".$config['limitoutmail'].") AS del);", array($log, $log));
-													save_usermail(60);
 
 													$_SESSION['note'] = 'Ваше письмо успешно отправлено!';
 													redirect("private.php");

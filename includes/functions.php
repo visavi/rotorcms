@@ -740,41 +740,14 @@ function make_calendar ($month, $year) {
 	return $cal;
 }
 
-// --------------- Функция сохранения количества денег  у юзера ---------------//
-function save_money($time = 0) {
-	if (empty($time) || @filemtime(DATADIR."/temp/money.dat") < time() - $time) {
-		$queryuser = DB::run() -> query("SELECT `users_login`, `users_money` FROM `users` WHERE `users_money`>?;", array(0));
-		$alluser = $queryuser -> fetchAssoc();
-		file_put_contents(DATADIR."/temp/money.dat", serialize($alluser), LOCK_EX);
-	}
-}
-
 // --------------- Функция подсчета денег у юзера ---------------//
-function user_money($login) {
-	static $arrmoney;
-
-	if (empty($arrmoney)) {
-		save_money(3600);
-		$arrmoney = unserialize(file_get_contents(DATADIR."/temp/money.dat"));
-	}
-
-	return (isset($arrmoney[$login])) ? $arrmoney[$login] : 0;
-}
-
-// --------------- Функция сохранения количества писем ---------------//
-function save_usermail($time = 0) {
-	if (empty($time) || @filemtime(DATADIR."/temp/usermail.dat") < time() - $time) {
-		$querymail = DB::run() -> query("SELECT `inbox_user`, COUNT(*) FROM `inbox` GROUP BY `inbox_user`;");
-		$arrmail = $querymail -> fetchAssoc();
-		file_put_contents(DATADIR."/temp/usermail.dat", serialize($arrmail), LOCK_EX);
-	}
+function user_money($user_id) {
+	return User::first(array('conditions' => array('user_id=?', $user_id)))->money;
 }
 
 // --------------- Функция подсчета писем у юзера ---------------//
-function user_mail($login) {
-	save_usermail(3600);
-	$arrmail = unserialize(file_get_contents(DATADIR."/temp/usermail.dat"));
-	return (isset($arrmail[$login])) ? $arrmail[$login] : 0;
+function user_mail($user_id) {
+	return Inbox::count(array('conditions' => array('user_id=?', $user_id)));
 }
 
 // --------------- Функция кэширования аватаров -------------------//

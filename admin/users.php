@@ -323,7 +323,6 @@ if (is_admin(array(101, 102))) {
 
 														save_title();
 														save_nickname();
-														save_money();
 
 														echo '<img src="/images/img/open.gif" alt="image" /> <b>Данные пользователя успешно изменены!</b><br /><br />';
 													} else {

@@ -212,17 +212,18 @@ case 'editpost':
 	if (is_user()) {
 		if ($token == $_SESSION['token']) {
 			if (utf_strlen($msg) >= 5 && utf_strlen($msg) < $config['guesttextlength']) {
-				$post = DB::run()->queryFetch("SELECT * FROM `guest` WHERE `guest_id`=? AND `guest_user`=? LIMIT 1;", array($id, $log));
+
+				$post = Guest::first(array('conditions' => array('id = ? AND user_id = ?', $id, $user->id)));
 
 				if (!empty($post)) {
-					if ($post['guest_time'] + 600 > SITETIME) {
-						$msg = no_br($msg);
-						$msg = antimat($msg);
-						$msg = smiles($msg);
+					if (strtotime($post->created_at->format('db')) > time() - 600) {
+						$msg = smiles(antimat(no_br($msg)));
 
-						DB::run()->query("UPDATE `guest` SET `guest_text`=?, `guest_edit`=?, `guest_edit_time`=? WHERE `guest_id`=?;", array($msg, $log, SITETIME, $id));
+						//DB::run()->query("UPDATE `guest` SET `guest_text`=?, `guest_edit`=?, `guest_edit_time`=? WHERE `guest_id`=?;", array($msg, $log, SITETIME, $id));
 
-						$_SESSION['note'] = 'Сообщение успешно отредактировано!';
+
+
+						notice('Сообщение успешно отредактировано!');
 						redirect("index.php?start=$start");
 
 					} else {
