@@ -766,57 +766,33 @@ function save_avatar($time = 0) {
 }
 
 // --------------- Функция вывода аватара пользователя ---------------//
-function user_avatars2($login) {
-	global $config;
-	static $arravat;
-
-	if (empty($login) || $login == $config['guestsuser']) {
-		return '<img class="pull-left media-object" src="/images/avatars/guest.png" alt="" /> ';
-	}
-
-	if (empty($arravat)) {
-		save_avatar(3600);
-		$arravat = unserialize(file_get_contents(DATADIR."/temp/avatars.dat"));
-	}
-
-	if (isset($arravat[$login]) && file_exists(BASEDIR.'/'.$arravat[$login])) {
-		return '<a class="pull-left" href="/pages/user.php?uz='.$login.'"><img class="media-object" src="/'.$arravat[$login].'" alt="" /></a> ';
-	}
-
-	return '<a class="pull-left" href="/pages/user.php?uz='.$login.'"><img class="media-object" src="/images/avatars/noavatar.png" alt="" /></a> ';
-}
-
 function user_avatars($login) {
-    global $config;
-    static $arravat;
+	global $config;
+	static $avatars;
 
-    $params = array(
-        'class' => 'pull-left',
-        'link' => '#',
-        'img_class' => 'media-object',
-        'img' => '/images/avatars/guest.png'
-    );
+	$image = array(
+		'class' => 'pull-left media-object',
+		'src' => '/images/avatars/guest.png'
+	);
 
-    switch ($login) {
-        case $config['guestsuser']:
-            break;
+	switch ($login) {
+		case null:
+			break;
 
-        default:
-            if (empty($arravat)) {
-                save_avatar(3600);
-                $arravat = unserialize(file_get_contents(DATADIR."/temp/avatars.dat"));
-            }
+		default:
+			if (empty($avatars)) {
+				save_avatar(3600);
+				$avatars = unserialize(file_get_contents(DATADIR."/temp/avatars.dat"));
+			}
 
-            if (isset($arravat[$login]) && file_exists(BASEDIR.'/'.$arravat[$login])) {
-                $params['link'] = '/pages/user.php?uz='.$login;
-                $params['img_'] = '/'.$arravat[$login];
-            } else {
-                $params['link'] = '/pages/user.php?uz='.$login;
-                $params['img'] = '/images/avatars/noavatar.png';
-            }
-    }
+			if (isset($avatars[$login]) && file_exists($avatars[$login])) {
+				$image['src'] = $avatars[$login];
+			} else {
+				$image['src'] = '/images/avatars/noavatar.png';
+			}
+	}
 
-    return render('includes/avatar', compact('params'));
+	return render('includes/avatar', compact('image'));
 }
 
 

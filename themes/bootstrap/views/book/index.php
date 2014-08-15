@@ -31,7 +31,7 @@
 					<li><a href="index.php?act=edit&amp;id=<?= $post->id ?>&amp;start=<?= $start ?>">Редактировать</a></li>
 				<?php endif; ?>
 
-					<li><?= $post->created_at ?></li>
+					<li class="text-muted"><?= $post->created_at ?></li>
 				</ul>
 
 				<?php if ($post->user_login): ?>
