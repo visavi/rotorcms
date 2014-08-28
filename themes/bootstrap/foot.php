@@ -8,6 +8,12 @@
 #            Skype  :  vantuzilla             #
 #---------------------------------------------#
 ?>
+			</div>
+
+			<div class="col-lg-3">
+				<?php include_once ('right.php') ?>
+			</div>
+		</div>
 	</div>
 	<div class="footer">
 		<div class="container">
