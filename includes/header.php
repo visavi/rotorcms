@@ -54,8 +54,7 @@ if (!empty($config['gzip'])) {
 ##                               Авторизация по cookies                                   ##
 ############################################################################################
 if (empty($_SESSION['id']) && empty($_SESSION['password'])) {
-	if (isset($_COOKIE['id']) && isset($_COOKIE['password'])) {
-
+	if (!empty($_COOKIE['id']) && !empty($_COOKIE['password'])) {
 
 		$id = intval($_COOKIE['id']);
 		$password = check($_COOKIE['password']);

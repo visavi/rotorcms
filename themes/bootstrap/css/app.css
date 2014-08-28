@@ -15,6 +15,11 @@
   border: 1px  solid #ccc;
 }
 
+.media {
+  padding-bottom: 5px;
+  border-bottom: 1px solid #eee;
+}
+
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
