@@ -1,5 +1,5 @@
 <?php
-class Spam extends ActiveRecord\Model {
+class Spam extends BaseActiveRecord {
 
 	static $table_name = 'spam2';
 

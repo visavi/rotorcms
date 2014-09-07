@@ -1,5 +1,5 @@
 <?php
-class User extends ActiveRecord\Model {
+class User extends BaseActiveRecord {
 
 	static $table_name = 'users2';
 

@@ -1,5 +1,5 @@
 <?php
-class Blacklist extends ActiveRecord\Model {
+class Blacklist extends BaseActiveRecord {
 
 	static $table_name = 'blacklist2';
 

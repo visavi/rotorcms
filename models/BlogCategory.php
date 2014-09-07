@@ -1,5 +1,5 @@
 <?php
-class BlogCategory extends ActiveRecord\Model {
+class BlogCategory extends BaseActiveRecord {
 
 	static $table_name = 'blogs_categories2';
 

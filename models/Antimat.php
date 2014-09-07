@@ -1,5 +1,5 @@
 <?php
-class Antimat extends ActiveRecord\Model {
+class Antimat extends BaseActiveRecord {
 
 	static $table_name = 'antimat2';
 

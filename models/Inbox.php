@@ -1,5 +1,5 @@
 <?php
-class Inbox extends ActiveRecord\Model {
+class Inbox extends BaseActiveRecord {
 
 	static $table_name = 'inbox2';
 
