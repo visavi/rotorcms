@@ -23,9 +23,19 @@ switch ($act):
 ############################################################################################
 case "index":
 
-	$total = DB::run() -> querySingle("SELECT count(*) FROM `smiles`;");
+	//$total = DB::run() -> querySingle("SELECT count(*) FROM `smiles`;");
+	$total = Smile::count();
 
-	if ($total > 0) {
+	if ($total > 0 && $start >= $total) {
+		$start = last_page($total, $config['smilelist']);
+	}
+
+	$smiles = Smile::all(array('offset' => $start, 'limit' => $config['smilelist'], 'order' => 'LENGTH(code) desc'));
+
+	render('pages/smiles', compact('smiles', 'start', 'total'));
+
+
+/*	if ($total > 0) {
 		if ($start >= $total) {
 			$start = 0;
 		}
@@ -41,7 +51,7 @@ case "index":
 		echo 'Всего cмайлов: <b>'.$total.'</b><br /><br />';
 	} else {
 		show_error('В данной категории смайлов нет!');
-	}
+	}*/
 break;
 
 default:
