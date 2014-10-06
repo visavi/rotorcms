@@ -134,7 +134,7 @@ break;
 ############################################################################################
 case 'spam':
 
-	$token = check($_GET['token']);
+/*	$token = check($_GET['token']);
 	$id = abs(intval($_GET['id']));
 
 	if (is_user()) {
@@ -167,7 +167,7 @@ case 'spam':
 		show_login('Вы не авторизованы, чтобы подать жалобу, необходимо');
 	}
 
-	render('includes/back', array('link' => 'index.php?start='.$start, 'title' => 'Вернуться'));
+	render('includes/back', array('link' => 'index.php?start='.$start, 'title' => 'Вернуться'));*/
 break;
 
 ############################################################################################
@@ -219,9 +219,9 @@ case 'editpost':
 					if (strtotime($post->created_at->format('db')) > time() - 600) {
 						$msg = smiles(antimat(no_br($msg)));
 
-						//DB::run()->query("UPDATE `guest` SET `guest_text`=?, `guest_edit`=?, `guest_edit_time`=? WHERE `guest_id`=?;", array($msg, $log, SITETIME, $id));
-
-
+						$post->text = $msg;
+						$post->edit_user_id = $user->id;
+						$post->save();
 
 						notice('Сообщение успешно отредактировано!');
 						redirect("index.php?start=$start");

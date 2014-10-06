@@ -45,6 +45,10 @@
 
 				<div class="message"><?= bb_code($post->text) ?></div>
 
+				<?php if (!empty($post->edit_user_id)): ?>
+					<div class="small text-muted"><span class="glyphicon glyphicon-pencil"></span> Отредактировано: <?= $post->user_login ?> (<?= $post->updated_at ?>)</div>
+				<?php endif; ?>
+
 				<?php if (!empty($post->reply)): ?>
 					<div class="bg-danger padding">Ответ: <?= $post->reply ?></div>
 				<?php endif; ?>

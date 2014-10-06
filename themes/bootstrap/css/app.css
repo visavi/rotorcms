@@ -49,9 +49,6 @@ body > .container {
   background-color: #fff;
   border: 1px  solid #ccc;
 }
-.container .text-muted {
-  margin: 20px 0;
-}
 
 .footer > .container {
   padding-right: 15px;
