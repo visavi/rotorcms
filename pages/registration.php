@@ -47,7 +47,7 @@ if ($config['openreg'] == 1) {
 						-> addRule('regex', array($login, '|^[a-z0-9\-]+$|i'), 'Недопустимые символы в логине. Разрешены знаки латинского алфавита, цифры и дефис!', true)
 						-> addRule('regex', array($password, '|^[а-яa-z0-9_\-\.]+$|iu'), 'Недопустимые символы в пароле. Разрешены знаки алфавита, цифры, дефис, подчеркивание и точка!', true)
 						-> addRule('email', $email, 'Вы ввели неверный адрес e-mail, необходим формат name@site.domen!', $config['regmail'])
-						-> addRule('string', $invite, 'Слишком длинный или короткий пригласительный ключ!', $config['invite'], 15, 20)
+						-> addRule('string', $invite, 'Слишком длинный или короткий пригласительный ключ!', $config['invite'], 10, 20)
 						-> addRule('string', $login, 'Слишком длинный или короткий логин!', true, 3, 20)
 						-> addRule('string', $password, 'Слишком длинный или короткий пароль!',  true, 6, 30)
 						-> addRule('not_equal', array($login, $password), 'Пароль и логин должны отличаться друг от друга!');
