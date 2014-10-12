@@ -11,7 +11,7 @@ require_once ('../includes/start.php');
 require_once ('../includes/functions.php');
 
 $imagecache = '/upload/counters/counter7.gif';
-if (!file_exists($imagecache) || date_fixed(@filemtime($imagecache), "dmY") != date_fixed(SITETIME, "dmY")){
+if (!file_exists(BASEDIR.$imagecache) || date_fixed(@filemtime(BASEDIR.$imagecache), "dmY") != date_fixed(SITETIME, "dmY")){
 
 	$week_day = date("w") - 1;
 	$arr_week = array('вс', 'пн', 'вт', 'ср', 'чт', 'пт', 'сб');

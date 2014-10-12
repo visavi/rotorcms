@@ -22,7 +22,7 @@ if ($debugmode) {
 }
 
 define('STARTTIME', microtime(1));
-define('BASEDIR', dirname(dirname(__FILE__)));
+define('BASEDIR', dirname(__DIR__));
 define('DATADIR', BASEDIR.'/local');
 define('SITETIME', time());
 define('PCLZIP_TEMPORARY_DIR', BASEDIR.'/local/temp/');

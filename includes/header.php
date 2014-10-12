@@ -148,4 +148,6 @@ if ($user = is_user()) {
 			Log::table()->delete(array('id' => $delete));
 		}
 	}
+} else {
+	$user = new User;
 }

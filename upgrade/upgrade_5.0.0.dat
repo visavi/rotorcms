@@ -387,6 +387,17 @@ CREATE TABLE IF NOT EXISTS `inbox2` (
   KEY `created_at` (`created_at`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-
+CREATE TABLE IF NOT EXISTS `error2` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `num` smallint(4) unsigned NOT NULL,
+  `request` varchar(255) NOT NULL DEFAULT '',
+  `referer` varchar(255) NOT NULL DEFAULT '',
+  `user_id` int(11) unsigned NOT NULL,
+  `ip` varchar(15) NOT NULL DEFAULT '',
+  `brow` varchar(25) NOT NULL DEFAULT '',
+  `created_at` timestamp NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `num` (`num`,`created_at`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
