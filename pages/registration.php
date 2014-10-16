@@ -144,7 +144,10 @@ if ($config['openreg'] == 1) {
 
 						// ------------------------------ Уведомление в приват ----------------------------------//
 						$textpriv = text_private(1, array('%USERNAME%'=>$login, '%SITENAME%'=>$config['home']));
-						send_private($login, $config['nickname'], $textpriv);
+
+						// исправить
+						$config['nickname'] = 1;
+						send_private($user->id, $config['nickname'], $textpriv);
 
 						if (!empty($config['regmail'])) {
 							addmail($email, 'Регистрация на сайте '.$config['title'], $regmessage);

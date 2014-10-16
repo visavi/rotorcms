@@ -1513,9 +1513,9 @@ function last_news() {
 }
 
 // ------------------------- Функция проверки аккаунта  ------------------------//
-function check_user($id) {
-	if (!empty($id)) {
-		$user = User::exists($id);
+function check_user($user_id) {
+	if (!empty($user_id)) {
+		$user = User::exists($user_id);
 		//$user = DB::run() -> querySingle("SELECT `users_id` FROM `users` WHERE `users_login`=? LIMIT 1;", array($login));
 		if ($user) {
 			return true;
@@ -2345,15 +2345,23 @@ function removeDir($dir){
 }
 
 // ----- Функция отправки приватного сообщения -----//
-function send_private($login, $sender, $text, $time = SITETIME){
-	if (check_user($login)) {
+function send_private($user_id, $author_id, $text, $time = SITETIME){
+	if (check_user($user_id)) {
 
-		DB::run() -> query("INSERT INTO `inbox` (`inbox_user`, `inbox_author`, `inbox_text`, `inbox_time`) VALUES (?, ?, ?, ?);",
-		array($login, $sender, $text, $time));
+		$inbox = new Inbox;
+		$inbox->user_id = $user_id;
+		$inbox->author_id = $author_id;
+		$inbox->text = $text;
+		$inbox->save();
 
-		DB::run() -> query("UPDATE `users` SET `users_newprivat`=`users_newprivat`+1 WHERE `users_login`=? LIMIT 1;", array($login));
+		$user = User::find_by_id($user_id);
+		$user->newprivat = $user->newprivat + 1;
+		$user->save();
 
-		save_usermail();
+		//DB::run() -> query("INSERT INTO `inbox` (`inbox_user`, `inbox_author`, `inbox_text`, `inbox_time`) VALUES (?, ?, ?, ?);",
+		//array($user_id, $sender, $text, $time));
+
+		//DB::run() -> query("UPDATE `users` SET `users_newprivat`=`users_newprivat`+1 WHERE `users_login`=? LIMIT 1;", array($user_id));
 		return true;
 	}
 	return false;
@@ -2362,12 +2370,14 @@ function send_private($login, $sender, $text, $time = SITETIME){
 // ----- Функция подготовки приватного сообщения -----//
 function text_private($id, $replace = array()){
 
-	$message = DB::run() -> querySingle("SELECT `notice_text` FROM `notice` WHERE `notice_id`=? LIMIT 1;", array($id));
+	$notice = Notice::find_by_id($id);
 
-	if (!empty($message)){
+	if ($notice) {
+
 		foreach ($replace as $key=>$val){
-			$message = str_replace($key, $val, $message);
+			$message = str_replace($key, $val, $notice->text);
 		}
+
 	} else {
 		$message = 'Отсутствует текст сообщения!';
 	}

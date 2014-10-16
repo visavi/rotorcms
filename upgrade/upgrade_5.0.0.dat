@@ -380,7 +380,6 @@ CREATE TABLE IF NOT EXISTS `inbox2` (
   `user_id` int(11) unsigned NOT NULL,
   `author_id` int(11) unsigned NOT NULL,
   `text` text NOT NULL,
-  `updated_at` timestamp NOT NULL,
   `created_at` timestamp NOT NULL,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
@@ -399,5 +398,19 @@ CREATE TABLE IF NOT EXISTS `error2` (
   PRIMARY KEY (`id`),
   KEY `num` (`num`,`created_at`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `notice2` (
+  `id` smallint(4) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `text` text NOT NULL,
+  `user_id` int(11) unsigned NOT NULL,
+  `protect` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `created_at` timestamp NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+INSERT INTO `notice2` (`id`, `name`, `text`, `user_id`, `protect`) VALUES
+(1, 'Приветствие при регистрации в приват', 'Добро пожаловать, %USERNAME%!<br />Теперь Вы полноправный пользователь сайта, сохраните ваш пароль и логин в надежном месте, они пригодятся вам для входа на наш сайт.<br />Перед посещением сайта рекомендуем вам ознакомиться с [url=%SITENAME%/pages/rules.php]правилами сайта[/url], это поможет Вам избежать неприятных ситуаций.<br />Желаем приятно провести время.<br />С уважением, администрация сайта!', 1, 1);
 
 
