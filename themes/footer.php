@@ -28,7 +28,7 @@ if (is_user()) {
 		$visit->user_id = $user->id;
 		$visit->count = 1;
 	} else {
-		$visit->count = ($visit->updated_at->format('Ymd') == date('Ymd')) ? $visit->count + 1 : 0;
+		$visit->count = ($visit->created_at->format('Ymd') == date('Ymd')) ? $visit->count + 1 : 0;
 	}
 
 	$visit->ip = $ip;
