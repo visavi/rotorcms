@@ -6,7 +6,7 @@ class BaseActiveRecord extends ActiveRecord\Model {
 	 * @param string $separator разделитель между ошибками
 	 * @return string ошибки в виде строки
 	 */
-	function getErrors($separator = ', ') {
+	public function getErrors($separator = ', ') {
 		$res = array();
 		$fields = $this->errors->get_raw_errors();
 		foreach ($fields as $errors) {

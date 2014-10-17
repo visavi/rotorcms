@@ -73,26 +73,63 @@ if ($online[1] < 150 || is_user()) {
 		}
 	}
 	// -----------------------------------------------------------//
-	$counts = Counter::first();
+	$count = Counter::first();
 
-	//$counts = DB::run() -> queryFetch("SELECT * FROM `counter`;");
+	//$count = DB::run() -> queryFetch("SELECT * FROM `counter`;");
 
-	if ($counts->hours != $hours) {
+	if ($count->hours != $hours) {
 
-		/*$attributes = array(
-			'hour' => $hours,
-			'hosts' => $counts->hosts24,
-			'hits' => $counts->hits24,
-		);
-		Counter24::create($attributes);
+		$counter24 = Counter24::find_by_hour($hours) ?: new Counter24;
+		$counter24->hour = $hours;
+		$counter24->hosts = $count->hosts24;
+		$counter24->hits = $count->hits24;
+		$counter24->save();
 
-		DB::run() -> query("INSERT IGNORE INTO `counter24` (`count_hour`, `count_hosts`, `count_hits`) VALUES (?, ?, ?);", array($hours, $counts['count_hosts24'], $counts['count_hits24']));
-		DB::run() -> query("UPDATE `counter` SET `count_hours`=?, `count_hosts24`=?, `count_hits24`=?;", array($hours, 0, 0));
-		DB::run() -> query("DELETE FROM `counter24` WHERE `count_hour` < (SELECT MIN(`count_hour`) FROM (SELECT `count_hour` FROM `counter24` ORDER BY `count_hour` DESC LIMIT 24) AS del);");
-		*/
+		$count->hours = $hours;
+		$count->hosts24 = 0;
+		$count->hits24 = 0;
+		$count->save();
+
+		$clocks = Counter24::all(array('offset' => 24, 'limit' => 10, 'order' => 'hour desc'));
+		$delete = ActiveRecord\collect($clocks, 'id');
+		if ($delete) Counter24::table()->delete(array('id' => array($delete)));
+
+
+		//DB::run() -> query("INSERT IGNORE INTO `counter24` (`count_hour`, `count_hosts`, `count_hits`) VALUES (?, ?, ?);", array($hours, $counts['count_hosts24'], $counts['count_hits24']));
+		//DB::run() -> query("UPDATE `counter` SET `count_hours`=?, `count_hosts24`=?, `count_hits24`=?;", array($hours, 0, 0));
+		//DB::run() -> query("DELETE FROM `counter24` WHERE `count_hour` < (SELECT MIN(`count_hour`) FROM (SELECT `count_hour` FROM `counter24` ORDER BY `count_hour` DESC LIMIT 24) AS del);");
+
 	}
 
-	if ($counts->days != $days) {
+	if ($count->days != $days) {
+
+		$counter31 = Counter31::find_by_day($days) ?: new Counter31;
+		$counter31->day = $days;
+		$counter31->hosts = $count->dayhosts;
+		$counter31->hits = $count->dayhits;
+		$counter31->save();
+
+		$count->days = $days;
+		$count->dayhosts = 0;
+		$count->dayhits = 0;
+		$count->save();
+
+		$days31 = Counter31::all(array('offset' => 31, 'limit' => 10, 'order' => 'day desc'));
+		$delete = ActiveRecord\collect($days31, 'id');
+		if ($delete) Counter31::table()->delete(array('id' => array($delete)));
+
+
+		$counter7 = Counter31::all(array('limit' => 6, 'order' => 'day desc'));
+		$weeks = ActiveRecord\assoc($counter7, 'day', 'hosts');
+
+		$host_data = array();
+		for ($i = 0, $tekdays = $days; $i < 6; $tekdays--, $i++) {
+			array_unshift($host_data, (isset($weeks[$tekdays])) ? $weeks[$tekdays] : 0);
+		}
+
+		file_put_contents(DATADIR.'/temp/counter7.dat', serialize($host_data), LOCK_EX);
+
+		//
 		/*
 		DB::run() -> query("INSERT IGNORE INTO `counter31` (`count_days`, `count_hosts`, `count_hits`) VALUES (?, ?, ?);", array($days, $counts['count_dayhosts'], $counts['count_dayhits']));
 		DB::run() -> query("UPDATE `counter` SET `count_days`=?, `count_dayhosts`=?, `count_dayhits`=?;", array($days, 0, 0));

@@ -827,11 +827,10 @@ function stats_counter() {
 	if (@filemtime(DATADIR."/temp/counter.dat") < time()-10) {
 
 		$counts = Counter::first();
-
-		file_put_contents(DATADIR."/temp/counter.dat", serialize($counts), LOCK_EX);
+		file_put_contents(DATADIR."/temp/counter.dat", $counts->to_json(), LOCK_EX);
 	}
 
-	return unserialize(file_get_contents(DATADIR."/temp/counter.dat"));
+	return json_decode(file_get_contents(DATADIR."/temp/counter.dat"));
 }
 
 // ------------------ Функция вывода счетчика посещений -----------------//
