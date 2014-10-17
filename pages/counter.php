@@ -109,7 +109,7 @@ switch ($act):
 			$host_data = array_reverse($host_data, true);
 
 			echo '<b>Время — Хосты / Хиты</b><br />';
-			for ($i = 0, $tekhour = $hours; $i < $currhour; $tekhour -= 1, $i++) {
+			for ($i = 0, $tekhour = $hour; $i < $currhour; $tekhour -= 1, $i++) {
 				echo date_fixed(floor(($tekhour-1) * 3600), 'H:i').' - '.date_fixed(floor($tekhour * 3600), 'H:i').' — <b>'.$host_data[$tekhour].'</b> / <b>'.$hits_data[$tekhour].'</b><br />';
 			}
 
