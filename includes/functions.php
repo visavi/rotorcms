@@ -1529,7 +1529,7 @@ function is_user() {
 	global $config;
 	static $result = false;
 
-	if (empty($result)) {
+	if (!$result) {
 		if (isset($_SESSION['id']) && isset($_SESSION['password'])) {
 
 			$user = User::first($_SESSION['id']);

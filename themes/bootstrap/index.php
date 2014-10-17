@@ -66,8 +66,8 @@ header("Content-type:text/html; charset=utf-8");
 				</li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
-<?= var_dump($user) ?>
-					<?php if ($user): ?>
+
+					<?php if (is_user()): ?>
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><?= $user->getLogin() ?> <b class="caret"></b></a>
 							<ul class="dropdown-menu">
