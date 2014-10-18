@@ -10,7 +10,7 @@
 ?>
 			</div>
 
-			<div class="col-lg-3">
+			<div class="col-lg-3 left-border">
 				<?php include_once ('right.php') ?>
 			</div>
 		</div>

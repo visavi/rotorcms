@@ -1033,21 +1033,24 @@ function user_online($user_id) {
 }
 
 // --------------- Функция определение пола пользователя ---------------//
-function user_gender($login) {
+function user_gender($user_id) {
 	static $arrgender;
 
 	$gender = 'user.gif';
 
 	if (empty($arrgender)) {
 		if (@filemtime(DATADIR."/temp/gender.dat") < time()-600) {
-			$querygender = DB::run() -> query("SELECT `users_login` FROM `users` WHERE `users_gender`=?;", array(2));
-			$allgender = $querygender -> fetchAll(PDO::FETCH_COLUMN);
+			$genders = User::all(array('conditions' => array('gender = ?', 2), 'select' => 'id'));
+			$allgender = ActiveRecord\collect($genders, 'id');
+
+			//$querygender = DB::run() -> query("SELECT `users_login` FROM `users` WHERE `users_gender`=?;", array(2));
+			//$allgender = $querygender -> fetchAll(PDO::FETCH_COLUMN);
 			file_put_contents(DATADIR."/temp/gender.dat", serialize($allgender), LOCK_EX);
 		}
 		$arrgender = unserialize(file_get_contents(DATADIR."/temp/gender.dat"));
 	}
 
-	if (in_array($login, $arrgender)) {
+	if (in_array($user_id, $arrgender)) {
 		$gender = 'female.gif';
 	}
 

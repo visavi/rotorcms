@@ -91,5 +91,5 @@ header("Content-type:text/html; charset=utf-8");
 
 	<!-- Begin page content -->
 	<div class="container">
-		<div class="row">
+		<div class="row main">
 			<div class="col-lg-9">

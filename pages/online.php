@@ -29,67 +29,56 @@ switch ($act):
 ############################################################################################
 ##                                    Главная страница                                    ##
 ############################################################################################
-	case 'index':
+case 'index':
 
-		if ($total > 0) {
-			if ($start >= $total) {
-				$start = 0;
-			}
+	if ($start >= $total) {
+		$start = 0;
+	}
 
-			$queryonline = DB::run() -> query("SELECT * FROM `online` WHERE `online_user`<>? ORDER BY `online_time` DESC LIMIT ".$start.", ".$config['onlinelist'].";", array(''));
+	$onlines = Online::all(array('conditions' => array('user_id <> ?', ''), 'order' =>  'created_at', 'offset' => $start, 'limit' => $config['onlinelist']));
 
-			while ($data = $queryonline -> fetch()) {
+	//$queryonline = DB::run() -> query("SELECT * FROM `online` WHERE `online_user`<>? ORDER BY `online_time` DESC LIMIT ".$start.", ".$config['onlinelist'].";", array(''));
+
+	render('pages/online', compact('onlines',  'start', 'total'));
+
+	echo '<img src="/images/img/users.gif" alt="image" /> <a href="online.php?act=all">Показать гостей</a><br />';
+break;
+
+############################################################################################
+##                                Список всех пользователей                               ##
+############################################################################################
+case 'all':
+
+	$total = $total_all;
+
+	if ($total > 0) {
+		if ($start >= $total) {
+			$start = 0;
+		}
+
+		$queryonline = DB::run() -> query("SELECT * FROM `online` ORDER BY `online_time` DESC LIMIT ".$start.", ".$config['onlinelist'].";");
+
+		while ($data = $queryonline -> fetch()) {
+			if (empty($data['online_user'])) {
+				echo '<div class="b">';
+				echo '<img src="/images/img/user.gif" alt="image" /> <b>'.$config['guestsuser'].'</b>  (Время: '.date_fixed($data['online_time'], 'H:i:s').')</div>';
+			} else {
 				echo '<div class="b">';
 				echo user_gender($data['online_user']).' <b>'.profile($data['online_user']).'</b> (Время: '.date_fixed($data['online_time'], 'H:i:s').')</div>';
-
-				if (is_admin()) {
-					echo '<div><span class="data">('.$data['online_brow'].', '.$data['online_ip'].')</span></div>';
-				}
 			}
 
-			page_strnavigation('online.php?', $config['onlinelist'], $start, $total);
-		} else {
-			show_error('Авторизованных пользователей нет!');
+			if (is_admin()) {
+				echo '<div><span class="data">('.$data['online_brow'].', '.$data['online_ip'].')</span></div>';
+			}
 		}
 
-		echo '<img src="/images/img/users.gif" alt="image" /> <a href="online.php?act=all">Показать гостей</a><br />';
-	break;
+		page_strnavigation('online.php?act=all&amp;', $config['onlinelist'], $start, $total);
+	} else {
+		show_error('На сайте никого нет!');
+	}
 
-	############################################################################################
-	##                                Список всех пользователей                               ##
-	############################################################################################
-	case 'all':
-
-		$total = $total_all;
-
-		if ($total > 0) {
-			if ($start >= $total) {
-				$start = 0;
-			}
-
-			$queryonline = DB::run() -> query("SELECT * FROM `online` ORDER BY `online_time` DESC LIMIT ".$start.", ".$config['onlinelist'].";");
-
-			while ($data = $queryonline -> fetch()) {
-				if (empty($data['online_user'])) {
-					echo '<div class="b">';
-					echo '<img src="/images/img/user.gif" alt="image" /> <b>'.$config['guestsuser'].'</b>  (Время: '.date_fixed($data['online_time'], 'H:i:s').')</div>';
-				} else {
-					echo '<div class="b">';
-					echo user_gender($data['online_user']).' <b>'.profile($data['online_user']).'</b> (Время: '.date_fixed($data['online_time'], 'H:i:s').')</div>';
-				}
-
-				if (is_admin()) {
-					echo '<div><span class="data">('.$data['online_brow'].', '.$data['online_ip'].')</span></div>';
-				}
-			}
-
-			page_strnavigation('online.php?act=all&amp;', $config['onlinelist'], $start, $total);
-		} else {
-			show_error('На сайте никого нет!');
-		}
-
-		echo '<img src="/images/img/users.gif" alt="image" /> <a href="online.php">Cкрыть гостей</a><br />';
-	break;
+	echo '<img src="/images/img/users.gif" alt="image" /> <a href="online.php">Cкрыть гостей</a><br />';
+break;
 
 default:
 	redirect('online.php');
