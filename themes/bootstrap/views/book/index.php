@@ -37,7 +37,7 @@
 				<?php if ($post->user_login): ?>
 
 					<h4 class="media-heading" style="display: inline;"><?= profile($post->user_login) ?></h4>
-					<?= user_title($post->user_login) ?> <?= user_online($post->user_login) ?>
+					<?= user_title($post->user_id) ?> <?= user_online($post->user_id) ?>
 
 				<?php else: ?>
 					<h4 class="media-heading"><?= $config['guestsuser'] ?></h4>

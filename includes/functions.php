@@ -443,7 +443,7 @@ function save_title($time = 0) {
 	if (empty($time) || @filemtime(DATADIR.'/temp/status.dat') < time() - $time) {
 
 		$users = User::all(array(
-			'select' => 'u.login, u.status, s.name, s.color',
+			'select' => 'u.id, u.status, s.name, s.color',
 			'from' => 'users2 u',
 			'conditions' => 'u.point > 0',
 			'joins' => 'LEFT JOIN status2 s ON u.point BETWEEN s.point AND s.topoint')
@@ -452,16 +452,16 @@ function save_title($time = 0) {
 		$allstat = array();
 		foreach ($users as $user) {
 			if (!empty($user->status)) {
-				$allstat[$user->login] = '<span style="color:#ff0000">'.$user->status.'</span>';
+				$allstat[$user->id] = '<span style="color:#ff0000">'.$user->status.'</span>';
 				continue;
 			}
 
 			if (!empty($user->color)) {
-				$allstat[$user->login] = '<span style="color:'.$user->color.'">'.$user->name.'</span>';
+				$allstat[$user->id] = '<span style="color:'.$user->color.'">'.$user->name.'</span>';
 				continue;
 			}
 
-			$allstat[$user->login] = $user->name;
+			$allstat[$user->id] = $user->name;
 		}
 
 		file_put_contents(DATADIR.'/temp/status.dat', serialize($allstat), LOCK_EX);
@@ -469,7 +469,7 @@ function save_title($time = 0) {
 }
 
 // ------------- Функция вывода статусов пользователей -----------//
-function user_title($login) {
+function user_title($user_id) {
 	global $config;
 	static $arrstat;
 
@@ -478,7 +478,7 @@ function user_title($login) {
 		$arrstat = unserialize(file_get_contents(DATADIR.'/temp/status.dat'));
 	}
 
-	return (isset($arrstat[$login])) ? $arrstat[$login] : $config['statusdef'];
+	return (isset($arrstat[$user_id])) ? $arrstat[$user_id] : $config['statusdef'];
 }
 
 // --------------- Функция кэширования ников -------------------//
@@ -1008,7 +1008,7 @@ function mc($str) {
 }
 
 // --------------- Функция определение онлайн-статуса ---------------//
-function user_online($login) {
+function user_online($user_id) {
 	static $arrvisit;
 
 	$statwho = '<span class="label label-danger">Off</span>';
@@ -1016,8 +1016,8 @@ function user_online($login) {
 	if (empty($arrvisit)) {
 		if (@filemtime(DATADIR."/temp/visit.dat") < time()-10) {
 
-			$query = Visit::all(array('conditions' => 'updated_at > NOW()-INTERVAL 10 MINUTE'));
-			$allvisits = ActiveRecord\collect($query, 'login');
+			$visits = Visit::all(array('conditions' => 'created_at > NOW()-INTERVAL 10 MINUTE'));
+			$allvisits = ActiveRecord\collect($visits, 'user_id');
 
 			file_put_contents(DATADIR."/temp/visit.dat", serialize($allvisits), LOCK_EX);
 		}
@@ -1025,7 +1025,7 @@ function user_online($login) {
 		$arrvisit = unserialize(file_get_contents(DATADIR."/temp/visit.dat"));
 	}
 
-	if (is_array($arrvisit) && in_array($login, $arrvisit)) {
+	if (is_array($arrvisit) && in_array($user_id, $arrvisit)) {
 		$statwho = '<span class="label label-success">On</span>';
 	}
 
