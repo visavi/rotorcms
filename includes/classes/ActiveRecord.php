@@ -17,6 +17,7 @@ require __DIR__.'/ActiveRecord/ConnectionManager.php';
 require __DIR__.'/ActiveRecord/Connection.php';
 require __DIR__.'/ActiveRecord/Serialization.php';
 require __DIR__.'/ActiveRecord/Expressions.php';
+require __DIR__.'/ActiveRecord/Validations.php';
 require __DIR__.'/ActiveRecord/SQLBuilder.php';
 require __DIR__.'/ActiveRecord/Reflections.php';
 require __DIR__.'/ActiveRecord/Inflector.php';
