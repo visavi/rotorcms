@@ -1,6 +1,6 @@
 <?php
 class Inbox extends BaseActiveRecord {
 
-	static $table_name = 'inbox2';
+	static $table_name = 'inbox';
 
 }

@@ -1,6 +1,6 @@
 <?php
 class Setting extends BaseActiveRecord {
 
-	static $table_name = 'setting2';
+	static $table_name = 'setting';
 
 }

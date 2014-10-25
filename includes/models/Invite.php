@@ -1,6 +1,6 @@
 <?php
 class Invite extends BaseActiveRecord {
 
-	static $table_name = 'invite2';
+	static $table_name = 'invite';
 
 }

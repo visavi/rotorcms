@@ -42,7 +42,7 @@ spl_autoload_register(function ($class) {
 include_once (BASEDIR.'/includes/classes/ActiveRecord.php');
 ActiveRecord\Config::initialize(function($cfg) {
 
-	$cfg->set_model_directory(BASEDIR.'/models');
+	$cfg->set_model_directory(BASEDIR.'/includes/models');
 	$cfg->set_connections(array(
 		'development' => 'mysql://'.DBUSER.':'.DBPASS.'@'.DBHOST.'/'.DBNAME.';charset=utf8'
 	));

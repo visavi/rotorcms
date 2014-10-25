@@ -1,7 +1,7 @@
 <?php
 class User extends BaseActiveRecord {
 
-	static $table_name = 'users2';
+	static $table_name = 'users';
 
 	public function getId()
 	{

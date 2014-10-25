@@ -444,9 +444,9 @@ function save_title($time = 0) {
 
 		$users = User::all(array(
 			'select' => 'u.id, u.status, s.name, s.color',
-			'from' => 'users2 u',
+			'from' => 'users u',
 			'conditions' => 'u.point > 0',
-			'joins' => 'LEFT JOIN status2 s ON u.point BETWEEN s.point AND s.topoint')
+			'joins' => 'LEFT JOIN status s ON u.point BETWEEN s.point AND s.topoint')
 		);
 
 		$allstat = array();
@@ -1069,19 +1069,20 @@ function allonline() {
 }
 
 // ------------------ Функция определение последнего посещения ----------------//
-function user_visit($login) {
-	$visit = '(Оффлайн)';
+function user_visit($user_id) {
+	$status = '(Оффлайн)';
 
-	$queryvisit = DB::run() -> querySingle("SELECT `visit_nowtime` FROM `visit` WHERE `visit_user`=? LIMIT 1;", array($login));
-	if (!empty($queryvisit)) {
-		if ($queryvisit > SITETIME-600) {
-			$visit = '(Сейчас на сайте)';
+	$visit = Visit::first(array('conditions' => array('user_id = ?', $user_id)));
+
+	if ($visit) {
+		if ($visit->created_at->getTimestamp() > SITETIME-600) {
+			$status = '(Сейчас на сайте)';
 		} else {
-			$visit = '(Последний визит: '.date_fixed($queryvisit).')';
+			$status = '(Последний визит: '.date_fixed($visit->created_at->getTimestamp()).')';
 		}
 	}
 
-	return $visit;
+	return $status;
 }
 
 /*// --------------- Функции сжатия страниц ---------------//

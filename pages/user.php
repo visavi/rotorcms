@@ -21,10 +21,14 @@ switch ($act):
 ############################################################################################
 case 'index':
 
-	$data = DB::run() -> queryFetch("SELECT * FROM `users` WHERE `users_login`=? LIMIT 1;", array($uz));
-	if (!empty($data)) {
+	$data = User::find_by_login($uz);
+	if ($data) {
+echo $data->created_at.'<br />';
+var_dump(date_fixed($data->created_at->getTimestamp())).'<br />';
+var_dump(date_fixed(strtotime($data->created_at->format('db')))).'<br />';
+var_dump(date('d.m.Y H:i:s', SITETIME)).'<br />';
 
-		show_title(user_avatars($uz).nickname($uz), user_visit($uz));
+		show_title(user_avatars($data->id).$data->login, user_visit($data->id));
 		$config['newtitle'] = 'Анкета пользователя '.nickname($data['users_login']);
 
 		if ($data['users_confirmreg'] == 1) {

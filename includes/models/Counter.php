@@ -1,6 +1,6 @@
 <?php
 class Counter extends BaseActiveRecord {
 
-	static $table_name = 'counter2';
+	static $table_name = 'counter';
 
 }

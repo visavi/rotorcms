@@ -1,6 +1,6 @@
 <?php
 class Antimat extends BaseActiveRecord {
 
-	static $table_name = 'antimat2';
+	static $table_name = 'antimat';
 
 }

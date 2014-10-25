@@ -1,6 +1,6 @@
 <?php
 class Blog extends BaseActiveRecord {
 
-	static $table_name = 'blogs2';
+	static $table_name = 'blogs';
 
 }

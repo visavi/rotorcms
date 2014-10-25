@@ -1,7 +1,7 @@
 <?php
 class Visit extends BaseActiveRecord {
 
-	static $table_name = 'visit2';
+	static $table_name = 'visit';
 
 	static $belongs_to = array(
 		array('user')

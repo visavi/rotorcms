@@ -1,7 +1,7 @@
 <?php
 class Online extends BaseActiveRecord {
 
-	static $table_name = 'online2';
+	static $table_name = 'online';
 
 	static $belongs_to = array(
 		array('user')

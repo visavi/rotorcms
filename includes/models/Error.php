@@ -1,5 +1,5 @@
 <?php
 class Error extends BaseActiveRecord {
 
-	static $table_name = 'error2';
+	static $table_name = 'error';
 }

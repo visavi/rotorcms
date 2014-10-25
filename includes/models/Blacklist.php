@@ -1,6 +1,6 @@
 <?php
 class Blacklist extends BaseActiveRecord {
 
-	static $table_name = 'blacklist2';
+	static $table_name = 'blacklist';
 
 }

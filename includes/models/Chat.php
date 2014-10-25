@@ -1,6 +1,6 @@
 <?php
 class Chat extends BaseActiveRecord {
 
-	static $table_name = 'chat2';
+	static $table_name = 'chat';
 
 }
