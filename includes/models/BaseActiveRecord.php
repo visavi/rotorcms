@@ -2,6 +2,14 @@
 class BaseActiveRecord extends ActiveRecord\Model {
 
 	/**
+	 * Метод атрибутов полей
+	 * @return array пустой массив
+	 */
+	public function attributeLabels() {
+		return array();
+	}
+
+	/**
 	 * Возвращает все ошибки в виде строки
 	 * @param string $separator разделитель между ошибками
 	 * @return string ошибки в виде строки
