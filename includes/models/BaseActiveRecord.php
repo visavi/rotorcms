@@ -1,6 +1,7 @@
 <?php
-class BaseActiveRecord extends ActiveRecord\Model {
 
+class BaseActiveRecord extends ActiveRecord\Model
+{
 	/**
 	 * Метод атрибутов полей
 	 * @return array пустой массив
@@ -19,9 +20,9 @@ class BaseActiveRecord extends ActiveRecord\Model {
 		$labels = $this->attributeLabels();
 		$raw_errors = $this->errors->get_raw_errors();
 
-		foreach ($raw_errors as $field => $errors) {
+		foreach ($raw_errors as $attribute => $errors) {
 			foreach ($errors as $error) {
-				$res[] = isset($labels[$field]) ? $labels[$field].' '.$error : $field.' '.$error;
+				$res[] = isset($labels[$attribute]) ? $labels[$attribute].' '.$error : ucfirst($attribute).' '.$error;
 			}
 		}
 		return implode($separator, $res);

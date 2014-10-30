@@ -189,20 +189,53 @@ CREATE TABLE IF NOT EXISTS `photo` (
 
 CREATE TABLE IF NOT EXISTS `forums` (
   `id` smallint(4) unsigned NOT NULL AUTO_INCREMENT,
-  `order` smallint(4) unsigned NOT NULL DEFAULT '0',
-  `parent` smallint(4) unsigned NOT NULL DEFAULT '0',
+  `sort` smallint(4) unsigned NOT NULL DEFAULT '0',
+  `parent_id` smallint(4) unsigned NOT NULL DEFAULT '0',
   `title` varchar(50) NOT NULL,
   `desc` varchar(100) NOT NULL DEFAULT '',
-  `topics` int(11) unsigned NOT NULL DEFAULT '0',
-  `posts` int(11) unsigned NOT NULL DEFAULT '0',
-  `last_id` int(11) unsigned NOT NULL DEFAULT '0',
-  `last_themes` varchar(50) NOT NULL DEFAULT '',
-  `forums_last_user_id` int(11) unsigned DEFAULT NULL,
   `closed` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `updated_at` timestamp NOT NULL,
   `created_at` timestamp NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `topics` (
+  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+  `forum_id` smallint(4) unsigned NOT NULL,
+  `title` varchar(50) NOT NULL,
+  `user_id` int(11) unsigned NOT NULL,
+  `closed` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `locked` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `posts` int(11) unsigned NOT NULL DEFAULT '0',
+  `mod` varchar(255) NOT NULL DEFAULT '',
+  `note` varchar(255) NOT NULL DEFAULT '',
+  `updated_at` timestamp NOT NULL,
+  `created_at` timestamp NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `forum_id` (`forum_id`),
+  KEY `locked` (`locked`),
+  KEY `created_at` (`created_at`),
+  FULLTEXT KEY `title` (`title`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+CREATE TABLE IF NOT EXISTS `posts` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `forum_id` smallint(4) unsigned NOT NULL,
+  `topic_id` mediumint(8) unsigned NOT NULL,
+  `user_id` int(11) unsigned NOT NULL,
+  `text` text NOT NULL,
+  `ip` varchar(15) NOT NULL,
+  `brow` varchar(25) NOT NULL,
+  `updated_at` timestamp NOT NULL,
+  `created_at` timestamp NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `forum_id` (`forum_id`),
+  KEY `user_id` (`user_id`),
+  KEY `topic_id` (`topic_id`,`created_at`),
+  FULLTEXT KEY `text` (`text`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
 
 
 CREATE TABLE IF NOT EXISTS `downs` (

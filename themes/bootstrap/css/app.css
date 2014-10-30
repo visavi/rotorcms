@@ -46,11 +46,6 @@ body {
   padding: 15px 0;
 }
 
-.left-border {
-  border-left: dotted #ccc 1px;
-  height: 1000px;
-}
-
 /* Custom page CSS
 -------------------------------------------------- */
 /* Not required for template or sticky footer method. */
