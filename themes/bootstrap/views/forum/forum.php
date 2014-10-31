@@ -1,21 +1,17 @@
 <a href="index.php">Форум</a> /
 
-<?php if (!empty($forums['subparent'])): ?>
-	<a href="forum.php?fid=<?=$forums['subparent']['forums_id']?>"><?=$forums['subparent']['forums_title']?></a> /
+<?php if (!empty($forum->parent_id)): ?>
+	<a href="forum.php?fid=<?= $forum->parent_id ?>"><?= $forum->parent()->title ?></a> /
 <?php endif; ?>
 
 <a href="forum.php?fid=<?=$fid?>&amp;start=<?=$start?>&amp;rand=<?=mt_rand(1000, 9999)?>">Обновить</a>
 
-<?php if (empty($forums['forums_closed'])): ?>
+<?php if (empty($forum->closed)): ?>
 	 / <a href="forum.php?act=addtheme&amp;fid=<?=$fid?>">Создать тему</a>
 <?php endif; ?>
 
-<br /><br />
-
-<b><img src="/images/img/themes.gif" alt="image" /> <?=$forums['forums_title']?></b>
-
 <?php if (is_admin()): ?>
-	(<a href="/admin/forum.php?act=forum&amp;fid=<?=$fid?>&amp;start=<?=$start?>">Управление</a>)
+	/ <a href="/admin/forum.php?act=forum&amp;fid=<?=$fid?>&amp;start=<?=$start?>">Управление</a>
 <?php endif; ?>
 
 <hr />

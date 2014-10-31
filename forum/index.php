@@ -17,27 +17,9 @@ $config['newtitle'] = 'Форум - Список разделов';
 
 include_once (DATADIR.'/advert/forum.dat');
 
-$forums = Forum::all(array('conditions' => array('parent_id = ?', 0), 'order' => 'sort ASC', 'include' => array('parents', 'topic')));
-
-/*
-if ($allforums) {
-	$forums = array();
-
-	foreach ($allforums as $forum) {
-
-
-
-
-		$id = $forum->id;
-		$fp =  $forum->parent_forum_id;
-		$forums[$fp][$id] = $forum;
-	}*/
+$forums = Forum::all(array('conditions' => array('parent_id = ?', 0), 'order' => 'sort ASC', 'include' => array('children', 'topics')));
 
 render('forum/index', compact('forums'));
-
-/*} else {
-	show_error('Разделы форума еще не созданы!');
-}*/
 
 include_once ('../themes/footer.php');
 ?>

@@ -25,31 +25,33 @@ switch ($act):
 case 'index':
 
 	if (!empty($fid)) {
-		$forums = DB::run() -> queryFetch("SELECT * FROM `forums` WHERE `forums_id`=? LIMIT 1;", array($fid));
+		$forum = Forum::find(array('conditions' => array('id = ?', $fid), 'include' => 'topics'));
+		//$forums = DB::run() -> queryFetch("SELECT * FROM `forums` WHERE `forums_id`=? LIMIT 1;", array($fid));
 
-		if (!empty($forums)) {
+		if ($forum) {
 
 			$page = floor(1 + $start / $config['forumtem']);
-			$config['header'] = $forums['forums_title'];
-			$config['newtitle'] = $forums['forums_title'].' (Стр. '.$page.')';
+			$config['header'] = $forum->title;
+			$config['newtitle'] = $forum->title.' (Стр. '.$page.')';
 
-			if (!empty($forums['forums_parent'])) {
+/*			if (!empty($forums['forums_parent'])) {
 				$forums['subparent'] = DB::run() -> queryFetch("SELECT `forums_id`, `forums_title` FROM `forums` WHERE `forums_id`=? LIMIT 1;", array($forums['forums_parent']));
-			}
+			}*/
 
-			$querysub = DB::run() -> query("SELECT * FROM `forums` WHERE `forums_parent`=? ORDER BY `forums_order` ASC;", array($fid));
-			$forums['subforums'] = $querysub -> fetchAll();
+			//$querysub = DB::run() -> query("SELECT * FROM `forums` WHERE `forums_parent`=? ORDER BY `forums_order` ASC;", array($fid));
+			//$forums['subforums'] = $querysub -> fetchAll();
 
-			$total = DB::run() -> querySingle("SELECT count(*) FROM `topics` WHERE `topics_forums_id`=?;", array($fid));
+			//$total = DB::run() -> querySingle("SELECT count(*) FROM `topics` WHERE `topics_forums_id`=?;", array($fid));
+			$total = count($forum->topics);
 
 			if ($total > 0 && $start >= $total) {
 				$start = last_page($total, $config['forumtem']);
 			}
 
-			$querytopic = DB::run() -> query("SELECT * FROM `topics` WHERE `topics_forums_id`=? ORDER BY `topics_locked` DESC, `topics_last_time` DESC LIMIT ".$start.", ".$config['forumtem'].";", array($fid));
-			$forums['topics'] = $querytopic->fetchAll();
+			//$querytopic = DB::run() -> query("SELECT * FROM `topics` WHERE `topics_forums_id`=? ORDER BY `topics_locked` DESC, `topics_last_time` DESC LIMIT ".$start.", ".$config['forumtem'].";", array($fid));
+			//$forums['topics'] = $querytopic->fetchAll();
 
-			render('forum/forum', array('forums' => $forums, 'fid' => $fid, 'start' => $start, 'total' => $total));
+			render('forum/forum', compact('forum', 'fid', 'start', 'total'));
 
 		} else {
 			show_error('Ошибка! Данного раздела не существует!');
