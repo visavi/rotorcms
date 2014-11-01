@@ -15,14 +15,14 @@
 
 		<div class="media" id="post">
 
-			<?= user_avatars($post->user_login) ?>
+			<?= user_avatars($post->user()->id) ?>
 
 			<div class="media-body">
 				<ul class="list-inline pull-right small">
 
 				<?php if ($user && $user->id != $post->user_id): ?>
 
-					<li><a href="#" onclick="return reply('<?= $post->user_login ?>')">Отв</a></li>
+					<li><a href="#" onclick="return reply('<?= $post->user()->login ?>')">Отв</a></li>
 
 					<li><noindex><a href="index.php?act=spam&amp;id=<?= $post->id ?>&amp;start=<?= $start ?>&amp;token=<?= $_SESSION['token'] ?>" onclick="return confirm('Вы подтверждаете факт спама?')" rel="nofollow">Спам</a></noindex></li>
 				<?php endif; ?>
@@ -31,12 +31,12 @@
 					<li><a href="index.php?act=edit&amp;id=<?= $post->id ?>&amp;start=<?= $start ?>">Редактировать</a></li>
 				<?php endif; ?>
 
-					<li class="text-muted"><?= $post->created_at ?></li>
+					<li class="text-muted"><?= $post->created_at->getTimestamp() ?></li>
 				</ul>
 
-				<?php if ($post->user_login): ?>
+				<?php if ($post->user()->login): ?>
 
-					<h4 class="media-heading" style="display: inline;"><?= profile($post->user_login) ?></h4>
+					<h4 class="media-heading" style="display: inline;"><?= profile($post->user()->login) ?></h4>
 					<?= user_title($post->user_id) ?> <?= user_online($post->user_id) ?>
 
 				<?php else: ?>

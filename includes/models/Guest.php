@@ -7,7 +7,11 @@ class Guest extends BaseActiveRecord {
 		array('user')
 	);
 
-	static $delegate = array(
-		array('id', 'login', 'to' => 'user', 'prefix' => 'user')
-	);
+	/**
+	 * Данные пользователя
+	 * @return object User модель пользователей
+	 */
+	public function user() {
+		return $this->user ? $this->user : new User;
+	}
 }

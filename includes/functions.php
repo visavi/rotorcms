@@ -755,10 +755,10 @@ function save_avatar($time = 0) {
 	if (empty($time) || @filemtime(DATADIR."/temp/avatars.dat") < time() - $time) {
 
 		$allavat = array();
-		$avatars = User::all(array('select' => 'login, avatar', 'conditions' => 'avatar IS NOT NULL'));
+		$avatars = User::all(array('select' => 'id, avatar', 'conditions' => 'avatar IS NOT NULL'));
 
 		foreach ($avatars as $avatar) {
-			$allavat[$avatar->login] = $avatar->avatar;
+			$allavat[$avatar->id] = $avatar->avatar;
 		}
 
 		file_put_contents(DATADIR."/temp/avatars.dat", serialize($allavat), LOCK_EX);
@@ -766,7 +766,7 @@ function save_avatar($time = 0) {
 }
 
 // --------------- Функция вывода аватара пользователя ---------------//
-function user_avatars($login) {
+function user_avatars($user_id) {
 	global $config;
 	static $avatars;
 
@@ -775,7 +775,7 @@ function user_avatars($login) {
 		'src' => '/images/avatars/guest.png'
 	);
 
-	switch ($login) {
+	switch ($user_id) {
 		case null:
 			break;
 
@@ -785,8 +785,8 @@ function user_avatars($login) {
 				$avatars = unserialize(file_get_contents(DATADIR."/temp/avatars.dat"));
 			}
 
-			if (isset($avatars[$login]) && file_exists($avatars[$login])) {
-				$image['src'] = $avatars[$login];
+			if (isset($avatars[$user_id]) && file_exists($avatars[$user_id])) {
+				$image['src'] = $avatars[$user_id];
 			} else {
 				$image['src'] = '/images/avatars/noavatar.png';
 			}
@@ -1357,8 +1357,11 @@ function stats_blog() {
 function stats_forum() {
 	if (@filemtime(DATADIR."/temp/statforum.dat") < time()-600) {
 
-		$forums = Forum::find(array('select' => 'SUM(topics) as topics, SUM(posts) as posts'));
-		file_put_contents(DATADIR."/temp/statforum.dat", intval($forums->topics).'/'.intval($forums->posts), LOCK_EX);
+		//$forums = Forum::find(array('select' => 'SUM(topics) as topics, SUM(posts) as posts'));
+		$topics = Forum::count();
+		$posts = Post::count();
+
+		file_put_contents(DATADIR."/temp/statforum.dat", $topics.'/'.$posts, LOCK_EX);
 	}
 
 	return file_get_contents(DATADIR."/temp/statforum.dat");
@@ -2494,6 +2497,7 @@ function real_ip()
 			}
 		}
 	}
+	return '127.0.0.1';
 }
 
 // ------------- Кеширование пользовательских функций -------------//
