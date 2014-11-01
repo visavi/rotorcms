@@ -174,6 +174,7 @@ break;
 ##                                   Подготовка к редактированию                          ##
 ############################################################################################
 case 'edit':
+	show_title('Редактирование сообщения');
 
 	$id = (isset($_GET['id'])) ? abs(intval($_GET['id'])) : 0;
 
@@ -181,7 +182,7 @@ case 'edit':
 		$post = Guest::first(array('conditions' => array('id = ? AND user_id = ?', $id, $user->id)));
 
 		if ($post) {
-			if (strtotime($post->created_at->format('db')) > time() - 600) {
+			if ($post->created_at->getTimestamp() > time() - 600) {
 
 				$post->text = yes_br(nosmiles($post->text));
 
@@ -215,12 +216,11 @@ case 'editpost':
 
 				$post = Guest::first(array('conditions' => array('id = ? AND user_id = ?', $id, $user->id)));
 
-				if (!empty($post)) {
-					if (strtotime($post->created_at->format('db')) > time() - 600) {
+				if ($post) {
+					if ($post->created_at->getTimestamp() > time() - 600) {
 						$msg = smiles(antimat(no_br($msg)));
 
 						$post->text = $msg;
-						$post->edit_user_id = $user->id;
 						$post->save();
 
 						notice('Сообщение успешно отредактировано!');

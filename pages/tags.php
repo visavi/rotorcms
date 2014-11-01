@@ -32,9 +32,9 @@ echo '<img src="/assets/markitup/images/youtube.png" alt="youtube" /> [youtube]�
 echo '<img src="/assets/markitup/images/spoiler.png" alt="spoiler" /> [spoiler]Выпадающий текст[/spoiler]'.bb_code('[spoiler]Текст который показывается при нажатии[/spoiler]').'<br />';
 echo '<img src="/assets/markitup/images/hidden.png" alt="hidden" /> [hide]Скрытый текст[/hide]'.bb_code('[hide]Для вставки скрытого текста[/hide]').'<br />';
 echo '<img src="/assets/markitup/images/quotes.png" alt="quotes" /> [q]Цитата[/q]'.bb_code('[q]Для вставки цитат[/q]').'<br />';
-echo '<img src="/assets/markitup/images/code.png" alt="code" /> [code]Форматированный код[/code]'.bb_code('[code]&lt;? echo"Для вставки php-кода"; ?&gt;[/code]').'<br />';
+echo '<img src="/assets/markitup/images/code.png" alt="code" /> [code]Форматированный код[/code]'.bb_code('[code]&lt;? echo "Для вставки php-кода"; ?&gt;[/code]').'<br />';
 echo '<img src="/assets/markitup/images/next.png" alt="next" /> [nextpage] - Служит для переноса текста на новую страницу (Работает только в блогах)<br />';
-echo '<img src="/assets/markitup/images/cut.png" alt="next" /> [cut] - Служит для обрезки текста (Работает только в новостях и событиях)<br /><br />';
+echo '<img src="/assets/markitup/images/cut.png" alt="next" /> [cut] - Служит для обрезки текста (Работает только в новостях)<br /><br />';
 
 echo 'Для того чтобы вставить ссылку, можно просто написать http://адрес_cсылки<br />';
 echo '<img src="/assets/markitup/images/link.png" alt="link" /> Для ссылки с названием: [url=http://адрес_cсылки] Название [/url]<br />';
