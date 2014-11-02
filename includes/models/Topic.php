@@ -30,4 +30,20 @@ class Topic extends BaseActiveRecord {
 	public function user() {
 		return $this->user ? $this->user : new User;
 	}
+
+	/**
+	 * Выводит определенную иконку в зависимости от статуса
+	 * @return string Иконка топика
+	 */
+	public function getIcon() {
+
+		if ($this->locked)
+			$icon = 'glyphicon-pushpin';
+		elseif ($this->closed)
+			$icon = 'glyphicon-lock';
+		else
+			$icon = 'glyphicon-folder-open';
+
+		return $icon;
+	}
 }

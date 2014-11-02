@@ -24,10 +24,10 @@ case 'index':
 	$data = User::find_by_login($uz);
 	if ($data) {
 
-		show_title(user_avatars($data->id).$data->login, user_visit($data->id));
-		$config['newtitle'] = 'Анкета пользователя '.nickname($data['users_login']);
+		show_title(user_avatars($data->id).' '.$data->login, user_visit($data->id));
+		$config['newtitle'] = 'Анкета пользователя '.$data->login;
 
-		if ($data['users_confirmreg'] == 1) {
+		if ($data->confirmreg == 1) {
 			echo '<b><span style="color:#ff0000">Внимание, аккаунт требует подтверждение регистрации!</span></b><br />';
 		}
 

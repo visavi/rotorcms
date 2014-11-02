@@ -1,18 +1,20 @@
+<?= var_dump($forums) ?>
+
 <?php if (count($forums) > 0): ?>
 	<div class="form">
-		<form action="forum.php?act=add&amp;fid=<?=$fid?>&amp;uid=<?=$_SESSION['token']?>" method="post">
+		<form action="forum.php?act=add&amp;fid=<?= $fid ?>&amp;uid=<?= $_SESSION['token'] ?>" method="post">
 
 			Раздел:<br />
 			<select name="fid">
 
-			<?php foreach ($forums[0] as $key => $data): ?>
-				<?php $selected = ($fid == $data['forums_id']) ? ' selected="selected"' : ''; ?>
-				<option value="<?=$data['forums_id']?>"<?=$selected?>><?=$data['forums_title']?></option>
+			<?php foreach ($forums as $key => $forum): ?>
+				<?php $selected = ($fid == $forum->id) ? ' selected="selected"' : ''; ?>
+				<option value="<?= $forum->id ?>"<?=$selected?>><?= $forum->title ?></option>
 
-				<?php if (isset($forums[$key])): ?>
-					<?php foreach($forums[$key] as $datasub): ?>
-						<?php $selected = ($fid == $datasub['forums_id']) ? ' selected="selected"' : ''; ?>
-						<option value="<?=$datasub['forums_id']?>"<?=$selected?>>– <?=$datasub['forums_title']?></option>
+				<?php if ($forum->children): ?>
+					<?php foreach($forum->children as $subforum): ?>
+						<?php $selected = ($fid == $subforum->id) ? ' selected="selected"' : ''; ?>
+						<option value="<?= $subforum->id ?>"<?=$selected?>>– <?= $subforum->title ?></option>
 					<?php endforeach; ?>
 				<?php endif; ?>
 			<?php endforeach; ?>

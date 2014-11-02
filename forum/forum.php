@@ -70,24 +70,25 @@ case 'addtheme':
 	$config['newtitle'] = 'Создание новой темы';
 
 	if (is_user()) {
-		$queryforum = DB::run() -> query("SELECT `forums_id`, `forums_parent`, `forums_title` FROM `forums` WHERE `forums_closed`=? ORDER BY `forums_order` ASC;", array(0));
-		$forums = $queryforum -> fetchAll();
 
-		if (count($forums) > 0) {
+		$forums = Forum::all(array('conditions' => array('parent_id = ? AND closed = ?', 0, 0), 'order' => 'sort', 'include' => array('children')));
 
-			$output = array();
+		//$queryforum = DB::run() -> query("SELECT `forums_id`, `forums_parent`, `forums_title` FROM `forums` WHERE `forums_closed`=? ORDER BY `forums_order` ASC;", array(0));
+		//$forums = $queryforum -> fetchAll();
+
+
+
+/*			$output = array();
 
 			foreach ($forums as $row) {
 				$i = $row['forums_id'];
 				$p = $row['forums_parent'];
 				$output[$p][$i] = $row;
-			}
+			}*/
 
-			render('forum/forum_add', array('forums' => $output, 'fid' => $fid));
+			render('forum/forum_add', compact('forums', 'fid'));
 
-		} else {
-			show_error('Разделы форума еще не созданы!');
-		}
+
 	} else {
 		show_login('Вы не авторизованы, для создания новой темы, необходимо');
 	}
