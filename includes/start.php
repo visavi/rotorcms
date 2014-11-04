@@ -48,7 +48,7 @@ ActiveRecord\Config::initialize(function($cfg) {
 	));
 });
 
-ActiveRecord\Errors::$DEFAULT_ERROR_MESSAGES = array(
+/*ActiveRecord\Errors::$DEFAULT_ERROR_MESSAGES = array(
 	'inclusion'    => "не включено в список",
 	'exclusion'    => "зарезервировано",
 	'invalid'      => "недействительно",
@@ -69,7 +69,7 @@ ActiveRecord\Errors::$DEFAULT_ERROR_MESSAGES = array(
 	'unique'       => "должно быть уникальным",
 	'less_than_or_equal_to' => "должно быть меньше или равно %d",
 	'greater_than_or_equal_to' => "должно быть больше или равно %d"
-);
+);*/
 
 ActiveRecord\DateTime::$DEFAULT_FORMAT = 'd.m.y / H:i';
 

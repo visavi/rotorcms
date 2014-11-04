@@ -73,20 +73,7 @@ case 'addtheme':
 
 		$forums = Forum::all(array('conditions' => array('parent_id = ? AND closed = ?', 0, 0), 'order' => 'sort', 'include' => array('children')));
 
-		//$queryforum = DB::run() -> query("SELECT `forums_id`, `forums_parent`, `forums_title` FROM `forums` WHERE `forums_closed`=? ORDER BY `forums_order` ASC;", array(0));
-		//$forums = $queryforum -> fetchAll();
-
-
-
-/*			$output = array();
-
-			foreach ($forums as $row) {
-				$i = $row['forums_id'];
-				$p = $row['forums_parent'];
-				$output[$p][$i] = $row;
-			}*/
-
-			render('forum/forum_add', compact('forums', 'fid'));
+		render('forum/forum_add', compact('forums', 'fid'));
 
 
 	} else {
@@ -101,18 +88,34 @@ break;
 ############################################################################################
 case 'add':
 
-	$uid = (!empty($_GET['uid'])) ? check($_GET['uid']) : 0;
+	$token = (!empty($_GET['token'])) ? check($_GET['token']) : 0;
 	$fid = (isset($_POST['fid'])) ? abs(intval($_POST['fid'])) : 0;
 	$title = (isset($_POST['title'])) ? check($_POST['title']) : '';
 	$msg = (isset($_POST['msg'])) ? check($_POST['msg']) : '';
 
+	//$forum = Forum::exists(array());
+
 	if (is_user()) {
+
+
+		$topic = new Topic;
+		$topic->token = $token;
+		$topic->forum_id = $fid;
+		//$topic->user_id = $user->id;
+		$topic->title = $title;
+
+		if ($topic->save()) {
+			notice('Новая тема успешно создана!');
+			redirect("topic.php?tid={$topic->id}");
+		} else {
+			show_error($topic->getErrors());
+		}
 
 		$forums = DB::run() -> queryFetch("SELECT * FROM `forums` WHERE `forums_id`=? LIMIT 1;", array($fid));
 
 		$validation = new Validation;
 
-		$validation -> addRule('equal', array($uid, $_SESSION['token']), 'Неверный идентификатор сессии, повторите действие!')
+		$validation -> addRule('equal', array($token, $_SESSION['token']), 'Неверный идентификатор сессии, повторите действие!')
 			-> addRule('not_empty', $forums, 'Раздела для новой темы не существует!')
 			-> addRule('empty', $forums['forums_closed'], 'В данном разделе запрещено создавать темы!')
 			-> addRule('equal', array(is_quarantine($log), true), 'Карантин! Вы не можете писать в течении '.round($config['karantin'] / 3600).' часов!')
