@@ -48,29 +48,6 @@ ActiveRecord\Config::initialize(function($cfg) {
 	));
 });
 
-/*ActiveRecord\Errors::$DEFAULT_ERROR_MESSAGES = array(
-	'inclusion'    => "не включено в список",
-	'exclusion'    => "зарезервировано",
-	'invalid'      => "недействительно",
-	'confirmation' => "не совпадает с подтверждением",
-	'accepted'     => "должно быть принято",
-	'empty'        => "не может быть пустым",
-	'blank'        => "не может быть пустым",
-	'too_long'     => "слишком длинное (максимум %d симв.)",
-	'too_short'    => "слишком короткое (минимум %d симв.)",
-	'wrong_length' => "имеет неправильную длину (должно быть %d симв.)",
-	'taken'        => "уже принято",
-	'not_a_number' => "не является числом",
-	'greater_than' => "должно быть больше чем %d",
-	'equal_to'     => "должно быть идентично %d",
-	'less_than'    => "должно быть меньше чем %d",
-	'odd'          => "должно быть нечетным",
-	'even'         => "должно быть четным",
-	'unique'       => "должно быть уникальным",
-	'less_than_or_equal_to' => "должно быть меньше или равно %d",
-	'greater_than_or_equal_to' => "должно быть больше или равно %d"
-);*/
-
 ActiveRecord\DateTime::$DEFAULT_FORMAT = 'd.m.y / H:i';
 
 if (!file_exists(DATADIR.'/temp/setting.dat')) {

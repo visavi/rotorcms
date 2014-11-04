@@ -7,6 +7,10 @@ class Topic extends BaseActiveRecord {
 	/**
 	 * Связи
 	 */
+	static $has_many = array(
+		array('posts', 'order' => 'created_at'),
+	);
+
 	static $belongs_to = array(
 		array('forum'),
 		array('user'),
@@ -33,30 +37,23 @@ class Topic extends BaseActiveRecord {
 
 	public function validate() {
 
+		//  Проверка токена
+		if ($this->token != $_SESSION['token']) {
+			$this->errors->add('token', 'Неверный идентификатор сессии, повторите действие!');
+		}
+
+		// Проверка существования раздела
 		if (!$this->forum) {
 			$this->errors->add('forum', 'Раздела для новой темы не существует!');
 		}
 
-		if ($this->token != $_SESSION['token']) {
-			$this->errors->add('token', 'Неверный идентификатор сессии, повторите действие!');
+		// Проверка на доступность
+		if ($this->forum()->closed) {
+			$this->errors->add('type', 'В данном разделе запрещено создавать темы!');
 		}
 	}
 
-	/**
-	 * @return array индивидуальные метки атрибутов
-	 */
-/*	public function attributeLabels()
-	{
-		return array(
-			'forum_id' => 'Раздел форума',
-			'user_id' => 'ID пользователя',
-			'title' => 'Название темы',
-			'type' => 'Статус темы',
-			'mods' => 'Список кураторов',
-			'note' => 'Заметка темы',
-			'token' => 'Идентификатор сессии',
-		);
-	}*/
+//TODO Антифлуд
 
 	/**
 	 * Количество сообщений в теме
@@ -72,6 +69,14 @@ class Topic extends BaseActiveRecord {
 	 */
 	public function user() {
 		return $this->user ? $this->user : new User;
+	}
+
+	/**
+	 * Данные форума
+	 * @return object Forum модель форума
+	 */
+	public function forum() {
+		return $this->forum ? $this->forum : new Forum;
 	}
 
 	/**

@@ -93,15 +93,12 @@ case 'add':
 	$title = (isset($_POST['title'])) ? check($_POST['title']) : '';
 	$msg = (isset($_POST['msg'])) ? check($_POST['msg']) : '';
 
-	//$forum = Forum::exists(array());
-
 	if (is_user()) {
-
 
 		$topic = new Topic;
 		$topic->token = $token;
 		$topic->forum_id = $fid;
-		//$topic->user_id = $user->id;
+		$topic->user_id = $user->id;
 		$topic->title = $title;
 
 		if ($topic->save()) {
@@ -111,21 +108,12 @@ case 'add':
 			show_error($topic->getErrors());
 		}
 
-		$forums = DB::run() -> queryFetch("SELECT * FROM `forums` WHERE `forums_id`=? LIMIT 1;", array($fid));
 
-		$validation = new Validation;
-
-		$validation -> addRule('equal', array($token, $_SESSION['token']), 'Неверный идентификатор сессии, повторите действие!')
-			-> addRule('not_empty', $forums, 'Раздела для новой темы не существует!')
-			-> addRule('empty', $forums['forums_closed'], 'В данном разделе запрещено создавать темы!')
-			-> addRule('equal', array(is_quarantine($log), true), 'Карантин! Вы не можете писать в течении '.round($config['karantin'] / 3600).' часов!')
-			-> addRule('equal', array(is_flood($log), true), 'Антифлуд! Разрешается отправлять сообщения раз в '.flood_period().' сек!')
-			-> addRule('string', $title, 'Слишком длинный или короткий заголовок темы!', true, 5, 50)
-			-> addRule('string', $msg, 'Слишком длинное или короткое сообщение!', true, 5, $config['forumtextlength']);
+			//-> addRule('string', $msg, 'Слишком длинное или короткое сообщение!', true, 5, $config['forumtextlength']);
 
 		/* Сделать проверку поиска похожей темы */
 
-		if ($validation->run(1)) {
+/*		if ($validation->run(1)) {
 
 			$title = antimat($title);
 			$msg = smiles(antimat(no_br($msg)));
@@ -142,14 +130,8 @@ case 'add':
 			// Обновление родительского форума
 			if ($forums['forums_parent'] > 0) {
 				DB::run() -> query("UPDATE `forums` SET `forums_last_id`=?, `forums_last_themes`=?, `forums_last_user`=?, `forums_last_time`=? WHERE `forums_id`=?", array($lastid, $title, $log, SITETIME, $forums['forums_parent']));
-			}
+			}*/
 
-			notice('Новая тема успешно создана!');
-			redirect("topic.php?tid=$lastid");
-
-		} else {
-			show_error($validation->errors);
-		}
 	} else {
 		show_login('Вы не авторизованы, для создания новой темы, необходимо');
 	}
