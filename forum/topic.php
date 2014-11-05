@@ -25,52 +25,57 @@ switch ($act):
 case 'index':
 
 	if (!empty($tid)) {
-		$topics = DB::run() -> queryFetch("SELECT `topics`.*, `forums`.`forums_id`, `forums`.`forums_title`, `forums`.`forums_parent` FROM `topics` LEFT JOIN `forums` ON `topics`.`topics_forums_id`=`forums`.`forums_id` WHERE `topics_id`=? LIMIT 1;", array($tid));
+		$topic = Topic::find(array('conditions' => array('id = ?', $tid), 'include' => array('forum', 'posts')));
 
-		if (!empty($topics)) {
-			$config['header'] = $topics['topics_title'];
+		//$topics = DB::run() -> queryFetch("SELECT `topics`.*, `forums`.`forums_id`, `forums`.`forums_title`, `forums`.`forums_parent` FROM `topics` LEFT JOIN `forums` ON `topics`.`topics_forums_id`=`forums`.`forums_id` WHERE `topics_id`=? LIMIT 1;", array($tid));
 
-			if (!empty($topics['forums_parent'])) {
-				$topics['subparent'] = DB::run() -> queryFetch("SELECT `forums_id`, `forums_title` FROM `forums` WHERE `forums_id`=? LIMIT 1;", array($topics['forums_parent']));
-			}
+		if ($topic) {
 
-			if (is_user()) {
-				$topics['bookmark'] = DB::run() -> queryFetch("SELECT * FROM `bookmarks` WHERE `book_topic`=? AND `book_user`=? LIMIT 1;", array($tid, $log));
+			//if (!empty($topics['forums_parent'])) {
+			//	$topics['subparent'] = DB::run() -> queryFetch("SELECT `forums_id`, `forums_title` FROM `forums` WHERE `forums_id`=? LIMIT 1;", array($topics['forums_parent']));
+			//}
 
-				if (!empty($topics['bookmark']) && $topics['topics_posts'] > $topics['bookmark']['book_posts']) {
-					DB::run() -> query("UPDATE `bookmarks` SET `book_posts`=? WHERE `book_topic`=? AND `book_user`=? LIMIT 1;", array($topics['topics_posts'], $tid, $log));
-				}
-			}
+			//if (is_user()) {
+			//	$topics['bookmark'] = DB::run() -> queryFetch("SELECT * FROM `bookmarks` WHERE `book_topic`=? AND `book_user`=? LIMIT 1;", array($tid, $log));
+
+			//	if (!empty($topics['bookmark']) && $topics['topics_posts'] > $topics['bookmark']['book_posts']) {
+			//		DB::run() -> query("UPDATE `bookmarks` SET `book_posts`=? WHERE `book_topic`=? AND `book_user`=? LIMIT 1;", array($topics['topics_posts'], $tid, $log));
+			//	}
+			//}
 
 			// --------------------------------------------------------------//
-			if (!empty($topics['topics_mod'])) {
+/*			if (!empty($topics['topics_mod'])) {
 				$topics['curator'] = explode(',', $topics['topics_mod']);
 				$topics['is_moder'] = (in_array($log, $topics['curator'])) ? 1 : 0;
-			}
+			}*/
 
-			$total = DB::run() -> querySingle("SELECT count(*) FROM `posts` WHERE `posts_topics_id`=?;", array($tid));
+			//$total = DB::run() -> querySingle("SELECT count(*) FROM `posts` WHERE `posts_topics_id`=?;", array($tid));
+			$total = count($topic->posts);
 
 			if ($total > 0 && $start >= $total) {
 				$start = last_page($total, $config['forumpost']);
 			}
 
 			$page = floor(1 + $start / $config['forumpost']);
-			$config['newtitle'] = $topics['topics_title'].' (Стр. '.$page.')';
-			$config['description'] = 'Обсуждение темы: '.$topics['topics_title'].' (Стр. '.$page.')';
+			$config['header'] = $topic->title;
+			$config['newtitle'] = $topic->title.' (Стр. '.$page.')';
+			$config['description'] = 'Обсуждение темы: '.$topic->title.' (Стр. '.$page.')';
 
 
-			$querypost = DB::run() -> query("SELECT * FROM `posts` WHERE `posts_topics_id`=? ORDER BY `posts_time` ASC LIMIT ".$start.", ".$config['forumpost'].";", array($tid));
 
-			$topics['posts'] = $querypost->fetchAll();
+
+			//$querypost = DB::run() -> query("SELECT * FROM `posts` WHERE `posts_topics_id`=? ORDER BY `posts_time` ASC LIMIT ".$start.", ".$config['forumpost'].";", array($tid));
+
+			//$topics['posts'] = $querypost->fetchAll();
 
 			// ----- Получение массива файлов ----- //
-			$ipdpost = array();
+/*			$ipdpost = array();
 			foreach ($topics['posts'] as $val) {
 				$ipdpost[] = $val['posts_id'];
 			}
 
 			$ipdpost = implode(',', $ipdpost);
-			
+
 			if (!empty($ipdpost)) {
 				$queryfiles = DB::run() -> query("SELECT * FROM `files_forum` WHERE `file_posts_id` IN (".$ipdpost.");");
 				$files = $queryfiles->fetchAll();
@@ -80,10 +85,10 @@ case 'index':
 				foreach ($files as $file){
 					$topics['posts_files'][$file['file_posts_id']][] = $file;
 				}
-			}
+			}*/
 			// ------------------------------------- //
 
-			render('forum/topic', array('topics' => $topics, 'tid' => $tid, 'start' => $start, 'total' => $total));
+			render('forum/topic', compact('topic', 'tid', 'start', 'total'));
 
 		} else {
 			show_error('Ошибка! Данной темы не существует!');

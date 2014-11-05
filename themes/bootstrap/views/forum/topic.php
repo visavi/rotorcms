@@ -1,17 +1,20 @@
+<?= var_dump($topic)?>
+
 <a href="index.php">Форум</a> /
 
-<?php if (!empty($topics['subparent'])): ?>
-	<a href="forum.php?fid=<?=$topics['subparent']['forums_id']?>"><?=$topics['subparent']['forums_title']?></a> /
+<?php if ($topic->forum): ?>
+
+	<?php if ($topic->forum->parent_id): ?>
+		<a href="forum.php?fid=<?= $topic->forum()->parent_id ?>"><?= $topic->forum()->parent()->title ?></a> /
+	<?php endif; ?>
+
+	<a href="forum.php?fid=<?= $topic->forum()->id ?>"><?= $topic->forum()->title ?></a> /
 <?php endif; ?>
 
-<a href="forum.php?fid=<?=$topics['forums_id']?>"><?=$topics['forums_title']?></a> /
-<a href="topic.php?tid=<?=$tid?>&amp;start=<?=$start?>&amp;rand=<?=mt_rand(1000, 9999)?>">Обновить</a> /
-<a href="print.php?tid=<?=$tid?>">Скачать</a> / <a href="rss.php?tid=<?=$tid?>">RSS-лента</a><br /><br />
-
-<img src="/images/img/themes.gif" alt="image" /> <b><?=$topics['topics_title']?></b>
-
+<a href="print.php?tid=<?= $tid ?>">Скачать</a> / <a href="rss.php?tid=<?= $tid ?>">RSS-лента</a>
 
 <?php if (is_user()): ?>
+<?php /*
 	(
 	<?php if ($topics['topics_author'] == $log && empty($topics['topics_closed']) && $udata['users_point'] >= $config['editforumpoint']): ?>
 		<a href="topic.php?act=closed&amp;tid=<?=$tid?>&amp;start=<?=$start?>&amp;uid=<?=$_SESSION['token']?>">Закрыть</a> /
@@ -25,6 +28,7 @@
 	<?php endif; ?>
 
 	)<br />
+ */ ?>
 <?php endif; ?>
 
 <?php if (!empty($topics['curator'])): ?>

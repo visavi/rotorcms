@@ -24,6 +24,10 @@
 				<a href="forum.php?fid=<?= $subforum->id ?>"><?= $subforum->title ?></a></b> (<?= $subforum->topicCount() ?>/<?= $subforum->topicLast()->postCount() ?>)
 			</h4>
 
+			<?php if ($subforum->description): ?>
+				<span class="help-block"><?= $subforum->description ?></span>
+			<?php endif; ?>
+
 			<?php if ($subforum->topic_last): ?>
 				Тема: <a href="topic.php?act=end&amp;tid=<?= $subforum->topicLast()->id ?>"><?= $subforum->topicLast()->title ?></a><br />
 				Сообщение: <?= $subforum->topicLast()->user()->getLogin() ?> (<?= $subforum->topicLast()->created_at ?>)

@@ -8,7 +8,7 @@ class Topic extends BaseActiveRecord {
 	 * Связи
 	 */
 	static $has_many = array(
-		array('posts', 'order' => 'created_at'),
+		array('posts', 'order' => 'created_at DESC'),
 	);
 
 	static $belongs_to = array(
