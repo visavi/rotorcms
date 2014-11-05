@@ -7,9 +7,14 @@
 #              ICQ  :  36-44-66               #
 #            Skype  :  vantuzilla             #
 #---------------------------------------------#
-$debugmode = 1;
+define('DEBUGMODE', true);
+define('STARTTIME', microtime(1));
+define('BASEDIR', dirname(__DIR__));
+define('DATADIR', BASEDIR.'/local');
+define('SITETIME', time());
+define('PCLZIP_TEMPORARY_DIR', BASEDIR.'/local/temp/');
 
-if ($debugmode) {
+if (DEBUGMODE) {
 	@error_reporting(E_ALL);
 	@ini_set('display_errors', true);
 	@ini_set('html_errors', true);
@@ -20,12 +25,6 @@ if ($debugmode) {
 	@ini_set('html_errors', false);
 	@ini_set('error_reporting', E_ALL ^ E_NOTICE);
 }
-
-define('STARTTIME', microtime(1));
-define('BASEDIR', dirname(__DIR__));
-define('DATADIR', BASEDIR.'/local');
-define('SITETIME', time());
-define('PCLZIP_TEMPORARY_DIR', BASEDIR.'/local/temp/');
 
 //@ini_set('session.save_path', dirname(BASEDIR).'/tmp');
 session_name('SID');
@@ -46,6 +45,9 @@ ActiveRecord\Config::initialize(function($cfg) {
 	$cfg->set_connections(array(
 		'development' => 'mysql://'.DBUSER.':'.DBPASS.'@'.DBHOST.'/'.DBNAME.';charset=utf8'
 	));
+
+	$cfg->set_logger(new Logger);
+	$cfg->set_logging(DEBUGMODE);
 });
 
 ActiveRecord\DateTime::$DEFAULT_FORMAT = 'd.m.y / H:i';

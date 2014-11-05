@@ -13,8 +13,8 @@
 				(<?= $forum->topicCount() ?>/<?= $forum->topicLast()->postCount() ?>)
 			</h4>
 
-		<?php if (!empty($forum->desc)): ?>
-			<small><?= $forum->desc ?></small>
+		<?php if ($forum->description): ?>
+			<span class="help-block"><?= $forum->description ?></span>
 		<?php endif; ?>
 
 

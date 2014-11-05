@@ -7,7 +7,7 @@ class Forum extends BaseActiveRecord {
 	 * Связи
 	 */
 	static $has_many = array(
-		array('topics', 'order' => 'created_at'),
+		array('topics', 'order' => 'locked, created_at'),
 		array('children', 'foreign_key' => 'parent_id', 'class' => 'Forum'),
 	);
 

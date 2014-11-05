@@ -21,10 +21,6 @@ class Topic extends BaseActiveRecord {
 	);
 
 	/* Валидаторы */
- 	static $validates_inclusion_of = array(
-		array('type', 'in' => array('open', 'closed', 'locked')),
-	);
-
 	static $validates_size_of = array(
 		array('title', 'within' => array(5, 50), 'message' => 'Слишком длинное или короткое название темы (от 5 до 50 симв.)'),
 		array('note', 'maximum' => 250, 'message' => 'Слишком длиная заметка темы (до 250 симв.)'),
@@ -49,7 +45,7 @@ class Topic extends BaseActiveRecord {
 
 		// Проверка на доступность
 		if ($this->forum()->closed) {
-			$this->errors->add('type', 'В данном разделе запрещено создавать темы!');
+			$this->errors->add('closed', 'В данном разделе запрещено создавать темы!');
 		}
 	}
 
