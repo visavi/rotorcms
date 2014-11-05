@@ -81,10 +81,10 @@ class Topic extends BaseActiveRecord {
 	 */
 	public function getIcon() {
 
-		if ($this->locked)
-			$icon = 'glyphicon-pushpin';
-		elseif ($this->closed)
+		if ($this->closed)
 			$icon = 'glyphicon-lock';
+		elseif ($this->locked)
+			$icon = 'glyphicon-pushpin';
 		else
 			$icon = 'glyphicon-folder-open';
 

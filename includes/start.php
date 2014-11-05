@@ -46,7 +46,8 @@ ActiveRecord\Config::initialize(function($cfg) {
 		'development' => 'mysql://'.DBUSER.':'.DBPASS.'@'.DBHOST.'/'.DBNAME.';charset=utf8'
 	));
 
-	$cfg->set_logger(new Logger);
+	$logger = new Logger();
+	$cfg->set_logger($logger);
 	$cfg->set_logging(DEBUGMODE);
 });
 
