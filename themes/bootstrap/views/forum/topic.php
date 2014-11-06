@@ -17,14 +17,14 @@
 <?php /*
 	(
 	<?php if ($topics['topics_author'] == $log && empty($topics['topics_closed']) && $udata['users_point'] >= $config['editforumpoint']): ?>
-		<a href="topic.php?act=closed&amp;tid=<?=$tid?>&amp;start=<?=$start?>&amp;uid=<?=$_SESSION['token']?>">Закрыть</a> /
-		<a href="topic.php?act=edittopic&amp;tid=<?=$tid?>">Изменить</a> /
+		<a href="topic.php?act=closed&amp;tid=<?= $tid ?>&amp;start=<?= $start ?>&amp;token=<?= $_SESSION['token'] ?>">Закрыть</a> /
+		<a href="topic.php?act=edittopic&amp;tid=<?= $tid ?>">Изменить</a> /
 	<?php endif; ?>
 
 	<?php if (empty($topics['bookmark'])): ?>
-		<a href="bookmark.php?act=add&amp;tid=<?=$tid?>&amp;start=<?=$start?>&amp;uid=<?=$_SESSION['token']?>">В закладки</a>
+		<a href="bookmark.php?act=add&amp;tid=<?= $tid ?>&amp;start=<?= $start ?>&amp;token=<?= $_SESSION['token'] ?>">В закладки</a>
 	<?php else: ?>
-		<a href="bookmark.php?act=remove&amp;tid=<?=$tid?>&amp;start=<?=$start?>&amp;uid=<?=$_SESSION['token']?>">Из закладок</a>
+		<a href="bookmark.php?act=remove&amp;tid=<?= $tid ?>&amp;start=<?= $start ?>&amp;token=<?= $_SESSION['token'] ?>">Из закладок</a>
 	<?php endif; ?>
 
 	)<br />
@@ -46,26 +46,26 @@
 <hr />
 
 <?php if (is_admin()): ?>
-	<?php if (empty($topics['topics_closed'])): ?>
-		<a href="/admin/forum.php?act=acttopic&amp;do=closed&amp;tid=<?=$tid?>&amp;start=<?=$start?>&amp;uid=<?=$_SESSION['token']?>">Закрыть</a> /
+	<?php if ($topic->closed): ?>
+		<a href="/admin/forum.php?act=acttopic&amp;do=open&amp;tid=<?= $tid ?>&amp;start=<?= $start ?>&amp;token=<?= $_SESSION['token'] ?>">Открыть</a> /
 	<?php else: ?>
-		<a href="/admin/forum.php?act=acttopic&amp;do=open&amp;tid=<?=$tid?>&amp;start=<?=$start?>&amp;uid=<?=$_SESSION['token']?>">Открыть</a> /
+		<a href="/admin/forum.php?act=acttopic&amp;do=closed&amp;tid=<?= $tid ?>&amp;start=<?= $start ?>&amp;token=<?= $_SESSION['token'] ?>">Закрыть</a> /
 	<?php endif; ?>
 
-	<?php if (empty($topics['topics_locked'])): ?>
-		<a href="/admin/forum.php?act=acttopic&amp;do=locked&amp;tid=<?=$tid?>&amp;start=<?=$start?>&amp;uid=<?=$_SESSION['token']?>">Закрепить</a> /
+	<?php if ($topic->locked): ?>
+		<a href="/admin/forum.php?act=acttopic&amp;do=unlocked&amp;tid=<?= $tid ?>&amp;start=<?= $start ?>&amp;token=<?= $_SESSION['token'] ?>">Открепить</a> /
 	<?php else: ?>
-		<a href="/admin/forum.php?act=acttopic&amp;do=unlocked&amp;tid=<?=$tid?>&amp;start=<?=$start?>&amp;uid=<?=$_SESSION['token']?>">Открепить</a> /
+		<a href="/admin/forum.php?act=acttopic&amp;do=locked&amp;tid=<?= $tid ?>&amp;start=<?= $start ?>&amp;token=<?= $_SESSION['token'] ?>">Закрепить</a> /
 	<?php endif; ?>
 
-	<a href="/admin/forum.php?act=edittopic&amp;tid=<?=$tid?>&amp;start=<?=$start?>">Изменить</a> /
-	<a href="/admin/forum.php?act=movetopic&amp;tid=<?=$tid?>">Переместить</a> /
-	<a href="/admin/forum.php?act=deltopics&amp;fid=<?=$topics['forums_id']?>&amp;del=<?=$tid?>&amp;uid=<?=$_SESSION['token']?>" onclick="return confirm('Вы действительно хотите удалить данную тему?')">Удалить</a> /
-	<a href="/admin/forum.php?act=topic&amp;tid=<?=$tid?>&amp;start=<?=$start?>">Управление</a><br />
+	<a href="/admin/forum.php?act=edittopic&amp;tid=<?= $tid ?>&amp;start=<?= $start ?>">Изменить</a> /
+	<a href="/admin/forum.php?act=movetopic&amp;tid=<?= $tid ?>">Переместить</a> /
+	<a href="/admin/forum.php?act=deltopics&amp;fid=<?= $topic->forum_id ?>&amp;del=<?= $tid ?>&amp;token=<?= $_SESSION['token'] ?>" onclick="return confirm('Вы действительно хотите удалить данную тему?')">Удалить</a> /
+	<a href="/admin/forum.php?act=topic&amp;tid=<?= $tid ?>&amp;start=<?= $start ?>">Управление</a><br />
 <?php endif; ?>
 
 <?php if (!empty($params['topics']['is_moder'])): ?>
-	<form action="topic.php?act=del&amp;tid=<?=$params['tid']?>&amp;start=<?=$params['start']?>&amp;uid=<?=$_SESSION['token']?>" method="post">
+	<form action="topic.php?act=del&amp;tid=<?=$params['tid']?>&amp;start=<?=$params['start']?>&amp;token=<?= $_SESSION['token'] ?>" method="post">
 <?php endif; ?>
 
 <?php if ($params['total'] > 0): ?>
@@ -77,7 +77,7 @@
 
 		<?php if (!empty($topics['is_moder'])): ?>
 			<span class="imgright">
-				<a href="topic.php?act=modedit&amp;tid=<?=$tid?>&amp;pid=<?=$data['posts_id']?>&amp;start=<?=$start?>">Ред.</a> <input type="checkbox" name="del[]" value="<?=$data['posts_id']?>" />
+				<a href="topic.php?act=modedit&amp;tid=<?= $tid ?>&amp;pid=<?=$data['posts_id']?>&amp;start=<?= $start ?>">Ред.</a> <input type="checkbox" name="del[]" value="<?=$data['posts_id']?>" />
 			</span>
 		<?php endif; ?>
 
@@ -86,15 +86,15 @@
 
 		<?php if (!empty($log) && $log != $data['posts_user']): ?>
 			<div class="right">
-				<a href="topic.php?act=reply&amp;tid=<?=$tid?>&amp;pid=<?=$data['posts_id']?>&amp;start=<?=$start?>&amp;num=<?=$num?>">Отв</a> /
-				<a href="topic.php?act=quote&amp;tid=<?=$tid?>&amp;pid=<?=$data['posts_id']?>&amp;start=<?=$start?>">Цит</a> /
-				<noindex><a href="topic.php?act=spam&amp;tid=<?=$tid?>&amp;pid=<?=$data['posts_id']?>&amp;start=<?=$start?>&amp;uid=<?=$_SESSION['token']?>" onclick="return confirm('Вы подтверждаете факт спама?')" rel="nofollow">Спам</a></noindex>
+				<a href="topic.php?act=reply&amp;tid=<?= $tid ?>&amp;pid=<?=$data['posts_id']?>&amp;start=<?= $start ?>&amp;num=<?=$num?>">Отв</a> /
+				<a href="topic.php?act=quote&amp;tid=<?= $tid ?>&amp;pid=<?=$data['posts_id']?>&amp;start=<?= $start ?>">Цит</a> /
+				<noindex><a href="topic.php?act=spam&amp;tid=<?= $tid ?>&amp;pid=<?=$data['posts_id']?>&amp;start=<?= $start ?>&amp;token=<?= $_SESSION['token'] ?>" onclick="return confirm('Вы подтверждаете факт спама?')" rel="nofollow">Спам</a></noindex>
 			</div>
 		<?php endif; ?>
 
 		<?php if ($log == $data['posts_user'] && $data['posts_time'] + 600 > SITETIME): ?>
 			<div class="right">
-				<a href="topic.php?act=edit&amp;tid=<?=$tid?>&amp;pid=<?=$data['posts_id']?>&amp;start=<?=$start?>">Редактировать</a>
+				<a href="topic.php?act=edit&amp;tid=<?= $tid ?>&amp;pid=<?=$data['posts_id']?>&amp;start=<?= $start ?>">Редактировать</a>
 			</div>
 		<?php endif; ?>
 
@@ -141,14 +141,14 @@
 <?php if (is_user()): ?>
 	<?php if (empty($topics['topics_closed'])): ?>
 		<div class="form">
-			<form action="topic.php?act=add&amp;tid=<?=$tid?>&amp;start=<?=$start?>&amp;uid=<?=$_SESSION['token']?>" method="post">
+			<form action="topic.php?act=add&amp;tid=<?= $tid ?>&amp;start=<?= $start ?>&amp;token=<?= $_SESSION['token'] ?>" method="post">
 			<textarea name="msg" cols="25" rows="5" id="markItUp"></textarea><br />
 
 			<input type="submit" value="Написать" />
 
 		<?php if ($udata['users_point'] >= $config['forumloadpoints']): ?>
 			<span class="imgright">
-				<a href="topic.php?act=addfile&amp;tid=<?=$tid?>&amp;start=<?=$start?>">Загрузить файл</a>
+				<a href="topic.php?act=addfile&amp;tid=<?= $tid ?>&amp;start=<?= $start ?>">Загрузить файл</a>
 			</span>
 		<?php endif; ?>
 
