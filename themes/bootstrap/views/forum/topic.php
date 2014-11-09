@@ -140,11 +140,11 @@
 
 <?php if (is_user()): ?>
 	<?php if (empty($topics['topics_closed'])): ?>
-		<div class="form">
+		<div class="well">
 			<form action="topic.php?act=add&amp;tid=<?= $tid ?>&amp;start=<?= $start ?>&amp;token=<?= $_SESSION['token'] ?>" method="post">
-			<textarea name="msg" cols="25" rows="5" id="markItUp"></textarea><br />
+			<textarea name="msg" class="form-control" id="markItUp"></textarea><br />
 
-			<input type="submit" value="Написать" />
+			<button type="submit" class="btn btn-action">Написать</button>
 
 		<?php if ($udata['users_point'] >= $config['forumloadpoints']): ?>
 			<span class="imgright">
@@ -166,4 +166,4 @@
 <a href="/pages/tags.php">Теги</a>  /
 <a href="/pages/rules.php">Правила</a> /
 <a href="top.php?act=themes">Топ тем</a> /
-<a href="search.php?fid=<?=$topics['forums_id']?>">Поиск</a><br />
+<a href="search.php?fid=<?= $topic->id ?>">Поиск</a><br />

@@ -18,7 +18,7 @@
 			<?= user_avatars($post->user()->id) ?>
 
 			<div class="media-body">
-				<ul class="list-inline pull-right small">
+				<ul class="list-inline small" style="float: right">
 
 				<?php if ($user && $user->id != $post->user_id): ?>
 

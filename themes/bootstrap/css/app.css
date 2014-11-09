@@ -2,6 +2,10 @@
    margin: 50px auto;
 }
 
+.media > .pull-right {
+  float: right !important;
+}
+
 .padding {
   padding: 10px;
 }

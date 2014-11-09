@@ -771,7 +771,7 @@ function user_avatars($user_id) {
 	static $avatars;
 
 	$image = array(
-		'class' => 'pull-left media-object',
+		'class' => 'media-left',
 		'src' => '/images/avatars/guest.png'
 	);
 
