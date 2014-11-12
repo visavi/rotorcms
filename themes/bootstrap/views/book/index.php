@@ -18,7 +18,7 @@
 			<?= user_avatars($post->user()->id) ?>
 
 			<div class="media-body">
-				<ul class="list-inline small" style="float: right">
+				<ul class="list-inline small pull-right">
 
 				<?php if ($user && $user->id != $post->user_id): ?>
 
@@ -46,7 +46,7 @@
 				<div class="message"><?= bb_code($post->text) ?></div>
 
 				<?php if (!empty($post->edit_user_id)): ?>
-					<div class="small text-muted"><span class="glyphicon glyphicon-pencil"></span> Отредактировано: <?= $post->user_login ?> (<?= $post->updated_at ?>)</div>
+					<div class="small text-muted"><span class="glyphicon glyphicon-pencil"></span> Отредактировано: <?= $post->user()->login ?> (<?= $post->updated_at ?>)</div>
 				<?php endif; ?>
 
 				<?php if (!empty($post->reply)): ?>

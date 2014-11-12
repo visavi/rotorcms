@@ -2,10 +2,6 @@
    margin: 50px auto;
 }
 
-.media > .pull-right {
-  float: right !important;
-}
-
 .padding {
   padding: 10px;
 }
@@ -19,13 +15,29 @@
   border: 1px  solid #ccc;
 }
 
+
+.main {
+  margin-bottom: 20px;
+}
+
 .media {
   padding-bottom: 5px;
   border-bottom: 1px solid #eee;
 }
 
-.main {
-  margin-bottom: 20px;
+.media-body {
+  display: block;
+  overflow: hidden;
+}
+
+.media-left {
+  float: left;
+  display: block;
+}
+
+.media-right {
+  float: right;
+  display: block;
 }
 /* Sticky footer styles
 -------------------------------------------------- */
