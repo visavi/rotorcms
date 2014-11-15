@@ -8,14 +8,16 @@ class BaseActiveRecord extends ActiveRecord\Model
 	 * @return string ошибки в виде строки
 	 */
 	public function getErrors($separator = '<br />') {
-		$result = array();
-		$raw_errors = $this->errors->get_raw_errors();
-
-		foreach ($raw_errors as $attribute => $errors) {
-			foreach ($errors as $error) {
-				$result[] = $error;
+		if ($this->errors) {
+			$result = array();
+			$raw_errors = $this->errors->get_raw_errors();
+			foreach ($raw_errors as $attribute => $errors) {
+				foreach ($errors as $error) {
+					$result[] = $error;
+				}
 			}
+			return implode($separator, $result);
 		}
-		return implode($separator, $result);
+		return false;
 	}
 }

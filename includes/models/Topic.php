@@ -8,7 +8,7 @@ class Topic extends BaseActiveRecord {
 	 * Связи
 	 */
 	static $has_many = array(
-		array('posts', 'order' => 'created_at DESC'),
+		array('posts', 'order' => 'created_at'),
 	);
 
 	static $belongs_to = array(
@@ -89,5 +89,22 @@ class Topic extends BaseActiveRecord {
 			$icon = 'glyphicon-folder-open';
 
 		return $icon;
+	}
+
+	/**
+	 * Список модераторов темы
+	 * @return string  список модераторов
+	 */
+	public function getModerators() {
+
+		$moderators = null;
+		$mods = explode(',', $this->mods);
+		//$topics['is_moder'] = (in_array($log, $topics['curator'])) ? 1 : 0;
+		foreach ($mods as $key => $mod) {
+			$comma = (empty($key)) ? '' : ', ';
+
+			$moderators .= $comma.$mod;
+		}
+		return $moderators;
 	}
 }

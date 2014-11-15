@@ -33,7 +33,7 @@ function makestime($time) {
 }
 
 // --------------------------- Функция временного сдвига -----------------------------//
-function date_fixed($timestamp, $format = "d.m.y / H:i") {
+function date_fixed($timestamp, $format = "d.m.y / H:i") { // Не используется
 	global $udata;
 
 	if (!is_numeric($timestamp)) {

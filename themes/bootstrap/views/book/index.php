@@ -75,7 +75,7 @@
 			<textarea class="form-control" id="markItUp" cols="25" rows="5" name="msg"></textarea><br />
 			<button type="submit" class="btn btn-action">Написать</button>
 		</form>
-	</div><br />
+	</div>
 
 <?php elseif ($config['bookadds'] == 1): ?>
 
@@ -89,7 +89,7 @@
 			<input name="provkod" class="form-control" maxlength="6" /><br />
 			<button type="submit" class="btn btn-action">Написать</button>
 		</form>
-	</div><br />
+	</div>
 
 <?php else: ?>
 	<?php show_login('Вы не авторизованы, чтобы добавить сообщение, необходимо'); ?>

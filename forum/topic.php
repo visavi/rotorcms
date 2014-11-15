@@ -122,11 +122,28 @@ break;
 ##                                   Добавление сообщения                                 ##
 ############################################################################################
 case 'add':
-
-	$uid = (!empty($_GET['uid'])) ? check($_GET['uid']) : 0;
+var_dump($_REQUEST);
+	$token = (!empty($_GET['token'])) ? check($_GET['token']) : 0;
 	$msg = (isset($_POST['msg'])) ? check($_POST['msg']) : '';
 
 	if (is_user()) {
+
+		$post = new Post;
+		$post->token = $token;
+		$post->forum_id = 0;
+		$post->topic_id = $tid;
+		$post->user_id = $user->id;
+		$post->text = $msg;
+		$post->ip = $ip;
+		$post->brow = $brow;
+
+		if ($post->save()) {
+			notice('Сообщение успешно добавлено!');
+			redirect("topic.php?act=end&tid=$tid");
+		} else {
+			show_error($post->getErrors());
+		}
+
 
 	$topics = DB::run() -> queryFetch("SELECT `topics`.*, `forums`.`forums_parent` FROM `topics` LEFT JOIN `forums` ON `topics`.`topics_forums_id`=`forums`.`forums_id` WHERE `topics`.`topics_id`=? LIMIT 1;", array($tid));
 
