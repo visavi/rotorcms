@@ -26,17 +26,21 @@ switch ($act):
 ############################################################################################
 case 'index':
 
-	$total = DB::run() -> querySingle("SELECT count(*) FROM `bookmarks` WHERE `book_user`=?;", array($log));
+	//$total = DB::run() -> querySingle("SELECT count(*) FROM `bookmarks` WHERE `book_user`=?;", array($log));
+
+	$total = Bookmark::count();
 
 	if ($total > 0) {
 		if ($start >= $total) {
 			$start = last_page($total, $config['forumtem']);
 		}
 
-		$querytopic = DB::run() -> query("SELECT `topics`.*, `bookmarks`.* FROM `bookmarks` LEFT JOIN `topics` ON `bookmarks`.`book_topic`=`topics`.`topics_id` WHERE `book_user`=?  ORDER BY `topics_last_time` DESC LIMIT ".$start.", ".$config['forumtem'].";", array($log));
-		$topics = $querytopic->fetchAll();
+		//$querytopic = DB::run() -> query("SELECT `topics`.*, `bookmarks`.* FROM `bookmarks` LEFT JOIN `topics` ON `bookmarks`.`book_topic`=`topics`.`topics_id` WHERE `book_user`=?  ORDER BY `topics_last_time` DESC LIMIT ".$start.", ".$config['forumtem'].";", array($log));
+		//$topics = $querytopic->fetchAll();
 
-		render('forum/bookmark', array('topics' => $topics, 'start' => $start));
+		$bookmarks = Bookmark::find_all_by_user_id($user->id);
+
+		render('forum/bookmark', compact('bookmarks', 'start'));
 
 		page_strnavigation('bookmark.php?', $config['forumtem'], $start, $total);
 

@@ -35,13 +35,17 @@ case 'index':
 			//	$topics['subparent'] = DB::run() -> queryFetch("SELECT `forums_id`, `forums_title` FROM `forums` WHERE `forums_id`=? LIMIT 1;", array($topics['forums_parent']));
 			//}
 
-			//if (is_user()) {
+			if (is_user()) {
+				$bookmark = Bookmark::find_by_topic_id_and_user_id($tid, $user->id);
 			//	$topics['bookmark'] = DB::run() -> queryFetch("SELECT * FROM `bookmarks` WHERE `book_topic`=? AND `book_user`=? LIMIT 1;", array($tid, $log));
 
-			//	if (!empty($topics['bookmark']) && $topics['topics_posts'] > $topics['bookmark']['book_posts']) {
+				if ($bookmark && $topic->postCount() > $bookmark->posts) {
+
+					$bookmark->posts = $topic->postCount();
+					$bookmark->save();
 			//		DB::run() -> query("UPDATE `bookmarks` SET `book_posts`=? WHERE `book_topic`=? AND `book_user`=? LIMIT 1;", array($topics['topics_posts'], $tid, $log));
-			//	}
-			//}
+				}
+			}
 
 			// --------------------------------------------------------------//
 /*			if (!empty($topics['topics_mod'])) {
@@ -784,11 +788,11 @@ break;
 ############################################################################################
 case 'end':
 
-	$querytopic = DB::run() -> querySingle("SELECT `topics_posts` FROM `topics` WHERE `topics_id`=? LIMIT 1;", array($tid));
+	$topic = Topic::find_by_id($tid);
 
-	if (!empty($querytopic)) {
-		$end = floor(($querytopic - 1) / $config['forumpost']) * $config['forumpost'];
+	if ($topic) {
 
+		$end = floor(abs($topic->postCount() - 1) / $config['forumpost']) * $config['forumpost'];
 		redirect("topic.php?tid=$tid&start=$end");
 
 	} else {

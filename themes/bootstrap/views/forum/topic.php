@@ -18,15 +18,15 @@
 		<a href="topic.php?act=closed&amp;tid=<?= $tid ?>&amp;start=<?= $start ?>&amp;token=<?= $_SESSION['token'] ?>">Закрыть</a> /
 		<a href="topic.php?act=edittopic&amp;tid=<?= $tid ?>">Изменить</a> /
 	<?php endif; ?>
-
+*/?>
 	<?php if (empty($topics['bookmark'])): ?>
-		<a href="bookmark.php?act=add&amp;tid=<?= $tid ?>&amp;start=<?= $start ?>&amp;token=<?= $_SESSION['token'] ?>">В закладки</a>
+		/ <a href="bookmark.php?act=add&amp;tid=<?= $tid ?>&amp;start=<?= $start ?>&amp;token=<?= $_SESSION['token'] ?>">В закладки</a>
 	<?php else: ?>
-		<a href="bookmark.php?act=remove&amp;tid=<?= $tid ?>&amp;start=<?= $start ?>&amp;token=<?= $_SESSION['token'] ?>">Из закладок</a>
+		/ <a href="bookmark.php?act=remove&amp;tid=<?= $tid ?>&amp;start=<?= $start ?>&amp;token=<?= $_SESSION['token'] ?>">Из закладок</a>
 	<?php endif; ?>
 
-	)<br />
- */ ?>
+
+
 <?php endif; ?>
 
 <?php if ($topic->mods): ?>

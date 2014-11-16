@@ -1291,3 +1291,14 @@ INSERT INTO `notice` (`id`, `name`, `text`, `user_id`, `protect`) VALUES
 (1, 'Приветствие при регистрации в приват', 'Добро пожаловать, %USERNAME%!<br />Теперь Вы полноправный пользователь сайта, сохраните ваш пароль и логин в надежном месте, они пригодятся вам для входа на наш сайт.<br />Перед посещением сайта рекомендуем вам ознакомиться с [url=%SITENAME%/pages/rules.php]правилами сайта[/url], это поможет Вам избежать неприятных ситуаций.<br />Желаем приятно провести время.<br />С уважением, администрация сайта!', 1, 1);
 
 
+CREATE TABLE IF NOT EXISTS `bookmarks` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) unsigned NOT NULL,
+  `topic_id` mediumint(8) unsigned NOT NULL,
+  `forum_id` smallint(4) unsigned NOT NULL,
+  `posts` mediumint(8) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`),
+  KEY `forum_id` (`forum_id`),
+  KEY `topic_id` (`topic_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
