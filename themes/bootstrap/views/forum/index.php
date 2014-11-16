@@ -28,7 +28,7 @@
 
 		<?php if ($forum->topic_last): ?>
 			Тема: <a href="topic.php?act=end&amp;tid=<?= $forum->topicLast()->id ?>"><?= $forum->topicLast()->title ?></a><br />
-			Сообщение: <?= $forum->topicLast()->user()->getLogin() ?> (<?= $forum->topicLast()->created_at ?>)
+			Сообщение: <?= $forum->topicLast()->postLast()->user()->getLogin() ?> (<?= $forum->topicLast()->postLast()->created_at ?>)
 		<?php else: ?>
 			Темы еще не созданы!
 		<?php endif; ?>

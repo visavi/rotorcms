@@ -18,6 +18,7 @@ class Topic extends BaseActiveRecord {
 
 	static $has_one = array(
 		array('post_count', 'select' => 'count(*) as count, topic_id', 'class' => 'Post'),
+		array('post_last', 'order' => 'created_at DESC', 'class' => 'Post'),
 	);
 
 	/* Валидаторы */
@@ -57,6 +58,14 @@ class Topic extends BaseActiveRecord {
 	 */
 	public function postCount() {
 		return $this->post_count ? $this->post_count->count : 0;
+	}
+
+	/**
+	 * Последнее сообщение в теме
+	 * @return object Post модель сообщений
+	 */
+	public function postLast() {
+		return $this->post_last ? $this->post_last : new Post;
 	}
 
 	/**

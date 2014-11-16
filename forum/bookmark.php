@@ -40,9 +40,7 @@ case 'index':
 
 		$bookmarks = Bookmark::find_all_by_user_id($user->id);
 
-		render('forum/bookmark', compact('bookmarks', 'start'));
-
-		page_strnavigation('bookmark.php?', $config['forumtem'], $start, $total);
+		render('forum/bookmark', compact('bookmarks', 'start', 'total'));
 
 	} else {
 		show_error('Закладок еще нет!');

@@ -1,10 +1,8 @@
-<a href="index.php">Форум</a> /
+<a href="index.php">Форум</a>
 
 <?php if (!empty($forum->parent_id)): ?>
-	<a href="forum.php?fid=<?= $forum->parent_id ?>"><?= $forum->parent()->title ?></a> /
+	/ <a href="forum.php?fid=<?= $forum->parent_id ?>"><?= $forum->parent()->title ?></a>
 <?php endif; ?>
-
-<a href="forum.php?fid=<?=$fid?>&amp;start=<?=$start?>&amp;rand=<?=mt_rand(1000, 9999)?>">Обновить</a>
 
 <?php if (empty($forum->closed)): ?>
 	 / <a href="forum.php?act=addtheme&amp;fid=<?=$fid?>">Создать тему</a>
@@ -30,7 +28,7 @@
 
 			<?php if ($subforum->topic_last): ?>
 				Тема: <a href="topic.php?act=end&amp;tid=<?= $subforum->topicLast()->id ?>"><?= $subforum->topicLast()->title ?></a><br />
-				Сообщение: <?= $subforum->topicLast()->user()->getLogin() ?> (<?= $subforum->topicLast()->created_at ?>)
+				Сообщение: <?= $subforum->topicLast()->postLast()->user()->getLogin() ?> (<?= $subforum->topicLast()->postLast()->created_at ?>)
 			<?php else: ?>
 				Темы еще не созданы!
 			<?php endif; ?>
@@ -47,7 +45,7 @@
 		</h5>
 		<div>
 			Страницы: <?= forum_navigation('topic.php?tid='.$topic->id.'&amp;', $config['forumpost'], $topic->postCount())?>
-			Сообщение: <?= $topic->user()->getLogin() ?> (<?= $topic->created_at ?>)
+			Сообщение: <?= $topic->postLast()->user()->getLogin() ?> (<?= $topic->postLast()->created_at ?>)
 		</div>
 	<?php endforeach; ?>
 

@@ -2,30 +2,26 @@
 
 	<?php foreach ($bookmarks as $bookmark): ?>
 
+		<?php $newpost = ($bookmark->topic()->postCount() > $bookmark->posts) ? '/<span style="color:#00cc00">+'.($bookmark->topic()->postCount() - $bookmark->posts).'</span>' : ''; ?>
+
+		<div>
+		<div class="pull-right">
+			<input type="checkbox" name="del[]" value="<?= $bookmark->id ?>" />
+		</div>
 		<h5>
 			<span class="glyphicon <?= $bookmark->topic()->getIcon() ?>"></span>
-			<a href="topic.php?tid=<?= $bookmark->topic()->id ?>"><?= $bookmark->topic()->title ?></a> (<?= $bookmark->topic()->postCount() ?>)
+			<a href="topic.php?tid=<?= $bookmark->topic()->id ?>"><?= $bookmark->topic()->title ?></a> (<?= $bookmark->topic()->postCount() ?><?=$newpost?>)
 		</h5>
+		</div>
+
 		<div>
 			Страницы: <?= forum_navigation('topic.php?tid='.$bookmark->topic()->id.'&amp;', $config['forumpost'], $bookmark->topic()->postCount())?>
-			Сообщение: <?= $bookmark->topic()->user()->getLogin() ?> (<?= $bookmark->topic()->created_at ?>)
+			Автор: <?= $bookmark->topic()->user()->getLogin() ?> / Посл.: <?= $bookmark->topic()->postLast()->user()->getLogin() ?> (<?= $bookmark->topic()->created_at ?>)
 		</div>
 
-		<div class="b">
-			<input type="checkbox" name="del[]" value="<?= $topic->id ?>" />
-
-			<?php $newpost = ($data['topics_posts'] > $data['book_posts']) ? '/<span style="color:#00cc00">+'.($data['topics_posts'] - $data['book_posts']).'</span>' : ''; ?>
-
-			<b><a href="topic.php?tid=<?=$data['topics_id']?>"><?=$data['topics_title']?></a></b> (<?=$data['topics_posts']?><?=$newpost?>)
-		</div>
-
-		<div>
-			Страницы:
-			<?php forum_navigation('topic.php?tid='.$data['topics_id'].'&amp;', $config['forumpost'], $data['topics_posts']); ?>
-			Автор: <?=nickname($data['topics_author'])?> / Посл.: <?=nickname($data['topics_last_user'])?> (<?=date_fixed($data['topics_last_time'])?>)
-		</div>
 	<?php endforeach; ?>
-
-	<br />
-	<input type="submit" value="Удалить выбранное" />
+	<button type="submit" class="btn btn-default btn-xs pull-right">Удалить выбранное</button>
 </form>
+
+<?php page_strnavigation('bookmark.php?', $config['forumtem'], $start, $total);  ?>
+
