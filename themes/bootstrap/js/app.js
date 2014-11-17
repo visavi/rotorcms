@@ -14,3 +14,22 @@ function revealPassword(el) {
 		$('.eye').attr('type', 'password');
 	}
 }
+
+
+function changeBookmark(el, topic) {
+
+	$.ajax({
+		type: "GET", url: "/ajax/bookmark.php",
+		data: {topic: topic, token: $(el).data('token')},
+		success: function(data) {
+
+			if (data.status == 'deleted') {
+				$(el).text('В закладки');
+			} else {
+				$(el).text('Из закладок');
+			}
+		}
+	});
+
+	return false;
+}

@@ -19,8 +19,11 @@
 		<a href="topic.php?act=edittopic&amp;tid=<?= $tid ?>">Изменить</a> /
 	<?php endif; ?>
 */?>
+
+	<a href="#" onclick="return changeBookmark(this, <?= $tid ?>)" data-token="<?= $_SESSION['token'] ?>">В закладки</a>
+
 	<?php if (empty($topics['bookmark'])): ?>
-		/ <a href="bookmark.php?act=add&amp;tid=<?= $tid ?>&amp;start=<?= $start ?>&amp;token=<?= $_SESSION['token'] ?>">В закладки</a>
+		/ <a href="bookmark.php?act=add&amp;tid=<?= $tid ?>&amp;start=<?= $start ?>&amp;token=<?= $_SESSION['token'] ?>" onclick="bookmark(this, $tid)">В закладки</a>
 	<?php else: ?>
 		/ <a href="bookmark.php?act=remove&amp;tid=<?= $tid ?>&amp;start=<?= $start ?>&amp;token=<?= $_SESSION['token'] ?>">Из закладок</a>
 	<?php endif; ?>

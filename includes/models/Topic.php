@@ -116,4 +116,8 @@ class Topic extends BaseActiveRecord {
 		}
 		return $moderators;
 	}
+
+	public function is_bookmarked() {
+
+	}
 }
