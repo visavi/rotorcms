@@ -26,11 +26,13 @@
 
 	<?= include_javascript() ?>
 	<script src="/themes/bootstrap/js/bootstrap.min.js"></script>
+	<script src="/themes/bootstrap/js/notify.min.js"></script>
 	<script src="/themes/bootstrap/js/app.js"></script>
 
 <script type="text/javascript">
 	$(function () {
-		$("[data-toggle='tooltip']").tooltip();
+		$('[data-toggle="tooltip"]').tooltip();
+		$('[data-toggle="popover"]').popover()
 	});
 </script>
 </body>

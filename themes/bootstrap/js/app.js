@@ -1,4 +1,15 @@
 $(document).ready(function(){
+
+	$.notify.defaults({ className: "success" });
+
+	// Скрывает поповеры по клику в любом месте
+	$('body').on('click', function (e) {
+		//did not click a popover toggle or popover
+		if ($(e.target).data('toggle') !== 'popover'
+			&& $(e.target).parents('.popover.in').length === 0) {
+			$('[data-toggle="popover"]').popover('hide');
+		}
+	});
 });
 
 /*
@@ -19,13 +30,22 @@ function revealPassword(el) {
 function changeBookmark(el, topic) {
 
 	$.ajax({
-		type: "GET", url: "/ajax/bookmark.php",
+		dataType: "JSON", type: "GET", url: "/ajax/bookmark.php",
 		data: {topic: topic, token: $(el).data('token')},
 		success: function(data) {
 
-			if (data.status == 'deleted') {
+			if (data.status == 'error'){
+				$.notify("Ошибка изменения закладок", "error");
+				return false;
+			}
+
+			if (data.status == 'deleted'){
+				$.notify("Удалено из закладок");
 				$(el).text('В закладки');
-			} else {
+			}
+
+			if (data.status == 'added'){
+				$.notify("Добавлено в закладки");
 				$(el).text('Из закладок');
 			}
 		}
