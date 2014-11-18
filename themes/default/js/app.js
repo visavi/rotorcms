@@ -26,7 +26,7 @@ function revealPassword(el) {
 	}
 }
 
-
+/* Добавление темы в закладки */
 function changeBookmark(el, topic) {
 
 	$.ajax({
@@ -48,6 +48,23 @@ function changeBookmark(el, topic) {
 				$.notify("Добавлено в закладки");
 				$(el).text('Из закладок');
 			}
+		}
+	});
+
+	return false;
+}
+
+/* Отправка жалобы на спам */
+function sendComplaint(el) {
+
+	confirm('Вы подтверждаете факт спама?');
+
+	$.ajax({
+		dataType: "JSON", type: "GET", url: "/ajax/complaint.php",
+
+		success: function(data) {
+
+
 		}
 	});
 

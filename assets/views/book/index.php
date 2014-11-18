@@ -25,6 +25,10 @@
 					<li><a href="#" onclick="return reply('<?= $post->user()->login ?>')">Отв</a></li>
 
 					<li><noindex><a href="index.php?act=spam&amp;id=<?= $post->id ?>&amp;start=<?= $start ?>&amp;token=<?= $_SESSION['token'] ?>" onclick="return confirm('Вы подтверждаете факт спама?')" rel="nofollow">Спам</a></noindex></li>
+
+					<li><noindex><a href="#" onclick="return sendComplaint(this);" rel="nofollow">Спам</a></noindex></li>
+
+
 				<?php endif; ?>
 
 				<?php if ($user->id == $post->user_id && $post->created_at->getTimestamp() > time() - 600): ?>
