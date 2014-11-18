@@ -20,7 +20,7 @@
 	<?php endif; ?>
 */?>
 
-	/ <a href="#" onclick="return changeBookmark(this, <?= $tid ?>)" data-token="<?= $_SESSION['token'] ?>">В закладки</a>
+	/ <a href="#" onclick="return changeBookmark(this, <?= $tid ?>)" data-token="<?= $_SESSION['token'] ?>"><?= $topic->is_bookmarked($user->id) ? 'Из закладок' : 'В закладки' ?></a>
 
 
 <?php endif; ?>

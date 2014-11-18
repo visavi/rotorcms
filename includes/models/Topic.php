@@ -117,7 +117,12 @@ class Topic extends BaseActiveRecord {
 		return $moderators;
 	}
 
-	public function is_bookmarked() {
-
+	/**
+	 *  Проверяет имеется ли тема в закладках
+	 * @param  integer  $user_id id пользователя
+	 * @return boolean  имеется ли тема в закладках
+	 */
+	public function is_bookmarked($user_id) {
+		return Bookmark::exists(array('conditions' => array('topic_id = ? AND user_id = ?', $this->id, $user_id)));
 	}
 }
