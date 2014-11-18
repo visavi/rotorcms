@@ -9,28 +9,89 @@
 #---------------------------------------------#
 header("Content-type:text/html; charset=utf-8");
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ru" lang="ru">
+<!DOCTYPE html>
+<html lang="ru">
 <head>
-	<title>%TITLE%</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-	<link rel="image_src" href="/images/img/icon.png" />
-	<link rel="stylesheet" href="/themes/default/css/style.css" type="text/css" />
-	<link rel="alternate" href="/news/rss.php" title="RSS News" type="application/rss+xml" />
-	<?= include_javascript() ?>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="keywords" content="%KEYWORDS%" />
 	<meta name="description" content="%DESCRIPTION%" />
-	<meta name="viewport" content="width=device-width,initial-scale=1" />
 	<meta name="generator" content="RotorCMS <?= $config['rotorversion'] ?>" />
+	<title>%TITLE%</title>
+
+	<!-- Bootstrap -->
+	<link href="/themes/default/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="/themes/default/css/bootstrap-theme.min.css" rel="stylesheet" />
+	<link href="/themes/default/css/app.css" rel="stylesheet" />
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&amp;subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+
+
+	<link rel="image_src" href="/images/img/icon.png" />
+	<link rel="alternate" href="/news/rss.php" title="RSS News" type="application/rss+xml" />
+	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+	  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+	  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<![endif]-->
 </head>
 <body>
 
-<div class="cs" id="up">
-	<a href="/"><img src="<?= $config['logotip'] ?>" alt="<?= $config['title'] ?>" /></a><br />
-	<?= $config['logos'] ?>
-</div>
+	<!-- Fixed navbar -->
+	<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="/"><?= $config['title'] ?></a>
+			</div>
+			<div class="navbar-collapse collapse">
+				<ul class="nav navbar-nav">
+				<li<?= ($php_self == '/book/index.php') ? ' class="active"' : '' ?>><a href="/book">Гостевая</a></li>
+				<li<?= ($php_self == '/forum/index.php') ? ' class="active"' : '' ?>><a href="/forum">Форум</a></li>
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li><a href="#">Action</a></li>
+						<li><a href="#">Another action</a></li>
+						<li><a href="#">Something else here</a></li>
+						<li class="divider"></li>
+						<li class="dropdown-header">Nav header</li>
+						<li><a href="#">Separated link</a></li>
+						<li><a href="#">One more separated link</a></li>
+					</ul>
+				</li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
 
-<?php render('includes/menu'); ?>
+					<?php if (is_user()): ?>
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><?= $user->getLogin() ?> <b class="caret"></b></a>
+							<ul class="dropdown-menu">
 
-<div class="site">
+								<?php if (is_admin()): ?>
+									<li><a href="/admin">Админ-панель</a></li>
+								<?php endif; ?>
+								<li><a href="/pages/user.php?id=<?= $user->id ?>">Профиль</a></li>
+								<li><a href="/pages/login.php?act=exit">Выход</a></li>
+							</ul>
+						</li>
+
+					<?php else: ?>
+						<li<?= ($php_self == '/pages/login.php') ? ' class="active"' : '' ?>><a href="/pages/login.php">Вход</a></li>
+						<li<?= ($php_self == '/pages/registration.php') ? ' class="active"' : '' ?>><a href="/pages/registration.php">Регистрация</a></li>
+					<?php endif; ?>
+				</ul>
+			</div><!--/.nav-collapse -->
+		</div>
+	</div>
+
+	<!-- Begin page content -->
+	<div class="container">
+		<div class="row main">
+			<div class="col-lg-9">

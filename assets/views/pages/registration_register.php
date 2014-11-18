@@ -1,14 +1,16 @@
-Вы успешно зарегистрированы!<br /><br />
+<div class="alert alert-success" role="alert">Вы успешно зарегистрированы!</div>
 
-Логин: <b><?= $login ?></b><br />
-Пароль: <b><?= $password ?></b><br /><br />
+<p>Логин: <b><?= $login ?></b></p>
+<p>Пароль: <b><?= $password ?></b></p>
 
-Теперь вы можете войти<br />
-<br /><img src="/images/img/open.gif" alt="image" />
-<b><a href="/pages/login.php?login=<?= $login ?>&amp;password=<?= $password ?>">Вход на сайт</a></b><br /><br />
+<h2><a href="/pages/login.php?login=<?= $login ?>&amp;password=<?= $password ?>">Вход на сайт</a></h2>
 
-Вы можете сделать закладку для быстрого входа:<br />
-<span style="color:#ff0000"><?= $config['home'] ?>/pages/login.php?login=<?= $login ?>&amp;password=<?= $password ?></span><br /><br />
-Cкопировать: <br /><input size="60" value="<?= $config['home'] ?>/pages/login.php?login=<?= $login ?>&amp;password=<?= $password ?>"/><br /><br />
+<span class="help-block">
+	Вы можете сделать закладку для быстрого входа:<br />
+	<p class="text-danger"><?= $config['home'] ?>/pages/login.php?login=<?= $login ?>&amp;password=<?= $password ?></p>
+</span>
 
-Если у вас включены cookies, то делать такую закладку не обязательно<br /><br />
+Cкопировать: <br />
+<input class="form-control" value="<?= $config['home'] ?>/pages/login.php?login=<?= $login ?>&amp;password=<?= $password ?>"/>
+
+<span class="help-block">Если у вас включены cookies, то делать такую закладку не обязательно</p>

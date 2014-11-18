@@ -1,13 +1,12 @@
-<?php if (is_array($errors)): ?>
-
-	<div class="info">
+<div class="alert alert-danger">
+	<?php if (is_array($errors)): ?>
 		<?php foreach ($errors as $error): ?>
-			<img src="/images/img/error.gif" alt="Ошибка" /> <b><?= $error ?></b><br />
+			<?= $error ?>
 		<?php endforeach; ?>
-	</div>
+	<?php else: ?>
+		<?= $errors ?>
+	<?php endif; ?>
+</div>
 
-<?php else: ?>
 
-	<div class="info"><img src="/images/img/error.gif" alt="Ошибка" /> <b><?= $errors ?></b></div>
 
-<?php endif; ?>

@@ -1,8 +1,9 @@
-<img src="/images/img/edit.gif" alt="image" /> <b><?=profile($post['guest_user'])?></b> <small>(<?=date_fixed($post['guest_time'])?>)</small><br /><br />
-
-<div class="form">
-	<form action="index.php?act=editpost&amp;id=<?=$id?>&amp;start=<?=$start?>&amp;uid=<?=$_SESSION['token']?>" method="post">
-		<textarea id="markItUp" cols="25" rows="5" name="msg"><?=$post['guest_text']?></textarea><br />
-		<input value="Редактировать" type="submit" />
+<div class="media" id="post">
+	<?= user_avatars($post->user()->id) ?><h4 class="media-heading" style="display: inline;"><?= profile($post->user()->getLogin()) ?></h4> <small>(<?= $post->created_at ?>)</small><br /><br />
+</div>
+<div class="well">
+	<form action="index.php?act=editpost&amp;id=<?= $id ?>&amp;start=<?= $start ?>&amp;token=<?= $_SESSION['token'] ?>" method="post">
+		<textarea class="form-control" id="markItUp" cols="25" rows="5" name="msg"><?= $post->text ?></textarea><br />
+		<button type="submit" class="btn btn-action">Редактировать</button>
 	</form>
 </div><br />

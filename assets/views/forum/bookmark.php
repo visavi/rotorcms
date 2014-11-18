@@ -1,29 +1,27 @@
-<form action="bookmark.php?act=del&amp;start=<?=$start?>&amp;uid=<?=$_SESSION['token']?>" method="post">
+<form action="bookmark.php?act=del&amp;start=<?= $start ?>&amp;token=<?= $_SESSION['token'] ?>" method="post">
 
-	<?php foreach ($topics as $data): ?>
-		<div class="b">
-			<input type="checkbox" name="del[]" value="<?=$data['book_id']?>" />
+	<?php foreach ($bookmarks as $bookmark): ?>
 
-			<?php if ($data['topics_locked'] == 1): ?>
-				<img src="/images/img/lock.gif" alt="image" />
-			<?php elseif ($data['topics_closed'] == 1): ?>
-				<img src="/images/img/closed.gif" alt="image" />
-			<?php else: ?>
-				<img src="/images/img/forums.gif" alt="image" />
-			<?php endif; ?>
+		<?php $newpost = ($bookmark->topic()->postCount() > $bookmark->posts) ? '/<span style="color:#00cc00">+'.($bookmark->topic()->postCount() - $bookmark->posts).'</span>' : ''; ?>
 
-			<?php $newpost = ($data['topics_posts'] > $data['book_posts']) ? '/<span style="color:#00cc00">+'.($data['topics_posts'] - $data['book_posts']).'</span>' : ''; ?>
-
-			<b><a href="topic.php?tid=<?=$data['topics_id']?>"><?=$data['topics_title']?></a></b> (<?=$data['topics_posts']?><?=$newpost?>)
+		<div>
+		<div class="pull-right">
+			<input type="checkbox" name="del[]" value="<?= $bookmark->id ?>" />
+		</div>
+		<h5>
+			<span class="glyphicon <?= $bookmark->topic()->getIcon() ?>"></span>
+			<a href="topic.php?tid=<?= $bookmark->topic()->id ?>"><?= $bookmark->topic()->title ?></a> (<?= $bookmark->topic()->postCount() ?><?=$newpost?>)
+		</h5>
 		</div>
 
 		<div>
-			Страницы:
-			<?php forum_navigation('topic.php?tid='.$data['topics_id'].'&amp;', $config['forumpost'], $data['topics_posts']); ?>
-			Автор: <?=nickname($data['topics_author'])?> / Посл.: <?=nickname($data['topics_last_user'])?> (<?=date_fixed($data['topics_last_time'])?>)
+			Страницы: <?= forum_navigation('topic.php?tid='.$bookmark->topic()->id.'&amp;', $config['forumpost'], $bookmark->topic()->postCount())?>
+			Автор: <?= $bookmark->topic()->user()->getLogin() ?> / Посл.: <?= $bookmark->topic()->postLast()->user()->getLogin() ?> (<?= $bookmark->topic()->created_at ?>)
 		</div>
-	<?php endforeach; ?>
 
-	<br />
-	<input type="submit" value="Удалить выбранное" />
+	<?php endforeach; ?>
+	<button type="submit" class="btn btn-default btn-xs pull-right">Удалить выбранное</button>
 </form>
+
+<?php page_strnavigation('bookmark.php?', $config['forumtem'], $start, $total);  ?>
+

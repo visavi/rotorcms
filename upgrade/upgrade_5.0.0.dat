@@ -261,12 +261,12 @@ INSERT INTO `setting` (`name`, `value`) VALUES
 ('smilelist', '10'),
 ('statusdef', 'Дух'),
 ('statusname', 'Суперадмин,Админ,Старший модер,Модератор,Пользователь'),
-('themes', 'bootstrap'),
+('themes', 'default'),
 ('timezone', 'Europe/Moscow'),
 ('title', 'Мой сайт'),
 ('touchthemes', '0'),
 ('userlist', '10'),
-('webthemes', 'bootstrap'),
+('webthemes', 'default'),
 ('ziplist', '20');
 
 CREATE TABLE IF NOT EXISTS `blacklist` (
