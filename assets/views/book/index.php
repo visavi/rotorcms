@@ -26,7 +26,7 @@
 
 					<li><noindex><a href="index.php?act=spam&amp;id=<?= $post->id ?>&amp;start=<?= $start ?>&amp;token=<?= $_SESSION['token'] ?>" onclick="return confirm('Вы подтверждаете факт спама?')" rel="nofollow">Спам</a></noindex></li>
 
-					<li><noindex><a href="#" onclick="return sendComplaint(this);" rel="nofollow">Спам</a></noindex></li>
+					<li><noindex><a href="#" onclick="return sendComplaint(this, 'guest', <?= $post->id ?>);" data-token="<?= $_SESSION['token'] ?>" rel="nofollow">Спам</a></noindex></li>
 
 
 				<?php endif; ?>

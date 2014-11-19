@@ -55,13 +55,13 @@ function changeBookmark(el, topic) {
 }
 
 /* Отправка жалобы на спам */
-function sendComplaint(el) {
+function sendComplaint(el, post) {
 
-	confirm('Вы подтверждаете факт спама?');
+	if (!confirm('Вы подтверждаете факт спама?')) return false;
 
 	$.ajax({
 		dataType: "JSON", type: "GET", url: "/ajax/complaint.php",
-
+		data: {post: post, token: $(el).data('token')},
 		success: function(data) {
 
 

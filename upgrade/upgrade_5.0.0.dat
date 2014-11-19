@@ -487,6 +487,17 @@ CREATE TABLE IF NOT EXISTS `spam` (
   KEY `created_at` (`created_at`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+CREATE TABLE IF NOT EXISTS `spam2` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `section` enum('guest', 'forum') NOT NULL,
+  `post_id` int(11) unsigned NOT NULL,
+  `user_id` int(11) unsigned NOT NULL,
+  `created_at` timestamp NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `section` (`section`),
+  KEY `created_at` (`created_at`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
 CREATE TABLE IF NOT EXISTS `ban` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `ip` varchar(15) NOT NULL,
