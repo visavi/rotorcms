@@ -340,17 +340,6 @@ if (is_admin(array(101))) {
 			}
 			echo '</select><br />';
 
-			echo 'Быстрый переход:<br /><select name="navigation">';
-
-			$innav = array('Выключить', 'Обычный список', 'Список без кнопки');
-
-			foreach($innav as $k => $v) {
-				$selected = ($k == $setting['navigation']) ? ' selected="selected"' : '';
-
-				echo '<option value="'.$k.'"'.$selected.'>'.$v.'</option>';
-			}
-			echo '</select><br />';
-
 			$checked = ($setting['performance'] == 1) ? ' checked="checked"' : '';
 			echo '<input name="performance" type="checkbox" value="1"'.$checked.' /> Производительность<br />';
 
@@ -371,10 +360,9 @@ if (is_admin(array(101))) {
 			$onlines = (empty($_POST['onlines'])) ? 0 : 1;
 
 			if ($uid == $_SESSION['token']) {
-				if ($_POST['incount'] != "" && $_POST['navigation'] != "") {
+				if ($_POST['incount'] != "") {
 					$dbr = DB::run() -> prepare("UPDATE `setting` SET `setting_value`=? WHERE `setting_name`=?;");
 					$dbr -> execute(intval($_POST['incount']), 'incount');
-					$dbr -> execute(intval($_POST['navigation']), 'navigation');
 					$dbr -> execute($performance, 'performance');
 					$dbr -> execute($onlines, 'onlines');
 

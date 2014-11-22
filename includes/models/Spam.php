@@ -1,6 +1,6 @@
 <?php
 class Spam extends BaseActiveRecord {
 
-	static $table_name = 'spam';
+	static $table_name = 'spam2';
 
 }

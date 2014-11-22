@@ -8,8 +8,6 @@
 	<?php endif;?>
 </ul>
 
-
-
 <?php if ($total > 0): ?>
 	<?php foreach ($posts as $post): ?>
 
@@ -20,18 +18,16 @@
 			<div class="media-body">
 				<ul class="list-inline small pull-right">
 
-				<?php if ($user && $user->id != $post->user_id): ?>
+				<?php if ($user->id && $user->id != $post->user_id): ?>
 
-					<li><a href="#" onclick="return reply('<?= $post->user()->login ?>')">Отв</a></li>
+					<li><a href="#" onclick="return reply('<?= $post->user()->login ?>')">Ответить</a></li>
 
-					<li><noindex><a href="index.php?act=spam&amp;id=<?= $post->id ?>&amp;start=<?= $start ?>&amp;token=<?= $_SESSION['token'] ?>" onclick="return confirm('Вы подтверждаете факт спама?')" rel="nofollow">Спам</a></noindex></li>
-
-					<li><noindex><a href="#" onclick="return sendComplaint(this, 'guest', <?= $post->id ?>);" data-token="<?= $_SESSION['token'] ?>" rel="nofollow">Спам</a></noindex></li>
+					<li><noindex><a href="#" onclick="return sendComplaint(this, 'guest', <?= $post->id ?>);" data-token="<?= $_SESSION['token'] ?>" rel="nofollow">Жалоба</a></noindex></li>
 
 
 				<?php endif; ?>
 
-				<?php if ($user->id == $post->user_id && $post->created_at->getTimestamp() > time() - 600): ?>
+				<?php if ($user->id && $user->id == $post->user_id && $post->created_at->getTimestamp() > time() - 600): ?>
 					<li><a href="index.php?act=edit&amp;id=<?= $post->id ?>&amp;start=<?= $start ?>">Редактировать</a></li>
 				<?php endif; ?>
 

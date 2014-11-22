@@ -16,7 +16,7 @@ if(isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUE
 	$token = (!empty($_GET['token'])) ? check($_GET['token']) : 0;
 	$topic_id = (isset($_GET['topic'])) ? abs(intval($_GET['topic'])) : 0;
 
-	if ($token == $_SESSION['token']) {
+	if ($user->id && $token == $_SESSION['token']) {
 
 		/* Проверка темы на существование */
 		$topic = Topic::find_by_id($topic_id);

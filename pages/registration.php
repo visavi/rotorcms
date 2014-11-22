@@ -130,7 +130,6 @@ if ($config['openreg'] == 1) {
 							'timelastlogin' => new DateTime(),
 							'confirmreg' => $config['regkeys'],
 							'confirmregkey' => $registration_key,
-							'navigation' => $config['navigation'],
 						);
 
 						$user = User::create($attributes);

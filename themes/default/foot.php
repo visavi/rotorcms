@@ -19,7 +19,6 @@
 		<div class="container">
 			<div class="pull-left"><?= show_online() ?></div>
 			<div class="pull-right"><?= show_counter() ?></div>
-				<?= navigation() ?>
 				<?= perfomance() ?>
 		</div>
 	</div>

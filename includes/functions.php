@@ -509,13 +509,6 @@ function save_setting() {
 	file_put_contents(DATADIR."/temp/setting.dat", serialize($config), LOCK_EX);
 }
 
-// --------------- Функция кэширования навигации -------------------//
-function save_navigation() {
-	$querynav = DB::run() -> query("SELECT `nav_url`, `nav_title` FROM `navigation` ORDER BY `nav_order` ASC;");
-	$arrnav = $querynav -> fetchAll();
-	file_put_contents(DATADIR."/temp/navigation.dat", serialize($arrnav), LOCK_EX);
-}
-
 // --------------- Функция кэширования забаненных IP -------------------//
 function save_ipban() {
 	$query = Ban::all(array('select' => 'ip'));
@@ -931,11 +924,6 @@ function stats_blacklist() {
 	$blacklist = $query -> fetchAssoc();
 	$list = $blacklist + array_fill(1, 3, 0);
 	return $list[1].'/'.$list[2].'/'.$list[3];
-}
-
-// --------------- Функция вывода количества заголовков ----------------//
-function stats_navigation() {
-	return Navigation::count();
 }
 
 // --------------- Функция вывода количества заголовков ----------------//
@@ -2396,24 +2384,6 @@ function notice($message, $color = false){
 	}
 
 	$_SESSION['note'] = (isset($_SESSION['note'])) ? $message.'<br />'.$_SESSION['note'] : $message;
-}
-
-// ------------ Функция вывода навигации -----------//
-function navigation (){
-	global $config;
-
-	if (!empty($config['navigation'])) {
-		if (file_exists(DATADIR."/temp/navigation.dat")) {
-			$navigation = unserialize(file_get_contents(DATADIR."/temp/navigation.dat"));
-		} else {
-			$querynav = DB::run() -> query("SELECT `nav_url`, `nav_title` FROM `navigation` ORDER BY `nav_order` ASC;");
-			$navigation = $querynav -> fetchAll();
-		}
-
-		if ($navigation) {
-			render ('includes/navigation', compact('navigation'));
-		}
-	}
 }
 
 // ------------ Функция статистики производительности -----------//

@@ -55,16 +55,29 @@ function changeBookmark(el, topic) {
 }
 
 /* Отправка жалобы на спам */
-function sendComplaint(el, post) {
+function sendComplaint(el, section, post) {
 
-	if (!confirm('Вы подтверждаете факт спама?')) return false;
+	if (!confirm('Вы действительно хотите отправить жалобу?')) return false;
 
 	$.ajax({
 		dataType: "JSON", type: "GET", url: "/ajax/complaint.php",
-		data: {post: post, token: $(el).data('token')},
+		data: {post: post, section: section, token: $(el).data('token')},
 		success: function(data) {
+			if (data.status == 'error'){
+				$.notify("Ошибка отправки жалобы", "error");
+				return false;
+			}
 
+			if (data.status == 'added'){
+				$.notify("Жалоба успешно отправлена");
+				$(el).text('Жалоба отправлена');
+			}
 
+			if (data.status == 'exists'){
+				$.notify("Жалоба уже была отправлена", "info");
+				$(el).remove();
+
+			}
 		}
 	});
 

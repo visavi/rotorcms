@@ -95,7 +95,6 @@ if ($user = is_user()) {
 	$config['forumpost']  = $user->postforum;   # Вывод сообщений в форуме
 	$config['forumtem']   = $user->themesforum; # Вывод тем в форуме
 	$config['privatpost'] = $user->postprivat;  # Вывод писем в привате
-	$config['navigation'] = $user->navigation;  # Быстрый переход
 
 	if ($user->ban) {
 		if (!strsearch($php_self, array('/pages/ban.php', '/pages/rules.php'))) {
