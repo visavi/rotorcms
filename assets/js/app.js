@@ -12,33 +12,3 @@ $(document).ready(function(){
  		//$(this).attr('src', '/images/img/ups.gif');
 	});
 });
-
-
-/* Ответ на сообщение */
-function reply(name){
-
-	$('#markItUp').focus().val('[b]' + name + '[/b], ');
-
-	$('html, body').animate({
-		scrollTop: ($('.form').offset().top)
-	}, 500);
-
-	return false;
-}
-
-/* Цитирование сообщения */
-function quote(el){
-	var msg = $(el).closest('#post').find('.message').text();
-	$('#markItUp').focus().val(msg);
-
-	$('html, body').animate({
-		scrollTop: ($('.form').offset().top)
-	}, 500);
-
-	return false;
-}
-
-/* Жалоба на спам */
-function spam(el){
-
-}

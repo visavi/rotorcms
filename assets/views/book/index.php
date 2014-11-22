@@ -20,7 +20,7 @@
 
 				<?php if ($user->id && $user->id != $post->user_id): ?>
 
-					<li><a href="#" onclick="return reply('<?= $post->user()->login ?>')">Ответить</a></li>
+					<li><a href="#" onclick="return reply('<?= $post->user()->getLogin() ?>')">Ответить</a></li>
 
 					<li><noindex><a href="#" onclick="return sendComplaint(this, 'guest', <?= $post->id ?>);" data-token="<?= $_SESSION['token'] ?>" rel="nofollow">Жалоба</a></noindex></li>
 
@@ -36,11 +36,11 @@
 
 				<?php if ($post->user()->login): ?>
 
-					<h4 class="media-heading" style="display: inline;"><?= profile($post->user()->login) ?></h4>
+					<h4 class="media-heading" style="display: inline;"><?= profile($post->user()->getLogin()) ?></h4>
 					<?= user_title($post->user_id) ?> <?= user_online($post->user_id) ?>
 
 				<?php else: ?>
-					<h4 class="media-heading"><?= $config['guestsuser'] ?></h4>
+					<h4 class="media-heading"><?= $post->user()->getLogin() ?></h4>
 				<?php endif; ?>
 
 				<div class="message"><?= bb_code($post->text) ?></div>

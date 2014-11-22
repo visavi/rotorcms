@@ -70,16 +70,28 @@ function sendComplaint(el, section, post) {
 
 			if (data.status == 'added'){
 				$.notify("Жалоба успешно отправлена");
-				$(el).text('Жалоба отправлена');
+				$(el).replaceWith('Жалоба отправлена');
 			}
 
 			if (data.status == 'exists'){
 				$.notify("Жалоба уже была отправлена", "info");
-				$(el).remove();
+				$(el).replaceWith('Жалоба отправлена');
 
 			}
 		}
 	});
+
+	return false;
+}
+
+/* Ответ на сообщение */
+function reply(name){
+
+	$('#markItUp').focus().val('[b]' + name + '[/b], ');
+
+	$('html, body').animate({
+		scrollTop: ($('.well').offset().top)
+	}, 500);
 
 	return false;
 }
