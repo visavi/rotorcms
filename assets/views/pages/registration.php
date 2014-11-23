@@ -32,7 +32,7 @@
 		<label for="inputPassword" class="col-sm-2 control-label">Пароль</label>
 		<div class="col-sm-5">
 			<input name="password" type="password" class="form-control eye" id="inputPassword" maxlength="30" placeholder="Пароль">
-			<span class="glyphicon glyphicon-eye-open form-control-feedback reveal" onclick="revealPassword(this)"></span>
+			<span class="glyphicon glyphicon-eye-open form-control-feedback reveal" style="cursor: pointer;" onclick="revealPassword(this);"></span>
 		</div>
 	</div>
 
