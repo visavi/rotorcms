@@ -22,6 +22,7 @@ header("Content-type:text/html; charset=utf-8");
 	<!-- Bootstrap -->
 	<link href="/themes/default/css/bootstrap.min.css" rel="stylesheet" />
 	<link href="/themes/default/css/bootstrap-theme.min.css" rel="stylesheet" />
+	<link href="/themes/default/css/font-awesome.min.css" rel="stylesheet" />
 	<link href="/themes/default/css/app.css" rel="stylesheet" />
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&amp;subset=latin,cyrillic' rel='stylesheet' type='text/css'>
 
@@ -94,4 +95,5 @@ header("Content-type:text/html; charset=utf-8");
 	<!-- Begin page content -->
 	<div class="container">
 		<div class="row main">
+		<?php render('includes/note', compact('php_self')); ?>
 			<div class="col-lg-9">

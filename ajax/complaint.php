@@ -26,7 +26,6 @@ if(isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUE
 			$spam->section = $section;
 			$spam->post_id = $post_id;
 			$spam->user_id = $user->id;
-			$spam->count = 1;
 			if ($spam->save())
 				exit(json_encode(array('status' => 'added')));
 		} else {

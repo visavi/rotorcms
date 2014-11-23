@@ -35,17 +35,17 @@ function changeBookmark(el, topic) {
 		success: function(data) {
 
 			if (data.status == 'error'){
-				$.notify("Ошибка изменения закладок", "error");
+				$.notify("Ошибка изменения закладок!", "error");
 				return false;
 			}
 
 			if (data.status == 'deleted'){
-				$.notify("Удалено из закладок");
+				$.notify("Удалено из закладок!");
 				$(el).text('В закладки');
 			}
 
 			if (data.status == 'added'){
-				$.notify("Добавлено в закладки");
+				$.notify("Добавлено в закладки!");
 				$(el).text('Из закладок');
 			}
 		}
@@ -64,18 +64,18 @@ function sendComplaint(el, section, post) {
 		data: {post: post, section: section, token: $(el).data('token')},
 		success: function(data) {
 			if (data.status == 'error'){
-				$.notify("Ошибка отправки жалобы", "error");
+				$.notify("Ошибка отправки жалобы!", "error");
 				return false;
 			}
 
 			if (data.status == 'added'){
-				$.notify("Жалоба успешно отправлена");
-				$(el).replaceWith('Жалоба отправлена');
+				$.notify("Жалоба успешно отправлена!");
+				$(el).replaceWith('<span class="fa fa-bell-slash-o"></span>');
 			}
 
 			if (data.status == 'exists'){
-				$.notify("Жалоба уже была отправлена", "info");
-				$(el).replaceWith('Жалоба отправлена');
+				$.notify("Жалоба уже была отправлена!", "info");
+				$(el).replaceWith('<span class="fa fa-bell-slash-o"></span>');
 
 			}
 		}
