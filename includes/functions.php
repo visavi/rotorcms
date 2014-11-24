@@ -2144,57 +2144,6 @@ function format_num($num = 0){
    }
 }
 
-// ------------- Подключение javascript -------------//
-function include_javascript(){
-
-	echo '<script type="text/javascript" src="/assets/jquery-2.1.1.min.js"></script>'."\r\n";
-	echo '<script type="text/javascript" src="/assets/markitup/jquery.markitup.js"></script>'."\r\n";
-	echo '<script type="text/javascript" src="/assets/markitup/markitup.set.js"></script>'."\r\n";
-	echo '<script type="text/javascript" src="/assets/js/app.js"></script>'."\r\n";
-
-	echo '<link href="/assets/markitup/style.css" rel="stylesheet" type="text/css" />'."\r\n";
-	echo '<link href="/assets/css/app.css" rel="stylesheet" type="text/css" />'."\r\n";
-}
-
-// ------------- Вывод спонсорских сайтов -------------//
-function show_sponsors(){
-	global $config;
-
-	if (empty($config['rotorlicense'])) {
-		if (@filemtime(DATADIR.'/temp/sponsors.dat') < time()-86400) {
-			if (@copy("http://visavi.net/rotorcms/sponsors.txt", DATADIR."/temp/sponsors.dat")) {
-			} else {
-				$data = curl_connect("http://visavi.net/rotorcms/sponsors.txt", 'Mozilla/5.0', $config['proxy']);
-				file_put_contents(DATADIR."/temp/sponsors.dat", $data);
-			}
-		}
-
-		$advert = file_get_contents(DATADIR."/temp/sponsors.dat");
-
-		if (is_serialized($advert)) {
-			$advert = unserialize($advert);
-
-			if (!empty($advert)){
-
-				$keys = array();
-				foreach($advert['sponsors'] as $key=>$val) {
-
-					if (!empty($val['sponsor_url'])){
-						$percent = ceil(100 / ($advert['total'] / $val['sponsor_sort']));
-
-						for ($i=0; $i<$percent; $i++){
-							$keys[] = $key;
-						}
-					}
-				}
-
-				$data = $advert['sponsors'][$keys[array_rand($keys)]];
-				return '<b><a href="'.$data['sponsor_url'].'" rel="nofollow">'.$data['sponsor_title'].'</a></b><br />';
-			}
-		}
-	}
-}
-
 // ------------- Прогресс бар -------------//
 function progress_bar($percent, $title = ''){
 

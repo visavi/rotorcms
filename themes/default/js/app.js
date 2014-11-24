@@ -2,6 +2,9 @@ $(document).ready(function(){
 
 	$.notify.defaults({ className: "success" });
 
+	$('[data-toggle="tooltip"]').tooltip();
+	$('[data-toggle="popover"]').popover()
+
 	// Скрывает поповеры по клику в любом месте
 	$('body').on('click', function (e) {
 		//did not click a popover toggle or popover
