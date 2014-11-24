@@ -13,6 +13,14 @@ $(document).ready(function(){
 			$('[data-toggle="popover"]').popover('hide');
 		}
 	});
+
+	$('.index-link').on('mouseover', function (e) {
+		$(e.target).children('.fa').removeClass("fa-circle-o").addClass("fa-circle");
+	});
+
+	$('.index-link').on('mouseout', function (e) {
+		$(e.target).children('.fa').removeClass("fa-circle").addClass("fa-circle-o");
+	});
 });
 
 /*

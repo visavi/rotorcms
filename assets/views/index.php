@@ -1,25 +1,26 @@
 <?php $config['newtitle'] = 'Главная страница'; ?>
 
-<img src="/images/img/act.png" alt="image" /> <a href="/news">Новости сайта</a> (<?=stats_news()?>)<br /> <?=last_news()?>
+<ul class="nav nav-pills nav-stacked">
+	<li class="index-link"><a href="/news"><span class="fa fa-circle-o"></span> Новости сайта</a> (<?=stats_news()?>)</li> <?=last_news()?></li>
 
-<div class="b">
-	<img src="/images/img/ice-cream.gif" alt="image" /> <b><a href="/pages/index.php?act=recent">Общение</a></b>
-</div>
-<img src="/images/img/act.png" alt="image" /> <a href="/book">Гостевая книга</a> (<?=stats_guest()?>)<br />
-<img src="/images/img/act.png" alt="image" /> <a href="/gallery">Фотогалерея</a> (<?=stats_gallery()?>)<br />
+	<li class="index-link"><a href="/pages/index.php?act=recent"><span class="fa fa-circle-o"></span> Общение</a></li>
 
-<div class="b"><img src="/images/img/lollipop.gif" alt="image" /> <b><a href="/forum">Форум</a></b> (<?=stats_forum()?>)</div>
-<?=recenttopics()?>
+	<li class="index-link"><a href="/book"><span class="fa fa-circle-o"></span> Гостевая книга</a> (<?=stats_guest()?>)</li>
+	<li class="index-link"><a href="/gallery"><span class="fa fa-circle-o"></span> Фотогалерея</a> (<?=stats_gallery()?>)</li>
 
-<div class="b"><img src="/images/img/fruit-lime.gif" alt="image" /> <b><a href="/load">Загрузки</a></b> (<?=stats_load()?>)</div>
-<?=recentfiles()?>
+	<li class="index-link"><a href="/forum"><span class="fa fa-circle-o"></span> Форум</a> (<?=stats_forum()?>)</li>
+	<?=recenttopics()?>
 
-<div class="b"><img src="/images/img/cookie.gif" alt="image" /> <b><a href="/blog">Блоги</a></b> (<?=stats_blog()?>)</div>
-<?=recentblogs()?>
+	<li class="index-link"><a href="/load"><span class="fa fa-circle-o"></span> Загрузки</a> (<?=stats_load()?>)</li>
+	<?=recentfiles()?>
 
-<div class="b"><img src="/images/img/fruit.gif" alt="image" /> <b><a href="/pages/index.php">Сервисы сайта</a></b></div>
-<img src="/images/img/act.png" alt="image" /> <a href="/mail">Обратная связь</a><br />
-<img src="/images/img/act.png" alt="image" /> <a href="/pages/userlist.php">Список юзеров</a> (<?=stats_users()?>)<br />
-<img src="/images/img/act.png" alt="image" /> <a href="/pages/adminlist.php">Администрация</a> (<?=stats_admins()?>)<br />
-<img src="/images/img/act.png" alt="image" /> <a href="/pages/index.php?act=stat">Информация</a><br />
-<img src="/images/img/act.png" alt="image" /> <a href="/pages/index.php?act=partners">Партнеры и друзья</a><br />
+	<li class="index-link"><a href="/blog"><span class="fa fa-circle-o"></span> Блоги</a> (<?=stats_blog()?>)</li>
+	<?=recentblogs()?>
+
+	<li class="index-link"><a href="/pages/index.php"><span class="fa fa-circle-o"></span> Сервисы сайта</a></li>
+	<li class="index-link"><a href="/mail"><span class="fa fa-circle-o"></span> Обратная связь</a></li>
+	<li class="index-link"><a href="/pages/userlist.php"><span class="fa fa-circle-o"></span> Список юзеров</a> (<?=stats_users()?>)</li>
+	<li class="index-link"><a href="/pages/adminlist.php"><span class="fa fa-circle-o"></span> Администрация</a> (<?=stats_admins()?>)</li>
+	<li class="index-link"><a href="/pages/index.php?act=stat"><span class="fa fa-circle-o"></span> Информация</a></li>
+	<li class="index-link"><a href="/pages/index.php?act=partners"><span class="fa fa-circle-o"></span> Партнеры и друзья</a></li>
+</ul>
