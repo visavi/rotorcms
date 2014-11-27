@@ -999,7 +999,7 @@ function mc($str) {
 function user_online($user_id) {
 	static $arrvisit;
 
-	$statwho = '<span class="label label-danger">Off</span>';
+	$statwho = '<span class="fa fa-asterisk fa-spin text-danger"></span>';
 
 	if (empty($arrvisit)) {
 		if (@filemtime(DATADIR."/temp/visit.dat") < time()-10) {
@@ -1014,7 +1014,7 @@ function user_online($user_id) {
 	}
 
 	if (is_array($arrvisit) && in_array($user_id, $arrvisit)) {
-		$statwho = '<span class="label label-success">On</span>';
+		$statwho = '<span class="fa fa-asterisk fa-spin text-success "></span>';
 	}
 
 	return $statwho;
@@ -1024,7 +1024,7 @@ function user_online($user_id) {
 function user_gender($user_id) {
 	static $arrgender;
 
-	$gender = 'user.gif';
+	$gender = 'fa-male';
 
 	if (empty($arrgender)) {
 		if (@filemtime(DATADIR."/temp/gender.dat") < time()-600) {
@@ -1039,10 +1039,10 @@ function user_gender($user_id) {
 	}
 
 	if (in_array($user_id, $arrgender)) {
-		$gender = 'female.gif';
+		$gender = 'fa-female';
 	}
 
-	return '<img src="/images/img/'.$gender.'" alt="image" /> ';
+	return '<span class="fa '.$gender.'"></span> ';
 }
 
 // --------------- Функция вывода пользователей онлайн ---------------//
