@@ -999,7 +999,7 @@ function mc($str) {
 function user_online($user_id) {
 	static $arrvisit;
 
-	$statwho = '<span class="fa fa-asterisk fa-spin text-danger"></span>';
+	$statwho = '<span class="fa fa-asterisk text-danger"></span>';
 
 	if (empty($arrvisit)) {
 		if (@filemtime(DATADIR."/temp/visit.dat") < time()-10) {

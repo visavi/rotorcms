@@ -472,21 +472,6 @@ CREATE TABLE IF NOT EXISTS `visit` (
 
 CREATE TABLE IF NOT EXISTS `spam` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `key` tinyint(1) unsigned NOT NULL,
-  `idnum` int(11) unsigned NOT NULL,
-  `user_id` int(11) unsigned NOT NULL,
-  `spam_user_id` int(11) unsigned NOT NULL,
-  `text` text NOT NULL,
-  `link` varchar(100) NOT NULL,
-  `sent_at` datetime NOT NULL,
-  `created_at` timestamp NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `key` (`key`),
-  KEY `created_at` (`created_at`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
-CREATE TABLE IF NOT EXISTS `spam2` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `section` enum('guest', 'forum') NOT NULL,
   `post_id` int(11) unsigned NOT NULL,
   `user_id` int(11) unsigned NOT NULL,
@@ -504,7 +489,6 @@ CREATE TABLE IF NOT EXISTS `ban` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `ip` (`ip`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
 
 CREATE TABLE IF NOT EXISTS `smiles` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
