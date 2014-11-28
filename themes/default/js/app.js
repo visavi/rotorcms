@@ -15,11 +15,11 @@ $(document).ready(function(){
 	});
 
 	$('.index').on('mouseover', function (e) {
-		$(e.target).children('.fa').removeClass("fa-circle-").addClass("fa-circle");
+		$(e.target).children('.fa').removeClass("fa-circle").addClass("fa-circle-o");
 	});
 
 	$('.index').on('mouseout', function (e) {
-		$(e.target).children('.fa').removeClass("fa-circle").addClass("fa-circle-o");
+		$(e.target).children('.fa').removeClass("fa-circle-o").addClass("fa-circle");
 	});
 });
 
