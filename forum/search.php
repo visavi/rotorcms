@@ -168,7 +168,7 @@ endswitch;
 	show_login('Вы не авторизованы, чтобы использовать поиск, необходимо');
 }
 
-render('includes/back', array('link' => 'index.php', 'title' => 'К форумам', 'icon' => 'reload.gif'));
+render('includes/back', array('link' => 'index.php', 'title' => 'К форумам', 'icon' => 'fa-arrow-circle-up'));
 
 include_once ('../themes/footer.php');
 ?>

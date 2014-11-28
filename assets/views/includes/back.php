@@ -1,2 +1,2 @@
-<?php $icon = (isset($icon)) ? $icon : 'back.gif'; ?>
-<img src="/images/img/<?=$icon?>" alt="image" /> <a href="<?=$link?>"><?=$title?></a><br />
+<?php $icon = (isset($icon)) ? $icon : 'fa-arrow-circle-left'; ?>
+ <a class="index-link" href="<?=$link?>"><span class="fa <?= $icon ?>"></span> <?=$title?></a>

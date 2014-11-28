@@ -74,7 +74,7 @@ default:
 	redirect("new.php");
 endswitch;
 
-render('includes/back', array('link' => 'index.php', 'title' => 'К форумам', 'icon' => 'reload.gif'));
+render('includes/back', array('link' => 'index.php', 'title' => 'К форумам', 'icon' => 'fa-arrow-circle-up'));
 
 include_once ('../themes/footer.php');
 ?>

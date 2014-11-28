@@ -140,7 +140,7 @@ endswitch;
 	show_login('Вы не авторизованы, для управления закладками, необходимо');
 }
 
-render('includes/back', array('link' => 'index.php', 'title' => 'К форумам', 'icon' => 'reload.gif'));
+render('includes/back', array('link' => 'index.php', 'title' => 'К форумам', 'icon' => 'fa-arrow-circle-up'));
 
 include_once ('../themes/footer.php');
 ?>
