@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `password` varchar(40) NOT NULL,
   `email` varchar(50) NOT NULL,
   `gender` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `level` smallint(4) unsigned NOT NULL DEFAULT '107',
+  `level` enum('user', 'moder', 'supermoder', 'admin', 'superamdin') NOT NULL DEFAULT 'user',
   `name` varchar(20) NOT NULL DEFAULT '',
   `country` varchar(30) NOT NULL DEFAULT '',
   `city` varchar(50) NOT NULL DEFAULT '',

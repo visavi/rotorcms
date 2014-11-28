@@ -32,9 +32,7 @@ switch ($act):
 ############################################################################################
 case 'index':
 
-	if ($start >= $total) {
-		$start = 0;
-	}
+	$total = ($start < $total) ? $start : 0;
 
 	$onlines = Online::all(array('conditions' => array('user_id <> ?', ''), 'order' =>  'created_at', 'offset' => $start, 'limit' => $config['onlinelist']));
 
@@ -47,10 +45,7 @@ break;
 ############################################################################################
 case 'all':
 
-
-	if ($start >= $total) {
-		$start = 0;
-	}
+	$total = ($start < $total) ? $start : 0;
 
 	$onlines = Online::all(array('order' =>  'created_at', 'offset' => $start, 'limit' => $config['onlinelist']));
 

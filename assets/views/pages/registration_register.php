@@ -3,14 +3,10 @@
 <p>Логин: <b><?= $login ?></b></p>
 <p>Пароль: <b><?= $password ?></b></p>
 
-<h2><a href="/pages/login.php?login=<?= $login ?>&amp;password=<?= $password ?>">Вход на сайт</a></h2>
+<form method="post" action="login.php">
+	<input type="hidden" name="login" value="<?= $login ?>" />
+	<input type="hidden" name="password" value="<?= $password ?>" />
+	<button type="submit" class="btn btn-success btn-lg">Вход на сайт</button>
+</form>
 
-<span class="help-block">
-	Вы можете сделать закладку для быстрого входа:<br />
-	<p class="text-danger"><?= $config['home'] ?>/pages/login.php?login=<?= $login ?>&amp;password=<?= $password ?></p>
-</span>
-
-Cкопировать: <br />
-<input class="form-control" value="<?= $config['home'] ?>/pages/login.php?login=<?= $login ?>&amp;password=<?= $password ?>"/>
-
-<span class="help-block">Если у вас включены cookies, то делать такую закладку не обязательно</p>
+<span class="help-block">Сохраните пароль в надежном месте</p>

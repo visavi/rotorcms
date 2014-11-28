@@ -117,7 +117,6 @@ if ($config['openreg'] == 1) {
 							'login' => $login,
 							'password' => md5(md5($password)),
 							'email' => $email,
-							'level' => 107,
 							'gender' => $gender,
 							'themes' => 0,
 							'postguest' => $config['bookpost'],
@@ -127,7 +126,7 @@ if ($config['openreg'] == 1) {
 							'themesforum' => $config['forumtem'],
 							'point' => 0,
 							'money' => $config['registermoney'],
-							'timelastlogin' => new DateTime(),
+							'timelastlogin' => new DateTime,
 							'confirmreg' => $config['regkeys'],
 							'confirmregkey' => $registration_key,
 						);

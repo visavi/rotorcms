@@ -424,13 +424,13 @@ function user_status($level) {
 	$name = explode(',', $config['statusname']);
 
 	switch ($level) {
-		case '101': $status = $name[0];
+		case 'superadmin': $status = $name[0];
 			break;
-		case '102': $status = $name[1];
+		case 'admin': $status = $name[1];
 			break;
-		case '103': $status = $name[2];
+		case 'supermoder': $status = $name[2];
 			break;
-		case '105': $status = $name[3];
+		case 'moder': $status = $name[3];
 			break;
 		default: $status = $name[4];
 	}
@@ -857,7 +857,7 @@ function stats_users() {
 // --------------- Функция вывода количества админов и модеров --------------------//
 function stats_admins() {
 	if (@filemtime(DATADIR."/temp/statadmins.dat") < time()-3600) {
-		$stat = User::count(array('conditions' => 'level BETWEEN 101 AND 105'));
+		$stat = User::count(array('conditions' => array('level <> ?', 'user')));
 
 		file_put_contents(DATADIR."/temp/statadmins.dat", $stat, LOCK_EX);
 	}
@@ -1540,7 +1540,7 @@ function is_user() {
 // ------------------------- Функция проверки администрации  ------------------------//
 function is_admin($access = array()) {
 	if (empty($access)) {
-		$access = array(101, 102, 103, 105);
+		$access = array('superadmin', 'admin', 'supermoder', 'moder');
 	}
 
 	if (is_user()) {

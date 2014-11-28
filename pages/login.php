@@ -25,10 +25,10 @@ case 'index':
 
 	if (!is_user()) {
 
-		if (isset($_REQUEST['login']) && isset($_REQUEST['password'])) {
+		if (isset($_POST['login']) && isset($_POST['password'])) {
 
-			$login = isset($_REQUEST['login']) ? check($_REQUEST['login']) : '';
-			$password = isset($_REQUEST['password']) ? md5(md5(trim($_REQUEST['password']))) : '';
+			$login = isset($_POST['login']) ? check($_POST['login']) : '';
+			$password = isset($_POST['password']) ? md5(md5(trim($_POST['password']))) : '';
 			$haunter = isset($_POST['haunter']) ? 1 : 0;
 
 			if (!empty($login) && !empty($password)) {
@@ -52,18 +52,18 @@ case 'index':
 					$user->save();
 
 					notice('Вы успешно авторизованы!');
-					redirect('/index.php');
+					redirect('/');
 				}
 
 			}
 
 			notice('Ошибка авторизации. Неправильный логин или пароль!');
-			redirect('login.php');
+			redirect('/pages/login.php');
 		}
 
 		render('pages/login');
 	} else {
-		redirect('/index.php');
+		redirect('/');
 	}
 break;
 
