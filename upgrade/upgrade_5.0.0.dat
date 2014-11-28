@@ -261,7 +261,7 @@ INSERT INTO `setting` (`name`, `value`) VALUES
 ('statusname', 'Суперадмин,Админ,Старший модер,Модератор,Пользователь'),
 ('themes', 'default'),
 ('timezone', 'Europe/Moscow'),
-('title', 'Мой сайт'),
+('title', 'RotorCMS 5.0'),
 ('touchthemes', '0'),
 ('userlist', '10'),
 ('webthemes', 'default'),

@@ -15,7 +15,7 @@ $(document).ready(function(){
 	});
 
 	$('.index').on('mouseover', function (e) {
-		$(e.target).children('.fa').removeClass("fa-circle-o").addClass("fa-circle");
+		$(e.target).children('.fa').removeClass("fa-circle-").addClass("fa-circle");
 	});
 
 	$('.index').on('mouseout', function (e) {
