@@ -91,9 +91,9 @@ if (!file_exists(BASEDIR.$imagecache) || date_fixed(@filemtime(BASEDIR.$imagecac
 			);
 
 		imageFilledPolygon($img, $points, 4, $color3);
-		// imageTTFtext($img, 7, 90, $x1+8, 50, $colorBlack, BASEDIR.'/assets/fonts/font.ttf', $host_data[$index]);
+		// imageTTFtext($img, 7, 90, $x1+8, 50, $colorBlack, BASEDIR.'/vendor/fonts/font.ttf', $host_data[$index]);
 		imagestringup($img, 1, $x1 + 3, 52, $host_data[$index], $colorBlack);
-		imageTTFtext($img, 6, 0, $x1 + 3, 66, $colorBlack, BASEDIR.'/assets/fonts/font.ttf', $arr_week[$week_day]);
+		imageTTFtext($img, 6, 0, $x1 + 3, 66, $colorBlack, BASEDIR.'/vendor/fonts/font.ttf', $arr_week[$week_day]);
 
 		$x1 += $collW;
 		$x2 += $collW;

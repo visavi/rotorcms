@@ -2160,7 +2160,7 @@ function progress_bar($percent, $title = ''){
 // ------------- Добавление пользовательского файла в ZIP-архив -------------//
 function copyright_archive($filename){
 
-	$readme_file = BASEDIR.'/assets/Visavi_Readme.txt';
+	$readme_file = BASEDIR.'/vendor/Visavi_Readme.txt';
 	$ext = getExtension($filename);
 
 	if ($ext == 'zip' && file_exists($readme_file)){
@@ -2356,8 +2356,8 @@ function render($view, $params = array(), $return = false){
 
 	if (file_exists(BASEDIR.'/themes/'.$config['themes'].'/views/'.$view.'.php')){
 		include (BASEDIR.'/themes/'.$config['themes'].'/views/'.$view.'.php');
-	} elseif (file_exists(BASEDIR.'/assets/views/'.$view.'.php')){
-		include (BASEDIR.'/assets/views/'.$view.'.php');
+	} elseif (file_exists(BASEDIR.'/vendor/views/'.$view.'.php')){
+		include (BASEDIR.'/vendor/views/'.$view.'.php');
 	} else {
 		show_error('Не удалось найти требуемый шаблон "'.$view.'"');
 	}
