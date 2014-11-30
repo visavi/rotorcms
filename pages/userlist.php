@@ -34,43 +34,7 @@ case 'index':
 	//$queryusers = DB::run() -> query("SELECT * FROM `users` ORDER BY `users_point` DESC, `users_login` ASC LIMIT ".$start.", ".$config['userlist'].";");
 
 	render('pages/userlist', compact('users', 'start', 'total'));
-var_dump($users);
 
-	$i = 0;
-	while ($data = $queryusers -> fetch()) {
-		++$i;
-
-		echo '<div class="b"> ';
-		echo '<div class="img">'.user_avatars($data['users_login']).'</div>';
-
-		if ($uz == $data['users_login']) {
-			echo ($start + $i).'. <b><big>'.profile($data['users_login'], '#ff0000').'</big></b> ';
-		} else {
-			echo ($start + $i).'. <b>'.profile($data['users_login']).'</b> ';
-		}
-		echo '('.points($data['users_point']).')<br />';
-		echo user_title($data['users_login']).' '.user_online($data['users_login']);
-		echo '</div>';
-
-		echo '<div>';
-		echo 'Форум: '.$data['users_allforum'].' | Гостевая: '.$data['users_allguest'].' | Коммент: '.$data['users_allcomments'].'<br />';
-		echo 'Посещений: '.$data['users_visits'].'<br />';
-		echo 'Деньги: '.user_money($data['users_login']).'<br />';
-		echo 'Дата регистрации: '.date_fixed($data['users_joined'], 'j F Y').'</div>';
-	}
-
-	page_strnavigation('userlist.php?', $config['userlist'], $start, $total);
-
-	echo '<div class="form">';
-	echo '<b>Поиск пользователя:</b><br />';
-	echo '<form action="userlist.php?act=search&amp;start='.$start.'" method="post">';
-	echo '<input type="text" name="uz" value="'.$log.'" />';
-	echo '<input type="submit" value="Искать" /></form></div><br />';
-
-	echo 'Всего пользователей: <b>'.$total.'</b><br /><br />';
-	//} else {
-	//	show_error('Пользователей еще нет!');
-	//}
 break;
 
 ############################################################################################
@@ -106,14 +70,13 @@ case 'search':
 		show_error('Ошибка! Вы не ввели логин или ник пользователя');
 	}
 
-	echo '<img src="/images/img/back.gif" alt="image" /> <a href="userlist.php?start='.$start.'">Вернуться</a><br />';
+	render('includes/back', array('link' => 'userlist.php?start='.$start, 'title' => 'Вернуться'));
+
 break;
 
 default:
 	redirect("userlist.php");
 endswitch;
-
-echo '<img src="/images/img/users.gif" alt="image" /> <a href="onlinewho.php">Новички</a><br />';
 
 include_once ('../themes/footer.php');
 ?>

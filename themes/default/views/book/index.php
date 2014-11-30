@@ -72,7 +72,9 @@
 <?php if (is_user()): ?>
 	<div class="well">
 		<form action="index.php?act=add&amp;token=<?= $_SESSION['token'] ?>" method="post">
-			<textarea class="form-control" id="markItUp" cols="25" rows="5" name="msg"></textarea><br />
+			<div class="form-group">
+				<textarea class="form-control" id="markItUp" cols="25" rows="5" name="msg"></textarea>
+			</div>
 			<button type="submit" class="btn btn-action">Написать</button>
 		</form>
 	</div>
@@ -81,12 +83,15 @@
 
 	<div class="well">
 		<form action="index.php?act=add&amp;token=<?= $_SESSION['token'] ?>" method="post">
-			Сообщение:<br />
-			<textarea class="form-control" cols="25" rows="5" name="msg"></textarea><br />
-
-			Проверочный код:<br />
-			<img src="/gallery/protect.php" alt="" /><br />
-			<input name="provkod" class="form-control" maxlength="6" /><br />
+			<div class="form-group">
+				<label for="msg">Сообщение:</label>
+				<textarea class="form-control" cols="25" rows="5" name="msg" id="msg"></textarea>
+			</div>
+			<div class="form-group">
+				<label for="provkod">Проверочный код:</label>
+				<img src="/gallery/protect.php" alt="" />
+				<input name="provkod" id="provkod" class="form-control" maxlength="6" style="width: 200px;" />
+			</div>
 			<button type="submit" class="btn btn-action">Написать</button>
 		</form>
 	</div>
