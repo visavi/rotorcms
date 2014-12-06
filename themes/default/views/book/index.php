@@ -72,7 +72,7 @@
 	<div class="well">
 		<form action="index.php?act=add&amp;token=<?= $_SESSION['token'] ?>" method="post">
 			<div class="form-group">
-				<textarea class="form-control" id="markItUp" cols="25" rows="5" name="msg"></textarea>
+				<textarea class="form-control" id="markItUp" rows="4" name="msg"></textarea>
 			</div>
 			<button type="submit" class="btn btn-action">Написать</button>
 		</form>
@@ -83,8 +83,8 @@
 	<div class="well">
 		<form action="index.php?act=add&amp;token=<?= $_SESSION['token'] ?>" method="post">
 			<div class="form-group">
-				<label for="msg">Сообщение:</label>
-				<textarea class="form-control" cols="25" rows="5" name="msg" id="msg"></textarea>
+				<label for="markItUp">Сообщение:</label>
+				<textarea class="form-control" id="markItUp" rows="4" name="msg"></textarea>
 			</div>
 			<div class="form-group">
 				<label for="provkod">Проверочный код:</label>
