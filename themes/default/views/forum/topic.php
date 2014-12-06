@@ -83,7 +83,7 @@
 				<?php endif; ?>
 
 				<?php if (!empty($topics['is_moder'])): ?>
-						<li><a href="topic.php?act=modedit&amp;tid=<?= $tid ?>&amp;pid=<?=$data['posts_id']?>&amp;start=<?= $start ?>">Удалитьы</a></li>
+						<li><a href="topic.php?act=modedit&amp;tid=<?= $tid ?>&amp;pid=<?=$data['posts_id']?>&amp;start=<?= $start ?>">Удалить</a></li>
 						<li><a href="topic.php?act=modedit&amp;tid=<?= $tid ?>&amp;pid=<?=$data['posts_id']?>&amp;start=<?= $start ?>">Ред.</a></li>
 				<?php endif; ?>
 

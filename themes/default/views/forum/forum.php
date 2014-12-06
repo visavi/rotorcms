@@ -45,7 +45,9 @@
 		</h5>
 		<div>
 			Страницы: <?= forum_navigation('topic.php?tid='.$topic->id.'&amp;', $config['forumpost'], $topic->postCount())?>
-			Сообщение: <?= $topic->postLast()->user()->getLogin() ?> (<?= $topic->postLast()->created_at ?>)
+			<?php if($topic->postLast()->user()->id): ?>
+				Сообщение: <?= $topic->postLast()->user()->getLogin() ?> (<?= $topic->postLast()->created_at ?>)
+			<?php endif; ?>
 		</div>
 	<?php endforeach; ?>
 
