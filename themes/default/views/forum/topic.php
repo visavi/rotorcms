@@ -69,6 +69,10 @@
 			<?= user_avatars($post->user()->id) ?>
 
 			<div class="media-body">
+
+				<?= $num ?>. <h4 class="media-heading" style="display: inline;"><?= profile($post->user()->login) ?></h4>
+				<?= user_title($post->user_id) ?> <?= user_online($post->user_id) ?>
+
 				<ul class="list-inline small pull-right">
 
 				<?php if ($user->id && $user->id != $post->user_id): ?>
@@ -89,9 +93,6 @@
 
 					<li class="text-muted"><?= $post->created_at ?></li>
 				</ul>
-
-				<?= $num ?>. <h4 class="media-heading" style="display: inline;"><?= profile($post->user()->login) ?></h4>
-				<?= user_title($post->user_id) ?> <?= user_online($post->user_id) ?>
 
 				<div class="message"><?= bb_code($post->text) ?></div>
 

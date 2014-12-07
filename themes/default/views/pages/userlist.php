@@ -5,14 +5,15 @@
 		<div class="media">
 			<?= user_avatars($user->id) ?>
 			<div class="media-body">
+
+				<?= ($key + 1) ?>. <h4 class="media-heading" style="display: inline;"><?= profile($user->getLogin()) ?></h4>
+				<?= user_title($user->id) ?> <?= user_online($user->id) ?>
+
 				<ul class="list-inline small pull-right">
 					<li><?= points($user->point) ?></li>
 					<li>Репутация: <?= ($user->rating > 0) ? '+'.$user->rating : $user->rating ?></li>
 					<li class="text-muted"><?= $user->created_at->format('d.m.Y') ?></li>
 				</ul>
-
-				<?= ($key + 1) ?>. <h4 class="media-heading" style="display: inline;"><?= profile($user->getLogin()) ?></h4>
-					<?= user_title($user->id) ?> <?= user_online($user->id) ?>
 
 				<div>
 					Деньги: <?= moneys($user->money) ?><br />

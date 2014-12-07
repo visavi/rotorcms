@@ -16,6 +16,16 @@
 			<?= user_avatars($post->user()->id) ?>
 
 			<div class="media-body">
+
+				<?php if ($post->user()->login): ?>
+
+					<h4 class="media-heading" style="display: inline;"><?= profile($post->user()->getLogin()) ?></h4>
+					<?= user_title($post->user_id) ?> <?= user_online($post->user_id) ?>
+
+				<?php else: ?>
+					<h4 class="media-heading" style="display: inline;"><?= $post->user()->getLogin() ?></h4>
+				<?php endif; ?>
+
 				<ul class="list-inline small pull-right">
 
 				<?php if ($user->id && $user->id != $post->user_id): ?>
@@ -31,15 +41,6 @@
 
 					<li class="text-muted"><?= $post->created_at ?></li>
 				</ul>
-
-				<?php if ($post->user()->login): ?>
-
-					<h4 class="media-heading" style="display: inline;"><?= profile($post->user()->getLogin()) ?></h4>
-					<?= user_title($post->user_id) ?> <?= user_online($post->user_id) ?>
-
-				<?php else: ?>
-					<h4 class="media-heading"><?= $post->user()->getLogin() ?></h4>
-				<?php endif; ?>
 
 				<div class="message"><?= bb_code($post->text) ?></div>
 
