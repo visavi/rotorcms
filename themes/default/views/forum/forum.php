@@ -12,14 +12,15 @@
 	/ <a href="/admin/forum.php?act=forum&amp;fid=<?=$fid?>&amp;start=<?=$start?>">Управление</a>
 <?php endif; ?>
 
-<hr />
-
 <?php if ($forum->children && empty($start)): ?>
 	<?php foreach ($forum->children as $subforum): ?>
-		<div class="media">
+		<div>
 			<h4>
-				<span class="glyphicon glyphicon-comment"></span>
-				<a href="forum.php?fid=<?= $subforum->id ?>"><?= $subforum->title ?></a></b> (<?= $subforum->topicCount() ?>/<?= $subforum->topicLast()->postCount() ?>)
+				<a class="link" href="forum.php?fid=<?= $subforum->id ?>">
+					<span class="glyphicon glyphicon-comment"></span>
+					<?= $subforum->title ?>
+					<span class="badge"><?= $subforum->topicCount() ?>/<?= $subforum->topicLast()->postCount() ?></span>
+				</a>
 			</h4>
 
 			<?php if ($subforum->description): ?>
@@ -28,7 +29,11 @@
 
 			<?php if ($subforum->topic_last): ?>
 				Тема: <a href="topic.php?act=end&amp;tid=<?= $subforum->topicLast()->id ?>"><?= $subforum->topicLast()->title ?></a><br />
-				Сообщение: <?= $subforum->topicLast()->postLast()->user()->getLogin() ?> (<?= $subforum->topicLast()->postLast()->created_at ?>)
+
+				<?php if ($subforum->topicLast()->postLast()->user()->id): ?>
+					Сообщение: <?= $subforum->topicLast()->postLast()->user()->getLogin() ?> (<?= $subforum->topicLast()->postLast()->created_at ?>)
+				<?php endif; ?>
+
 			<?php else: ?>
 				Темы еще не созданы!
 			<?php endif; ?>
@@ -40,14 +45,19 @@
 	<?php foreach ($forum->topics as $topic): ?>
 		<h5 id="topic_<?= $topic->id ?>">
 
-			<span class="glyphicon <?= $topic->getIcon() ?>"></span>
-			<a href="topic.php?tid=<?= $topic->id ?>"><?= $topic->title ?></a> (<?= $topic->postCount() ?>)
+			<a class="link" href="topic.php?tid=<?= $topic->id ?>">
+				<span class="glyphicon <?= $topic->getIcon() ?>"></span>
+				<?= $topic->title ?>
+				<span class="badge"><?= $topic->postCount() ?></span>
+			</a>
 		</h5>
 		<div>
 			Страницы: <?= forum_navigation('topic.php?tid='.$topic->id.'&amp;', $config['forumpost'], $topic->postCount())?>
-			<?php if($topic->postLast()->user()->id): ?>
+
+			<?php if ($topic->postLast()->user()->id): ?>
 				Сообщение: <?= $topic->postLast()->user()->getLogin() ?> (<?= $topic->postLast()->created_at ?>)
 			<?php endif; ?>
+
 		</div>
 	<?php endforeach; ?>
 

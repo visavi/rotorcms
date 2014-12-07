@@ -3,14 +3,16 @@
 		Мои: <a href="active.php?act=themes">темы</a>, <a href="active.php?act=posts">сообщения</a>, <a href="bookmark.php">закладки</a> /
 	<?php endif; ?>
 
-	Новые: <a href="new.php?act=themes">темы</a>, <a href="new.php?act=posts">сообщения</a><hr />
+	Новые: <a href="new.php?act=themes">темы</a>, <a href="new.php?act=posts">сообщения</a>
 
 	<?php foreach($forums as $forum): ?>
-		<div class="media">
+		<div>
 			<h4>
-				<span class="glyphicon glyphicon-comment"></span>
-				<a href="forum.php?fid=<?= $forum->id ?>"><?= $forum->title ?></a>
-				(<?= $forum->topicCount() ?>/<?= $forum->topicLast()->postCount() ?>)
+				<a class="link" href="forum.php?fid=<?= $forum->id ?>">
+					<span class="glyphicon glyphicon-comment"></span>
+					<?= $forum->title ?>
+					<span class="badge"><?= $forum->topicCount() ?>/<?= $forum->topicLast()->postCount() ?></span>
+				</a>
 			</h4>
 
 		<?php if ($forum->description): ?>
@@ -21,7 +23,9 @@
 		<?php if ($forum->children): ?>
 			<?php foreach($forum->children as $subforum): ?>
 				<h5>
-					<span class="glyphicon glyphicon-folder-open"></span> <a href="forum.php?fid=<?= $subforum->id?>"><?= $subforum->title ?></a> (<?= $subforum->topicCount() ?>/<?= $subforum->topicLast()->postCount() ?>)
+					<span class="glyphicon glyphicon-folder-open"></span>
+					<a href="forum.php?fid=<?= $subforum->id?>"><?= $subforum->title ?></a>
+					<span class="badge"><?= $subforum->topicCount() ?>/<?= $subforum->topicLast()->postCount() ?></span>
 				</h5>
 			<?php endforeach; ?>
 		<?php endif; ?>
