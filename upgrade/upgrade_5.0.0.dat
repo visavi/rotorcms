@@ -150,7 +150,6 @@ INSERT INTO `setting` (`name`, `value`) VALUES
 ('bonusmoney', '500'),
 ('bookadds', '1'),
 ('bookpost', '10'),
-('bookscores', '0'),
 ('cache', '1'),
 ('captcha_amplitude', '4'),
 ('captcha_credits', '0'),

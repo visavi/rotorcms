@@ -25,13 +25,10 @@ switch ($act):
 case 'index':
 
 	$total = User::count();
-	//$total = DB::run() -> querySingle("SELECT count(*) FROM `users`;");
 
-	$total = ($start < $total) ? $start : 0;
+	$start = ($start < $total) ? $start : 0;
 
 	$users = User::all(array('order' => 'point DESC, login ASC', 'offset' => $start, 'limit' => $config['userlist']));
-
-	//$queryusers = DB::run() -> query("SELECT * FROM `users` ORDER BY `users_point` DESC, `users_login` ASC LIMIT ".$start.", ".$config['userlist'].";");
 
 	render('pages/userlist', compact('users', 'start', 'total'));
 

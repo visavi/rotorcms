@@ -54,12 +54,10 @@ case 'add':
 
 						$msg = smiles(antimat(no_br($msg)));
 
-						$bookscores = ($config['bookscores']) ? 1 : 0;
-
 						$user = User::find($user->id);
 
 						$user->allguest = $user->allguest + 1;
-						$user->point = $user->point + $bookscores;
+						$user->point = $user->point + 1;
 						$user->money = $user->money + 20;
 						$user->save();
 

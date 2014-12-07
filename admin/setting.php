@@ -413,9 +413,6 @@ if (is_admin(array(101))) {
 			$checked = ($setting['bookadds'] == 1) ? ' checked="checked"' : '';
 			echo '<input name="bookadds" id="bookadds" type="checkbox" value="1"'.$checked.' title="Разрешить гостям писать в гостевой" /> <label for="bookadds">Допуск гостей</label><br />';
 
-			$checked = ($setting['bookscores'] == 1) ? ' checked="checked"' : '';
-			echo '<input name="bookscores" id="bookscores" type="checkbox" value="1"'.$checked.' title="При добавлении сообщений в гостевую начисляются баллы" /> <label for="bookscores">Начисление баллов</label><br />';
-
 			echo 'Сообщений в гостевой на стр.:<br /><input name="bookpost" maxlength="2" value="'.$setting['bookpost'].'" title="Сколько сообщений выводить на 1 страницу (По умолчанию: 10)" /><br />';
 			echo 'Неавторизованный пользователь:<br /><input name="guestsuser" maxlength="20" value="'.$setting['guestsuser'].'" title="Как подписывать пользователя если он не авторизован (По умолчанию: Гость)" /><br />';
 
@@ -438,7 +435,6 @@ if (is_admin(array(101))) {
 
 			$uid = check($_GET['uid']);
 			$bookadds = (empty($_POST['bookadds'])) ? 0 : 1;
-			$bookscores = (empty($_POST['bookscores'])) ? 0 : 1;
 
 			if ($uid == $_SESSION['token']) {
 				if ($_POST['lastnews'] != "" && $_POST['postnews'] != "" && $_POST['bookpost'] != "" && $_POST['guestsuser'] != "" && $_POST['maxkommnews'] != "" && $_POST['maxpostbook'] != "" && $_POST['guesttextlength'] != "" && $_POST['chatpost'] != "" && $_POST['maxpostchat'] != "") {
@@ -453,7 +449,6 @@ if (is_admin(array(101))) {
 					$dbr -> execute(intval($_POST['chatpost']), 'chatpost');
 					$dbr -> execute(intval($_POST['maxpostchat']), 'maxpostchat');
 					$dbr -> execute($bookadds, 'bookadds');
-					$dbr -> execute($bookscores, 'bookscores');
 
 					save_setting();
 
