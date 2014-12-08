@@ -1,3 +1,17 @@
+<script src="//ulogin.ru/js/ulogin.js"></script>
+<div class="col-sm-offset-2" id="uLogin" data-ulogin="display=panel;fields=first_name,last_name,nickname,sex,email;providers=vkontakte,odnoklassniki,mailru,facebook,twitter,google,yandex;redirect_uri=http%3A%2F%2Frotorcms.ll%2Fpages%2Flogin.php"></div>
+
+<?php
+
+                    $s = file_get_contents('http://ulogin.ru/token.php?token=' . $_POST['token'] . '&amp;host=' . $_SERVER['HTTP_HOST']);
+                    $user = json_decode($s, true);
+
+
+                    var_dump($user, $_REQUEST);
+
+?>
+
+
 <form class="form-horizontal" role="form" method="post" action="login.php">
 	<div class="form-group">
 		<label for="inputLogin" class="col-sm-2 control-label">Email / Логин</label>
