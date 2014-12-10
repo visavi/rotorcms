@@ -65,9 +65,9 @@ if (empty($_SESSION['id']) && empty($_SESSION['password'])) {
 			if ($password == md5($user->password.$config['keypass'])) {
 				session_regenerate_id(1);
 
+				$_SESSION['ip'] = $ip;
 				$_SESSION['id'] = $user->id;
 				$_SESSION['password'] = md5($config['keypass'].$user->password);
-				$_SESSION['ip'] = $ip;
 
 				$user->visits = $user->visits + 1;
 				$user->timelastlogin = new DateTime();

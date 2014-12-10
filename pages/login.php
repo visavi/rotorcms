@@ -43,9 +43,9 @@ case 'index':
 						setcookie('password', md5($password.$config['keypass']), time() + 3600 * 24 * 365, '/', $domain, null, true);
 					}
 
-					$_SESSION['id'] = $user->id;
-					$_SESSION['password'] = md5($config['keypass'].$password);
 					$_SESSION['ip'] = $ip;
+					$_SESSION['id'] = $user->id;
+					$_SESSION['password'] = md5($config['keypass'].md5(md5($password)));
 
 					$user->visits = $user->visits + 1;
 					$user->timelastlogin = new DateTime();
@@ -59,6 +59,31 @@ case 'index':
 
 			notice('Ошибка авторизации. Неправильный логин или пароль!');
 			redirect('/pages/login.php');
+		}
+
+
+		if (isset($_POST['token'])) {
+			$query = curl_connect('http://ulogin.ru/token.php?token='.check($_POST['token']).'&amp;host='.$_SERVER['HTTP_HOST'], 'Mozilla/5.0', $config['proxy']);
+
+			$network = json_decode($query);
+
+			if ($network && !isset($network->error)) {
+
+				$social = Social::find_by_network_and_uid($network->network, $network->uid);
+				if ($social && $social->user()->id) {
+
+					$_SESSION['ip'] = $ip;
+					$_SESSION['id'] = $social->user()->id;
+					$_SESSION['password'] = md5($config['keypass'].$social->user()->password);
+
+					$social->user()->visits = $user->visits + 1;
+					$social->user()->timelastlogin = new DateTime();
+					$social->user()->save();
+
+					notice('Вы успешно авторизованы!');
+					redirect('/');
+				}
+			}
 		}
 
 		render('pages/login');
