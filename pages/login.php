@@ -45,7 +45,7 @@ case 'index':
 
 					$_SESSION['ip'] = $ip;
 					$_SESSION['id'] = $user->id;
-					$_SESSION['password'] = md5($config['keypass'].md5(md5($password)));
+					$_SESSION['password'] = md5($config['keypass'].$password);
 
 					$user->visits = $user->visits + 1;
 					$user->timelastlogin = new DateTime();
