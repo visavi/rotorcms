@@ -43,12 +43,12 @@ function activerecord_autoload($class_name)
 		$namespace_directory = DIRECTORY_SEPARATOR . implode($directories, DIRECTORY_SEPARATOR);
 	}
 	$paths = count($paths) ? $paths : array('.');
-
+	
 	foreach($paths as $path)
 	{
 		$root = realpath($path);
 		$file = "{$root}{$namespace_directory}/{$class_name}.php";
-
+		
 		if (file_exists($file))
 		{
 			require $file;

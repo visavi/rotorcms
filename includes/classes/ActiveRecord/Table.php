@@ -457,6 +457,8 @@ class Table
 					$this->pk[] = $c->inflected_name;
 			}
 		}
+		// make sure the primary key is stored in lowercase
+		$this->pk = array_map('strtolower', $this->pk);
 	}
 
 	private function set_table_name()
@@ -505,7 +507,7 @@ class Table
 
 	private function set_associations()
 	{
-		require_once 'Relationship.php';
+		require_once __DIR__ . '/Relationship.php';
 		$namespace = $this->class->getNamespaceName();
 
 		foreach ($this->class->getStaticProperties() as $name => $definitions)
