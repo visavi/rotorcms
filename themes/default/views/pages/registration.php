@@ -19,7 +19,10 @@
 <?php endif; ?>
 
 
-<hr />
+<script src="//ulogin.ru/js/ulogin.js"></script>
+<div class="col-sm-offset-2" style="padding: 10px 5px;" id="uLogin" data-ulogin="display=panel;fields=first_name,last_name,nickname,sex,email;providers=vkontakte,odnoklassniki,mailru,facebook,twitter,google,yandex;redirect_uri=http%3A%2F%2F<?= $config['home'] ?>%2Fpages%2Fregistration.php">
+</div>
+
 <form class="form-horizontal" role="form" method="post" action="registration.php?act=register">
 	<div class="form-group">
 		<label for="inputLogin" class="col-sm-2 control-label">Логин</label>
