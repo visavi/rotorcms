@@ -61,6 +61,7 @@ case 'index':
 			redirect('/pages/login.php');
 		}
 
+		$network = null;
 
 		if (isset($_POST['token'])) {
 			$query = curl_connect('http://ulogin.ru/token.php?token='.check($_POST['token']).'&amp;host='.$_SERVER['HTTP_HOST'], 'Mozilla/5.0', $config['proxy']);
@@ -68,6 +69,9 @@ case 'index':
 			$network = json_decode($query);
 
 			if ($network && !isset($network->error)) {
+
+				$_SESSION['social_network'] = $network->network;
+				$_SESSION['social_uid'] = $network->uid;
 
 				$social = Social::find_by_network_and_uid($network->network, $network->uid);
 				if ($social && $social->user()->id) {
@@ -86,7 +90,7 @@ case 'index':
 			}
 		}
 
-		render('pages/login');
+		render('pages/login', compact('network'));
 	} else {
 		redirect('/');
 	}

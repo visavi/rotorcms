@@ -1,3 +1,13 @@
+<?php if ($network && !isset($network->error)): ?>
+	<?php var_dump($network) ?>
+
+	<?= $network->first_name ?> <?= $network->last_name ?> <?= $network->nickname ?>
+	<div class="bg-info">Профиль не связан с какой-либо учетной записью на сайте. Войдите на сайт или зарегистирируйтесь, чтобы связать свою учетную запись с профилем социальной сети.</div>
+
+	<div class="bg-info" style="margin-bottom: 30px;">Или выберите другую социальную сеть для входа.</div>
+
+<?php endif; ?>
+
 <script src="//ulogin.ru/js/ulogin.js"></script>
 <div class="col-sm-offset-2" style="padding: 5px;" id="uLogin" data-ulogin="display=panel;fields=first_name,last_name,nickname,sex,email;providers=vkontakte,odnoklassniki,mailru,facebook,twitter,google,yandex;redirect_uri=http%3A%2F%2F<?= $config['home'] ?>%2Fpages%2Flogin.php">
 </div>
