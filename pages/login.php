@@ -51,6 +51,14 @@ case 'index':
 					$user->timelastlogin = new DateTime();
 					$user->save();
 
+					if (!empty($_SESSION['social_network']) && !empty($_SESSION['social_uid'])) {
+						$social = new Social;
+						$social->user_id = $user->id;
+						$social->network = $_SESSION['social_network'];
+						$social->uid = $_SESSION['social_uid'];
+						$social->save();
+					}
+
 					notice('Вы успешно авторизованы!');
 					redirect('/');
 				}

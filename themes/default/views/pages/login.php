@@ -1,10 +1,10 @@
 <?php if ($network && !isset($network->error)): ?>
-	<?php var_dump($network) ?>
 
-	<?= $network->first_name ?> <?= $network->last_name ?> <?= $network->nickname ?>
-	<div class="bg-info">Профиль не связан с какой-либо учетной записью на сайте. Войдите на сайт или зарегистирируйтесь, чтобы связать свою учетную запись с профилем социальной сети.</div>
-
-	<div class="bg-info" style="margin-bottom: 30px;">Или выберите другую социальную сеть для входа.</div>
+	<div class="bg-danger padding">
+		<span class="label label-primary"><?= $network->network ?></span> <?= $network->first_name ?> <?= $network->last_name ?> (<?= $network->nickname ?>)
+	</div>
+	<div class="bg-info padding" style="margin-bottom: 30px;">Профиль не связан с какой-либо учетной записью на сайте. Войдите на сайт или зарегистирируйтесь, чтобы связать свою учетную запись с профилем социальной сети.<br />
+	Или выберите другую социальную сеть для входа.</div>
 
 <?php endif; ?>
 
