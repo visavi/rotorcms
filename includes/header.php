@@ -68,10 +68,6 @@ if (empty($_SESSION['id']) && empty($_SESSION['password'])) {
 				$_SESSION['ip'] = $ip;
 				$_SESSION['id'] = $user->id;
 				$_SESSION['password'] = md5($config['keypass'].$user->password);
-
-				$user->visits = $user->visits + 1;
-				$user->timelastlogin = new DateTime();
-				$user->save();
 			}
 		}
 	}

@@ -25,16 +25,16 @@ if ($config['openreg'] == 1) {
 			############################################################################################
 				case 'index':
 
-				if (isset($_POST['token'])) {
-					$query = curl_connect('http://ulogin.ru/token.php?token='.check($_POST['token']).'&amp;host='.$_SERVER['HTTP_HOST'], 'Mozilla/5.0', $config['proxy']);
+					if (isset($_POST['token'])) {
+						$query = curl_connect('http://ulogin.ru/token.php?token='.check($_POST['token']).'&amp;host='.$_SERVER['HTTP_HOST'], 'Mozilla/5.0', $config['proxy']);
 
-					$network = json_decode($query);
+						$network = json_decode($query, true);
 
-					if ($network && !isset($network->error)) {
-						$_SESSION['social'] = (array) $network;
+						if ($network && !isset($network['error'])) {
+							$_SESSION['social'] = $network;
+						}
 					}
-				}
-var_dump($_SESSION['social']);
+
 					render('pages/registration');
 				break;
 
@@ -137,7 +137,6 @@ var_dump($_SESSION['social']);
 							'themesforum' => $config['forumtem'],
 							'point' => 0,
 							'money' => $config['registermoney'],
-							'timelastlogin' => new DateTime,
 							'confirmreg' => $config['regkeys'],
 							'confirmregkey' => $registration_key,
 						);

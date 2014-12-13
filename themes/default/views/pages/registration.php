@@ -74,13 +74,14 @@
 	</div>
 <?php endif; ?>
 
-<?= (isset($_SESSION['social']['sex']) && $_SESSION['social']['sex'] == 2) ? 1 : 2?>
+	<?php $sex = (isset($_SESSION['social']['sex']) && $_SESSION['social']['sex'] == 1) ? 2 : 1; ?>
+
 	<div class="form-group">
 		<label for="inputGender" class="col-sm-2 control-label">Пол</label>
 		<div class="col-sm-5">
-			<input type="radio" name="gender" id="inputGender1" value="1" checked="checked">
+			<input type="radio" name="gender" id="inputGender1" value="1"<?= ($sex == 1 ? ' checked="checked"' : '') ?>>
 			<label for="inputGender1">Мужской</label>
-			<input type="radio" name="gender" id="inputGender2" value="2">
+			<input type="radio" name="gender" id="inputGender2" value="2"<?= ($sex == 2 ? ' checked="checked"' : '') ?>>
 			<label for="inputGender2">Женский</label>
 		</div>
 	</div>

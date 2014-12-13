@@ -42,7 +42,6 @@ if (!empty($key)){
 			'avatar'    => $config['home'].'/'.$user['users_avatar'],
 			'picture'   => $user['users_picture'],
 			'rating'    => $user['users_rating'],
-			'lastlogin' => $user['users_timelastlogin'],
 		));
 
 	} else {echo json_encode(array('error'=>'nouser'));}

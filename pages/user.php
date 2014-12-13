@@ -80,7 +80,6 @@ case 'index':
 			echo 'Jabber: '.$data['users_jabber'].' <br />';
 		}
 
-		echo 'Всего посeщений: '.$data['users_visits'].'<br />';
 		echo 'Сообщений на форуме: '.$data['users_allforum'].'<br />';
 		echo 'Сообщений в гостевой: '.$data['users_allguest'].'<br />';
 		echo 'Комментариев: '.$data['users_allcomments'].'<br />';
@@ -96,8 +95,6 @@ case 'index':
 		if (!empty($invite)){
 			echo 'Зарегистрирован по приглашению: '.profile($invite['user']).'<br />';
 		}
-
-		echo 'Последняя авторизация: '.date_fixed($data['users_timelastlogin']).'<br />';
 
 		echo '<a href="banhist.php?uz='.$uz.'">Строгих нарушений: '.$data['users_totalban'].'</a><br />';
 

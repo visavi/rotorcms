@@ -47,10 +47,6 @@ case 'index':
 					$_SESSION['id'] = $user->id;
 					$_SESSION['password'] = md5($config['keypass'].$password);
 
-					$user->visits = $user->visits + 1;
-					$user->timelastlogin = new DateTime();
-					$user->save();
-
 					if (!empty($_SESSION['social'])) {
 						$social = new Social;
 						$social->user_id = $user->id;
@@ -72,22 +68,18 @@ case 'index':
 		if (isset($_POST['token'])) {
 			$query = curl_connect('http://ulogin.ru/token.php?token='.check($_POST['token']).'&amp;host='.$_SERVER['HTTP_HOST'], 'Mozilla/5.0', $config['proxy']);
 
-			$network = json_decode($query);
+			$network = json_decode($query, true);
 
-			if ($network && !isset($network->error)) {
+			if ($network && !isset($network['error'])) {
 
-				$_SESSION['social'] = (array) $network;
+				$_SESSION['social'] = $network;
 
-				$social = Social::find_by_network_and_uid($network->network, $network->uid);
+				$social = Social::find_by_network_and_uid($network['network'], $network['uid']);
 				if ($social && $social->user()->id) {
 
 					$_SESSION['ip'] = $ip;
 					$_SESSION['id'] = $social->user()->id;
 					$_SESSION['password'] = md5($config['keypass'].$social->user()->password);
-
-					$social->user()->visits = $user->visits + 1;
-					$social->user()->timelastlogin = new DateTime();
-					$social->user()->save();
 
 					notice('Вы успешно авторизованы!');
 					redirect('/');
