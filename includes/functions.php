@@ -518,20 +518,6 @@ function save_ipban() {
 	return $banip;
 }
 
-// ------------------------- Функция карантина ------------------------------//
-function is_quarantine($log) {
-	global $config;
-
-	if (!empty($config['karantin'])) {
-		$queryuser = DB::run() -> querySingle("SELECT `users_joined` FROM users WHERE `users_login`=? LIMIT 1;", array($log));
-
-		if ($queryuser + $config['karantin'] > SITETIME) {
-			return false;
-		}
-	}
-	return true;
-}
-
 // ------------------------- Функция времени антифлуда ------------------------------//
 function flood_period() {
 	global $config, $udata;

@@ -55,7 +55,6 @@ if (is_user()) {
 					if ($ext == 'jpg' || $ext == 'jpeg' || $ext == 'gif' || $ext == 'png') {
 						if ($_FILES['photo']['size'] > 0 && $_FILES['photo']['size'] <= $config['filesize']) {
 							if ($photosize[0] <= $config['fileupfoto'] && $photosize[1] <= $config['fileupfoto'] && $photosize[0] >= 100 && $photosize[1] >= 100) {
-								if (is_quarantine($log)) {
 									if (is_flood($log)) {
 
 										// ------------------------------------------------------//
@@ -90,9 +89,6 @@ if (is_user()) {
 									} else {
 										show_error('Антифлуд! Вы слишком часто добавляете фотографии!');
 									}
-								} else {
-									show_error('Карантин! Вы не можете добавлять фото в течении '.round($config['karantin'] / 3600).' часов!');
-								}
 							} else {
 								show_error('Ошибка! Размер изображение должен быть от 100 до '.$config['fileupfoto'].'px');
 							}

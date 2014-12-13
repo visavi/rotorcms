@@ -196,17 +196,6 @@ if (is_admin(array(101))) {
 				echo '</select><br />';
 
 				# ----------------------------------------#
-				echo 'Время карантина:<br />';
-				echo '<select name="karantin">';
-				$karantin = array(0 => 'Выключить', 21600 => '6 часов', 43200 => '12 часов', 86400 => '24 часа', 129600 => '36 часов', 172800 => '48 часов');
-
-				foreach($karantin as $k => $v) {
-					$selected = ($k == $setting['karantin']) ? ' selected="selected"' : '';
-
-					echo '<option value="'.$k.'"'.$selected.'>'.$v.'</option>';
-				}
-				echo '</select><br />';
-
 				echo 'Подтверждение регистрации:<br />';
 				echo '<select name="regkeys">';
 				$regist = array(0 => 'Выключить', 1 => 'Автоматически', 2 => 'Вручную');
@@ -276,7 +265,7 @@ if (is_admin(array(101))) {
 
 			if ($log == $config['nickname']) {
 				if ($uid == $_SESSION['token']) {
-					if ($_POST['title'] != "" && $_POST['copy'] != "" && $_POST['home'] != "" && $_POST['logotip'] != "" && $_POST['floodstime'] != "" && $_POST['keypass'] != "" && $_POST['timezone'] != "" && $_POST['themes'] != "" && $_POST['webthemes'] != "" && $_POST['touchthemes'] != "" && $_POST['karantin'] != "") {
+					if ($_POST['title'] != "" && $_POST['copy'] != "" && $_POST['home'] != "" && $_POST['logotip'] != "" && $_POST['floodstime'] != "" && $_POST['keypass'] != "" && $_POST['timezone'] != "" && $_POST['themes'] != "" && $_POST['webthemes'] != "" && $_POST['touchthemes'] != "") {
 
 						$dbr = DB::run() -> prepare("UPDATE `setting` SET `setting_value`=? WHERE `setting_name`=?;");
 						$dbr -> execute(check($_POST['title']), 'title');
@@ -290,7 +279,6 @@ if (is_admin(array(101))) {
 						$dbr -> execute(check($_POST['themes']), 'themes');
 						$dbr -> execute(check($_POST['webthemes']), 'webthemes');
 						$dbr -> execute(check($_POST['touchthemes']), 'touchthemes');
-						$dbr -> execute(intval($_POST['karantin']), 'karantin');
 						$dbr -> execute($regkeys, 'regkeys');
 						$dbr -> execute($regmail, 'regmail');
 						$dbr -> execute($invite, 'invite');

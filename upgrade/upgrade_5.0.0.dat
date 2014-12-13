@@ -197,7 +197,6 @@ INSERT INTO `setting` (`name`, `value`) VALUES
 ('incount', '5'),
 ('invite', '0'),
 ('ipbanlist', '10'),
-('karantin', '0'),
 ('keypass', ''),
 ('keywords', 'Ключевые слова вашего сайта на движке RotorCMS'),
 ('lastnews', '1'),

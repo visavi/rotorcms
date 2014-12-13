@@ -24,6 +24,17 @@ if ($config['openreg'] == 1) {
 			##                                    Главная страница                                    ##
 			############################################################################################
 				case 'index':
+
+				if (isset($_POST['token'])) {
+					$query = curl_connect('http://ulogin.ru/token.php?token='.check($_POST['token']).'&amp;host='.$_SERVER['HTTP_HOST'], 'Mozilla/5.0', $config['proxy']);
+
+					$network = json_decode($query);
+
+					if ($network && !isset($network->error)) {
+						$_SESSION['social'] = (array) $network;
+					}
+				}
+var_dump($_SESSION['social']);
 					render('pages/registration');
 				break;
 
@@ -59,30 +70,30 @@ if ($config['openreg'] == 1) {
 
 					if (!empty($login)){
 						// Проверка логина на существование
-						$reglogin = User::first(array('conditions' => array("login=?", $login)));
+						$reglogin = User::first(array('conditions' => array("login = ?", $login)));
 						$validation -> addRule('empty', $reglogin, 'Пользователь с данным логином уже зарегистрирован!');
 
 						// Проверка логина в черном списке
-						$blacklogin = Blacklist::first(array('conditions' => array("type=? and value=?", 2, $login)));
+						$blacklogin = Blacklist::first(array('conditions' => array("type = ? AND value = ?", 2, $login)));
 						$validation -> addRule('empty', $blacklogin, 'Выбранный вами логин занесен в черный список!');
 					}
 
 					if (!empty($config['regmail']) && !empty($email)){
 						// Проверка email на существование
-						$regmail = User::first(array('conditions' => array("email=?", $email)));
+						$regmail = User::first(array('conditions' => array("email = ?", $email)));
 						$validation -> addRule('empty', $regmail, 'Указанный вами адрес e-mail уже используется в системе!');
 
 						// Проверка email в черном списке
-						$blackmail = Blacklist::first(array('conditions' => array("type=? and value=?", 1, $email)));
+						$blackmail = Blacklist::first(array('conditions' => array("type = ? AND value = ?", 1, $email)));
 						$validation -> addRule('empty', $blackmail, 'Указанный вами адрес email занесен в черный список!');
 
 						// Проверка домена от email в черном списке
-						$blackdomain = Blacklist::first(array('conditions' => array("type=? and value=?", 3, $domain)));
+						$blackdomain = Blacklist::first(array('conditions' => array("type = ? AND value = ?", 3, $domain)));
 						$validation -> addRule('empty', $blackdomain, 'Домен от вашего адреса email занесен в черный список!');
 					}
 					// Проверка пригласительного ключа
 					if (!empty($config['invite'])){
-						$invitation = Invite::first(array('conditions' => array("invite=? and used=?", $invite, 0)));
+						$invitation = Invite::first(array('conditions' => array("invite = ? AND used = ?", $invite, 0)));
 						$validation -> addRule('not_empty', $invitation, 'Ключ приглашения недействителен!');
 					}
 

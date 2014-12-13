@@ -16,7 +16,6 @@ INSERT INTO `setting` (`setting_name`, `setting_value`) VALUES
 ('themes', 'default'),
 ('webthemes', 'motor'),
 ('touchthemes', '0'),
-('karantin', '0'),
 ('regkeys', '0'),
 ('cache', '1'),
 ('openreg', '1'),

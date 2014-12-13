@@ -51,11 +51,11 @@ case 'index':
 					$user->timelastlogin = new DateTime();
 					$user->save();
 
-					if (!empty($_SESSION['social_network']) && !empty($_SESSION['social_uid'])) {
+					if (!empty($_SESSION['social'])) {
 						$social = new Social;
 						$social->user_id = $user->id;
-						$social->network = $_SESSION['social_network'];
-						$social->uid = $_SESSION['social_uid'];
+						$social->network = $_SESSION['social']['network'];
+						$social->uid = $_SESSION['social']['uid'];
 						$social->save();
 					}
 
@@ -69,8 +69,6 @@ case 'index':
 			redirect('/pages/login.php');
 		}
 
-		$network = null;
-
 		if (isset($_POST['token'])) {
 			$query = curl_connect('http://ulogin.ru/token.php?token='.check($_POST['token']).'&amp;host='.$_SERVER['HTTP_HOST'], 'Mozilla/5.0', $config['proxy']);
 
@@ -78,8 +76,7 @@ case 'index':
 
 			if ($network && !isset($network->error)) {
 
-				$_SESSION['social_network'] = $network->network;
-				$_SESSION['social_uid'] = $network->uid;
+				$_SESSION['social'] = (array) $network;
 
 				$social = Social::find_by_network_and_uid($network->network, $network->uid);
 				if ($social && $social->user()->id) {
@@ -98,7 +95,7 @@ case 'index':
 			}
 		}
 
-		render('pages/login', compact('network'));
+		render('pages/login');
 	} else {
 		redirect('/');
 	}

@@ -1,7 +1,7 @@
-<?php if ($network && !isset($network->error)): ?>
-
-	<div class="bg-danger padding">
-		<span class="label label-primary"><?= $network->network ?></span> <?= $network->first_name ?> <?= $network->last_name ?> (<?= $network->nickname ?>)
+<?php if (isset($_SESSION['social'])): ?>
+	<div class="bg-success padding">
+	<img class="img-circle border" alt="photo" src="<?= $_SESSION['social']['photo'] ?>" style="width: 48px; height: 48px;">
+		<span class="label label-primary"><?= $_SESSION['social']['network'] ?></span> <?= $_SESSION['social']['first_name'] ?> <?= $_SESSION['social']['last_name'] ?> <?= isset($_SESSION['social']['nickname']) ? '('.$_SESSION['social']['nickname'].')' : ''; ?>
 	</div>
 	<div class="bg-info padding" style="margin-bottom: 30px;">Профиль не связан с какой-либо учетной записью на сайте. Войдите на сайт или зарегистирируйтесь, чтобы связать свою учетную запись с профилем социальной сети.<br />
 	Или выберите другую социальную сеть для входа.</div>
@@ -9,7 +9,7 @@
 <?php endif; ?>
 
 <script src="//ulogin.ru/js/ulogin.js"></script>
-<div class="col-sm-offset-2" style="padding: 5px;" id="uLogin" data-ulogin="display=panel;fields=first_name,last_name,nickname,sex,email;providers=vkontakte,odnoklassniki,mailru,facebook,twitter,google,yandex;redirect_uri=http%3A%2F%2F<?= $config['home'] ?>%2Fpages%2Flogin.php">
+<div class="col-sm-offset-2" style="padding: 5px;" id="uLogin" data-ulogin="display=panel;fields=first_name,last_name,photo;optional=sex,email,nickname;providers=vkontakte,odnoklassniki,mailru,facebook,twitter,google,yandex;redirect_uri=http%3A%2F%2F<?= $config['home'] ?>%2Fpages%2Flogin.php">
 </div>
 
 <form class="form-horizontal" role="form" method="post" action="login.php">
@@ -19,10 +19,11 @@
 			<input name="login" type="text" class="form-control" id="inputLogin"  maxlength="50" placeholder="Email или Логин">
 		</div>
 	</div>
-	<div class="form-group">
+	<div class="form-group has-feedback">
 		<label for="inputPassword" class="col-sm-2 control-label">Пароль</label>
 		<div class="col-sm-5">
-			<input name="password" type="password" class="form-control" id="inputPassword" maxlength="30" placeholder="Пароль">
+			<input name="password" type="password" class="form-control eye" id="inputPassword" maxlength="30" placeholder="Пароль">
+			<span class="glyphicon glyphicon-eye-close form-control-feedback reveal" style="cursor: pointer;" onclick="revealPassword(this);"></span>
 		</div>
 	</div>
 	<div class="form-group">

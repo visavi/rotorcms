@@ -156,7 +156,6 @@ var_dump($_REQUEST);
 		$validation -> addRule('equal', array($uid, $_SESSION['token']), 'Неверный идентификатор сессии, повторите действие!')
 			-> addRule('not_empty', $topics, 'Выбранная вами тема не существует, возможно она была удалена!')
 			-> addRule('empty', $topics['topics_closed'], 'Запрещено писать в закрытую тему!')
-			-> addRule('equal', array(is_quarantine($log), true), 'Карантин! Вы не можете писать в течении '.round($config['karantin'] / 3600).' часов!')
 			-> addRule('equal', array(is_flood($log), true), 'Антифлуд! Разрешается отправлять сообщения раз в '.flood_period().' сек!')
 			-> addRule('string', $msg, 'Слишком длинное или короткое сообщение!', true, 5, $config['forumtextlength']);
 

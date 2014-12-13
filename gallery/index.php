@@ -158,7 +158,6 @@ break;
 							if ($ext == 'jpg' || $ext == 'jpeg' || $ext == 'gif' || $ext == 'png') {
 								if ($_FILES['photo']['size'] > 0 && $_FILES['photo']['size'] <= $config['filesize']) {
 									if ($photosize[0] <= $config['fileupfoto'] && $photosize[1] <= $config['fileupfoto'] && $photosize[0] >= 100 && $photosize[1] >= 100) {
-										if (is_quarantine($log)) {
 											if (is_flood($log)) {
 												$text = no_br($text);
 												$text = antimat($text);
@@ -191,9 +190,6 @@ break;
 											} else {
 												show_error('Антифлуд! Вы слишком часто добавляете фотографии!');
 											}
-										} else {
-											show_error('Карантин! Вы не можете добавлять фото в течении '.round($config['karantin'] / 3600).' часов!');
-										}
 									} else {
 										show_error('Ошибка! Размер изображения должен быть от 100 до '.$config['fileupfoto'].' px');
 									}
@@ -407,7 +403,6 @@ break;
 
 					if (!empty($data)) {
 						if (empty($data['photo_closed'])) {
-							if (is_quarantine($log)) {
 								if (is_flood($log)) {
 									$msg = no_br($msg);
 									$msg = antimat($msg);
@@ -426,9 +421,6 @@ break;
 								} else {
 									show_error('Антифлуд! Разрешается отправлять комментарии раз в '.flood_period().' секунд!');
 								}
-							} else {
-								show_error('Карантин! Вы не можете писать в течении '.round($config['karantin'] / 3600).' часов!');
-							}
 						} else {
 							show_error('Ошибка! Комментирование данной фотографии запрещено!');
 						}

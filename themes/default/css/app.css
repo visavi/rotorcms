@@ -34,6 +34,10 @@ a.link:focus {
   padding: 10px;
 }
 
+.border {
+  border: 1px solid #ccc;
+}
+
 .page-header {
   margin-top: 20px;
 }

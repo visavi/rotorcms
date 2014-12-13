@@ -474,7 +474,6 @@ switch ($act):
 
 					if (!empty($downs)) {
 						if (!empty($downs['downs_active'])) {
-							if (is_quarantine($log)) {
 								if (is_flood($log)) {
 
 									$msg = no_br($msg);
@@ -493,9 +492,6 @@ switch ($act):
 								} else {
 									show_error('Антифлуд! Разрешается отправлять сообщения раз в '.flood_period().' секунд!');
 								}
-							} else {
-								show_error('Карантин! Вы не можете писать в течении '.round($config['karantin'] / 3600).' часов!');
-							}
 						} else {
 							show_error('Ошибка! Данный файл еще не проверен модератором!');
 						}

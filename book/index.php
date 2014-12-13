@@ -49,7 +49,6 @@ case 'add':
 	if (is_user()) {
 		if ($token == $_SESSION['token']) {
 			if (utf_strlen($msg) >= 5 && utf_strlen($msg) < $config['guesttextlength']) {
-				if (is_quarantine($log) || $config['bookadds'] == 1) {
 					if (is_flood($log)) {
 
 						$msg = smiles(antimat(no_br($msg)));
@@ -80,9 +79,6 @@ case 'add':
 					} else {
 						show_error('Антифлуд! Разрешается отправлять сообщения раз в '.flood_period().' секунд!');
 					}
-				} else {
-					show_error('Карантин! Вы не можете писать в течении '.round($config['karantin'] / 3600).' часов!');
-				}
 			} else {
 				show_error('Ошибка! Слишком длинное или короткое сообщение!');
 			}

@@ -290,7 +290,6 @@ case 'addblog':
 						if (utf_strlen($tags) >= 2 && utf_strlen($tags) <= 50) {
 							$blogs = DB::run() -> querySingle("SELECT `cats_id` FROM `catsblog` WHERE `cats_id`=? LIMIT 1;", array($cid));
 							if (!empty($blogs)) {
-								if (is_quarantine($log)) {
 									if (is_flood($log)) {
 
 										$text = smiles(antimat(no_br($text)));
@@ -308,9 +307,6 @@ case 'addblog':
 									} else {
 										show_error('Антифлуд! Вы слишком часто добавляете статьи!');
 									}
-								} else {
-									show_error('Карантин! Вы не можете добавлять статьи в течении '.round($config['karantin'] / 3600).' часов!');
-								}
 							} else {
 								show_error('Ошибка! Выбранный вами раздел не существует!');
 							}
@@ -447,7 +443,6 @@ case 'add':
 				$queryblog = DB::run() -> querySingle("SELECT `blogs_cats_id` FROM `blogs` WHERE `blogs_id`=? LIMIT 1;", array($id));
 
 				if (!empty($queryblog)) {
-					if (is_quarantine($log)) {
 						if (is_flood($log)) {
 							$msg = no_br($msg);
 							$msg = antimat($msg);
@@ -466,9 +461,6 @@ case 'add':
 						} else {
 							show_error('Антифлуд! Разрешается отправлять сообщения раз в '.flood_period().' секунд!');
 						}
-					} else {
-						show_error('Карантин! Вы не можете писать в течении '.round($config['karantin'] / 3600).' часов!');
-					}
 				} else {
 					show_error('Ошибка! Данной статьи не существует!');
 				}
