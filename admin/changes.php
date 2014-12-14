@@ -92,7 +92,7 @@ if (is_admin()) {
 
 			if (@copy("http://visavi.net/rotorcms/rotor.txt", DATADIR."/temp/changes.dat")) {
 			} else {
-				$data = curl_connect("http://visavi.net/rotorcms/rotor.txt", 'Mozilla/5.0', $config['proxy']);
+				$data = curl_connect("http://visavi.net/rotorcms/rotor.txt");
 				file_put_contents(DATADIR."/temp/changes.dat", $data);
 			}
 

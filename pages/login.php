@@ -66,25 +66,7 @@ case 'index':
 		}
 
 		if (isset($_POST['token'])) {
-			$query = curl_connect('http://ulogin.ru/token.php?token='.check($_POST['token']).'&amp;host='.$_SERVER['HTTP_HOST'], 'Mozilla/5.0', $config['proxy']);
-
-			$network = json_decode($query, true);
-
-			if ($network && !isset($network['error'])) {
-
-				$_SESSION['social'] = $network;
-
-				$social = Social::find_by_network_and_uid($network['network'], $network['uid']);
-				if ($social && $social->user()->id) {
-
-					$_SESSION['ip'] = $ip;
-					$_SESSION['id'] = $social->user()->id;
-					$_SESSION['password'] = md5($config['keypass'].$social->user()->password);
-
-					notice('Вы успешно авторизованы!');
-					redirect('/');
-				}
-			}
+			User::socialLogin($_POST['token']);
 		}
 
 		render('pages/login');

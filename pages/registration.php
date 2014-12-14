@@ -26,13 +26,7 @@ if ($config['openreg'] == 1) {
 				case 'index':
 
 					if (isset($_POST['token'])) {
-						$query = curl_connect('http://ulogin.ru/token.php?token='.check($_POST['token']).'&amp;host='.$_SERVER['HTTP_HOST'], 'Mozilla/5.0', $config['proxy']);
-
-						$network = json_decode($query, true);
-
-						if ($network && !isset($network['error'])) {
-							$_SESSION['social'] = $network;
-						}
+						User::socialLogin($_POST['token']);
 					}
 
 					render('pages/registration');
@@ -105,7 +99,7 @@ if ($config['openreg'] == 1) {
 						}
 
 						// ------------------------- Уведомление о регистрации на E-mail --------------------------//
-						$regmessage = "Добро пожаловать, ".$login." \nТеперь вы зарегистрированный пользователь сайта ".$config['home']." , сохраните ваш пароль и логин в надежном месте, они вам еще пригодятся. \nВаши данные для входа на сайт \nЛогин: ".$login." \nПароль: ".$password." \n\nСсылка для автоматического входа на сайт: \n".$config['home']."/pages/login.php?login=".$login."&password=".$password." \nНадеемся вам понравится на нашем портале! \nС уважением администрация сайта \nЕсли это письмо попало к вам по ошибке, то просто проигнорируйте его \n\n";
+						$regmessage = "Добро пожаловать, ".$login." \nТеперь вы зарегистрированный пользователь сайта ".$config['home']." , сохраните ваш пароль и логин в надежном месте, они вам еще пригодятся. \nВаши данные для входа на сайт \nЛогин: ".$login." \nПароль: ".$password." \n\nНадеемся вам понравится у нас! \nС уважением администрация сайта \nЕсли это письмо попало к вам по ошибке, то просто проигнорируйте его \n\n";
 
 						if ($config['regkeys'] == 1) {
 							$registration_key = generate_password();

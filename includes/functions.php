@@ -1774,7 +1774,7 @@ function license_verification() {
 	if (@file_get_contents($geturl)) {
 		$data = file_get_contents($geturl);
 	} else {
-		$data = curl_connect($geturl, 'Mozilla/5.0', $config['proxy']);
+		$data = curl_connect($geturl);
 	}
 
 	$verification = (stristr($data, '--VERIFICATION--')) ? 1 : 0;
@@ -1807,7 +1807,7 @@ function stats_changes() {
 	if (@filemtime(DATADIR."/temp/changes.dat") < time()-86400) {
 		if (@copy("http://visavi.net/rotorcms/rotor.txt", DATADIR."/temp/changes.dat")) {
 		} else {
-			$data = curl_connect("http://visavi.net/rotorcms/rotor.txt", 'Mozilla/5.0', $config['proxy']);
+			$data = curl_connect("http://visavi.net/rotorcms/rotor.txt");
 			file_put_contents(DATADIR."/temp/changes.dat", $data);
 		}
 	}
@@ -1832,7 +1832,7 @@ function is_serialized($data) {
 }
 
 // ----------- Функция закачки файла через curl ------------//
-function curl_connect($url, $user_agent = 'Mozilla/5.0', $proxy = null) {
+function curl_connect($url, $user_agent = 'Mozilla/5.0') {
 	if (function_exists('curl_init')) {
 		$ch = curl_init();
 		curl_setopt ($ch, CURLOPT_URL, $url);
@@ -1841,7 +1841,6 @@ function curl_connect($url, $user_agent = 'Mozilla/5.0', $proxy = null) {
 		curl_setopt ($ch, CURLOPT_REFERER, $url);
 		curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt ($ch, CURLOPT_TIMEOUT, 10);
-		if ($proxy) curl_setopt ($ch, CURLOPT_PROXY, $proxy);
 		$result = curl_exec ($ch);
 		curl_close ($ch);
 		return $result;
