@@ -2098,8 +2098,7 @@ function redirect($url, $permanent = false){
 		header('HTTP/1.1 301 Moved Permanently');
 	}
 
-	header('Location: '.$url);
-	exit();
+	exit(header('Location: '.$url));
 }
 
 // ------------- Функция вывода ссылки на анкету -------------//
