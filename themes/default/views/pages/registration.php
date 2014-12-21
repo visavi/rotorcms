@@ -89,7 +89,7 @@
 	<div class="form-group">
 		<label for="inputProvkod" class="col-sm-2 control-label">Проверочный код</label>
 		<div class="col-sm-5">
-			<img src="/gallery/protect.php" alt="" /><br />
+			<img src="/gallery/protect.php" class="img-rounded" alt="" / ><br />
 			<input name="captcha" type="text" class="form-control" id="inputProvkod" maxlength="6" placeholder="Проверочный код">
 		</div>
 	</div>
