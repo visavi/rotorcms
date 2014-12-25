@@ -88,7 +88,7 @@
 			</div>
 			<div class="form-group">
 				<label for="provkod">Проверочный код:</label>
-				<img src="/gallery/protect.php" alt="" />
+				<img src="/gallery/protect.php" class="img-rounded" alt="" />
 				<input name="provkod" id="provkod" class="form-control" maxlength="6" style="width: 200px;" />
 			</div>
 			<button type="submit" class="btn btn-action">Написать</button>
