@@ -1,17 +1,3 @@
-<?php
-#---------------------------------------------#
-#      ********* RotorCMS *********           #
-#           Author  :  Vantuz                 #
-#            Email  :  visavi.net@mail.ru     #
-#             Site  :  http://visavi.net      #
-#              ICQ  :  36-44-66               #
-#            Skype  :  vantuzilla             #
-#---------------------------------------------#
-if (!defined('BASEDIR')) {
-	exit(header('Location: /index.php'));
-}
-?>
-
 CREATE TABLE IF NOT EXISTS `migrations` (
   `migration` varchar(255) NOT NULL,
   `created_at` timestamp NOT NULL,
