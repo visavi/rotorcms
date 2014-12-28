@@ -77,7 +77,6 @@ if (!isset($_SESSION['token'])) {
 	$_SESSION['token'] = empty($config['session']) ? 0 : generate_password(6);
 }
 
-ob_start('mc');
 ob_start('ob_processing');
 ############################################################################################
 ##                            Получение данных пользователя                               ##

@@ -16,7 +16,7 @@
 	<?php foreach ($forum->children as $subforum): ?>
 		<div>
 			<h4>
-				<a class="link" href="forum.php?fid=<?= $subforum->id ?>">
+				<a class="touch-link" href="forum.php?fid=<?= $subforum->id ?>">
 					<span class="glyphicon glyphicon-comment"></span>
 					<?= $subforum->title ?>
 					<span class="badge"><?= $subforum->topicCount() ?>/<?= $subforum->topicLast()->postCount() ?></span>
@@ -45,7 +45,7 @@
 	<?php foreach ($forum->topics as $topic): ?>
 		<h5 id="topic_<?= $topic->id ?>">
 
-			<a class="link" href="topic.php?tid=<?= $topic->id ?>">
+			<a class="touch-link" href="topic.php?tid=<?= $topic->id ?>">
 				<span class="glyphicon <?= $topic->getIcon() ?>"></span>
 				<?= $topic->title ?>
 				<span class="badge"><?= $topic->postCount() ?></span>

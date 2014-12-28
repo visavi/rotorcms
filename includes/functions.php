@@ -948,39 +948,6 @@ function stats_invite() {
 	return $invite.'/'.$used_invite;
 }
 
-// --------------- Функция автоустановки прав доступа ---------------//
-function chmode ($path = ".") {
-	if ($handle = opendir ($path)) {
-		while (false !== ($file = readdir($handle))) {
-			if ($file != "." && $file != "..") {
-				$file_path = $path."/".$file;
-
-				if (is_dir ($file_path)) {
-					$old = umask(0);
-					chmod ($file_path, 0777);
-					umask($old);
-
-					chmode ($file_path);
-				} else {
-					chmod ($file_path, 0666);
-				}
-			}
-		}
-
-		closedir($handle);
-	}
-}
-function mc($str) {
-	global $config;
-	if (empty($config['rotorlicense'])) {
-		return preg_replace('#</body>#i',
-			'<div style="text-align:center"><a href="http://'.str_rot13('ivfniv.arg').'"><small>'.str_rot13('Cbjrerq ol EbgbePZF').'</small></a></div></body>',
-			$str, 1);
-	} else {
-		return $str;
-	}
-}
-
 // --------------- Функция определение онлайн-статуса ---------------//
 function user_online($user_id) {
 	static $arrvisit;

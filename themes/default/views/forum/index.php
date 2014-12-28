@@ -8,7 +8,7 @@
 	<?php foreach($forums as $forum): ?>
 		<div>
 			<h4>
-				<a class="link" href="forum.php?fid=<?= $forum->id ?>">
+				<a class="touch-link" href="forum.php?fid=<?= $forum->id ?>">
 					<span class="glyphicon glyphicon-comment"></span>
 					<?= $forum->title ?>
 					<span class="badge"><?= $forum->topicCount() ?>/<?= $forum->topicLast()->postCount() ?></span>

@@ -8,7 +8,7 @@
 }
 
 
-.link {
+.touch-link {
   position: relative;
   display: block;
   padding: 10px 15px;
@@ -19,17 +19,17 @@
   box-shadow: 0 1px 2px rgba(0, 0, 0, .075);
 }
 
-.link:hover,
-.link:focus {
+.touch-link:hover,
+.touch-link:focus {
   text-decoration: none;
   background-color: #f5f5f5;
 }
 
-.link > .badge {
+.touch-link > .badge {
   margin-left: 3px;
 }
 
-.short-link {
+.touch-back {
   display: inline-block;
   padding: 5px 14px;
   background-color: #fdfdfd;
@@ -37,8 +37,8 @@
   border-radius: 15px;
 }
 
-.short-link:hover,
-.short-link:focus {
+.touch-back:hover,
+.touch-back:focus {
   text-decoration: none;
   background-color: #eee;
 }

@@ -133,8 +133,11 @@
 	<?php if(!$topic->closed): ?>
 		<div class="well">
 			<form action="topic.php?act=add&amp;tid=<?= $tid ?>&amp;start=<?= $start ?>&amp;token=<?= $_SESSION['token'] ?>" method="post">
-				<textarea class="form-control" id="markItUp" cols="25" rows="5" name="msg"></textarea><br />
-				<button type="submit" class="btn btn-action">Написать</button>
+				<div class="form-group">
+					<textarea class="form-control" id="markItUp" cols="25" rows="5" name="msg"></textarea>
+				</div>
+				<button type="submit" class="btn btn-action pull-right">Написать</button>
+
 		<?php if ($udata['users_point'] >= $config['forumloadpoints']): ?>
 			<span class="imgright">
 				<a href="topic.php?act=addfile&amp;tid=<?= $tid ?>&amp;start=<?= $start ?>">Загрузить файл</a>
