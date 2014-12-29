@@ -1,6 +1,9 @@
-RewriteEngine On
-RewriteCond %{REQUEST_METHOD} ^TRACE
-RewriteRule .* - [F]
+DirectoryIndex index.php
+AddDefaultCharset UTF-8
+Options -Indexes
+
+ErrorDocument 403 /pages/error.php?error=403
+ErrorDocument 404 /pages/error.php?error=404
 
 <Files ~ "includes|local">
    Order allow,deny
@@ -10,18 +13,6 @@ RewriteRule .* - [F]
    Order allow,deny
    Deny from all
 </Files>
-
-php_value magic_quotes_gpc Off
-php_value magic_quotes_runtime Off
-php_value magic_quotes_sybase Off
-php_value file_uploads On
-
-DirectoryIndex index.php
-AddDefaultCharset UTF-8
-Options -Indexes
-
-ErrorDocument 403 /pages/error.php?error=403
-ErrorDocument 404 /pages/error.php?error=404
 
 FileETag MTime Size
 <ifmodule mod_expires.c>

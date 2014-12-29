@@ -168,9 +168,9 @@ function hidden_text($str) {
 
 	if ($str[1]=='') $str[1] = 'Текст отсутствует';
 	if (is_user()) {
-		$text = '<div class="hide"><b>Скрытый текст:</b> '.$str[1].'</div>';
+		$text = '<div class="hiding"><span class="strong">Скрытый текст:</span> '.$str[1].'</div>';
 	} else {
-		$text = '<div class="hide"><b>Скрытый текст.</b> Для просмотра необходимо авторизоваться!</div>';
+		$text = '<div class="hiding"><span class="strong">Скрытый текст.</span> Для просмотра необходимо авторизоваться!</div>';
 	}
 
 	return $text;

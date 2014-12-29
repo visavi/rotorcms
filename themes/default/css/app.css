@@ -7,7 +7,6 @@
   pointer-events: auto;
 }
 
-
 .touch-link {
   position: relative;
   display: block;
@@ -47,6 +46,10 @@
   padding: 10px;
 }
 
+.strong {
+  font-weight: bold;
+}
+
 .border {
   border: 1px solid #ccc;
 }
@@ -84,6 +87,7 @@
   float: right;
   display: block;
 }
+
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
