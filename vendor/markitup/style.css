@@ -53,7 +53,8 @@
 }
 .markItUpHeader ul .markItUpDropMenu {
 	background: transparent url(images/menu.png) no-repeat 115% 50%;
-	padding: 0 3px;
+	padding: 0 2px;
+	margin-right: 5px;
 }
 .markItUpHeader ul .markItUpDropMenu li {
 	margin-right:0px;
@@ -75,7 +76,7 @@
 	background:#FFF url(images/submenu.png) no-repeat 100% 50%;
 }
 .markItUpHeader ul .markItUpSeparator {
-	margin:0 10px;
+	margin:0 10px 0 5px;
 	width:1px;
 	height:16px;
 	overflow:hidden;
@@ -205,7 +206,7 @@
  }
 
 .markItUp .preview:before {
-    content: "\f0c5";
+    content: "\f046";
  }
 
 .markItUp .nextpage a {

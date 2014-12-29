@@ -39,7 +39,8 @@ mySettings = {
 			{name:':krut', openWith:' :krut ', className:"col3-3" }
 		]},
 		{name:'Nextpage', className:"nextpage", openWith:'[nextpage]'},
-		{name:'Cutpage', className:"cutpage", openWith:'[cut]'}
+		{name:'Cutpage', className:"cutpage", openWith:'[cut]'},
+		//{name:'Preview', className:'preview',  call:'preview'}
 	]
 }
 
