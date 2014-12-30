@@ -123,31 +123,31 @@
 
 .markItUp .bold:before {
     content: "\f032";
- }
+}
 
 .markItUp .italic:before {
     content: "\f033";
- }
+}
 
 .markItUp .underline:before {
     content: "\f0cd";
- }
+}
 
 .markItUp .strike:before {
     content: "\f0cc";
- }
+}
 
 .markItUp .link:before {
     content: "\f0c1";
- }
+}
 
 .markItUp .youtube:before {
     content: "\f16a";
- }
+}
 
 .markItUp .colors:before {
     content: "\f009";
- }
+}
 
 .markItUp .colors ul {
 	width:81px;
@@ -179,40 +179,40 @@
 
 .markItUp .small:before {
     content: "\f12c";
- }
+}
 
 .markItUp .big:before {
     content: "\f12b";
- }
+}
 
 .markItUp .spoiler:before {
     content: "\f034";
- }
+}
 
 .markItUp .hiding:before {
     content: "\f070";
- }
+}
 
 .markItUp .quotes:before {
     content: "\f10d";
- }
+}
 
 .markItUp .code:before {
     content: "\f121";
- }
+}
 
 .markItUp .clean:before {
     content: "\f12d";
- }
+}
 
 .markItUp .preview:before {
     content: "\f046";
- }
+}
 
 .markItUp .nextpage a {
     content: "\f0db";
     display: none;
- }
+}
 
 .next .nextpage a {
 	display: block;
@@ -230,7 +230,7 @@
 
 .markItUp .smiles:before {
     content: "\f118";
- }
+}
 
 .markItUp .smiles ul{width: 85px; padding: 1px;}
 .markItUp .smiles li{border:none;width:26px;height:30px;overflow:hidden;float:left;margin:0;padding:0}

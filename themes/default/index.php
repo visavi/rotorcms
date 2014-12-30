@@ -23,9 +23,9 @@ header("Content-type:text/html; charset=utf-8");
 	<link href="/themes/default/css/bootstrap.min.css" rel="stylesheet" />
 	<link href="/themes/default/css/bootstrap-theme.min.css" rel="stylesheet" />
 	<link href="/themes/default/css/font-awesome.min.css" rel="stylesheet" />
+	<link href="/themes/default/css/opensans.css" rel="stylesheet" />
+	<link href="/vendor/markitup/markitup.css" rel="stylesheet" />
 	<link href="/themes/default/css/app.css" rel="stylesheet" />
-	<link href="/vendor/markitup/style.css" rel="stylesheet" />
-	<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&amp;subset=latin,cyrillic' rel='stylesheet' type='text/css'>
 
 	<link rel="image_src" href="/images/img/icon.png" />
 	<link rel="alternate" href="/news/rss.php" title="RSS News" type="application/rss+xml" />

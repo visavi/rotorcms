@@ -227,7 +227,7 @@ INSERT INTO `setting` (`name`, `value`) VALUES
 ('rekusershow', '1'),
 ('rekusertime', '12'),
 ('rekusertotal', '50'),
-('rotorversion', '4.0.0'),
+('rotorversion', '5.0.0'),
 ('scorename', 'баллов,балла,балл'),
 ('screensize', '500'),
 ('screenupload', '2097152'),
