@@ -209,9 +209,19 @@ function spoiler_text($match) {
 }
 
 // ------------------ Функция вставки BB-кода --------------------//
-function bb_code($msg) {
+function bb_code($text) {
 
-	$msg = preg_replace_callback('#\[code\](.*?)\[/code\]#i', 'highlight_code', $msg);
+	$parser = new JBBCode\Parser();
+	$parser->addCodeDefinitionSet(new JBBCode\NewCodeDefinitionSet());
+
+	$parser->parse($text);
+
+	$smileyVisitor = new \JBBCode\visitors\SmilesVisitor();
+	$parser->accept($smileyVisitor);
+
+	return $parser->getAsHTML();
+
+/*	$msg = preg_replace_callback('#\[code\](.*?)\[/code\]#i', 'highlight_code', $msg);
 	$msg = preg_replace_callback('#\[hide\](.*?)\[/hide\]#i', 'hidden_text', $msg);
 
 	$msg = preg_replace_callback('#\[spoiler=(.*?)\](.*?)\[/spoiler\]#si', 'spoiler_text',$msg);
@@ -229,7 +239,7 @@ function bb_code($msg) {
 	$msg = preg_replace('#\[blue\](.*?)\[/blue\]#si', '<span style="color:#0000ff">\1</span>', $msg);
 	$msg = preg_replace('#\[q\](.*?)\[/q\]#si', '<div class="q">\1</div>', $msg);
 	$msg = preg_replace('#\[del\](.*?)\[/del\]#si', '<del>\1</del>', $msg);
-	return $msg;
+	return $msg;*/
 }
 
 // ------------------ Функция перекодировки из UTF в WIN --------------------//
@@ -315,32 +325,32 @@ function yes_br($msg) {
 }
 
 // ------------------------ Функция замены и вывода смайлов --------------------------//
-function smiles($str) {
-	global $config;
+function smiles($text) {
+	//global $config;
 
-	$smiles = Smile::all(array('order' => 'LENGTH(code) desc'));
+	//$smiles = Smile::all(array('order' => 'LENGTH(code) desc'));
 
 	//$query = DB::run()->query("SELECT `smiles_name`, `smiles_code` FROM `smiles` ORDER BY LENGTH(`smiles_code`) DESC;");
 	//$smiles = $query->fetchAll();
 
 	//$count = 0;
-	foreach($smiles as $smile) {
-		$str = str_replace($smile->code, '<img src="/images/smiles/'.$smile->name.'" alt="smile" /> ', $str);
+	//foreach($smiles as $smile) {
+		//$text = str_replace($smile->code, '<img src="/images/smiles/'.$smile->name.'" alt="smile" /> ', $text);
 /*		$str = preg_replace('|'.preg_quote($smile['smiles_code']).'|', '<img src="/images/smiles/'.$smile['smiles_name'].'" alt="smile" /> ', $str, $config['resmiles'] - $count, $cnt);
 		$count += $cnt;
 		if ($count >= $config['resmiles']) {
 			break;
 		}*/
-	}
+	//}
 
-	return $str;
+	return $text;
 }
 
 // --------------- Функция обратной замены смайлов -------------------//
-function nosmiles($string) {
+function nosmiles($text) {
 
-	$string = preg_replace('|<img src="/images/smiles/(.*?).(\w+)" alt="smile" /> |', ':$1', $string);
-	return $string;
+	//$text = preg_replace('|<img src="/images/smiles/(.*?).(\w+)" alt="smile" /> |', ':$1', $text);
+	return $text;
 }
 
 // --------------- Функция правильного вывода веса файла -------------------//

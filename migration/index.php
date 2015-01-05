@@ -14,7 +14,7 @@ $migrate = '201412262226_add_test_to_socials';
 
 if (!Migration::exists($migrate)) {
 
-	Social::query("ALTER TABLE `socials` ADD `test` int(11) NULL DEFAULT NULL AFTER `uid`;");
+	Migration::query("ALTER TABLE `socials` ADD `test` int(11) NULL DEFAULT NULL AFTER `uid`;");
 	Migration::migrate($migrate);
 }
 

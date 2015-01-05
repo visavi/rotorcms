@@ -34,7 +34,7 @@ include_once (BASEDIR.'/includes/connect.php');
 
 // -------- Автозагрузка классов ---------- //
 spl_autoload_register(function ($class) {
-	include_once BASEDIR.'/includes/classes/'.$class.'.php';
+	include_once BASEDIR.'/includes/classes/'.str_replace('\\', '/', $class).'.php';
 });
 
 // ------------ ActiveRecord -------------- //
