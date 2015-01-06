@@ -22,8 +22,8 @@ header("Content-type:text/html; charset=utf-8");
 	<!-- Bootstrap -->
 	<link href="/themes/default/css/bootstrap.min.css" rel="stylesheet" />
 	<link href="/themes/default/css/bootstrap-theme.min.css" rel="stylesheet" />
-	<link href="/themes/default/css/prettify.css" rel="stylesheet">
 	<link href="/themes/default/css/font-awesome.min.css" rel="stylesheet" />
+	<link href="/themes/default/css/prettify.css" rel="stylesheet">
 	<link href="/themes/default/css/opensans.css" rel="stylesheet" />
 	<link href="/vendor/markitup/markitup.css" rel="stylesheet" />
 	<link href="/themes/default/css/app.css" rel="stylesheet" />

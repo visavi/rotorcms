@@ -78,6 +78,10 @@
   overflow: hidden;
 }
 
+.media-heading {
+  min-height: 25px;
+}
+
 .media-left {
   float: left;
   display: block;

@@ -18,29 +18,30 @@
 			<div class="media-body">
 
 				<?php if ($post->user()->login): ?>
-
-					<h4 class="media-heading" style="display: inline;"><?= profile($post->user()->getLogin()) ?></h4>
-					<?= user_title($post->user_id) ?> <?= user_online($post->user_id) ?>
+					<div class="media-heading">
+						<h4 style="display: inline;"><?= profile($post->user()->getLogin()) ?></h4>
+						<?= user_title($post->user_id) ?> <?= user_online($post->user_id) ?>
 
 				<?php else: ?>
-					<h4 class="media-heading" style="display: inline;"><?= $post->user()->getLogin() ?></h4>
+					<h4 style="display: inline;"><?= $post->user()->getLogin() ?></h4>
 				<?php endif; ?>
 
-				<ul class="list-inline small pull-right">
+					<ul class="list-inline small pull-right">
 
-				<?php if ($user->id && $user->id != $post->user_id): ?>
-					<li><a href="#" onclick="return reply('<?= $post->user()->getLogin() ?>')" data-toggle="tooltip" title="Ответить"><span class="fa fa-reply"></span></a></li>
+					<?php if ($user->id && $user->id != $post->user_id): ?>
+						<li><a href="#" onclick="return reply('<?= $post->user()->getLogin() ?>')" data-toggle="tooltip" title="Ответить"><span class="fa fa-reply"></span></a></li>
 
-					<li><a href="#" onclick="return sendComplaint(this, 'guest', <?= $post->id ?>);" data-token="<?= $_SESSION['token'] ?>" rel="nofollow" data-toggle="tooltip" title="Жалоба"><span class="fa fa-bell"></span></a></li>
+						<li><a href="#" onclick="return sendComplaint(this, 'guest', <?= $post->id ?>);" data-token="<?= $_SESSION['token'] ?>" rel="nofollow" data-toggle="tooltip" title="Жалоба"><span class="fa fa-bell"></span></a></li>
 
-				<?php endif; ?>
+					<?php endif; ?>
 
-				<?php if ($user->id && $user->id == $post->user_id && $post->created_at->getTimestamp() > time() - 600): ?>
-					<li><a href="index.php?act=edit&amp;id=<?= $post->id ?>&amp;start=<?= $start ?>">Редактировать</a></li>
-				<?php endif; ?>
+					<?php if ($user->id && $user->id == $post->user_id && $post->created_at->getTimestamp() > time() - 600): ?>
+						<li><a href="index.php?act=edit&amp;id=<?= $post->id ?>&amp;start=<?= $start ?>">Редактировать</a></li>
+					<?php endif; ?>
 
-					<li class="text-muted"><?= $post->created_at ?></li>
-				</ul>
+						<li class="text-muted"><?= $post->created_at ?></li>
+					</ul>
+				</div>
 
 				<div class="message"><?= bb_code($post->text) ?></div>
 
