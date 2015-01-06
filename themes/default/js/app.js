@@ -1,5 +1,7 @@
 $(document).ready(function(){
 
+	prettyPrint();
+
 	$.notify.defaults({ className: "success" });
 
 	$('[data-toggle="tooltip"]').tooltip();

@@ -46,9 +46,17 @@ ActiveRecord\Config::initialize(function($cfg) {
 		'development' => 'mysql://'.DBUSER.':'.DBPASS.'@'.DBHOST.'/'.DBNAME.';charset=utf8'
 	));
 
-	$logger = new Logger();
+	$conf = array('error_prepend' => '<pre class="prettyprint linenums">',
+				  'error_append'  => '</pre>');
+
+	//$logger = Log::singleton('file', DATADIR.'/temp/mysql.dat');
+	$logger = Log::singleton('display', '', '', $conf);
+
 	$cfg->set_logger($logger);
 	$cfg->set_logging(DEBUGMODE);
+
+	//$cfg->set_cache("memcache://localhost", array("expire" => 60));
+	//$cfg->set_date_format("Y-m-d H:i:s");
 });
 
 ActiveRecord\DateTime::$DEFAULT_FORMAT = 'd.m.y / H:i';

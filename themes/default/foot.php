@@ -26,6 +26,7 @@
 	<script src="/themes/default/js/jquery-2.1.1.min.js"></script>
 	<script src="/themes/default/js/bootstrap.min.js"></script>
 	<script src="/themes/default/js/notify.min.js"></script>
+	<script src="/themes/default/js/prettify.js"></script>
 	<script src="/themes/default/js/app.js"></script>
 	<script src="/vendor/markitup/jquery.markitup.js"></script>
 	<script src="/vendor/markitup/markitup.set.js"></script>

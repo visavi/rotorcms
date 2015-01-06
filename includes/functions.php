@@ -211,7 +211,7 @@ function spoiler_text($match) {
 // ------------------ Функция вставки BB-кода --------------------//
 function bb_code($text) {
 
-	$parser = new JBBCode\Parser();
+/*	$parser = new JBBCode\Parser();
 	$parser->addCodeDefinitionSet(new JBBCode\NewCodeDefinitionSet());
 
 	$parser->parse($text);
@@ -219,27 +219,27 @@ function bb_code($text) {
 	$smileyVisitor = new \JBBCode\visitors\SmilesVisitor();
 	$parser->accept($smileyVisitor);
 
-	return $parser->getAsHTML();
+	return $parser->getAsHTML();*/
 
-/*	$msg = preg_replace_callback('#\[code\](.*?)\[/code\]#i', 'highlight_code', $msg);
-	$msg = preg_replace_callback('#\[hide\](.*?)\[/hide\]#i', 'hidden_text', $msg);
+	$text = preg_replace_callback('#\[code\](.*?)\[/code\]#i', 'highlight_code', $text);
+	$text = preg_replace_callback('#\[hide\](.*?)\[/hide\]#i', 'hidden_text', $text);
 
-	$msg = preg_replace_callback('#\[spoiler=(.*?)\](.*?)\[/spoiler\]#si', 'spoiler_text',$msg);
-	$msg = preg_replace_callback('#\[spoiler\](.*?)\[/spoiler\]#si', 'spoiler_text',$msg);
+	$text = preg_replace_callback('#\[spoiler=(.*?)\](.*?)\[/spoiler\]#si', 'spoiler_text', $text);
+	$text = preg_replace_callback('#\[spoiler\](.*?)\[/spoiler\]#si', 'spoiler_text', $text);
 
-	$msg = preg_replace_callback('~\[url=((https?|ftp)://.+?)\](.+?)\[/url\]|((https?|ftp)://[0-9a-zа-яё/.;?=\(\)\_\-&%#]+)~ui', 'url_replace', $msg);
-	$msg = preg_replace('#\[youtube\](.*?)\[/youtube\]#si', '<iframe width="280" height="210" src="//www.youtube.com/embed/\1" frameborder="0"></iframe>', $msg);
-	$msg = preg_replace('#\[big\](.*?)\[/big\]#si', '<big>\1</big>', $msg);
-	$msg = preg_replace('#\[b\](.*?)\[/b\]#si', '<b>\1</b>', $msg);
-	$msg = preg_replace('#\[i\](.*?)\[/i\]#si', '<i>\1</i>', $msg);
-	$msg = preg_replace('#\[u\](.*?)\[/u\]#si', '<u>\1</u>', $msg);
-	$msg = preg_replace('#\[small\](.*?)\[/small\]#si', '<small>\1</small>', $msg);
-	$msg = preg_replace('#\[red\](.*?)\[/red\]#si', '<span style="color:#ff0000">\1</span>', $msg);
-	$msg = preg_replace('#\[green\](.*?)\[/green\]#si', '<span style="color:#00cc00">\1</span>', $msg);
-	$msg = preg_replace('#\[blue\](.*?)\[/blue\]#si', '<span style="color:#0000ff">\1</span>', $msg);
-	$msg = preg_replace('#\[q\](.*?)\[/q\]#si', '<div class="q">\1</div>', $msg);
-	$msg = preg_replace('#\[del\](.*?)\[/del\]#si', '<del>\1</del>', $msg);
-	return $msg;*/
+	$text = preg_replace_callback('~\[url=((https?|ftp)://.+?)\](.+?)\[/url\]|((https?|ftp)://[0-9a-zа-яё/.;?=\(\)\_\-&%#]+)~ui', 'url_replace', $text);
+	$text = preg_replace('#\[youtube\](.*?)\[/youtube\]#si', '<iframe width="280" height="210" src="//www.youtube.com/embed/\1" frameborder="0"></iframe>', $text);
+	$text = preg_replace('#\[big\](.*?)\[/big\]#si', '<big>\1</big>', $text);
+	$text = preg_replace('#\[b\](.*?)\[/b\]#si', '<b>\1</b>', $text);
+	$text = preg_replace('#\[i\](.*?)\[/i\]#si', '<i>\1</i>', $text);
+	$text = preg_replace('#\[u\](.*?)\[/u\]#si', '<u>\1</u>', $text);
+	$text = preg_replace('#\[small\](.*?)\[/small\]#si', '<small>\1</small>', $text);
+	$text = preg_replace('#\[red\](.*?)\[/red\]#si', '<span style="color:#ff0000">\1</span>', $text);
+	$text = preg_replace('#\[green\](.*?)\[/green\]#si', '<span style="color:#00cc00">\1</span>', $text);
+	$text = preg_replace('#\[blue\](.*?)\[/blue\]#si', '<span style="color:#0000ff">\1</span>', $text);
+	$text = preg_replace('#\[q\](.*?)\[/q\]#si', '<div class="q">\1</div>', $text);
+	$text = preg_replace('#\[del\](.*?)\[/del\]#si', '<del>\1</del>', $text);
+	return $text;
 }
 
 // ------------------ Функция перекодировки из UTF в WIN --------------------//
@@ -326,22 +326,12 @@ function yes_br($msg) {
 
 // ------------------------ Функция замены и вывода смайлов --------------------------//
 function smiles($text) {
-	//global $config;
 
-	//$smiles = Smile::all(array('order' => 'LENGTH(code) desc'));
+	$smiles = Smile::all(array('order' => 'LENGTH(code) desc'));
 
-	//$query = DB::run()->query("SELECT `smiles_name`, `smiles_code` FROM `smiles` ORDER BY LENGTH(`smiles_code`) DESC;");
-	//$smiles = $query->fetchAll();
-
-	//$count = 0;
-	//foreach($smiles as $smile) {
-		//$text = str_replace($smile->code, '<img src="/images/smiles/'.$smile->name.'" alt="smile" /> ', $text);
-/*		$str = preg_replace('|'.preg_quote($smile['smiles_code']).'|', '<img src="/images/smiles/'.$smile['smiles_name'].'" alt="smile" /> ', $str, $config['resmiles'] - $count, $cnt);
-		$count += $cnt;
-		if ($count >= $config['resmiles']) {
-			break;
-		}*/
-	//}
+	foreach($smiles as $smile) {
+		$text = str_replace($smile->code, '<img src="/images/smiles/'.$smile->name.'" alt="smile" /> ', $text);
+	}
 
 	return $text;
 }
@@ -349,8 +339,8 @@ function smiles($text) {
 // --------------- Функция обратной замены смайлов -------------------//
 function nosmiles($text) {
 
-	//$text = preg_replace('|<img src="/images/smiles/(.*?).(\w+)" alt="smile" /> |', ':$1', $text);
-	return $text;
+	return preg_replace('|<img src="/images/smiles/(.*?).(\w+)" alt="smile" /> |', ':$1', $text);
+
 }
 
 // --------------- Функция правильного вывода веса файла -------------------//

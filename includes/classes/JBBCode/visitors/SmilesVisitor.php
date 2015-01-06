@@ -30,7 +30,7 @@ class SmilesVisitor implements \JBBCode\NodeVisitor
         }
 
         foreach($list_smiles as $code => $smile) {
-            $textNode->setValue(str_replace($code, '<img src="/images/smiles/'.$smile.'" alt="'.$code.'" /> ', $textNode->getValue()));
+            $textNode->setValue(str_replace(' '.$code.' ', '<img src="/images/smiles/'.$smile.'" alt="'.$code.'" /> ', $textNode->getValue()));
         }
 
     }

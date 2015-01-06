@@ -22,6 +22,7 @@ header("Content-type:text/html; charset=utf-8");
 	<!-- Bootstrap -->
 	<link href="/themes/default/css/bootstrap.min.css" rel="stylesheet" />
 	<link href="/themes/default/css/bootstrap-theme.min.css" rel="stylesheet" />
+	<link href="/themes/default/css/prettify.css" rel="stylesheet">
 	<link href="/themes/default/css/font-awesome.min.css" rel="stylesheet" />
 	<link href="/themes/default/css/opensans.css" rel="stylesheet" />
 	<link href="/vendor/markitup/markitup.css" rel="stylesheet" />
@@ -40,7 +41,7 @@ header("Content-type:text/html; charset=utf-8");
 <body>
 
 	<!-- Fixed navbar -->
-	<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+	<div class="navbar navbar-default navbar-static-top" role="navigation">
 		<div class="container">
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
