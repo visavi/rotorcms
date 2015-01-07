@@ -49,8 +49,8 @@ ActiveRecord\Config::initialize(function($cfg) {
 	$conf = array('error_prepend' => '<pre class="prettyprint linenums">',
 				  'error_append'  => '</pre>');
 
-	//$logger = Log::singleton('file', DATADIR.'/temp/mysql.dat');
-	$logger = Log::singleton('display', '', '', $conf);
+	$logger = Log::singleton('file', DATADIR.'/temp/mysql.dat');
+	//$logger = Log::singleton('display', '', '', $conf);
 
 	$cfg->set_logger($logger);
 	$cfg->set_logging(DEBUGMODE);

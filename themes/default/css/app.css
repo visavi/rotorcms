@@ -92,6 +92,14 @@
   display: block;
 }
 
+/* Insert the pseudo element - replicating what FontAwesome does */
+blockquote:before {
+    content: "\f10d";
+    font-family: FontAwesome;
+    float: left;
+    margin-right: 10px;
+}
+
 /* Sticky footer styles
 -------------------------------------------------- */
 html {

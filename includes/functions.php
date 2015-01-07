@@ -154,13 +154,14 @@ function points($sum) {
 function highlight_code($code) {
 
 	if (is_array($code)) $code = $code[1];
-	$code = nosmiles($code);
+
+/*	$code = nosmiles($code);
 	$code = strtr($code, array('&lt;'=>'<', '&gt;'=>'>', '&amp;'=>'&', '&quot;'=>'"', '&#36;'=>'$', '&#37;'=>'%', '&#39;'=>"'", '&#92;'=>'\\', '&#94;'=>'^', '&#96;'=>'`', '&#124;' => '|', '<br />'=>"\r\n"));
 
 	$code = highlight_string($code, true);
-	$code = strtr($code, array("\r\n"=>'<br />', '://'=>'&#58//', '$'=>'&#36;', "'"=>'&#39;', '%'=>'&#37;', '\\'=>'&#92;', '`'=>'&#96;', '^'=>'&#94;', '|'=>'&#124;'));
+	$code = strtr($code, array("\r\n"=>'<br />', '://'=>'&#58//', '$'=>'&#36;', "'"=>'&#39;', '%'=>'&#37;', '\\'=>'&#92;', '`'=>'&#96;', '^'=>'&#94;', '|'=>'&#124;'));*/
 
-	return '<div class="d">'.$code.'</div>';
+	return '<pre class="prettyprint linenums">'.$code.'</pre>';
 }
 
 // ----------------------- Функция скрытого текста ------------------------//
@@ -211,6 +212,27 @@ function spoiler_text($match) {
 // ------------------ Функция вставки BB-кода --------------------//
 function bb_code($text) {
 
+	static $list_smiles;
+
+	if (empty($list_smiles)) {
+
+		if (!file_exists(DATADIR."/temp/smiles.dat")) {
+
+			$smiles = \Smile::all(array('order' => 'LENGTH(code) desc'));
+			$smiles = \ActiveRecord\assoc($smiles, 'code', 'name');
+			file_put_contents(DATADIR."/temp/smiles.dat", serialize($smiles));
+		}
+
+		$list_smiles = unserialize(file_get_contents(DATADIR."/temp/smiles.dat"));
+	}
+
+	foreach($list_smiles as $code => $smile) {
+		$text = str_replace($code, '<img src="/images/smiles/'.$smile.'" alt="'.$code.'" /> ', $text);
+	}
+
+	$bbcode = new BBCodeParser;
+	return $bbcode->parse($text);
+
 /*	$parser = new JBBCode\Parser();
 	$parser->addCodeDefinitionSet(new JBBCode\NewCodeDefinitionSet());
 
@@ -220,8 +242,7 @@ function bb_code($text) {
 	$parser->accept($smileyVisitor);
 
 	return $parser->getAsHTML();*/
-
-	$text = preg_replace_callback('#\[code\](.*?)\[/code\]#i', 'highlight_code', $text);
+	$text = preg_replace_callback('/\[code\](.*?)\[\/code\]/si', 'highlight_code', $text);
 	$text = preg_replace_callback('#\[hide\](.*?)\[/hide\]#i', 'hidden_text', $text);
 
 	$text = preg_replace_callback('#\[spoiler=(.*?)\](.*?)\[/spoiler\]#si', 'spoiler_text', $text);
@@ -239,6 +260,7 @@ function bb_code($text) {
 	$text = preg_replace('#\[blue\](.*?)\[/blue\]#si', '<span style="color:#0000ff">\1</span>', $text);
 	$text = preg_replace('#\[q\](.*?)\[/q\]#si', '<div class="q">\1</div>', $text);
 	$text = preg_replace('#\[del\](.*?)\[/del\]#si', '<del>\1</del>', $text);
+	$text = nl2br($text);
 	return $text;
 }
 
@@ -311,6 +333,7 @@ function subtok($string, $chr, $pos, $len = null) {
 	return implode($chr, array_slice(explode($chr, $string), $pos, $len));
 }
 
+//deprecated  use nl2br
 // ----------------------- Функция вырезания переноса строки -------------------------//
 function no_br($msg) {
 	$msg = nl2br($msg);
@@ -318,10 +341,16 @@ function no_br($msg) {
 	return $msg;
 }
 
+//deprecated use br2nl
 // ----------------------- Функция добавления переноса строки -------------------------//
 function yes_br($msg) {
 	$msg = preg_replace('|<br */?>|i', "\r\n", $msg);
 	return $msg;
+}
+
+// ----------------------- Функция добавления переноса строки -------------------------//
+function br2nl($string) {
+	return preg_replace('/\<br(\s*)?\/?\>/i', '', $string);
 }
 
 // ------------------------ Функция замены и вывода смайлов --------------------------//

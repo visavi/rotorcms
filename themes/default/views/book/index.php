@@ -1,3 +1,20 @@
+ <?php
+
+define('XTIME', microtime(1));
+
+
+
+
+for($i = 0; $i < 100; $i++) {
+
+	$text = "The default codes :) include: [code][b]bold[/b][/code], [i]italics[/i], [u]underlining[/u], [s]hello[/s]&quot;;<br />&#36;text .= &quot;[url=http://jbbcode.com]links[/url]  [url]//jbbcode.com[/url]  , [color=red]color![/color] and more. :) [img]http://avatars.yandex.net/get-ynews/a53d3847d6d914efa93fc8fe32557e99/thumb[/img] [hide]wedwedwe[/hide]";
+
+echo bb_code(($text));
+}
+
+echo round(microtime(1) - XTIME, 4);
+ ?>
+<blockquote>"I'm looking forward to this year's reunion and catching up with everyone." <small>Michael Tyson</small></blockquote>
 <ul class="breadcrumb">
 	<li><a href="/pages/rules.php">Правила</a></li>
 	<li><a href="/pages/smiles.php">Смайлы</a></li>

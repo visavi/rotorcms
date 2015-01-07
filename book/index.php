@@ -51,7 +51,7 @@ case 'add':
 			if (utf_strlen($msg) >= 5 && utf_strlen($msg) < $config['guesttextlength']) {
 					if (is_flood($log)) {
 
-						$msg = smiles(antimat(no_br($msg)));
+						$msg = antimat($msg);
 
 						$user = User::find($user->id);
 
@@ -96,7 +96,7 @@ case 'add':
 				if (utf_strlen($msg) >= 5 && utf_strlen($msg) < $config['guesttextlength']) {
 					if (is_flood($log)) {
 
-						$msg = smiles(antimat(no_br($msg)));
+						$msg = antimat($msg);
 
 						$attributes = array('user_id' => 0, 'text' => $msg, 'ip' => $ip, 'brow' => $brow);
 						$post = Guest::create($attributes);
@@ -124,47 +124,6 @@ case 'add':
 break;
 
 ############################################################################################
-##                                    Жалоба на спам                                      ##
-############################################################################################
-case 'spam':
-
-/*	$token = check($_GET['token']);
-	$id = abs(intval($_GET['id']));
-
-	if (is_user()) {
-		if ($token == $_SESSION['token']) {
-			$data = DB::run()->queryFetch("SELECT * FROM `guest` WHERE `guest_id`=? LIMIT 1;", array($id));
-
-			if (!empty($data)) {
-				$queryspam = DB::run()->querySingle("SELECT `spam_id` FROM `spam` WHERE `spam_key`=? AND `spam_idnum`=? LIMIT 1;", array(2, $id));
-
-				if (empty($queryspam)) {
-					if (is_flood($log)) {
-						DB::run()->query("INSERT INTO `spam` (`spam_key`, `spam_idnum`, `spam_user`, `spam_login`, `spam_text`, `spam_time`, `spam_addtime`, `spam_link`) VALUES (?, ?, ?, ?, ?, ?, ?, ?);", array(2, $data['guest_id'], $log, $data['guest_user'], $data['guest_text'], $data['guest_time'], SITETIME, $config['home'].'/book/index.php?start='.$start));
-
-						$_SESSION['note'] = 'Жалоба успешно отправлена!';
-						redirect("index.php?start=$start");
-
-					} else {
-						show_error('Антифлуд! Разрешается жаловаться на спам не чаще чем раз в '.flood_period().' секунд!');
-					}
-				} else {
-					show_error('Ошибка! Жалоба на данное сообщение уже отправлена!');
-				}
-			} else {
-				show_error('Ошибка! Выбранное вами сообщение для жалобы не существует!');
-			}
-		} else {
-			show_error('Ошибка! Неверный идентификатор сессии, повторите действие!');
-		}
-	} else {
-		show_login('Вы не авторизованы, чтобы подать жалобу, необходимо');
-	}
-
-	render('includes/back', array('link' => 'index.php?start='.$start, 'title' => 'Вернуться'));*/
-break;
-
-############################################################################################
 ##                                   Подготовка к редактированию                          ##
 ############################################################################################
 case 'edit':
@@ -178,7 +137,7 @@ case 'edit':
 		if ($post) {
 			if ($post->created_at->getTimestamp() > time() - 600) {
 
-				$post->text = yes_br(nosmiles($post->text));
+				$post->text = $post->text;
 
 				render('book/edit', compact('post', 'id', 'start'));
 
@@ -212,7 +171,7 @@ case 'editpost':
 
 				if ($post) {
 					if ($post->created_at->getTimestamp() > time() - 600) {
-						$msg = smiles(antimat(no_br($msg)));
+						$msg = antimat($msg);
 
 						$post->text = $msg;
 						$post->save();
