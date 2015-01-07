@@ -341,7 +341,7 @@ function no_br($msg) {
 	return $msg;
 }
 
-//deprecated use br2nl
+//deprecated
 // ----------------------- Функция добавления переноса строки -------------------------//
 function yes_br($msg) {
 	$msg = preg_replace('|<br */?>|i', "\r\n", $msg);
@@ -349,9 +349,9 @@ function yes_br($msg) {
 }
 
 // ----------------------- Функция добавления переноса строки -------------------------//
-function br2nl($string) {
+/*function br2nl($string) {
 	return preg_replace('/\<br(\s*)?\/?\>/i', '', $string);
-}
+}*/
 
 // ------------------------ Функция замены и вывода смайлов --------------------------//
 function smiles($text) {

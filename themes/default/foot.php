@@ -23,7 +23,7 @@
 		</div>
 	</div>
 
-	<script src="/themes/default/js/jquery-2.1.1.min.js"></script>
+	<script src="/themes/default/js/jquery-1.11.2.min.js"></script>
 	<script src="/themes/default/js/bootstrap.min.js"></script>
 	<script src="/themes/default/js/notify.min.js"></script>
 	<script src="/themes/default/js/prettify.js"></script>

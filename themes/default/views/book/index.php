@@ -1,5 +1,5 @@
  <?php
-
+/*
 define('XTIME', microtime(1));
 
 
@@ -12,9 +12,9 @@ for($i = 0; $i < 100; $i++) {
 echo bb_code(($text));
 }
 
-echo round(microtime(1) - XTIME, 4);
+echo round(microtime(1) - XTIME, 4);*/
  ?>
-<blockquote>"I'm looking forward to this year's reunion and catching up with everyone." <small>Michael Tyson</small></blockquote>
+
 <ul class="breadcrumb">
 	<li><a href="/pages/rules.php">Правила</a></li>
 	<li><a href="/pages/smiles.php">Смайлы</a></li>
@@ -90,7 +90,7 @@ echo round(microtime(1) - XTIME, 4);
 	<div class="well">
 		<form action="index.php?act=add&amp;token=<?= $_SESSION['token'] ?>" method="post">
 			<div class="form-group">
-				<textarea class="form-control" id="markItUp" rows="4" name="msg"></textarea>
+				<textarea class="form-control" id="markItUp" rows="5" name="msg"></textarea>
 			</div>
 			<button type="submit" class="btn btn-action">Написать</button>
 		</form>
@@ -102,7 +102,7 @@ echo round(microtime(1) - XTIME, 4);
 		<form action="index.php?act=add&amp;token=<?= $_SESSION['token'] ?>" method="post">
 			<div class="form-group">
 				<label for="msg">Сообщение:</label>
-				<textarea class="form-control" id="msg" rows="4" name="msg"></textarea>
+				<textarea class="form-control" id="msg" rows="5" name="msg"></textarea>
 			</div>
 			<div class="form-group">
 				<label for="provkod">Проверочный код:</label>
