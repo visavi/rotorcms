@@ -88,14 +88,42 @@
   display: block;
 }
 
-/* Insert the pseudo element - replicating what FontAwesome does */
 blockquote:before {
-    content: "\f10d";
-    font-family: FontAwesome;
-    float: left;
-    margin-right: 10px;
+  content: "\f10d";
+  font-family: FontAwesome;
+  float: left;
+  margin-right: 10px;
 }
 
+blockquote {
+  font-size: 13px;
+  background-color: #eff;
+  border: 1px dotted #ddd;
+  border-left: 5px solid #ddd;
+}
+
+.spoiler:before {
+  content: "\f0da";
+  font-family: FontAwesome;
+  font-size: 15px;
+  color: #bbb;
+  margin-right: 5px;
+}
+
+.spoiler-title {
+  border-bottom: 1px dashed;
+  color: #6da3bd;
+  cursor: pointer;
+  font-weight: normal;
+}
+
+.spoiler-text {
+  padding: 9px 14px;
+  margin: 10px 0;
+  background-color: #f7f7f9;
+  border: 1px solid #e1e1e8;
+  border-radius: 4px;
+}
 /* Sticky footer styles
 -------------------------------------------------- */
 html {

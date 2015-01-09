@@ -20,12 +20,13 @@ class BBCodeParser {
 			'replace' => '<strike>$1</strike>',
 		),
 		'fontSize' => array(
-			'pattern' => '/\[size\=([1-7])\](.*?)\[\/size\]/s',
+			'pattern' => '/\[size\=([1-5])\](.*?)\[\/size\]/s',
 			'replace' => '<font size="$1">$2</font>',
 		),
 		'fontColor' => array(
 			'pattern' => '/\[color\=(#[A-f0-9]{6}|#[A-f0-9]{3})\](.*?)\[\/color\]/s',
 			'replace' => '<font color="$1">$2</font>',
+			'iterate' => 1,
 		),
 		'center' => array(
 			'pattern' => '/\[center\](.*?)\[\/center\]/s',
@@ -38,7 +39,7 @@ class BBCodeParser {
 		),
 		'namedQuote' => array(
 			'pattern' => '/\[quote\=(.*?)\](.*)\[\/quote\]/s',
-			'replace' => '<blockquote><small>$1</small>$2</blockquote>',
+			'replace' => '<blockquote>$2<small>$1</small></blockquote>',
 			'iterate' => 3,
 		),
 		'link' => array(
@@ -50,20 +51,31 @@ class BBCodeParser {
 			'replace' => '<a href="$1">$2</a>',
 		),
 		//'image' => array(
-		//	'pattern' => '/\[img\](.*?)\[\/img\]/s',
+		//	'pattern' => '/\[img\](.*?)\[\/img\]/ms',
 		//	'replace' => '<img src="$1">',
 		//),
-		//'list' => array(
-		//	'pattern' => '/\[list\](.*?)\[\/list\]/s',
-		//	'replace' => '<ul>$1</ul>',
-		//),
-		//'listItem' => array(
-		//	'pattern' => '/\[\*\](.*)/',
-		//	'replace' => '<li>$1</li>',
-		//),
+		'orderedList' => array(
+			'pattern' => '/\[list=1\](.*?)\[\/list\]/s',
+			'replace' => '<ol>$1</ol>',
+		),
+		'unorderedList' => array(
+			'pattern' => '/\[list\](.*?)\[\/list\]/s',
+			'replace' => '<ul>$1</ul>',
+		),
+		'listItem' => array(
+			'pattern' => '/\[\*\](.*)/',
+			'replace' => '<li>$1</li>',
+		),
 		'code' => array(
 			'pattern' => '/\[code\](.*?)\[\/code\]/s',
 			'replace' => '<pre class="prettyprint linenums">$1</pre>',
+		),
+		'hide' => array(
+			'pattern' => '/\[spoiler\=(.*?)\](.*?)\[\/spoiler\]/s',
+			'replace' => '<div class="spoiler">
+				<b class="spoiler-title open">$1</b>
+				<div class="spoiler-text" style="display: none;">$2</div>
+				</div>',
 		),
 		'youtube' => array(
 			'pattern' => '/\[youtube\](.*?)\[\/youtube\]/s',
@@ -78,6 +90,8 @@ class BBCodeParser {
 	 */
 	public function parse($source)
 	{
+		$source = nl2br($source);
+
 		foreach ($this->parsers as $name => $parser) {
 			if(isset($parser['iterate']))
 			{
@@ -89,7 +103,7 @@ class BBCodeParser {
 				$source = preg_replace($parser['pattern'], $parser['replace'], $source);
 			}
 		}
-		return nl2br($source);
+		return $source;
 	}
 
 	/**

@@ -1,11 +1,14 @@
 .com { color: #93a1a1; }
-.lit { color: #195f91; }
+.lit { color: #F60; }
 .pun, .opn, .clo { color: #93a1a1; }
 .fun { color: #dc322f; }
-.str, .atv { color: #D14; }
-.kwd, .prettyprint .tag { color: #1e347b; }
-.typ, .atn, .dec, .var { color: teal; }
-.pln { color: #48484c; }
+.str { color: #D14; }
+.atv { color: #d44950; }
+.kwd, .prettyprint { color: #0A8; }
+.tag { color: #2f6f9f; }
+.typ, .dec, .var { color: teal; }
+.atn { color: #4f9fcf; }
+.pln { color: #069; }
 
 .prettyprint {
   padding: 8px;

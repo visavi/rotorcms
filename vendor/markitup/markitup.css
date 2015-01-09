@@ -70,7 +70,7 @@
 }
 .markItUpHeader ul ul li {
 	float:none;
-	border-bottom:1px solid #000;
+	border-bottom:1px solid #ccc;
 }
 .markItUpHeader ul ul .markItUpDropMenu {
 	background:#FFF url(images/submenu.png) no-repeat 100% 50%;
@@ -81,6 +81,7 @@
 	height:16px;
 	overflow:hidden;
 	background-color:#CCC;
+	text-indent: -10000px;
 }
 .markItUpHeader ul ul .markItUpSeparator {
 	width:auto; height:1px;
@@ -102,14 +103,16 @@
 }
 .markItUpHeader ul ul a {
 	display:block;
+	font-size: 12px;
 	padding-left:0px;
 	text-indent:0;
-	width:120px;
-	padding:5px 5px 5px 25px;
+	width:100px;
+	padding:2px 5px;
 	background-position:2px 50%;
 }
 .markItUpHeader ul ul a:hover  {
-	color:#FFF;
+	color: #fff;
+	background-color: #bbb;
 }
 
 /* -------------------------------------------------------------------
@@ -121,147 +124,191 @@
     cursor: pointer;
 }
 
-.markItUp .bold:before {
+.markItUp .bb-bold:before {
     content: "\f032";
 }
 
-.markItUp .italic:before {
+.markItUp .bb-italic:before {
     content: "\f033";
 }
 
-.markItUp .underline:before {
+.markItUp .bb-underline:before {
     content: "\f0cd";
 }
 
-.markItUp .strike:before {
+.markItUp .bb-strike:before {
     content: "\f0cc";
 }
 
-.markItUp .link:before {
+.markItUp .bb-link:before {
     content: "\f0c1";
 }
 
-.markItUp .youtube:before {
+.markItUp .bb-youtube:before {
     content: "\f16a";
 }
 
-.markItUp .colors:before {
-    content: "\f009";
+.markItUp .bb-colors:before {
+    content: "\f00a";
 }
 
-.markItUp .colors ul {
-	width:81px;
+.markItUp .bb-colors ul {
+	width:80px;
 	padding:1px;
 }
-.markItUp .colors  li {
+.markItUp .bb-colors  li {
 	border:1px solid white;
 	width:25px;	height:25px;
 	overflow:hidden;
 	padding:0px; margin:0px;
 	float:left;
 }
-.markItUp .colors ul a {
-	width:25px;	height:25px;
+.markItUp .bb-colors ul a {
+	width:25px;
+	height:25px;
+	text-indent:-10000px;
 }
-.markItUp .colors ul a:hover {
+.markItUp .bb-colors ul a:hover {
 	background-color:none;
 }
 
-.markItUp .colors .col1-1 a {
-	background:red;
+.markItUp .bb-colors .col1-1 a {
+	background: #ffd700;
 }
-.markItUp .colors .col1-2 a {
-	background:green;
+.markItUp .bb-colors .col1-2 a {
+	background: #ffa500;
 }
-.markItUp .colors .col1-3 a {
-	background:blue;
-}
-
-.markItUp .small:before {
-    content: "\f12c";
+.markItUp .bb-colors .col1-3 a {
+	background: #ff0000;
 }
 
-.markItUp .big:before {
-    content: "\f12b";
+.markItUp .bb-colors .col2-1 a {
+	background: #0000ff;
+}
+.markItUp .bb-colors .col2-2 a {
+	background: #800080;
+}
+.markItUp .bb-colors .col2-3 a {
+	background: #00cc00;
 }
 
-.markItUp .spoiler:before {
+.markItUp .bb-colors .col3-1 a {
+	background: #ff00ff;
+}
+.markItUp .bb-colors .col3-2 a {
+	background: #808080;
+}
+.markItUp .bb-colors .col3-3 a {
+	background: #00ffff;
+}
+
+.markItUp .bb-size:before {
+    content: "\f031";
+}
+
+.markItUp .bb-center:before {
+    content: "\f037";
+}
+
+.markItUp .bb-orderedlist:before {
+    content: "\f0cb";
+}
+
+.markItUp .bb-unorderedlist:before {
+    content: "\f0ca";
+}
+
+.markItUp .bb-spoiler:before {
     content: "\f034";
 }
 
-.markItUp .hiding:before {
+.markItUp .bb-hide:before {
     content: "\f070";
 }
 
-.markItUp .quotes:before {
+.markItUp .bb-quotes:before {
     content: "\f10d";
 }
 
-.markItUp .code:before {
+.markItUp .bb-code:before {
     content: "\f121";
 }
 
-.markItUp .clean:before {
+.markItUp .bb-clean:before {
     content: "\f12d";
 }
 
-.markItUp .preview:before {
+.markItUp .bb-preview:before {
     content: "\f046";
 }
 
-.markItUp .nextpage a {
+.markItUp .bb-nextpage a {
     content: "\f0db";
     display: none;
 }
 
-.next .nextpage a {
+.next .bb-nextpage a {
 	display: block;
 }
 
-.markItUp .cutpage a {
+.markItUp .bb-cutpage a {
     /*content: "\f0c4";	*/
     display: none;
 }
 
-.cut .cutpage a {
+.cut .bb-cutpage a {
 	display: block;
 }
 
-
-.markItUp .smiles:before {
+.markItUp .bb-smiles:before {
     content: "\f118";
 }
 
-.markItUp .smiles ul{width: 85px; padding: 1px;}
-.markItUp .smiles li{border:none;width:26px;height:30px;overflow:hidden;float:left;margin:0;padding:0}
-.markItUp .smiles ul a{width:26px;height:26px}
-.markItUp .smiles .col1-0 a{padding:1px}
-.markItUp .smiles ul a:hover {background-color:none;}
+.markItUp .bb-smiles ul{
+	width: 85px;
+	padding: 1px;
+}
+.markItUp .bb-smiles li{
+	border:none;
+	width:26px;
+	height:30px;
+	overflow:hidden;
+	float:left;
+	margin:0;
+	padding:0;
+}
+.markItUp .bb-smiles ul a{
+	width:26px;
+	height:26px;
+	text-indent:-10000px;
+}
+.markItUp .bb-smiles .col1-0 a{padding:1px}
+.markItUp .bb-smiles ul a:hover {background-color:none;}
 
-.markItUp .smiles .col1-1 a {
+.markItUp .bb-smiles .col1-1 a {
 	background-image:url('/images/smiles/).gif');
 }
-.markItUp .smiles .col1-2 a {
+.markItUp .bb-smiles .col1-2 a {
 	background-image:url('/images/smiles/(.gif');
 }
-.markItUp .smiles .col1-3 a {
+.markItUp .bb-smiles .col1-3 a {
 	background-image:url('/images/smiles/E.gif');
 }
-.markItUp .smiles .col2-1 a {
+.markItUp .bb-smiles .col2-1 a {
 	background-image:url('/images/smiles/hello.gif');
 }
-.markItUp .smiles .col2-2 a {
+.markItUp .bb-smiles .col2-2 a {
 	background-image:url('/images/smiles/cry.gif');
 }
-.markItUp .smiles .col2-3 a {
+.markItUp .bb-smiles .col2-3 a {
 	background-image:url('/images/smiles/obana.gif');
 }
-.markItUp .smiles .col3-1 a {
+.markItUp .bb-smiles .col3-1 a {
 	background-image:url('/images/smiles/infat.gif');
 }
-.markItUp .smiles .col3-2 a {
+.markItUp .bb-smiles .col3-2 a {
 	background-image:url('/images/smiles/klass.gif');
 }
-.markItUp .smiles .col3-3 a {
+.markItUp .bb-smiles .col3-3 a {
 	background-image:url('/images/smiles/krut.gif');
 }

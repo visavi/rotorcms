@@ -30,28 +30,10 @@ case "index":
 		$start = last_page($total, $config['smilelist']);
 	}
 
-	$smiles = Smile::all(array('offset' => $start, 'limit' => $config['smilelist'], 'order' => 'LENGTH(code) desc'));
+	$smiles = Smile::all(array('offset' => $start, 'limit' => $config['smilelist'], 'order' => 'LENGTH(code)'));
 
 	render('pages/smiles', compact('smiles', 'start', 'total'));
 
-
-/*	if ($total > 0) {
-		if ($start >= $total) {
-			$start = 0;
-		}
-
-		$querysmiles = DB::run() -> query("SELECT * FROM `smiles` ORDER BY LENGTH(`smiles_code`) ASC LIMIT ".$start.", ".$config['smilelist'].";");
-
-		while ($data = $querysmiles -> fetch()) {
-			echo '<img src="/images/smiles/'.$data['smiles_name'].'" alt="" /> — <b>'.$data['smiles_code'].'</b><br />';
-		}
-
-		page_strnavigation('smiles.php?', $config['smilelist'], $start, $total);
-
-		echo 'Всего cмайлов: <b>'.$total.'</b><br /><br />';
-	} else {
-		show_error('В данной категории смайлов нет!');
-	}*/
 break;
 
 default:

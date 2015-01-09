@@ -23,6 +23,12 @@ $(document).ready(function(){
 	$('.index').on('mouseout', function (e) {
 		$(e.target).children('.fa').removeClass("fa-circle-o").addClass("fa-circle");
 	});
+
+
+
+	$(".spoiler-title").click(function(){
+		$(this).toggleClass("open").toggleClass("closed").next().slideToggle();
+	});
 });
 
 /*
