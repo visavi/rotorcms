@@ -16,6 +16,7 @@ $(document).ready(function(){
 		}
 	});
 
+	// Украшения для главной страницы
 	$('.index').on('mouseover', function (e) {
 		$(e.target).children('.fa').removeClass("fa-circle").addClass("fa-circle-o");
 	});
@@ -25,10 +26,13 @@ $(document).ready(function(){
 	});
 
 
-
+	// Спойлер
 	$(".spoiler-title").click(function(){
-		$(this).toggleClass("open").toggleClass("closed").next().slideToggle();
+		var spoiler = $(this).parent();
+		spoiler.toggleClass("spoiler-open");
+		spoiler.find('.spoiler-text:first').slideToggle();
 	});
+
 });
 
 /*

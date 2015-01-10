@@ -70,12 +70,10 @@ class BBCodeParser {
 			'pattern' => '/\[code\](.*?)\[\/code\]/s',
 			'replace' => '<pre class="prettyprint linenums">$1</pre>',
 		),
-		'hide' => array(
+		'spoiler' => array(
 			'pattern' => '/\[spoiler\=(.*?)\](.*?)\[\/spoiler\]/s',
-			'replace' => '<div class="spoiler">
-				<b class="spoiler-title open">$1</b>
-				<div class="spoiler-text" style="display: none;">$2</div>
-				</div>',
+			'callback' => 'spoiler_text',
+			'iterate' => 1,
 		),
 		'youtube' => array(
 			'pattern' => '/\[youtube\](.*?)\[\/youtube\]/s',
@@ -93,17 +91,40 @@ class BBCodeParser {
 		$source = nl2br($source);
 
 		foreach ($this->parsers as $name => $parser) {
-			if(isset($parser['iterate']))
-			{
-				for ($i=0; $i <= $parser['iterate']; $i++) {
+
+			$iterate = isset($parser['iterate']) ? $parser['iterate'] : 0;
+
+			for ($i=0; $i <= $iterate; $i++) {
+
+				if (isset($parser['callback']))
+				{
+					$source = preg_replace_callback($parser['pattern'], array($this, $parser['callback']), $source);
+				}
+				else {
 					$source = preg_replace($parser['pattern'], $parser['replace'], $source);
 				}
 			}
-			else {
-				$source = preg_replace($parser['pattern'], $parser['replace'], $source);
-			}
+
+
+
 		}
 		return $source;
+	}
+
+	public function spoiler_text($match)
+	{
+		$title = (empty($match[1])) ? 'Развернуть для просмотра' : $match[1];
+		$text = (empty($match[2])) ? 'Текст отсутствует' : $match[2];
+
+		if (!isset($match[2])) {
+			$title = 'Спойлер';
+			$text = $match[1];
+		}
+
+		return '<div class="spoiler">
+				<b class="spoiler-title">'.$title.'</b>
+				<div class="spoiler-text" style="display: none;">'.$text.'</div>
+			</div>';
 	}
 
 	/**
