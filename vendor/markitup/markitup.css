@@ -103,6 +103,7 @@
 }
 .markItUpHeader ul ul a {
 	display:block;
+	color: #333;
 	font-size: 12px;
 	padding-left:0px;
 	text-indent:0;
@@ -216,6 +217,10 @@
 
 .markItUp .bb-unorderedlist:before {
     content: "\f0ca";
+}
+
+.markItUp .bb-listitem:before {
+    content: "\f178";
 }
 
 .markItUp .bb-spoiler:before {

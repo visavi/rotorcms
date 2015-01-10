@@ -3,6 +3,10 @@
 class BBCodeParser {
 
 	public $parsers = array(
+		'code' => array(
+			'pattern' => '/\[code\](.*?)\[\/code\]/s',
+			'callback' => 'highlight_code'
+		),
 		'bold' => array(
 			'pattern' => '/\[b\](.*?)\[\/b\]/s',
 			'replace' => '<strong>$1</strong>',
@@ -54,7 +58,7 @@ class BBCodeParser {
 		//	'pattern' => '/\[img\](.*?)\[\/img\]/ms',
 		//	'replace' => '<img src="$1">',
 		//),
-		'orderedList' => array(
+/*		'orderedList' => array(
 			'pattern' => '/\[list=1\](.*?)\[\/list\]/s',
 			'replace' => '<ol>$1</ol>',
 		),
@@ -65,11 +69,7 @@ class BBCodeParser {
 		'listItem' => array(
 			'pattern' => '/\[\*\](.*)/',
 			'replace' => '<li>$1</li>',
-		),
-		'code' => array(
-			'pattern' => '/\[code\](.*?)\[\/code\]/s',
-			'replace' => '<pre class="prettyprint linenums">$1</pre>',
-		),
+		),*/
 		'spoiler' => array(
 			'pattern' => '/\[spoiler\](.*?)\[\/spoiler\]/s',
 			'callback' => 'spoiler_text',
@@ -98,20 +98,11 @@ class BBCodeParser {
 	public function parse($source) {
 		$source = nl2br($source);
 
-		foreach ($this->parsers as $name => $parser) {
+		foreach ($this->parsers as $parser) {
 
-			if (isset($parser['iterate'])) {
+			$iterate = isset($parser['iterate']) ? $parser['iterate'] : 0;
 
-				for ($i=0; $i <= $parser['iterate']; $i++) {
-					if (isset($parser['callback'])) {
-						$source = preg_replace_callback($parser['pattern'], array($this, $parser['callback']), $source);
-					} else {
-						$source = preg_replace($parser['pattern'], $parser['replace'], $source);
-					}
-				}
-
-			} else {
-
+			for ($i = 0; $i <= $iterate; $i++) {
 				if (isset($parser['callback'])) {
 					$source = preg_replace_callback($parser['pattern'], array($this, $parser['callback']), $source);
 				} else {
@@ -123,12 +114,25 @@ class BBCodeParser {
 	}
 
 	/**
+	 * Подсветка кода
+	 * @param callable $match массив элементов
+	 * @return string текст с подсветкой
+	 */
+	public function highlight_code($match) {
+
+		//Чтобы bb-код и смайлы не работали внутри тега [code]
+		$match[1] = strtr($match[1], array(':' => '&#58;', '[' => '&#91;'));
+
+		return '<pre class="prettyprint linenums">'.$match[1].'</pre>';
+	}
+
+	/**
 	 * Скрытие текста под спойлер
-	 * @param  callable $match массив элементов
+	 * @param callable $match массив элементов
 	 * @return string код спойлера
 	 */
-	public function spoiler_text($match)
-	{
+	public function spoiler_text($match) {
+
 		$title = (empty($match[1]) || !isset($match[2])) ? 'Развернуть для просмотра' : $match[1];
 		$text = (empty($match[2])) ? !isset($match[2]) ? $match[1] : 'Текст отсуствует' : $match[2];
 
@@ -140,11 +144,11 @@ class BBCodeParser {
 
 	/**
 	 * Скрытие текста от неавторизованных пользователей
-	 * @param  callable $match массив элементов
+	 * @param callable $match массив элементов
 	 * @return string  скрытый код
 	 */
-	public function hidden_text($match)
-	{
+	public function hidden_text($match) {
+
 		if (empty($match[1])) $match[1] = 'Текст отсутствует';
 
 		return '<div class="hiding">
@@ -159,8 +163,8 @@ class BBCodeParser {
 	 * @param string $pattern Pattern
 	 * @param string $replace Replace pattern
 	 */
-	public function setParser($name, $pattern, $replace)
-	{
+	public function setParser($name, $pattern, $replace) {
+
 		$this->parsers[$name] = array(
 			'pattern' => $pattern,
 			'replace' => $replace
@@ -172,8 +176,8 @@ class BBCodeParser {
 	 * @param  mixed $only parsers
 	 * @return object BBCodeParser object
 	 */
-	public function only($only = null)
-	{
+	public function only($only = null) {
+
 		$only = (is_array($only)) ? $only : func_get_args();
 		$this->parsers = $this->arrayOnly($only);
 		return $this;
@@ -184,8 +188,8 @@ class BBCodeParser {
 	 * @param  mixed $except parsers
 	 * @return object BBCodeParser object
 	 */
-	public function except($except = null)
-	{
+	public function except($except = null) {
+
 		$except = (is_array($except)) ? $except : func_get_args();
 		$this->parsers = $this->arrayExcept($except);
 		return $this;
@@ -195,8 +199,8 @@ class BBCodeParser {
 	 * List of all available parsers
 	 * @return array array of available parsers
 	 */
-	public function getAvailableParsers()
-	{
+	public function getAvailableParsers() {
+
 		return $this->availableParsers;
 	}
 
@@ -204,8 +208,8 @@ class BBCodeParser {
 	 * List of chosen parsers
 	 * @return array array of parsers
 	 */
-	public function getParsers()
-	{
+	public function getParsers() {
+
 		return $this->parsers;
 	}
 
@@ -214,8 +218,8 @@ class BBCodeParser {
 	 * @param  array $only chosen parsers
 	 * @return array parsers
 	 */
-	private function arrayOnly($only)
-	{
+	private function arrayOnly($only) {
+
 		return array_intersect_key($this->parsers, array_flip((array) $only));
 	}
 
@@ -224,8 +228,8 @@ class BBCodeParser {
 	 * @param  array $except parsers to exclude
 	 * @return array parsers
 	 */
-	private function arrayExcept($excepts)
-	{
+	private function arrayExcept($excepts) {
+
 		return array_diff_key($this->parsers, array_flip((array) $excepts));
 	}
 

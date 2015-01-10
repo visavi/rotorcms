@@ -193,7 +193,7 @@ function url_replace($url) {
 }
 
 // ----------------------- Функция вывода спойлера ------------------------//
-function spoiler_text($match) {
+/*function spoiler_text($match) {
 
 	$title = (empty($match[1])) ? 'Спойлер' : $match[1];
 	$text = (empty($match[2])) ? 'Текста нет' : $match[2];
@@ -207,12 +207,15 @@ function spoiler_text($match) {
 		<div class="spoiler-head open">'.$title.'</div>
 		<div class="spoiler-body">'.$text.'</div>
 	</div>';
-}
+}*/
 
 // ------------------ Функция вставки BB-кода --------------------//
 function bb_code($text) {
 
 	static $list_smiles;
+
+	$bbcode = new BBCodeParser;
+	$text = $bbcode->parse($text);
 
 	if (empty($list_smiles)) {
 
@@ -230,9 +233,7 @@ function bb_code($text) {
 		$text = str_replace($code, '<img src="/images/smiles/'.$smile.'" alt="'.$code.'" /> ', $text);
 	}
 
-	$bbcode = new BBCodeParser;
-	return $bbcode->parse($text);
-
+	return $text;
 /*	$parser = new JBBCode\Parser();
 	$parser->addCodeDefinitionSet(new JBBCode\NewCodeDefinitionSet());
 
@@ -242,7 +243,7 @@ function bb_code($text) {
 	$parser->accept($smileyVisitor);
 
 	return $parser->getAsHTML();*/
-	$text = preg_replace_callback('/\[code\](.*?)\[\/code\]/si', 'highlight_code', $text);
+/*	$text = preg_replace_callback('/\[code\](.*?)\[\/code\]/si', 'highlight_code', $text);
 	$text = preg_replace_callback('#\[hide\](.*?)\[/hide\]#i', 'hidden_text', $text);
 
 	$text = preg_replace_callback('#\[spoiler=(.*?)\](.*?)\[/spoiler\]#si', 'spoiler_text', $text);
@@ -261,7 +262,7 @@ function bb_code($text) {
 	$text = preg_replace('#\[q\](.*?)\[/q\]#si', '<div class="q">\1</div>', $text);
 	$text = preg_replace('#\[del\](.*?)\[/del\]#si', '<del>\1</del>', $text);
 	$text = nl2br($text);
-	return $text;
+	return $text;*/
 }
 
 // ------------------ Функция перекодировки из UTF в WIN --------------------//
