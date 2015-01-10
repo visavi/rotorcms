@@ -71,9 +71,18 @@ class BBCodeParser {
 			'replace' => '<pre class="prettyprint linenums">$1</pre>',
 		),
 		'spoiler' => array(
+			'pattern' => '/\[spoiler\](.*?)\[\/spoiler\]/s',
+			'callback' => 'spoiler_text',
+			'iterate' => 1,
+		),
+		'shortSpoiler' => array(
 			'pattern' => '/\[spoiler\=(.*?)\](.*?)\[\/spoiler\]/s',
 			'callback' => 'spoiler_text',
 			'iterate' => 1,
+		),
+		'hide' => array(
+			'pattern' => '/\[hide\](.*?)\[\/hide\]/s',
+			'callback' => 'hidden_text',
 		),
 		'youtube' => array(
 			'pattern' => '/\[youtube\](.*?)\[\/youtube\]/s',
@@ -82,49 +91,65 @@ class BBCodeParser {
 	);
 
 	/**
-	 * Parses the BBCode string
-	 * @param  string $source String containing the BBCode
-	 * @return string Parsed string
+	 * Метод парсинга BBCode
+	 * @param  string $source текст содержаший BBCode
+	 * @return string распарсенный текст
 	 */
-	public function parse($source)
-	{
+	public function parse($source) {
 		$source = nl2br($source);
 
 		foreach ($this->parsers as $name => $parser) {
 
-			$iterate = isset($parser['iterate']) ? $parser['iterate'] : 0;
+			if (isset($parser['iterate'])) {
 
-			for ($i=0; $i <= $iterate; $i++) {
-
-				if (isset($parser['callback']))
-				{
-					$source = preg_replace_callback($parser['pattern'], array($this, $parser['callback']), $source);
+				for ($i=0; $i <= $parser['iterate']; $i++) {
+					if (isset($parser['callback'])) {
+						$source = preg_replace_callback($parser['pattern'], array($this, $parser['callback']), $source);
+					} else {
+						$source = preg_replace($parser['pattern'], $parser['replace'], $source);
+					}
 				}
-				else {
+
+			} else {
+
+				if (isset($parser['callback'])) {
+					$source = preg_replace_callback($parser['pattern'], array($this, $parser['callback']), $source);
+				} else {
 					$source = preg_replace($parser['pattern'], $parser['replace'], $source);
 				}
 			}
-
-
-
 		}
 		return $source;
 	}
 
+	/**
+	 * Скрытие текста под спойлер
+	 * @param  callable $match массив элементов
+	 * @return string код спойлера
+	 */
 	public function spoiler_text($match)
 	{
-		$title = (empty($match[1])) ? 'Развернуть для просмотра' : $match[1];
-		$text = (empty($match[2])) ? 'Текст отсутствует' : $match[2];
-
-		if (!isset($match[2])) {
-			$title = 'Спойлер';
-			$text = $match[1];
-		}
+		$title = (empty($match[1]) || !isset($match[2])) ? 'Развернуть для просмотра' : $match[1];
+		$text = (empty($match[2])) ? !isset($match[2]) ? $match[1] : 'Текст отсуствует' : $match[2];
 
 		return '<div class="spoiler">
 				<b class="spoiler-title">'.$title.'</b>
 				<div class="spoiler-text" style="display: none;">'.$text.'</div>
 			</div>';
+	}
+
+	/**
+	 * Скрытие текста от неавторизованных пользователей
+	 * @param  callable $match массив элементов
+	 * @return string  скрытый код
+	 */
+	public function hidden_text($match)
+	{
+		if (empty($match[1])) $match[1] = 'Текст отсутствует';
+
+		return '<div class="hiding">
+				<span class="strong">Скрытый текст:</span> '.(is_user() ? $match[1] : 'Для просмотра необходимо авторизоваться!').
+				'</div>';
 	}
 
 	/**

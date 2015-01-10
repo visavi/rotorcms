@@ -2,6 +2,8 @@ $(document).ready(function(){
 
 	prettyPrint();
 
+	$('#markItUp').markItUp(mySettings);
+
 	$.notify.defaults({ className: "success" });
 
 	$('[data-toggle="tooltip"]').tooltip();
@@ -24,7 +26,6 @@ $(document).ready(function(){
 	$('.index').on('mouseout', function (e) {
 		$(e.target).children('.fa').removeClass("fa-circle-o").addClass("fa-circle");
 	});
-
 
 	// Спойлер
 	$(".spoiler-title").click(function(){

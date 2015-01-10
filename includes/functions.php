@@ -309,12 +309,13 @@ function check($msg) {
 			$msg[$key] = check($val);
 		}
 	} else {
-		$msg = htmlspecialchars($msg);
-		$search = array('|', '\'', '$', '\\', '^', '%', '`', "\0", "\x00", "\x1A", chr(226) . chr(128) . chr(174));
-		$replace = array('&#124;', '&#39;', '&#36;', '&#92;', '&#94;', '&#37;', '&#96;', '', '', '', '');
+
+		$msg = htmlspecialchars(stripslashes(trim($msg)), ENT_QUOTES, 'UTF-8');
+
+		$search = array("\0", "\x00", "\x1A", chr(226).chr(128).chr(174));
+		$replace = array('', '', '', '');
 
 		$msg = str_replace($search, $replace, $msg);
-		$msg = stripslashes(trim($msg));
 	}
 
 	return $msg;
@@ -335,18 +336,18 @@ function subtok($string, $chr, $pos, $len = null) {
 
 //deprecated  use nl2br
 // ----------------------- Функция вырезания переноса строки -------------------------//
-function no_br($msg) {
+/*function no_br($msg) {
 	$msg = nl2br($msg);
 	$msg = preg_replace('|[\r\n]+|si', '', $msg);
 	return $msg;
-}
+}*/
 
 //deprecated
 // ----------------------- Функция добавления переноса строки -------------------------//
-function yes_br($msg) {
-	$msg = preg_replace('|<br */?>|i', "\r\n", $msg);
+/*function yes_br($msg) {
+	$msg = preg_replace('|<br * /?>|i', "\r\n", $msg);
 	return $msg;
-}
+}*/
 
 // ----------------------- Функция добавления переноса строки -------------------------//
 /*function br2nl($string) {
@@ -354,7 +355,7 @@ function yes_br($msg) {
 }*/
 
 // ------------------------ Функция замены и вывода смайлов --------------------------//
-function smiles($text) {
+/*function smiles($text) {
 
 	$smiles = Smile::all(array('order' => 'LENGTH(code) desc'));
 
@@ -363,14 +364,14 @@ function smiles($text) {
 	}
 
 	return $text;
-}
+}*/
 
 // --------------- Функция обратной замены смайлов -------------------//
-function nosmiles($text) {
+/*function nosmiles($text) {
 
 	return preg_replace('|<img src="/images/smiles/(.*?).(\w+)" alt="smile" /> |', ':$1', $text);
 
-}
+}*/
 
 // --------------- Функция правильного вывода веса файла -------------------//
 function formatsize($file_size) {
