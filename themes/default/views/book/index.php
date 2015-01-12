@@ -33,11 +33,11 @@ echo round(microtime(1) - XTIME, 4);*/
 			<?= user_avatars($post->user()->id) ?>
 
 			<div class="media-body">
+				<div class="media-heading">
 
 				<?php if ($post->user()->login): ?>
-					<div class="media-heading">
-						<h4 style="display: inline;"><?= profile($post->user()->getLogin()) ?></h4>
-						<?= user_title($post->user_id) ?> <?= user_online($post->user_id) ?>
+					<h4 style="display: inline;"><?= profile($post->user()->getLogin()) ?></h4>
+					<?= user_title($post->user_id) ?> <?= user_online($post->user_id) ?>
 
 				<?php else: ?>
 					<h4 style="display: inline;"><?= $post->user()->getLogin() ?></h4>
