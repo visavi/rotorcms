@@ -46,14 +46,14 @@ echo round(microtime(1) - XTIME, 4);*/
 					<ul class="list-inline small pull-right">
 
 					<?php if ($user->id && $user->id != $post->user_id): ?>
-						<li><a href="#" onclick="return reply('<?= $post->user()->getLogin() ?>')" data-toggle="tooltip" title="Ответить"><span class="fa fa-reply"></span></a></li>
+						<li><a href="#" onclick="return reply('<?= $post->user()->getLogin() ?>')" data-toggle="tooltip" title="Ответить"><span class="fa fa-reply text-muted"></span></a></li>
 
-						<li><a href="#" onclick="return sendComplaint(this, 'guest', <?= $post->id ?>);" data-token="<?= $_SESSION['token'] ?>" rel="nofollow" data-toggle="tooltip" title="Жалоба"><span class="fa fa-bell"></span></a></li>
+						<li><a href="#" onclick="return sendComplaint(this, 'guest', <?= $post->id ?>);" data-token="<?= $_SESSION['token'] ?>" rel="nofollow" data-toggle="tooltip" title="Жалоба"><span class="fa fa-bell text-muted"></span></a></li>
 
 					<?php endif; ?>
 
 					<?php if ($user->id && $user->id == $post->user_id && $post->created_at->getTimestamp() > time() - 600): ?>
-						<li><a href="index.php?act=edit&amp;id=<?= $post->id ?>&amp;start=<?= $start ?>">Редактировать</a></li>
+						<li><a href="index.php?act=edit&amp;id=<?= $post->id ?>&amp;start=<?= $start ?>" data-toggle="tooltip" title="Редактировать"><span class="fa fa-pencil text-muted"></span></a></li>
 					<?php endif; ?>
 
 						<li class="text-muted"><?= $post->created_at ?></li>
@@ -87,18 +87,18 @@ echo round(microtime(1) - XTIME, 4);*/
 
 
 <?php if (is_user()): ?>
-	<div class="well">
+	<div class="well well-sm clearfix">
 		<form action="index.php?act=add&amp;token=<?= $_SESSION['token'] ?>" method="post">
 			<div class="form-group">
 				<textarea class="form-control" id="markItUp" rows="5" name="msg"></textarea>
 			</div>
-			<button type="submit" class="btn btn-action">Написать</button>
+			<button type="submit" class="btn btn-action pull-right">Написать</button>
 		</form>
 	</div>
 
 <?php elseif ($config['bookadds'] == 1): ?>
 
-	<div class="well">
+	<div class="well well-sm clearfix">
 		<form action="index.php?act=add&amp;token=<?= $_SESSION['token'] ?>" method="post">
 			<div class="form-group">
 				<label for="msg">Сообщение:</label>
@@ -109,7 +109,7 @@ echo round(microtime(1) - XTIME, 4);*/
 				<img src="/gallery/protect.php" class="img-rounded" alt="" />
 				<input name="provkod" id="provkod" class="form-control" maxlength="6" style="width: 200px;" />
 			</div>
-			<button type="submit" class="btn btn-action">Написать</button>
+			<button type="submit" class="btn btn-action pull-right">Написать</button>
 		</form>
 	</div>
 

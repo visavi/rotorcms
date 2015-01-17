@@ -4,15 +4,15 @@
 mySettings = {
 	previewParserPath:	'', // path to your BBCode parser
 	markupSet: [
-		{name:'Bold', className:"bb-bold", key:'B', openWith:'[b]', closeWith:'[/b]'},
-		{name:'Italic', className:"bb-italic", key:'I', openWith:'[i]', closeWith:'[/i]'},
-		{name:'Underline', className:"bb-underline", key:'U', openWith:'[u]', closeWith:'[/u]'},
-		{name:'Strike', className:"bb-strike", key:'S', openWith:'[s]', closeWith:'[/s]'},
+		{title:'Жирный текст', name:'Bold', className:"bb-bold", key:'B', openWith:'[b]', closeWith:'[/b]'},
+		{title:'Наклонный текст', name:'Italic', className:"bb-italic", key:'I', openWith:'[i]', closeWith:'[/i]'},
+		{title:'Подчеркнутый текст', name:'Underline', className:"bb-underline", key:'U', openWith:'[u]', closeWith:'[/u]'},
+		{title:'Зачеркнутый текст', name:'Strike', className:"bb-strike", key:'S', openWith:'[s]', closeWith:'[/s]'},
 
 		{separator:'---------------' },
-		{name:'Link', className:"bb-link", key:'L', openWith:'[url=[![Ссылка:!:http://]!]]', closeWith:'[/url]', placeHolder:'Текст ссылки...'},
-		{name:'Video', className:"bb-youtube", openWith:'[youtube][![Код видео с youtube]!]', closeWith:'[/youtube]'},
-		{name:'Colors', className:"bb-colors", openWith:'[color=[![Код цвета]!]]', closeWith:'[/color]',
+		{title:'Ссылка', name:'Link', className:"bb-link", key:'L', openWith:'[url=[![Ссылка:!:http://]!]]', closeWith:'[/url]', placeHolder:'Текст ссылки...'},
+		{title:'Видео', name:'Video', className:"bb-youtube", openWith:'[youtube][![Код видео с youtube]!]', closeWith:'[/youtube]'},
+		{title:'Цвет', name:'Color', className:"bb-color", openWith:'[color=[![Код цвета]!]]', closeWith:'[/color]',
 		dropMenu: [
 			{name:'Yellow',	openWith:'[color=#ffd700]', closeWith:'[/color]', className:"col1-1" },
 			{name:'Orange',	openWith:'[color=#ffa500]', closeWith:'[/color]', className:"col1-2" },
@@ -28,7 +28,7 @@ mySettings = {
 		]},
 
 		{separator:'---------------' },
-		{name:'Size', className:"bb-size",
+		{title:'Размер текста', name:'Size', className:"bb-size", openWith:'[size=[![Размер текста от 1 до 5]!]]', closeWith:'[/size]',
 		dropMenu :[
 			{name:'x-small', openWith:'[size=1]', closeWith:'[/size]' },
 			{name:'small', openWith:'[size=2]', closeWith:'[/size]' },
@@ -37,8 +37,8 @@ mySettings = {
 			{name:'x-large', openWith:'[size=5]', closeWith:'[/size]' },
 		]},
 
-		{name:'Center', className:"bb-center", openWith:'[center]', closeWith:'[/center]'},
-		{name:'Spoiler', className:"bb-spoiler", openWith:'[spoiler=[![Заголовок спойлера]!]]', closeWith:'[/spoiler]'},
+		{title:'По центру', name:'Center', className:"bb-center", openWith:'[center]', closeWith:'[/center]'},
+		{title:'Спойлер', name:'Spoiler', className:"bb-spoiler", openWith:'[spoiler=[![Заголовок спойлера]!]]', closeWith:'[/spoiler]'},
 
 		//{separator:'---------------' },
 		//{name:'OrderedList', className:"bb-orderedlist", openWith:'[*]', multiline:true, openBlockWith:'[list=1]\n', closeBlockWith:'\n[/list]'},
@@ -46,13 +46,13 @@ mySettings = {
 		//{name:'ListItem', className:"bb-listitem", openWith:'[*]'},
 
 		{separator:'---------------' },
-		{name:'Hide', className:"bb-hide", openWith:'[hide]', closeWith:'[/hide]'},
-		{name:'Quotes', className:"bb-quotes", openWith:'[quote]', closeWith:'[/quote]'},
-		{name:'Code', className:"bb-code", openWith:'[code]', closeWith:'[/code]'},
+		{title:'Скрытый контент', name:'Hide', className:"bb-hide", openWith:'[hide]', closeWith:'[/hide]'},
+		{title:'Цитата', name:'Quote', className:"bb-quote", openWith:'[quote]', closeWith:'[/quote]'},
+		{title:'Исходный код', name:'Code', className:"bb-code", openWith:'[code]', closeWith:'[/code]'},
 
 		{separator:'---------------' },
-		{name:'Clean', className:"bb-clean", replaceWith:function(markitup) { return markitup.selection.replace(/\[(.*?)\]/g, "") } },
-		{name:'Smiles', className:"bb-smiles",
+		{title:'Очистка BB-кода', name:'Clean', className:"bb-clean", replaceWith:function(markitup) { return markitup.selection.replace(/\[(.*?)\]/g, "") } },
+		{title:'Смайл', name:'Smile', className:"bb-smile", openWith:' :) ',
 		dropMenu: [
 			{name:':)', openWith:' :) ', className:"col1-1" },
 			{name:':(', openWith:' :( ', className:"col1-2" },
@@ -64,9 +64,6 @@ mySettings = {
 			{name:':klass', openWith:' :klass ', className:"col3-2" },
 			{name:':krut', openWith:' :krut ', className:"col3-3" }
 		]},
-		{name:'Nextpage', className:"nextpage", openWith:'[nextpage]'},
-		{name:'Cutpage', className:"cutpage", openWith:'[cut]'},
-		//{name:'Picture', className:'image-upload', closeWith:function(markItUp){miu.ImageUpload.upload(markItUp,'textile');}},
 		//{name:'Preview', className:'preview',  call:'preview'}
 	]
 }

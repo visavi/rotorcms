@@ -206,7 +206,7 @@ INSERT INTO `setting` (`name`, `value`) VALUES
 ('onlinelist', '10'),
 ('onlines', '1'),
 ('openreg', '1'),
-('performance', '0'),
+('performance', '1'),
 ('photoexprated', '72'),
 ('photogroup', '10'),
 ('postchanges', '10'),

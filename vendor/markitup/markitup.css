@@ -112,8 +112,7 @@
 	background-position:2px 50%;
 }
 .markItUpHeader ul ul a:hover  {
-	color: #fff;
-	background-color: #bbb;
+	color: #bbb;
 }
 
 /* -------------------------------------------------------------------
@@ -149,57 +148,57 @@
     content: "\f16a";
 }
 
-.markItUp .bb-colors:before {
+.markItUp .bb-color:before {
     content: "\f00a";
 }
 
-.markItUp .bb-colors ul {
+.markItUp .bb-color ul {
 	width:80px;
 	padding:1px;
 }
-.markItUp .bb-colors  li {
+.markItUp .bb-color  li {
 	border:1px solid white;
 	width:25px;	height:25px;
 	overflow:hidden;
 	padding:0px; margin:0px;
 	float:left;
 }
-.markItUp .bb-colors ul a {
+.markItUp .bb-color ul a {
 	width:25px;
 	height:25px;
 	text-indent:-10000px;
 }
-.markItUp .bb-colors ul a:hover {
+.markItUp .bb-color ul a:hover {
 	background-color:none;
 }
 
-.markItUp .bb-colors .col1-1 a {
+.markItUp .bb-color .col1-1 a {
 	background: #ffd700;
 }
-.markItUp .bb-colors .col1-2 a {
+.markItUp .bb-color .col1-2 a {
 	background: #ffa500;
 }
-.markItUp .bb-colors .col1-3 a {
+.markItUp .bb-color .col1-3 a {
 	background: #ff0000;
 }
 
-.markItUp .bb-colors .col2-1 a {
+.markItUp .bb-color .col2-1 a {
 	background: #0000ff;
 }
-.markItUp .bb-colors .col2-2 a {
+.markItUp .bb-color .col2-2 a {
 	background: #800080;
 }
-.markItUp .bb-colors .col2-3 a {
+.markItUp .bb-color .col2-3 a {
 	background: #00cc00;
 }
 
-.markItUp .bb-colors .col3-1 a {
+.markItUp .bb-color .col3-1 a {
 	background: #ff00ff;
 }
-.markItUp .bb-colors .col3-2 a {
+.markItUp .bb-color .col3-2 a {
 	background: #808080;
 }
-.markItUp .bb-colors .col3-3 a {
+.markItUp .bb-color .col3-3 a {
 	background: #00ffff;
 }
 
@@ -231,7 +230,7 @@
     content: "\f070";
 }
 
-.markItUp .bb-quotes:before {
+.markItUp .bb-quote:before {
     content: "\f10d";
 }
 
@@ -247,33 +246,15 @@
     content: "\f046";
 }
 
-.markItUp .bb-nextpage a {
-    content: "\f0db";
-    display: none;
-}
-
-.next .bb-nextpage a {
-	display: block;
-}
-
-.markItUp .bb-cutpage a {
-    /*content: "\f0c4";	*/
-    display: none;
-}
-
-.cut .bb-cutpage a {
-	display: block;
-}
-
-.markItUp .bb-smiles:before {
+.markItUp .bb-smile:before {
     content: "\f118";
 }
 
-.markItUp .bb-smiles ul{
+.markItUp .bb-smile ul{
 	width: 85px;
 	padding: 1px;
 }
-.markItUp .bb-smiles li{
+.markItUp .bb-smile li{
 	border:none;
 	width:26px;
 	height:30px;
@@ -282,38 +263,38 @@
 	margin:0;
 	padding:0;
 }
-.markItUp .bb-smiles ul a{
+.markItUp .bb-smile ul a{
 	width:26px;
 	height:26px;
 	text-indent:-10000px;
 }
-.markItUp .bb-smiles .col1-0 a{padding:1px}
-.markItUp .bb-smiles ul a:hover {background-color:none;}
+.markItUp .bb-smile .col1-0 a{padding:1px}
+.markItUp .bb-smile ul a:hover {background-color:none;}
 
-.markItUp .bb-smiles .col1-1 a {
+.markItUp .bb-smile .col1-1 a {
 	background-image:url('/images/smiles/).gif');
 }
-.markItUp .bb-smiles .col1-2 a {
+.markItUp .bb-smile .col1-2 a {
 	background-image:url('/images/smiles/(.gif');
 }
-.markItUp .bb-smiles .col1-3 a {
+.markItUp .bb-smile .col1-3 a {
 	background-image:url('/images/smiles/E.gif');
 }
-.markItUp .bb-smiles .col2-1 a {
+.markItUp .bb-smile .col2-1 a {
 	background-image:url('/images/smiles/hello.gif');
 }
-.markItUp .bb-smiles .col2-2 a {
+.markItUp .bb-smile .col2-2 a {
 	background-image:url('/images/smiles/cry.gif');
 }
-.markItUp .bb-smiles .col2-3 a {
+.markItUp .bb-smile .col2-3 a {
 	background-image:url('/images/smiles/obana.gif');
 }
-.markItUp .bb-smiles .col3-1 a {
+.markItUp .bb-smile .col3-1 a {
 	background-image:url('/images/smiles/infat.gif');
 }
-.markItUp .bb-smiles .col3-2 a {
+.markItUp .bb-smile .col3-2 a {
 	background-image:url('/images/smiles/klass.gif');
 }
-.markItUp .bb-smiles .col3-3 a {
+.markItUp .bb-smile .col3-3 a {
 	background-image:url('/images/smiles/krut.gif');
 }
