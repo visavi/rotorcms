@@ -75,7 +75,6 @@ case 'addtheme':
 
 		render('forum/forum_add', compact('forums', 'fid'));
 
-
 	} else {
 		show_login('Вы не авторизованы, для создания новой темы, необходимо');
 	}

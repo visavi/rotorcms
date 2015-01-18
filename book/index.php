@@ -48,39 +48,35 @@ case 'add':
 
 	if (is_user()) {
 		if ($token == $_SESSION['token']) {
-			if (utf_strlen($msg) >= 5 && utf_strlen($msg) < $config['guesttextlength']) {
-					if (is_flood($log)) {
 
-						$msg = antimat($msg);
+			if (is_flood($log)) {
 
-						$user = User::find($user->id);
+				$user = User::find_by_id($user->id);
+				$user->allguest = $user->allguest + 1;
+				$user->point = $user->point + 1;
+				$user->money = $user->money + 20;
+				$user->save();
 
-						$user->allguest = $user->allguest + 1;
-						$user->point = $user->point + 1;
-						$user->money = $user->money + 20;
-						$user->save();
+				$post = new Guest;
+				$post->user_id = $user->id;
+				$post->text = $msg;
+				$post->ip = $ip;
+				$post->brow = $brow;
 
-						$attributes = array(
-							'user_id' => $user->id,
-							'text' => $msg,
-							'ip' => $ip,
-							'brow' => $brow
-						);
-						$post = Guest::create($attributes);
+				if ($post->save()) {
 
-						// Удаляем старые сообщения
-						//$posts = Guest::all(array('offset' => $config['maxpostbook'], 'limit' => 10, 'order' => 'created_at desc'));
-						//$delete = ActiveRecord\collect($posts, 'id');
-						//Guest::table()->delete(array('id' => array($delete)));
+					// Удаляем старые сообщения
+					//$posts = Guest::all(array('offset' => $config['maxpostbook'], 'limit' => 10, 'order' => 'created_at desc'));
+					//$delete = ActiveRecord\collect($posts, 'id');
+					//Guest::table()->delete(array('id' => array($delete)));
 
-						notice('Сообщение успешно добавлено!');
-						redirect("index.php");
-
-					} else {
-						show_error('Антифлуд! Разрешается отправлять сообщения раз в '.flood_period().' секунд!');
-					}
+					notice('Сообщение успешно добавлено!');
+					redirect("index.php");
+				} else {
+					show_error($post->getErrors());
+				}
 			} else {
-				show_error('Ошибка! Слишком длинное или короткое сообщение!');
+				show_error('Антифлуд! Разрешается отправлять сообщения раз в '.flood_period().' секунд!');
 			}
 		} else {
 			show_error('Ошибка! Неверный идентификатор сессии, повторите действие!');
@@ -91,30 +87,26 @@ case 'add':
 	} elseif ($config['bookadds'] == 1) {
 		$provkod = check(strtolower($_POST['provkod']));
 
-		if ($token == $_SESSION['token']) {
-			if ($provkod == $_SESSION['protect']) {
-				if (utf_strlen($msg) >= 5 && utf_strlen($msg) < $config['guesttextlength']) {
-					if (is_flood($log)) {
+		if ($provkod == $_SESSION['protect']) {
+			if (is_flood($log)) {
 
-						$msg = antimat($msg);
+				$post = new Guest;
+				$post->user_id = 0;
+				$post->text = $msg;
+				$post->ip = $ip;
+				$post->brow = $brow;
 
-						$attributes = array('user_id' => 0, 'text' => $msg, 'ip' => $ip, 'brow' => $brow);
-						$post = Guest::create($attributes);
-
-						notice('Сообщение успешно добавлено!');
-						redirect("index.php");
-
-					} else {
-						show_error('Антифлуд! Разрешается отправлять сообщения раз в '.flood_period().' секунд!');
-					}
+				if ($post->save()) {
+					notice('Сообщение успешно добавлено!');
+					redirect("index.php");
 				} else {
-					show_error('Ошибка! Слишком длинное или короткое сообщение!');
+					show_error($post->getErrors());
 				}
 			} else {
-				show_error('Ошибка! Проверочное число не совпало с данными на картинке!');
+				show_error('Антифлуд! Разрешается отправлять сообщения раз в '.flood_period().' секунд!');
 			}
 		} else {
-			show_error('Ошибка! Неверный идентификатор сессии, повторите действие!');
+			show_error('Ошибка! Проверочное число не совпало с данными на картинке!');
 		}
 	} else {
 		show_login('Вы не авторизованы, чтобы добавить сообщение, необходимо');
@@ -132,7 +124,7 @@ case 'edit':
 	$id = (isset($_GET['id'])) ? abs(intval($_GET['id'])) : 0;
 
 	if (is_user()) {
-		$post = Guest::first(array('conditions' => array('id = ? AND user_id = ?', $id, $user->id)));
+		$post = Guest::find_by_id_and_user_id($id, $user->id);
 
 		if ($post) {
 			if ($post->created_at->getTimestamp() > time() - 600) {
@@ -165,28 +157,23 @@ case 'editpost':
 
 	if (is_user()) {
 		if ($token == $_SESSION['token']) {
-			if (utf_strlen($msg) >= 5 && utf_strlen($msg) < $config['guesttextlength']) {
 
-				$post = Guest::first(array('conditions' => array('id = ? AND user_id = ?', $id, $user->id)));
+			$post = Guest::find_by_id_and_user_id($id, $user->id);
 
-				if ($post) {
-					if ($post->created_at->getTimestamp() > time() - 600) {
-						$msg = antimat($msg);
+			if ($post) {
+				if ($post->created_at->getTimestamp() > time() - 600) {
 
-						$post->text = $msg;
-						$post->save();
+					$post->text = $msg;
+					$post->save();
 
-						notice('Сообщение успешно отредактировано!');
-						redirect("index.php?start=$start");
+					notice('Сообщение успешно отредактировано!');
+					redirect("index.php?start=$start");
 
-					} else {
-						show_error('Ошибка! Редактирование невозможно, прошло более 10 минут!!');
-					}
 				} else {
-					show_error('Ошибка! Сообщение удалено или вы не автор этого сообщения!');
+					show_error('Ошибка! Редактирование невозможно, прошло более 10 минут!!');
 				}
 			} else {
-				show_error('Ошибка! Слишком длинное или короткое сообщение!');
+				show_error('Ошибка! Сообщение удалено или вы не автор этого сообщения!');
 			}
 		} else {
 			show_error('Ошибка! Неверный идентификатор сессии, повторите действие!');
@@ -196,7 +183,7 @@ case 'editpost':
 	}
 
 	render('includes/back', array('link' => 'index.php?act=edit&amp;id='.$id.'&amp;start='.$start, 'title' => 'Вернуться'));
-	render('includes/back', array('link' => 'index.php?start='.$start, 'title' => 'В гостевую', 'icon' => 'reload.gif'));
+	render('includes/back', array('link' => 'index.php?start='.$start, 'title' => 'В гостевую', 'icon' => 'fa-arrow-circle-up'));
 break;
 
 default:

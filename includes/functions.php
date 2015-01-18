@@ -435,7 +435,8 @@ function formattime($file_time, $round = 1) {
 // ------------------ Функция антимата --------------------//
 function antimat($str) {
 
-	$badwords = Antimat::all(array('order' => 'LENGTH(string) desc'));
+	$antimat = Antimat::all(array('order' => 'LENGTH(string) desc'));
+	$badwords = ActiveRecord\collect($antimat, 'string');
 	//$querymat = DB::run() -> query("SELECT `mat_string` FROM `antimat` ORDER BY LENGTH(`mat_string`) DESC;");
 	//$arrmat = $querymat -> fetchAll(PDO::FETCH_COLUMN);
 

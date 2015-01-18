@@ -20,4 +20,27 @@ class BaseActiveRecord extends ActiveRecord\Model
 		}
 		return false;
 	}
+
+	/**
+	 * Подсвечивает текстовый блок красным цветом
+	 * @param  string  $attribute имя поля
+	 * @return string класс ошибки
+	 */
+	public function hasError($attribute)
+	{
+		if ($this->errors && $this->errors->is_invalid($attribute)) return ' has-error';
+	}
+
+	/**
+	 * Выводит блок с текстом ошибки
+	 * @param  string  $attribute имя поля
+	 * @return string  блоки ошибки
+	 */
+	public function textError($attribute)
+	{
+		if ($this->errors && $this->errors->is_invalid($attribute)) {
+			$error = $this->errors->on($attribute);
+			return '<div class="text-danger">'.$error.'</div>';
+		}
+	}
 }
