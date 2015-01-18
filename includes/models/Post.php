@@ -12,7 +12,8 @@ class Post extends BaseActiveRecord {
 	/* Валидаторы */
 	static $validates_size_of = array(
 		//$config['forumtextlength']
-		array('text', 'within' => array(5, 1500), 'message' => 'Слишком длинное или короткое сообщение (от 5 до 1500 симв.)'),
+		array('text', 'minimum' => 5, 'too_short' => 'Слишком короткое сообщение, минимум %d симв.'),
+		array('text', 'maximum' => 3000, 'too_long' => 'Слишком длинное сообщение, максимум %d симв.'),
 	);
 
 

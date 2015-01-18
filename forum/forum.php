@@ -101,6 +101,7 @@ case 'add':
 		$topic->title = $title;
 
 		$post = new Post;
+		$post->token = $token;
 		$post->forum_id = $fid;
 		$post->topic_id = $topic->id;
 		$post->user_id = $user->id;
@@ -112,7 +113,7 @@ case 'add':
 			notice('Новая тема успешно создана!');
 			redirect("topic.php?tid={$topic->id}");
 		} else {
-			show_error(array_merge($topic->getErrors(), $post->getErrors()));
+			show_error(array($topic->getErrors(), $post->getErrors()));
 		}
 
 
