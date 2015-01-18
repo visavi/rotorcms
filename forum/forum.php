@@ -100,11 +100,19 @@ case 'add':
 		$topic->user_id = $user->id;
 		$topic->title = $title;
 
-		if ($topic->save()) {
+		$post = new Post;
+		$post->forum_id = $fid;
+		$post->topic_id = $topic->id;
+		$post->user_id = $user->id;
+		$post->text = $msg;
+		$post->ip = $ip;
+		$post->brow = $brow;
+
+		if ($topic->save() && $post->save()) {
 			notice('Новая тема успешно создана!');
 			redirect("topic.php?tid={$topic->id}");
 		} else {
-			show_error($topic->getErrors());
+			show_error(array_merge($topic->getErrors(), $post->getErrors()));
 		}
 
 

@@ -64,35 +64,40 @@
 <?php foreach ($topic->posts as $key => $post): ?>
 	<?php $num = ($start + $key + 1); ?>
 
-		<div class="media" id="post">
+		<div class="media">
 
 			<?= user_avatars($post->user()->id) ?>
 
 			<div class="media-body">
+				<div class="media-heading">
 
-				<?= $num ?>. <h4 class="media-heading" style="display: inline;"><?= profile($post->user()->login) ?></h4>
-				<?= user_title($post->user_id) ?> <?= user_online($post->user_id) ?>
+					<?= $num ?>. <h4 class="author"><?= profile($post->user()->login) ?></h4>
+					<?= user_title($post->user_id) ?> <?= user_online($post->user_id) ?>
 
-				<ul class="list-inline small pull-right">
+					<ul class="list-inline small pull-right">
 
-				<?php if ($user->id && $user->id != $post->user_id): ?>
+					<?php if ($user->id && $user->id != $post->user_id): ?>
 
-					<li><a href="#" onclick="return reply('<?= $post->user()->login ?>')">Отв</a></li>
+						<li><a href="#" onclick="return postReply('<?= $post->user()->login ?>')" data-toggle="tooltip" title="Ответить"><span class="fa fa-reply text-muted"></span></a></li>
 
-					<li><noindex><a href="index.php?act=spam&amp;id=<?= $post->id ?>&amp;start=<?= $start ?>&amp;token=<?= $_SESSION['token'] ?>" onclick="return confirm('Вы подтверждаете факт спама?')" rel="nofollow">Спам</a></noindex></li>
-				<?php endif; ?>
+						<li><a href="#" onclick="return postQuote(this);" data-toggle="tooltip" title="Цитировать"><span class="fa fa-quote-right text-muted"></span></a></li>
 
-				<?php if ($user->id && $user->id == $post->user_id && $post->created_at->getTimestamp() > time() - 600): ?>
-					<li><a href="index.php?act=edit&amp;id=<?= $post->id ?>&amp;start=<?= $start ?>">Редактировать</a></li>
-				<?php endif; ?>
+						<li><a href="#" onclick="return sendComplaint(this, 'forum', <?= $post->id ?>);" data-token="<?= $_SESSION['token'] ?>" rel="nofollow" data-toggle="tooltip" title="Жалоба"><span class="fa fa-bell text-muted"></span></a></li>
 
-				<?php if (!empty($topics['is_moder'])): ?>
-						<li><a href="topic.php?act=modedit&amp;tid=<?= $tid ?>&amp;pid=<?=$data['posts_id']?>&amp;start=<?= $start ?>">Удалить</a></li>
-						<li><a href="topic.php?act=modedit&amp;tid=<?= $tid ?>&amp;pid=<?=$data['posts_id']?>&amp;start=<?= $start ?>">Ред.</a></li>
-				<?php endif; ?>
+					<?php endif; ?>
 
-					<li class="text-muted"><?= $post->created_at ?></li>
-				</ul>
+					<?php if ($user->id && $user->id == $post->user_id && $post->created_at->getTimestamp() > time() - 600): ?>
+						<li><a href="index.php?act=edit&amp;id=<?= $post->id ?>&amp;start=<?= $start ?>" data-toggle="tooltip" title="Редактировать"><span class="fa fa-pencil text-muted"></span></a></li>
+					<?php endif; ?>
+
+					<?php if (!empty($topics['is_moder'])): /* ?>
+							<li><a href="topic.php?act=modedit&amp;tid=<?= $tid ?>&amp;pid=<?=$data['posts_id']?>&amp;start=<?= $start ?>">Удалить</a></li>
+							<li><a href="topic.php?act=modedit&amp;tid=<?= $tid ?>&amp;pid=<?=$data['posts_id']?>&amp;start=<?= $start ?>">Ред.</a></li>
+					<?php */ endif; ?>
+
+						<li class="text-muted date"><?= $post->created_at ?></li>
+					</ul>
+				</div>
 
 				<div class="message"><?= bb_code($post->text) ?></div>
 

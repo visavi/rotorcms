@@ -5,14 +5,14 @@ class Guest extends BaseActiveRecord {
 
 	public $token;
 
-	static $belongs_to = array(
-		array('user'),
-	);
-
 	/**
 	 * @var array названия функций вызываемых перед сохранением
 	 */
 	static $before_save = array('before_save');
+
+	static $belongs_to = array(
+		array('user'),
+	);
 
 	//$config['guesttextlength']
 	static $validates_size_of = array(
