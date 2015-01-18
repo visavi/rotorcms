@@ -17,18 +17,19 @@
 				<?php endif; ?>
 			<?php endforeach; ?>
 
-			</select><br />
+			</select>
 
 			<label class="control-label" for="title">Заголовок</label>
-			<input name="title" id="title" type="text" class="form-control" maxlength="50" /><br />
-			<textarea name="msg" class="form-control" id="markItUp" cols="25" rows="5"></textarea><br />
+			<input name="title" id="title" type="text" class="form-control" maxlength="50" />
+
+			<textarea name="msg" class="form-control" id="markItUp" rows="5"></textarea><br />
 			<button type="submit" class="btn btn-action">Создать тему</button>
 		</form>
 	</div>
 
-	<p class="bg-info">
+	<p class="bg-info padding">
 		Прежде чем создать новую тему необходимо ознакомиться с правилами <a href="/pages/rules.php">Правила сайта</a><br />
-		Также убедись что такой темы нет, чтобы не создавать одинаковые, для этого введи ключевое слово в поиске <a href="search.php">Поиск по форуму</a><br />
+		Также убедись что такой темы нет, чтобы не создавать одинаковые, для этого введи ключевое слово в <a href="search.php">Поискe по форуму</a><br />
 		И если после этого вы уверены, что ваша тема будет интересна другим пользователям, то можете ее создать<br />
 	</p>
 

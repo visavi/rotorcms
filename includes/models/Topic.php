@@ -1,8 +1,9 @@
 <?php
 class Topic extends BaseActiveRecord {
 
-	public $token;
 	static $table_name = 'topics';
+
+	public $token;
 
 	/**
 	 * Связи
@@ -23,8 +24,9 @@ class Topic extends BaseActiveRecord {
 
 	/* Валидаторы */
 	static $validates_size_of = array(
-		array('title', 'within' => array(5, 50), 'message' => 'Слишком длинное или короткое название темы (от 5 до 50 симв.)'),
-		array('note', 'maximum' => 250, 'message' => 'Слишком длиная заметка темы (до 250 симв.)'),
+		array('title', 'minimum' => 5, 'too_short' => 'Слишком короткое название темы, минимум %d симв.'),
+		array('title', 'maximum' => 50, 'too_long' => 'Слишком длинное название темы, максимум %d симв.'),
+		array('note', 'maximum' => 250, 'message' => 'Слишком длиная заметка темы (до %d симв.)'),
 	);
 
 	static $validates_numericality_of = array(

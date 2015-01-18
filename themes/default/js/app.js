@@ -108,14 +108,34 @@ function sendComplaint(el, section, post) {
 	return false;
 }
 
-/* Ответ на сообщение */
-function reply(name){
-
-	$('#markItUp').focus().val('[b]' + name + '[/b], ');
+function postJump() {
 
 	$('html, body').animate({
 		scrollTop: ($('.well').offset().top)
 	}, 500);
+}
+
+/* Ответ на сообщение */
+function postReply(name){
+
+	postJump();
+
+	$('#markItUp').focus().val('[b]' + name + '[/b], ');
+
+	return false;
+}
+
+/* Цитирование сообщения  */
+function postQuote(el){
+
+	postJump();
+
+	var post = $(el).closest('.media-body');
+	var author = post.find('.author').text();
+	var date = post.find('.date').text();
+	var message = post.find('.message').text();
+
+	$('#markItUp').focus().val('[quote=' + author + ' (' + date + ')]' + message + '[/quote]\n');
 
 	return false;
 }

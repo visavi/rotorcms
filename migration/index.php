@@ -10,12 +10,21 @@
 require_once (__DIR__.'/../includes/start.php');
 require_once (__DIR__.'/../includes/functions.php');
 
-$migrate = '201412262226_add_test_to_socials';
+if (!Migration::exists($migrate = '201501181614_create_floods_table')) {
 
-if (!Migration::exists($migrate)) {
+	Migration::query("
+	CREATE TABLE IF NOT EXISTS `floods` (
+	  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+	  `user_id` int(11) unsigned NOT NULL,
+	  `page` varchar(30) NOT NULL,
+	  `created_at` timestamp NOT NULL,
+	  PRIMARY KEY (`id`),
+	  KEY `user_id` (`user_id`)
+	) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+	");
 
-	Migration::query("ALTER TABLE `socials` ADD `test` int(11) NULL DEFAULT NULL AFTER `uid`;");
 	Migration::migrate($migrate);
 }
+	//Migration::query("ALTER TABLE `socials` ADD `test` int(11) NULL DEFAULT NULL AFTER `uid`;");
 
 Migration::result();

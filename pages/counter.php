@@ -118,7 +118,7 @@ switch ($act):
 			show_error('Статистика за текущие сутки еще не обновилась!');
 		}
 
-		echo '<img src="/images/img/back.gif" alt="image" /> <a href="counter.php">Вернуться</a><br />';
+		render('includes/back', array('link' => 'counter.php', 'title' => 'Вернуться'));
 	break;
 
 	############################################################################################
@@ -174,7 +174,7 @@ switch ($act):
 			show_error('Статистика за текущий месяц еще не обновилась!');
 		}
 
-		echo '<img src="/images/img/back.gif" alt="image" /> <a href="counter.php">Вернуться</a><br />';
+		render('includes/back', array('link' => 'counter.php', 'title' => 'Вернуться'));
 	break;
 
 default:

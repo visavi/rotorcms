@@ -47,40 +47,37 @@ case 'add':
 	$token = check($_GET['token']);
 
 	if (is_user()) {
-		if ($token == $_SESSION['token']) {
+		if (is_flood($log)) {
 
-			if (is_flood($log)) {
+			$user = User::find_by_id($user->id);
+			$user->allguest = $user->allguest + 1;
+			$user->point = $user->point + 1;
+			$user->money = $user->money + 20;
+			$user->save();
 
-				$user = User::find_by_id($user->id);
-				$user->allguest = $user->allguest + 1;
-				$user->point = $user->point + 1;
-				$user->money = $user->money + 20;
-				$user->save();
+			$post = new Guest;
+			$post->token = $token;
+			$post->user_id = $user->id;
+			$post->text = $msg;
+			$post->ip = $ip;
+			$post->brow = $brow;
 
-				$post = new Guest;
-				$post->user_id = $user->id;
-				$post->text = $msg;
-				$post->ip = $ip;
-				$post->brow = $brow;
+			if ($post->save()) {
 
-				if ($post->save()) {
+				// Удаляем старые сообщения
+				//$posts = Guest::all(array('offset' => $config['maxpostbook'], 'limit' => 10, 'order' => 'created_at desc'));
+				//$delete = ActiveRecord\collect($posts, 'id');
+				//Guest::table()->delete(array('id' => array($delete)));
 
-					// Удаляем старые сообщения
-					//$posts = Guest::all(array('offset' => $config['maxpostbook'], 'limit' => 10, 'order' => 'created_at desc'));
-					//$delete = ActiveRecord\collect($posts, 'id');
-					//Guest::table()->delete(array('id' => array($delete)));
-
-					notice('Сообщение успешно добавлено!');
-					redirect("index.php");
-				} else {
-					show_error($post->getErrors());
-				}
+				notice('Сообщение успешно добавлено!');
+				redirect("index.php");
 			} else {
-				show_error('Антифлуд! Разрешается отправлять сообщения раз в '.flood_period().' секунд!');
+				show_error($post->getErrors());
 			}
 		} else {
-			show_error('Ошибка! Неверный идентификатор сессии, повторите действие!');
+			show_error('Антифлуд! Разрешается отправлять сообщения раз в '.flood_period().' секунд!');
 		}
+
 		############################################################################################
 		##                                   Добавление для гостей                                ##
 		############################################################################################
@@ -156,27 +153,26 @@ case 'editpost':
 	$msg = check($_POST['msg']);
 
 	if (is_user()) {
-		if ($token == $_SESSION['token']) {
 
-			$post = Guest::find_by_id_and_user_id($id, $user->id);
+		$post = Guest::find_by_id_and_user_id($id, $user->id);
 
-			if ($post) {
-				if ($post->created_at->getTimestamp() > time() - 600) {
+		if ($post) {
+			if ($post->created_at->getTimestamp() > time() - 600) {
 
-					$post->text = $msg;
-					$post->save();
-
+				$post->token = $token;
+				$post->text = $msg;
+				if ($post->save()) {
 					notice('Сообщение успешно отредактировано!');
 					redirect("index.php?start=$start");
-
 				} else {
-					show_error('Ошибка! Редактирование невозможно, прошло более 10 минут!!');
+					show_error($post->getErrors());
 				}
+
 			} else {
-				show_error('Ошибка! Сообщение удалено или вы не автор этого сообщения!');
+				show_error('Ошибка! Редактирование невозможно, прошло более 10 минут!!');
 			}
 		} else {
-			show_error('Ошибка! Неверный идентификатор сессии, повторите действие!');
+			show_error('Ошибка! Сообщение удалено или вы не автор этого сообщения!');
 		}
 	} else {
 		show_login('Вы не авторизованы, чтобы редактировать сообщения, необходимо');
