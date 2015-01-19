@@ -76,7 +76,7 @@
 	background:#FFF url(images/submenu.png) no-repeat 100% 50%;
 }
 .markItUpHeader ul .markItUpSeparator {
-	margin:0 10px 0 5px;
+	margin:0 5px;
 	width:1px;
 	height:16px;
 	overflow:hidden;
@@ -97,7 +97,7 @@
 }
 .markItUpHeader ul a {
 	display:inline-block;
-	text-indent:-10000px;
+	//text-indent:-10000px;
 	background-repeat:no-repeat;
 	padding:3px;
 }
@@ -118,38 +118,10 @@
 /* -------------------------------------------------------------------
 // Пользовательские классы markItUp!
 // ------------------------------------------------------------------*/
-.markItUp .markItUpButton {
-    font-family: FontAwesome;
+.markItUp .markItUpButton a {
     font-size: 15px;
     cursor: pointer;
-}
-
-.markItUp .bb-bold:before {
-    content: "\f032";
-}
-
-.markItUp .bb-italic:before {
-    content: "\f033";
-}
-
-.markItUp .bb-underline:before {
-    content: "\f0cd";
-}
-
-.markItUp .bb-strike:before {
-    content: "\f0cc";
-}
-
-.markItUp .bb-link:before {
-    content: "\f0c1";
-}
-
-.markItUp .bb-youtube:before {
-    content: "\f16a";
-}
-
-.markItUp .bb-color:before {
-    content: "\f00a";
+    color: #333;
 }
 
 .markItUp .bb-color ul {
@@ -200,54 +172,6 @@
 }
 .markItUp .bb-color .col3-3 a {
 	background: #00ffff;
-}
-
-.markItUp .bb-size:before {
-    content: "\f031";
-}
-
-.markItUp .bb-center:before {
-    content: "\f037";
-}
-
-.markItUp .bb-orderedlist:before {
-    content: "\f0cb";
-}
-
-.markItUp .bb-unorderedlist:before {
-    content: "\f0ca";
-}
-
-.markItUp .bb-listitem:before {
-    content: "\f178";
-}
-
-.markItUp .bb-spoiler:before {
-    content: "\f034";
-}
-
-.markItUp .bb-hide:before {
-    content: "\f070";
-}
-
-.markItUp .bb-quote:before {
-    content: "\f10d";
-}
-
-.markItUp .bb-code:before {
-    content: "\f121";
-}
-
-.markItUp .bb-clean:before {
-    content: "\f12d";
-}
-
-.markItUp .bb-preview:before {
-    content: "\f046";
-}
-
-.markItUp .bb-smile:before {
-    content: "\f118";
 }
 
 .markItUp .bb-smile ul{

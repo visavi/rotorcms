@@ -4,15 +4,15 @@
 mySettings = {
 	previewParserPath:	'', // path to your BBCode parser
 	markupSet: [
-		{title:'Жирный текст', name:'Bold', className:"bb-bold", key:'B', openWith:'[b]', closeWith:'[/b]'},
-		{title:'Наклонный текст', name:'Italic', className:"bb-italic", key:'I', openWith:'[i]', closeWith:'[/i]'},
-		{title:'Подчеркнутый текст', name:'Underline', className:"bb-underline", key:'U', openWith:'[u]', closeWith:'[/u]'},
-		{title:'Зачеркнутый текст', name:'Strike', className:"bb-strike", key:'S', openWith:'[s]', closeWith:'[/s]'},
+		{title:'Жирный текст', name:'<i class="fa fa-bold"></i>', className:"bb-bold", key:'B', openWith:'[b]', closeWith:'[/b]'},
+		{title:'Наклонный текст', name:'<i class="fa fa-italic"></i>', className:"bb-italic", key:'I', openWith:'[i]', closeWith:'[/i]'},
+		{title:'Подчеркнутый текст', name:'<i class="fa fa-underline"></i>', className:"bb-underline", key:'U', openWith:'[u]', closeWith:'[/u]'},
+		{title:'Зачеркнутый текст', name:'<i class="fa fa-strikethrough"></i>', className:"bb-strike", key:'S', openWith:'[s]', closeWith:'[/s]'},
 
 		{separator:'---------------' },
-		{title:'Ссылка', name:'Link', className:"bb-link", key:'L', openWith:'[url=[![Ссылка:!:http://]!]]', closeWith:'[/url]', placeHolder:'Текст ссылки...'},
-		{title:'Видео', name:'Video', className:"bb-youtube", openWith:'[youtube][![Код видео с youtube]!]', closeWith:'[/youtube]'},
-		{title:'Цвет', name:'Color', className:"bb-color", openWith:'[color=[![Код цвета]!]]', closeWith:'[/color]',
+		{title:'Ссылка', name:'<i class="fa fa-link"></i>', className:"bb-link", key:'L', openWith:'[url=[![Ссылка:!:http://]!]]', closeWith:'[/url]', placeHolder:'Текст ссылки...'},
+		{title:'Видео', name:'<i class="fa fa-youtube-play"></i>', className:"bb-youtube", openWith:'[youtube][![Код видео с youtube]!]', closeWith:'[/youtube]'},
+		{title:'Цвет', name:'<i class="fa fa-th"></i>', className:"bb-color", openWith:'[color=[![Код цвета]!]]', closeWith:'[/color]',
 		dropMenu: [
 			{name:'Yellow',	openWith:'[color=#ffd700]', closeWith:'[/color]', className:"col1-1" },
 			{name:'Orange',	openWith:'[color=#ffa500]', closeWith:'[/color]', className:"col1-2" },
@@ -28,7 +28,7 @@ mySettings = {
 		]},
 
 		{separator:'---------------' },
-		{title:'Размер текста', name:'Size', className:"bb-size", openWith:'[size=[![Размер текста от 1 до 5]!]]', closeWith:'[/size]',
+		{title:'Размер текста', name:'<i class="fa fa-font"></i>', className:"bb-size", openWith:'[size=[![Размер текста от 1 до 5]!]]', closeWith:'[/size]',
 		dropMenu :[
 			{name:'x-small', openWith:'[size=1]', closeWith:'[/size]' },
 			{name:'small', openWith:'[size=2]', closeWith:'[/size]' },
@@ -37,8 +37,8 @@ mySettings = {
 			{name:'x-large', openWith:'[size=5]', closeWith:'[/size]' },
 		]},
 
-		{title:'По центру', name:'Center', className:"bb-center", openWith:'[center]', closeWith:'[/center]'},
-		{title:'Спойлер', name:'Spoiler', className:"bb-spoiler", openWith:'[spoiler=[![Заголовок спойлера]!]]', closeWith:'[/spoiler]'},
+		{title:'По центру', name:'<i class="fa fa-align-center"></i>', className:"bb-center", openWith:'[center]', closeWith:'[/center]'},
+		{title:'Спойлер', name:'<i class="fa fa-text-height"></i>', className:"bb-spoiler", openWith:'[spoiler=[![Заголовок спойлера]!]]', closeWith:'[/spoiler]'},
 
 		//{separator:'---------------' },
 		//{name:'OrderedList', className:"bb-orderedlist", openWith:'[*]', multiline:true, openBlockWith:'[list=1]\n', closeBlockWith:'\n[/list]'},
@@ -46,13 +46,13 @@ mySettings = {
 		//{name:'ListItem', className:"bb-listitem", openWith:'[*]'},
 
 		{separator:'---------------' },
-		{title:'Скрытый контент', name:'Hide', className:"bb-hide", openWith:'[hide]', closeWith:'[/hide]'},
-		{title:'Цитата', name:'Quote', className:"bb-quote", openWith:'[quote]', closeWith:'[/quote]'},
-		{title:'Исходный код', name:'Code', className:"bb-code", openWith:'[code]', closeWith:'[/code]'},
+		{title:'Скрытый контент', name:'<i class="fa fa-eye-slash"></i>', className:"bb-hide", openWith:'[hide]', closeWith:'[/hide]'},
+		{title:'Цитата', name:'<i class="fa fa-quote-right"></i>', className:"bb-quote", openWith:'[quote]', closeWith:'[/quote]'},
+		{title:'Исходный код', name:'<i class="fa fa-code"></i>', className:"bb-code", openWith:'[code]', closeWith:'[/code]'},
 
 		{separator:'---------------' },
-		{title:'Очистка BB-кода', name:'Clean', className:"bb-clean", replaceWith:function(markitup) { return markitup.selection.replace(/\[(.*?)\]/g, "") } },
-		{title:'Смайл', name:'Smile', className:"bb-smile", openWith:' :) ',
+		{title:'Очистка BB-кода', name:'<i class="fa fa-eraser"></i>', className:"bb-clean", replaceWith:function(markitup) { return markitup.selection.replace(/\[(.*?)\]/g, "") } },
+		{title:'Смайл', name:'<i class="fa fa-smile-o"></i>', className:"bb-smile", openWith:' :) ',
 		dropMenu: [
 			{name:':)', openWith:' :) ', className:"col1-1" },
 			{name:':(', openWith:' :( ', className:"col1-2" },
@@ -64,6 +64,6 @@ mySettings = {
 			{name:':klass', openWith:' :klass ', className:"col3-2" },
 			{name:':krut', openWith:' :krut ', className:"col3-3" }
 		]},
-		//{name:'Preview', className:'preview',  call:'preview'}
+		//{title:'Просмотр', name:'<i class="fa fa-check-square-o"></i>', className:'bb-preview',  call:'preview'},
 	]
 }
