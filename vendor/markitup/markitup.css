@@ -53,8 +53,7 @@
 }
 .markItUpHeader ul .markItUpDropMenu {
 	background: transparent url(images/menu.png) no-repeat 115% 50%;
-	padding: 0 2px;
-	margin-right: 5px;
+	padding-right: 5px;
 }
 .markItUpHeader ul .markItUpDropMenu li {
 	margin-right:0px;
