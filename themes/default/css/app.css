@@ -77,21 +77,21 @@ body {
 }
 
 .media {
-  overflow: hidden;
+/*  overflow: hidden;*/
   margin-bottom: 5px;
   border-bottom: 1px solid #eee;
 }
 
-.media-body {
+/*.media-body {
   display: block;
   overflow: hidden;
 }
-
+*/
 .media-heading {
   min-height: 25px;
 }
 
-.media-left {
+/*.media-left {
   float: left;
   display: block;
 }
@@ -99,7 +99,7 @@ body {
 .media-right {
   float: right;
   display: block;
-}
+}*/
 
 blockquote:before {
   content: "\f10d";
