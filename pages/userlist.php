@@ -14,7 +14,7 @@ include_once ('../themes/header.php');
 
 $act = (isset($_GET['act'])) ? check($_GET['act']) : 'index';
 $start = (isset($_GET['start'])) ? abs(intval($_GET['start'])) : 0;
-$uz = (isset($_GET['uz'])) ? check($_GET['uz']) : (isset($_POST['uz'])) ? check($_POST['uz']) : '';
+$login = (isset($_REQUEST['login'])) ? check($_REQUEST['login']) : '';
 
 show_title('Список пользователей');
 
@@ -30,7 +30,7 @@ case 'index':
 
 	$users = User::all(array('order' => 'point DESC, login ASC', 'offset' => $start, 'limit' => $config['userlist']));
 
-	render('pages/userlist', compact('users', 'start', 'total'));
+	render('pages/userlist', compact('users', 'start', 'total', 'login'));
 
 break;
 
@@ -39,24 +39,22 @@ break;
 ############################################################################################
 case 'search':
 
-	if (!empty($uz)) {
-		$queryuser = DB::run() -> querySingle("SELECT `users_login` FROM `users` WHERE LOWER(`users_login`)=? OR LOWER(`users_nickname`)=? LIMIT 1;", array(strtolower($uz), utf_lower($uz)));
+	if (!empty($login)) {
+		$user = User::first(array('conditions' => array('LOWER(login) = ?', utf_lower($login))));
 
-		if (!empty($queryuser)) {
-			$queryrating = DB::run() -> query("SELECT `users_login` FROM `users` ORDER BY `users_point` DESC, `users_login` ASC;");
-			$ratusers = $queryrating -> fetchAll(PDO::FETCH_COLUMN);
-
-			foreach ($ratusers as $key => $ratval) {
-				if ($queryuser == $ratval) {
-					$rat = $key + 1;
+		if ($user) {
+			$users = User::all(array('select' => 'login', 'order' => 'point DESC, login ASC'));
+			foreach ($users as $key => $val) {
+				if ($user->login == $val->login) {
+					$position = $key + 1;
 				}
 			}
 
-			if (!empty($rat)) {
-				$page = floor(($rat - 1) / $config['userlist']) * $config['userlist'];
+			if (isset($position)) {
+				$page = floor(($position - 1) / $config['userlist']) * $config['userlist'];
 
-				$_SESSION['note'] = 'Позиция в рейтинге: '.$rat;
-				redirect("userlist.php?start=$page&uz=$queryuser");
+				$_SESSION['note'] = 'Позиция в рейтинге: '.$position;
+				redirect("userlist.php?start=$page&login=$user->login");
 			} else {
 				show_error('Пользователь с данным логином не найден!');
 			}

@@ -2101,16 +2101,11 @@ function redirect($url, $permanent = false){
 }
 
 // ------------- Функция вывода ссылки на анкету -------------//
-function profile($login, $color = false/*, $nickname = true*/){
+function profile($user_id){
 	global $config;
 
-	if (!empty($login)){
-		//$nickname = ($nickname) ? nickname($login) : $login;
-		if ($color){
-			return '<a href="/pages/user.php?uz='.$login.'"><span style="color:'.$color.'">'.$login.'</span></a>';
-		} else {
-			return '<a href="/pages/user.php?uz='.$login.'">'.$login.'</a>';
-		}
+	if (!empty($user_id)){
+		return '<a href="/pages/user.php?id='.$user_id.'">'.$user_id.'</a>';
 	}
 	return $config['guestsuser'];
 }
