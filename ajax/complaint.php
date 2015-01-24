@@ -17,7 +17,7 @@ if(isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUE
 	$section = (isset($_GET['section'])) ? check($_GET['section']) : '';
 	$post_id = (isset($_GET['post'])) ? abs(intval($_GET['post'])) : 0;
 
-	if ($user->id && $token == $_SESSION['token']) {
+	if ($current_user->id && $token == $_SESSION['token']) {
 
 		$spam = Spam::first(array('conditions' => array('section = ? AND post_id = ?', $section, $post_id)));
 
@@ -25,7 +25,7 @@ if(isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUE
 			$spam = new Spam;
 			$spam->section = $section;
 			$spam->post_id = $post_id;
-			$spam->user_id = $user->id;
+			$spam->user_id = $current_user->id;
 			if ($spam->save())
 				exit(json_encode(array('status' => 'added')));
 		} else {

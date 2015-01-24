@@ -94,27 +94,40 @@ case 'add':
 
 	if (is_user()) {
 
-		$topic = new Topic;
-		$topic->token = $token;
-		$topic->forum_id = $fid;
-		$topic->user_id = $user->id;
-		$topic->title = $title;
+		$topic_data = array(
+			'token' => $token,
+			'forum_id' => $fid,
+			'user_id' => $current_user->id,
+			'title' => $title,
+		);
 
-		$post = new Post;
-		$post->token = $token;
-		$post->forum_id = $fid;
-		$post->topic_id = $topic->id;
-		$post->user_id = $user->id;
-		$post->text = $msg;
-		$post->ip = $ip;
-		$post->brow = $brow;
+		$post_data = array(
+			'token' => $token,
+			'forum_id' => $fid,
+			//'topic_id' => $topic->id,
+			'user_id' => $current_user->id,
+			'text' => $msg,
+			'ip' => $ip,
+			'brow' => $brow,
+		);
 
-		if ($topic->save() && $post->save()) {
+
+		$topics = Topic::transaction(function() use ($topic_data, $post_data) {
+
+			$topic = Topic::create($topic_data);
+			$post = Post::create($post_data);
+
+			return ($post->is_valid() && $topic->is_valid());
+		});
+
+var_dump($topic);
+var_dump($post);
+/*		if ($topic && $post) {
 			notice('Новая тема успешно создана!');
 			redirect("topic.php?tid={$topic->id}");
 		} else {
 			show_error(array($topic->getErrors(), $post->getErrors()));
-		}
+		}*/
 
 
 			//-> addRule('string', $msg, 'Слишком длинное или короткое сообщение!', true, 5, $config['forumtextlength']);

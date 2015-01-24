@@ -23,11 +23,11 @@ if ($online[1] < 150 || is_user()) {
 
 	if (is_user()) {
 
-		$online = Online::first(array('conditions' => array('user_id = ? OR ip = ?', $user->id, $ip)));
+		$online = Online::first(array('conditions' => array('user_id = ? OR ip = ?', $current_user->id, $ip)));
 		//$queryonline = DB::run() -> querySingle("SELECT `online_id` FROM `online` WHERE `online_ip`=? OR `online_user`=? LIMIT 1;", array($ip, $log));
 		if ($online) {
 
-			$online->user_id = $user->id;
+			$online->user_id = $current_user->id;
 			$online->ip = $ip;
 			$online->brow = $brow;
 			$online->save();
@@ -37,7 +37,7 @@ if ($online[1] < 150 || is_user()) {
 		} else {
 
 			$attributes = array(
-				'user_id' => $user->id,
+				'user_id' => $current_user->id,
 				'ip' => $ip,
 				'brow' => $brow
 			);

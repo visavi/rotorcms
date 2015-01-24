@@ -39,7 +39,7 @@
 		<form class="form-inline" action="userlist.php?act=search&amp;start=<?= $start ?>" method="post">
 		<label for="uz">Поиск пользователя:</label><br />
 		<div class="form-group">
-			<input type="text" class="form-control" name="uz" id="uz" value="<?= $user->getLogin() ?>" />
+			<input type="text" class="form-control" name="uz" id="uz" value="<?= $current_user->getLogin() ?>" />
 		</div>
 		<input type="submit"  class="btn btn-action" value="Искать" /></form>
 	</div>

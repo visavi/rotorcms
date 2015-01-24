@@ -49,7 +49,7 @@ case 'add':
 	if (is_user()) {
 		if (is_flood($log)) {
 
-			$user = User::find_by_id($user->id);
+			$user = User::find_by_id($current_user->id);
 			$user->allguest = $user->allguest + 1;
 			$user->point = $user->point + 1;
 			$user->money = $user->money + 20;
@@ -57,7 +57,7 @@ case 'add':
 
 			$post = new Guest;
 			$post->token = $token;
-			$post->user_id = $user->id;
+			$post->user_id = $current_user->id;
 			$post->text = $msg;
 			$post->ip = $ip;
 			$post->brow = $brow;
@@ -121,7 +121,7 @@ case 'edit':
 	$id = (isset($_GET['id'])) ? abs(intval($_GET['id'])) : 0;
 
 	if (is_user()) {
-		$post = Guest::find_by_id_and_user_id($id, $user->id);
+		$post = Guest::find_by_id_and_user_id($id, $current_user->id);
 
 		if ($post) {
 			if ($post->created_at->getTimestamp() > time() - 600) {
@@ -154,7 +154,7 @@ case 'editpost':
 
 	if (is_user()) {
 
-		$post = Guest::find_by_id_and_user_id($id, $user->id);
+		$post = Guest::find_by_id_and_user_id($id, $current_user->id);
 
 		if ($post) {
 			if ($post->created_at->getTimestamp() > time() - 600) {

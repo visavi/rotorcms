@@ -5,7 +5,7 @@
 <?php endif; ?>
 
 <?php if (empty($forum->closed)): ?>
-	 / <a href="forum.php?act=addtheme&amp;fid=<?=$fid?>">Создать тему</a>
+	 <a class="btn btn-success" href="forum.php?act=addtheme&amp;fid=<?=$fid?>">Создать тему</a>
 <?php endif; ?>
 
 <?php if (is_admin()): ?>

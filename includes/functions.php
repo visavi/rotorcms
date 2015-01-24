@@ -165,7 +165,7 @@ function highlight_code($code) {
 }
 
 // ----------------------- Функция скрытого текста ------------------------//
-function hidden_text($str) {
+/*function hidden_text($str) {
 
 	if ($str[1]=='') $str[1] = 'Текст отсутствует';
 	if (is_user()) {
@@ -175,10 +175,10 @@ function hidden_text($str) {
 	}
 
 	return $text;
-}
+}*/
 
 // ------------------ Вспомогательная функция для bb-кода --------------------//
-function url_replace($url) {
+/*function url_replace($url) {
 	global $config;
 
 	if (!isset($url[4])) {
@@ -190,7 +190,7 @@ function url_replace($url) {
 		$title = (utf_strlen($url[4]) > 80) ? utf_substr($url[4], 0, 70).'...' : $url[4];
 		return '<a href="'.$url[4].'"'.$target.'>'.check(rawurldecode(html_entity_decode($title, ENT_QUOTES, 'utf-8'))).'</a>';
 	}
-}
+}*/
 
 // ----------------------- Функция вывода спойлера ------------------------//
 /*function spoiler_text($match) {
@@ -398,7 +398,7 @@ function read_file($file) {
 }
 
 // --------------- Функция подсчета веса директории -------------------//
-function read_dir($dir) {
+/*function read_dir($dir) {
 	if (empty($allsize)) {
 		$allsize = 0;
 	}
@@ -416,7 +416,7 @@ function read_dir($dir) {
 		closedir ($path);
 	}
 	return $allsize;
-}
+}*/
 
 // --------------- Функция правильного вывода времени -------------------//
 function formattime($file_time, $round = 1) {
@@ -1528,9 +1528,9 @@ function is_admin($access = array()) {
 		$access = array('superadmin', 'admin', 'supermoder', 'moder');
 	}
 
-	if (is_user()) {
-		global $user;
-		if (in_array($user->level, $access)) {
+	if ($current_user = is_user()) {
+
+		if (in_array($current_user->level, $access)) {
 			return true;
 		}
 	}
@@ -2329,7 +2329,7 @@ function perfomance (){
 
 // ------------ Функция подключения шаблонов -----------//
 function render($view, $params = array(), $return = false){
-	global $config, $log, $user, $udata;
+	global $config, $current_user;
 
 	extract($params);
 

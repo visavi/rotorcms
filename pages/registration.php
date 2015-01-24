@@ -140,7 +140,7 @@ if ($config['openreg'] == 1) {
 						// Активация пригласительного ключа
 						if (!empty($config['invite'])){
 							$invitation->used = 1;
-							$invitation->invited_user_id = $user->id;
+							$invitation->invited_user_id = $current_user->id;
 							$invitation->save();
 						}
 
@@ -149,7 +149,7 @@ if ($config['openreg'] == 1) {
 
 						// исправить
 						$config['nickname'] = 1;
-						send_private($user->id, $config['nickname'], $textpriv);
+						send_private($current_user->id, $config['nickname'], $textpriv);
 
 						if (!empty($config['regmail'])) {
 							addmail($email, 'Регистрация на сайте '.$config['title'], $regmessage);

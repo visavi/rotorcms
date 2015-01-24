@@ -36,7 +36,7 @@ case 'index':
 			//}
 
 			if (is_user()) {
-				$bookmark = Bookmark::find_by_topic_id_and_user_id($tid, $user->id);
+				$bookmark = Bookmark::find_by_topic_id_and_user_id($tid, $current_user->id);
 			//	$topics['bookmark'] = DB::run() -> queryFetch("SELECT * FROM `bookmarks` WHERE `book_topic`=? AND `book_user`=? LIMIT 1;", array($tid, $log));
 
 				if ($bookmark && $topic->postCount() > $bookmark->posts) {
@@ -136,7 +136,7 @@ var_dump($_REQUEST);
 		$post->token = $token;
 		$post->forum_id = 0;
 		$post->topic_id = $tid;
-		$post->user_id = $user->id;
+		$post->user_id = $current_user->id;
 		$post->text = $msg;
 		$post->ip = $ip;
 		$post->brow = $brow;

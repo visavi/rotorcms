@@ -81,30 +81,24 @@ ob_start('ob_processing');
 ############################################################################################
 ##                            Получение данных пользователя                               ##
 ############################################################################################
-if ($user = is_user()) {
-	$log  = $user->id; // Временно
-	// ---------------------- Переопределение глобальных настроек -------------------------//
-	$config['themes']     = $user->themes;      # Скин/тема по умолчанию
-	$config['bookpost']   = $user->postguest;   # Вывод сообщений в гостевой
-	$config['postnews']   = $user->postnews;    # Новостей на страницу
-	$config['forumpost']  = $user->postforum;   # Вывод сообщений в форуме
-	$config['forumtem']   = $user->themesforum; # Вывод тем в форуме
-	$config['privatpost'] = $user->postprivat;  # Вывод писем в привате
+if ($current_user = is_user()) {
 
-	if ($user->ban) {
+	$config['themes'] = $current_user->themes; # Скин/тема по умолчанию
+
+	if ($current_user->ban) {
 		if (!strsearch($php_self, array('/pages/ban.php', '/pages/rules.php'))) {
-			redirect('/pages/ban.php?log='.$log);
+			redirect('/pages/ban.php?user='.$current_user->id);
 		}
 	}
 
-	if ($config['regkeys'] > 0 && $user->confirmreg > 0 && empty($user->ban)) {
+	if ($config['regkeys'] > 0 && $current_user->confirmreg > 0 && empty($current_user->ban)) {
 		if (!strsearch($php_self, array('/pages/key.php', '/pages/login.php'))) {
-			redirect('/pages/key.php?log='.$log);
+			redirect('/pages/key.php?user='.$current_user->id);
 		}
 	}
 
 	// --------------------- Проверка соответствия ip-адреса ---------------------//
-	if (!empty($user->ipbinding)) {
+	if (!empty($current_user->ipbinding)) {
 		if ($_SESSION['ip'] != $ip) {
 			$_SESSION = array();
 			setcookie(session_name(), '', 0, '/', '');
@@ -114,11 +108,11 @@ if ($user = is_user()) {
 	}
 
 	// ---------------------- Получение ежедневного бонуса -----------------------//
-	if (!$user->timebonus || $user->timebonus->getTimestamp()  < SITETIME - 82800) {
+	if (!$current_user->timebonus || $current_user->timebonus->getTimestamp()  < SITETIME - 82800) {
 
-		$user->timebonus = new DateTime();
-		$user->money = $user->money + $config['bonusmoney'];
-		$user->save();
+		$current_user->timebonus = new DateTime();
+		$current_user->money = $current_user->money + $config['bonusmoney'];
+		$current_user->save();
 
 		notice('Получен ежедневный бонус '.moneys($config['bonusmoney']).'!');
 	}
@@ -127,7 +121,7 @@ if ($user = is_user()) {
 	if (strstr($php_self, '/admin')) {
 
 		$attributes = array(
-			'user_id' => $user->id,
+			'user_id' => $current_user->id,
 			'request' => $request_uri,
 			'referer' => $http_referer,
 			'ip' => $ip,
@@ -143,5 +137,5 @@ if ($user = is_user()) {
 		}
 	}
 } else {
-	$user = new User;
+	$current_user = new User;
 }

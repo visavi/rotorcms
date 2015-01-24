@@ -22,10 +22,10 @@ if (isset($_SESSION['note'])) {
 
 if (is_user()) {
 	// -------------------------- Дайджест ------------------------------------//
-	$visit = Visit::first(array('conditions' => array('user_id=?', $user->id)));
+	$visit = Visit::first(array('conditions' => array('user_id = ?', $current_user->id)));
 	if (!$visit) {
 		$visit = new Visit();
-		$visit->user_id = $user->id;
+		$visit->user_id = $current_user->id;
 		$visit->count = 1;
 	} else {
 		$visit->count = ($visit->created_at->format('Ymd') == date('Ymd')) ? $visit->count + 1 : 0;

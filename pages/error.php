@@ -25,7 +25,7 @@ if (!empty($config['errorlog'])){
 		$error->num = 403;
 		$error->request = $request_uri;
 		$error->referer = $http_referer;
-		$error->user_id = $user->getId();
+		$error->user_id = $current_user->getId();
 		$error->ip = $ip;
 		$error->brow = $brow;
 		$error->save();
@@ -48,7 +48,7 @@ if (!empty($config['errorlog'])){
 		$error->num = 404;
 		$error->request = $request_uri;
 		$error->referer = $http_referer;
-		$error->user_id = $user->getId();
+		$error->user_id = $current_user->getId();
 		$error->ip = $ip;
 		$error->brow = $brow;
 		$error->save();

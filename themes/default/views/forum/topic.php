@@ -20,7 +20,7 @@
 	<?php endif; ?>
 */?>
 
-	/ <a href="#" onclick="return changeBookmark(this, <?= $tid ?>)" data-token="<?= $_SESSION['token'] ?>"><?= $topic->is_bookmarked($user->id) ? 'Из закладок' : 'В закладки' ?></a>
+	/ <a href="#" onclick="return changeBookmark(this, <?= $tid ?>)" data-token="<?= $_SESSION['token'] ?>"><?= $topic->is_bookmarked($current_user->id) ? 'Из закладок' : 'В закладки' ?></a>
 
 
 <?php endif; ?>
@@ -76,7 +76,7 @@
 
 					<ul class="list-inline small pull-right">
 
-					<?php if ($user->id && $user->id != $post->user_id): ?>
+					<?php if ($current_user->id && $current_user->id != $post->user_id): ?>
 
 						<li><a href="#" onclick="return postReply('<?= $post->user()->login ?>')" data-toggle="tooltip" title="Ответить"><span class="fa fa-reply text-muted"></span></a></li>
 
@@ -86,7 +86,7 @@
 
 					<?php endif; ?>
 
-					<?php if ($user->id && $user->id == $post->user_id && $post->created_at->getTimestamp() > time() - 600): ?>
+					<?php if ($current_user->id && $current_user->id == $post->user_id && $post->created_at->getTimestamp() > time() - 600): ?>
 						<li><a href="index.php?act=edit&amp;id=<?= $post->id ?>&amp;start=<?= $start ?>" data-toggle="tooltip" title="Редактировать"><span class="fa fa-pencil text-muted"></span></a></li>
 					<?php endif; ?>
 

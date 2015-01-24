@@ -16,14 +16,14 @@ if(isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUE
 	$token = (!empty($_GET['token'])) ? check($_GET['token']) : 0;
 	$topic_id = (isset($_GET['topic'])) ? abs(intval($_GET['topic'])) : 0;
 
-	if ($user->id && $token == $_SESSION['token']) {
+	if ($current_user->id && $token == $_SESSION['token']) {
 
 		/* Проверка темы на существование */
 		$topic = Topic::find_by_id($topic_id);
 		if ($topic) {
 
 			/* Добавление темы в закладки */
-			$bookmark = Bookmark::find_by_topic_id_and_user_id($topic_id, $user->id);
+			$bookmark = Bookmark::find_by_topic_id_and_user_id($topic_id, $current_user->id);
 
 			if ($bookmark) {
 

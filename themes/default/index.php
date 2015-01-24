@@ -73,13 +73,13 @@ header("Content-type:text/html; charset=utf-8");
 
 					<?php if (is_user()): ?>
 						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><?= $user->getLogin() ?> <b class="caret"></b></a>
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><?= $current_user->getLogin() ?> <b class="caret"></b></a>
 							<ul class="dropdown-menu">
 
 								<?php if (is_admin()): ?>
 									<li><a href="/admin">Админ-панель</a></li>
 								<?php endif; ?>
-								<li><a href="/pages/user.php?id=<?= $user->id ?>">Профиль</a></li>
+								<li><a href="/pages/user.php?id=<?= $current_user->id ?>">Профиль</a></li>
 								<li><a href="/pages/login.php?act=exit">Выход</a></li>
 							</ul>
 						</li>

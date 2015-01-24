@@ -38,7 +38,7 @@ case 'index':
 		//$querytopic = DB::run() -> query("SELECT `topics`.*, `bookmarks`.* FROM `bookmarks` LEFT JOIN `topics` ON `bookmarks`.`book_topic`=`topics`.`topics_id` WHERE `book_user`=?  ORDER BY `topics_last_time` DESC LIMIT ".$start.", ".$config['forumtem'].";", array($log));
 		//$topics = $querytopic->fetchAll();
 
-		$bookmarks = Bookmark::find_all_by_user_id($user->id);
+		$bookmarks = Bookmark::find_all_by_user_id($current_user->id);
 
 		render('forum/bookmark', compact('bookmarks', 'start', 'total'));
 
