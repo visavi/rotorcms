@@ -1,5 +1,7 @@
 <?php if ($users): ?>
 
+	<a class="touch-back<?= ($list == 'all' ? ' bg-success' : '') ?>" href="/pages/userlist.php">Все <span class="badge"><?= $total['users'] ?></span></a> <a class="touch-back<?= ($list == 'admins' ? ' bg-success' : '') ?>" href="/pages/userlist.php?list=admins">Администрация <span class="badge"><?= $total['admins'] ?></span></a>
+
 	<?php foreach($users as $key => $user): ?>
 
 		<div class="media<?= ($login == $user->getLogin() ? ' bg-success padding' : '') ?>">
@@ -20,7 +22,7 @@
 		</div>
 	<?php endforeach; ?>
 
-	<?php page_strnavigation('online.php?', $config['userlist'], $start, $total); ?>
+	<?php page_strnavigation('userlist.php?list='.$list.'&amp;', $config['userlist'], $start, $total['all']); ?>
 
 	<div class="well">
 		<form class="form-inline" action="userlist.php?act=search&amp;start=<?= $start ?>" method="post">
@@ -30,8 +32,6 @@
 		</div>
 		<input type="submit"  class="btn btn-action" value="Поиск" /></form>
 	</div>
-
-	<div class="bg-info padding">Всего пользователей: <?= $total ?></div>
 
 <?php else: ?>
 	<?php show_error('Пользователи не найдены!'); ?>

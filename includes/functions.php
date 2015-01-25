@@ -872,17 +872,6 @@ function stats_users() {
 	return file_get_contents(DATADIR."/temp/statusers.dat");
 }
 
-// --------------- Функция вывода количества админов и модеров --------------------//
-function stats_admins() {
-	if (@filemtime(DATADIR."/temp/statadmins.dat") < time()-3600) {
-		$stat = User::count(array('conditions' => array('level <> ?', 'user')));
-
-		file_put_contents(DATADIR."/temp/statadmins.dat", $stat, LOCK_EX);
-	}
-
-	return file_get_contents(DATADIR."/temp/statadmins.dat");
-}
-
 // --------------- Функция вывода количества жалоб --------------------//
 function stats_spam() {
 	return Spam::count();

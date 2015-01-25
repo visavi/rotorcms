@@ -19,7 +19,6 @@
 <a href="/pages/index.php" class="index touch-link"><span class="fa fa-circle"></span> Сервисы сайта</a>
 <a href="/mail" class="index touch-link"><span class="fa fa-circle"></span> Обратная связь</a>
 <a href="/pages/userlist.php" class="index touch-link"><span class="fa fa-circle"></span> Список юзеров <span class="badge"><?=stats_users()?></span></a>
-<a href="/pages/adminlist.php" class="index touch-link"><span class="fa fa-circle"></span> Администрация <span class="badge"><?=stats_admins()?></span></a>
 <a href="/pages/index.php?act=stat" class="index touch-link"><span class="fa fa-circle"></span> Информация</a>
 <a href="/pages/index.php?act=partners" class="index touch-link"><span class="fa fa-circle"></span> Партнеры и друзья</a>
 

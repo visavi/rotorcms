@@ -36,7 +36,6 @@ body {
 .touch-back {
   display: inline-block;
   padding: 5px 14px;
-  background-color: #fdfdfd;
   border: 1px solid #ddd;
   border-radius: 15px;
 }
