@@ -69,7 +69,7 @@ case 'index':
 			User::socialLogin($_POST['token']);
 		}
 
-		render('pages/login');
+		App::render('pages/login');
 	} else {
 		redirect('/');
 	}

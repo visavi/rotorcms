@@ -51,7 +51,7 @@ case 'index':
 			//$querytopic = DB::run() -> query("SELECT * FROM `topics` WHERE `topics_forums_id`=? ORDER BY `topics_locked` DESC, `topics_last_time` DESC LIMIT ".$start.", ".$config['forumtem'].";", array($fid));
 			//$forums['topics'] = $querytopic->fetchAll();
 
-			render('forum/forum', compact('forum', 'fid', 'start', 'total'));
+			App::render('forum/forum', compact('forum', 'fid', 'start', 'total'));
 
 		} else {
 			show_error('Ошибка! Данного раздела не существует!');
@@ -73,13 +73,13 @@ case 'addtheme':
 
 		$forums = Forum::all(array('conditions' => array('parent_id = ? AND closed = ?', 0, 0), 'order' => 'sort', 'include' => array('children')));
 
-		render('forum/forum_add', compact('forums', 'fid'));
+		App::render('forum/forum_add', compact('forums', 'fid'));
 
 	} else {
 		show_login('Вы не авторизованы, для создания новой темы, необходимо');
 	}
 
-	render('includes/back', array('link' => 'forum.php?fid='.$fid, 'title' => 'Вернуться'));
+	App::render('includes/back', array('link' => 'forum.php?fid='.$fid, 'title' => 'Вернуться'));
 break;
 
 ############################################################################################
@@ -157,14 +157,14 @@ var_dump($post);
 		show_login('Вы не авторизованы, для создания новой темы, необходимо');
 	}
 
-	render('includes/back', array('link' => 'forum.php?fid='.$fid, 'title' => 'К темам'));
+	App::render('includes/back', array('link' => 'forum.php?fid='.$fid, 'title' => 'К темам'));
 break;
 
 default:
 	redirect("index.php");
 endswitch;
 
-render('includes/back', array('link' => 'index.php', 'title' => 'К форумам', 'icon' => 'fa-arrow-circle-up'));
+App::render('includes/back', array('link' => 'index.php', 'title' => 'К форумам', 'icon' => 'fa-arrow-circle-up'));
 
 include_once ('../themes/footer.php');
 ?>

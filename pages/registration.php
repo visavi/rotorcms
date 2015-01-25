@@ -29,7 +29,7 @@ if ($config['openreg'] == 1) {
 						User::socialLogin($_POST['token']);
 					}
 
-					render('pages/registration');
+					App::render('pages/registration');
 				break;
 
 				############################################################################################
@@ -157,13 +157,13 @@ if ($config['openreg'] == 1) {
 
 						// ----------------------------------------------------------------------------------------//
 						$_SESSION['reguser'] = 1;
-						render('pages/registration_register', compact('login', 'password'));
+						App::render('pages/registration_register', compact('login', 'password'));
 
 					} else {
 						show_error($validation->errors);
 					}
 
-					render('includes/back', array('link' => 'registration.php', 'title' => 'Вернуться'));
+					App::render('includes/back', array('link' => 'registration.php', 'title' => 'Вернуться'));
 				break;
 
 			default:

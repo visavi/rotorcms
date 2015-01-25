@@ -803,7 +803,7 @@ function user_avatars($user_id) {
 			}
 	}
 
-	return render('includes/avatar', compact('image'));
+	return App::render('includes/avatar', compact('image'));
 }
 
 
@@ -827,7 +827,7 @@ function show_online() {
 
 	if ($config['onlines'] == 1) {
 		$online = stats_online();
-		render('includes/online', compact('online'));
+		App::render('includes/online', compact('online'));
 	}
 }
 
@@ -849,7 +849,7 @@ function show_counter() {
 	if ($config['incount'] > 0) {
 		$count = stats_counter();
 
-		render('includes/counter', compact('count'));
+		App::render('includes/counter', compact('count'));
 	}
 }
 
@@ -1251,7 +1251,7 @@ function page_strnavigation($url, $posts, $start, $total, $range = 3) {
 			);
 		}
 
-		render('includes/pagination', compact('pages', 'url'));
+		App::render('includes/pagination', compact('pages', 'url'));
 	}
 }
 
@@ -1289,7 +1289,7 @@ function forum_navigation($url, $posts, $total) {
 			);
 		}
 
-		render('includes/pagination_forum', compact('pages', 'url'));
+		App::render('includes/pagination_forum', compact('pages', 'url'));
 	}
 }
 
@@ -1548,7 +1548,7 @@ function show_title($header, $subheader = false) {
 	$config['subheader'] = $subheader;
 
 	if (empty($show)) {
-		echo $show = render('includes/title', array(), true);
+		echo $show = App::render('includes/title', array(), true);
 	}
 
 	return $config;
@@ -1556,12 +1556,12 @@ function show_title($header, $subheader = false) {
 
 // ------------------------- Функция вывода ошибок ------------------------//
 function show_error($errors) {
-	render('includes/error', compact('errors'));
+	App::render('includes/error', compact('errors'));
 }
 
 // ------------------------- Функция вывода предупреждения ------------------------//
 function show_login($notice) {
-	render ('includes/login', compact('notice'));
+	App::render('includes/login', compact('notice'));
 }
 
 // ------------------------- Функция замены заголовков ------------------------//
@@ -2318,30 +2318,7 @@ function perfomance (){
 	global $config;
 
 	if (is_admin() && !empty($config['performance'])){
-		render ('includes/perfomance');
-	}
-}
-
-// ------------ Функция подключения шаблонов -----------//
-function render($view, $params = array(), $return = false){
-	global $config, $current_user;
-
-	extract($params);
-
-	if ($return) {
-		ob_start();
-	}
-
-	if (file_exists(BASEDIR.'/themes/'.$config['themes'].'/views/'.$view.'.php')){
-		include (BASEDIR.'/themes/'.$config['themes'].'/views/'.$view.'.php');
-	} elseif (file_exists(BASEDIR.'/themes/default/views/'.$view.'.php')){
-		include (BASEDIR.'/themes/default/views/'.$view.'.php');
-	} else {
-		show_error('Не удалось найти требуемый шаблон "'.$view.'"');
-	}
-
-	if ($return) {
-		return ob_get_clean();
+		App::render ('includes/perfomance');
 	}
 }
 

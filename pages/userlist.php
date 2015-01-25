@@ -30,7 +30,7 @@ case 'index':
 
 	$users = User::all(array('order' => 'point DESC, login ASC', 'offset' => $start, 'limit' => $config['userlist']));
 
-	render('pages/userlist', compact('users', 'start', 'total', 'login'));
+	App::render('pages/userlist', compact('users', 'start', 'total', 'login'));
 
 break;
 
@@ -65,7 +65,7 @@ case 'search':
 		show_error('Ошибка! Вы не ввели логин или ник пользователя');
 	}
 
-	render('includes/back', array('link' => 'userlist.php?start='.$start, 'title' => 'Вернуться'));
+	App::render('includes/back', array('link' => 'userlist.php?start='.$start, 'title' => 'Вернуться'));
 
 break;
 

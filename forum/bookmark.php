@@ -40,7 +40,7 @@ case 'index':
 
 		$bookmarks = Bookmark::find_all_by_user_id($current_user->id);
 
-		render('forum/bookmark', compact('bookmarks', 'start', 'total'));
+		App::render('forum/bookmark', compact('bookmarks', 'start', 'total'));
 
 	} else {
 		show_error('Закладок еще нет!');
@@ -73,7 +73,7 @@ case 'add':
 		show_error('Ошибка! Данной темы не существует!');
 	}
 
-	render('includes/back', array('link' => 'topic.php?tid='.$tid.'start='.$start, 'title' => 'Вернуться'));
+	App::render('includes/back', array('link' => 'topic.php?tid='.$tid.'start='.$start, 'title' => 'Вернуться'));
 break;
 
 ############################################################################################
@@ -100,7 +100,7 @@ case 'del':
 		show_error('Ошибка! Неверный идентификатор сессии, повторите действие!');
 	}
 
-	render('includes/back', array('link' => 'bookmark.php?start='.$start, 'title' => 'Вернуться'));
+	App::render('includes/back', array('link' => 'bookmark.php?start='.$start, 'title' => 'Вернуться'));
 break;
 
 ############################################################################################
@@ -129,7 +129,7 @@ case 'remove':
 		show_error('Ошибка! Неверный идентификатор сессии, повторите действие!');
 	}
 
-	render('includes/back', array('link' => 'topic.php?tid='.$tid.'start='.$start, 'title' => 'Вернуться'));
+	App::render('includes/back', array('link' => 'topic.php?tid='.$tid.'start='.$start, 'title' => 'Вернуться'));
 break;
 
 default:
@@ -140,7 +140,7 @@ endswitch;
 	show_login('Вы не авторизованы, для управления закладками, необходимо');
 }
 
-render('includes/back', array('link' => 'index.php', 'title' => 'К форумам', 'icon' => 'fa-arrow-circle-up'));
+App::render('includes/back', array('link' => 'index.php', 'title' => 'К форумам', 'icon' => 'fa-arrow-circle-up'));
 
 include_once ('../themes/footer.php');
 ?>

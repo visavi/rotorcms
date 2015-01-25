@@ -36,7 +36,7 @@ case 'index':
 
 	$onlines = Online::all(array('conditions' => array('user_id <> ?', ''), 'order' =>  'created_at', 'offset' => $start, 'limit' => $config['onlinelist']));
 
-	render('pages/online', compact('onlines', 'start', 'total', 'page'));
+	App::render('pages/online', compact('onlines', 'start', 'total', 'page'));
 
 break;
 
@@ -49,7 +49,7 @@ case 'all':
 
 	$onlines = Online::all(array('order' =>  'created_at', 'offset' => $start, 'limit' => $config['onlinelist']));
 
-	render('pages/online', compact('onlines', 'start', 'total', 'page'));
+	App::render('pages/online', compact('onlines', 'start', 'total', 'page'));
 
 break;
 

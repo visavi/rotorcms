@@ -96,5 +96,5 @@ header("Content-type:text/html; charset=utf-8");
 	<!-- Begin page content -->
 	<div class="container">
 		<div class="row main">
-		<?php render('includes/note', compact('php_self')); ?>
+		<?php App::render('includes/note', compact('php_self')); ?>
 			<div class="col-lg-9">

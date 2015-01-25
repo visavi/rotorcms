@@ -92,7 +92,7 @@ case 'index':
 			}*/
 			// ------------------------------------- //
 
-			render('forum/topic', compact('topic', 'tid', 'start', 'total'));
+			App::render('forum/topic', compact('topic', 'tid', 'start', 'total'));
 
 		} else {
 			show_error('Ошибка! Данной темы не существует!');
@@ -110,7 +110,7 @@ case 'addfile':
 	if (is_user()) {
 		if ($udata['users_point'] >= $config['forumloadpoints']){
 
-			render('forum/topic_addfile', array('tid' => $tid, 'start' => $start));
+			App::render('forum/topic_addfile', array('tid' => $tid, 'start' => $start));
 
 		} else {
 			show_error('Ошибка! У вас недостаточно актива для загрузки файлов!');
@@ -119,7 +119,7 @@ case 'addfile':
 		show_login('Вы не авторизованы, чтобы добавить сообщение, необходимо');
 	}
 
-	render('includes/back', array('link' => 'topic.php?tid='.$tid.'&amp;start='.$start, 'title' => 'Вернуться'));
+	App::render('includes/back', array('link' => 'topic.php?tid='.$tid.'&amp;start='.$start, 'title' => 'Вернуться'));
 break;
 
 ############################################################################################
@@ -249,7 +249,7 @@ var_dump($_REQUEST);
 		show_login('Вы не авторизованы, чтобы добавить сообщение, необходимо');
 	}
 
-	render('includes/back', array('link' => 'topic.php?tid='.$tid.'&amp;start='.$start, 'title' => 'Вернуться'));
+	App::render('includes/back', array('link' => 'topic.php?tid='.$tid.'&amp;start='.$start, 'title' => 'Вернуться'));
 break;
 
 ############################################################################################
@@ -289,7 +289,7 @@ case 'spam':
 		show_login('Вы не авторизованы, чтобы подать жалобу, необходимо');
 	}
 
-	render('includes/back', array('link' => 'topic.php?tid='.$tid.'&amp;start='.$start, 'title' => 'Вернуться'));
+	App::render('includes/back', array('link' => 'topic.php?tid='.$tid.'&amp;start='.$start, 'title' => 'Вернуться'));
 break;
 
 ############################################################################################
@@ -351,7 +351,7 @@ case 'del':
 		show_login('Вы не авторизованы, чтобы добавить сообщение, необходимо');
 	}
 
-	render('includes/back', array('link' => 'topic.php?tid='.$tid.'&amp;start='.$start, 'title' => 'Вернуться'));
+	App::render('includes/back', array('link' => 'topic.php?tid='.$tid.'&amp;start='.$start, 'title' => 'Вернуться'));
 break;
 
 ############################################################################################
@@ -393,7 +393,7 @@ case 'closed':
 		show_error('Ошибка! Неверный идентификатор сессии, повторите действие!');
 	}
 
-	render('includes/back', array('link' => 'topic.php?tid='.$tid.'&amp;start='.$start, 'title' => 'Вернуться'));
+	App::render('includes/back', array('link' => 'topic.php?tid='.$tid.'&amp;start='.$start, 'title' => 'Вернуться'));
 break;
 
 ############################################################################################
@@ -412,7 +412,7 @@ case 'reply':
 		if (!empty($post)) {
 			if (empty($post['topics_closed'])) {
 
-				render('forum/topic_reply', array('post' => $post, 'start' => $start, 'num' => $num));
+				App::render('forum/topic_reply', array('post' => $post, 'start' => $start, 'num' => $num));
 
 			} else {
 				show_error('Данная тема закрыта для обсуждения!');
@@ -424,7 +424,7 @@ case 'reply':
 		show_login('Вы не авторизованы, чтобы отвечать на сообщения, необходимо');
 	}
 
-	render('includes/back', array('link' => 'topic.php?tid='.$tid.'&amp;start='.$start, 'title' => 'Вернуться'));
+	App::render('includes/back', array('link' => 'topic.php?tid='.$tid.'&amp;start='.$start, 'title' => 'Вернуться'));
 break;
 
 ############################################################################################
@@ -445,7 +445,7 @@ case 'quote':
 				$post['posts_text'] = preg_replace('|\[q\](.*?)\[/q\](<br />)?|', '', $post['posts_text']);
 				$post['posts_text'] = yes_br($post['posts_text']);
 
-				render('forum/topic_quote', array('post' => $post, 'start' => $start));
+				App::render('forum/topic_quote', array('post' => $post, 'start' => $start));
 
 			} else {
 				show_error('Данная тема закрыта для обсуждения!');
@@ -457,7 +457,7 @@ case 'quote':
 		show_login('Вы не авторизованы, чтобы цитировать сообщения, необходимо');
 	}
 
-	render('includes/back', array('link' => 'topic.php?tid='.$tid.'&amp;start='.$start, 'title' => 'Вернуться'));
+	App::render('includes/back', array('link' => 'topic.php?tid='.$tid.'&amp;start='.$start, 'title' => 'Вернуться'));
 break;
 
 ############################################################################################
@@ -476,7 +476,7 @@ case 'edittopic':
 						if (!empty($post)) {
 
 							$post['posts_text'] = yes_br(nosmiles($post['posts_text']));
-							render('forum/topic_edittopic', array('post' => $post, 'topics' => $topics));
+							App::render('forum/topic_edittopic', array('post' => $post, 'topics' => $topics));
 
 						} else {
 							show_error('Ошибка! Первого сообщения в теме не существует!');
@@ -497,7 +497,7 @@ case 'edittopic':
 		show_login('Вы не авторизованы, чтобы изменять темы, необходимо');
 	}
 
-	render('includes/back', array('link' => 'topic.php?tid='.$tid, 'title' => 'Вернуться'));
+	App::render('includes/back', array('link' => 'topic.php?tid='.$tid, 'title' => 'Вернуться'));
 break;
 
 ############################################################################################
@@ -560,7 +560,7 @@ case 'changetopic':
 		show_login('Вы не авторизованы, чтобы редактировать сообщения, необходимо');
 	}
 
-	render('includes/back', array('link' => 'topic.php?act=edittopic&amp;tid='.$tid, 'title' => 'Вернуться'));
+	App::render('includes/back', array('link' => 'topic.php?act=edittopic&amp;tid='.$tid, 'title' => 'Вернуться'));
 break;
 
 ############################################################################################
@@ -579,7 +579,7 @@ case 'modedit':
 					if (in_array($log, $topic_mod)) {
 
 						$post['posts_text'] = yes_br(nosmiles($post['posts_text']));
-						render('forum/topic_modedit', array('post' => $post, 'pid' => $pid, 'start' => $start));
+						App::render('forum/topic_modedit', array('post' => $post, 'pid' => $pid, 'start' => $start));
 
 					} else {
 						show_error('Ошибка! Редактировать сообщения могут только кураторы темы!');
@@ -597,7 +597,7 @@ case 'modedit':
 		show_login('Вы не авторизованы, чтобы редактировать сообщения, необходимо');
 	}
 
-	render('includes/back', array('link' => 'topic.php?tid='.$tid.'&amp;start='.$start, 'title' => 'Вернуться'));
+	App::render('includes/back', array('link' => 'topic.php?tid='.$tid.'&amp;start='.$start, 'title' => 'Вернуться'));
 break;
 
 ############################################################################################
@@ -651,7 +651,7 @@ case 'modeditpost':
 		show_login('Вы не авторизованы, чтобы редактировать сообщения, необходимо');
 	}
 
-	render('includes/back', array('link' => 'topic.php?act=modedit&amp;tid='.$tid.'&amp;pid='.$pid.'&amp;start='.$start, 'title' => 'Вернуться'));
+	App::render('includes/back', array('link' => 'topic.php?act=modedit&amp;tid='.$tid.'&amp;pid='.$pid.'&amp;start='.$start, 'title' => 'Вернуться'));
 break;
 
 ############################################################################################
@@ -673,7 +673,7 @@ case 'edit':
 					$queryfiles = DB::run() -> query("SELECT * FROM `files_forum` WHERE `file_posts_id`=?;", array($pid));
 					$files = $queryfiles->fetchAll();
 
-					render('forum/topic_edit', array('post' => $post, 'files' => $files, 'pid' => $pid, 'start' => $start));
+					App::render('forum/topic_edit', array('post' => $post, 'files' => $files, 'pid' => $pid, 'start' => $start));
 
 				} else {
 					show_error('Ошибка! Редактирование невозможно, прошло более 10 минут!!');
@@ -688,7 +688,7 @@ case 'edit':
 		show_login('Вы не авторизованы, чтобы редактировать сообщения, необходимо');
 	}
 
-	render('includes/back', array('link' => 'topic.php?tid='.$tid.'&amp;start='.$start, 'title' => 'Вернуться'));
+	App::render('includes/back', array('link' => 'topic.php?tid='.$tid.'&amp;start='.$start, 'title' => 'Вернуться'));
 break;
 
 ############################################################################################
@@ -761,7 +761,7 @@ case 'editpost':
 		show_login('Вы не авторизованы, чтобы редактировать сообщения, необходимо');
 	}
 
-	render('includes/back', array('link' => 'topic.php?act=edit&amp;tid='.$tid.'&amp;pid='.$pid.'&amp;start='.$start, 'title' => 'Вернуться'));
+	App::render('includes/back', array('link' => 'topic.php?act=edit&amp;tid='.$tid.'&amp;pid='.$pid.'&amp;start='.$start, 'title' => 'Вернуться'));
 break;
 
 ############################################################################################
@@ -803,6 +803,6 @@ default:
 	redirect("index.php");
 endswitch;
 
-render('includes/back', array('link' => 'index.php', 'title' => 'К форумам', 'icon' => 'fa-arrow-circle-up'));
+App::render('includes/back', array('link' => 'index.php', 'title' => 'К форумам', 'icon' => 'fa-arrow-circle-up'));
 include_once ('../themes/footer.php');
 ?>

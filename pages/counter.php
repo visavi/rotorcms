@@ -118,7 +118,7 @@ switch ($act):
 			show_error('Статистика за текущие сутки еще не обновилась!');
 		}
 
-		render('includes/back', array('link' => 'counter.php', 'title' => 'Вернуться'));
+		App::render('includes/back', array('link' => 'counter.php', 'title' => 'Вернуться'));
 	break;
 
 	############################################################################################
@@ -174,7 +174,7 @@ switch ($act):
 			show_error('Статистика за текущий месяц еще не обновилась!');
 		}
 
-		render('includes/back', array('link' => 'counter.php', 'title' => 'Вернуться'));
+		App::render('includes/back', array('link' => 'counter.php', 'title' => 'Вернуться'));
 	break;
 
 default:

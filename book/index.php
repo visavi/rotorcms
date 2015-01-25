@@ -34,7 +34,7 @@ case 'index':
 
 	$posts = Guest::all(array('offset' => $start, 'limit' => $config['bookpost'], 'order' => 'created_at desc', 'include' => array('user')));
 
-	render('book/index', compact('posts', 'start', 'total'));
+	App::render('book/index', compact('posts', 'start', 'total'));
 
 break;
 
@@ -109,7 +109,7 @@ case 'add':
 		show_login('Вы не авторизованы, чтобы добавить сообщение, необходимо');
 	}
 
-	render('includes/back', array('link' => 'index.php', 'title' => 'Вернуться'));
+	App::render('includes/back', array('link' => 'index.php', 'title' => 'Вернуться'));
 break;
 
 ############################################################################################
@@ -128,7 +128,7 @@ case 'edit':
 
 				$post->text = $post->text;
 
-				render('book/edit', compact('post', 'id', 'start'));
+				App::render('book/edit', compact('post', 'id', 'start'));
 
 			} else {
 				show_error('Ошибка! Редактирование невозможно, прошло более 10 минут!!');
@@ -140,7 +140,7 @@ case 'edit':
 		show_login('Вы не авторизованы, чтобы редактировать сообщения, необходимо');
 	}
 
-	render('includes/back', array('link' => 'index.php?start='.$start, 'title' => 'Вернуться'));
+	App::render('includes/back', array('link' => 'index.php?start='.$start, 'title' => 'Вернуться'));
 break;
 
 ############################################################################################
@@ -178,8 +178,8 @@ case 'editpost':
 		show_login('Вы не авторизованы, чтобы редактировать сообщения, необходимо');
 	}
 
-	render('includes/back', array('link' => 'index.php?act=edit&amp;id='.$id.'&amp;start='.$start, 'title' => 'Вернуться'));
-	render('includes/back', array('link' => 'index.php?start='.$start, 'title' => 'В гостевую', 'icon' => 'fa-arrow-circle-up'));
+	App::render('includes/back', array('link' => 'index.php?act=edit&amp;id='.$id.'&amp;start='.$start, 'title' => 'Вернуться'));
+	App::render('includes/back', array('link' => 'index.php?start='.$start, 'title' => 'В гостевую', 'icon' => 'fa-arrow-circle-up'));
 break;
 
 default:

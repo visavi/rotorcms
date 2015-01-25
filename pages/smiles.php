@@ -32,7 +32,7 @@ case "index":
 
 	$smiles = Smile::all(array('offset' => $start, 'limit' => $config['smilelist'], 'order' => 'LENGTH(code)'));
 
-	render('pages/smiles', compact('smiles', 'start', 'total'));
+	App::render('pages/smiles', compact('smiles', 'start', 'total'));
 
 break;
 
