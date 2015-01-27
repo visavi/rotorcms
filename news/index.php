@@ -24,23 +24,20 @@ switch ($act):
 ############################################################################################
 case 'index':
 
-	if (is_admin(array(101, 102))){
-		echo '<div class="form"><a href="/admin/news.php">Управление новостями</a></div>';
+	$total = News::count();
+
+	if ($total > 0 && $start >= $total) {
+		$start = last_page($total, $config['postnews']);
 	}
 
-	$total = DB::run() -> querySingle("SELECT count(*) FROM `news`;");
-
 	$page = floor(1 + $start / $config['postnews']);
-	$config['description'] = 'Список новостей (Стр. '.$page.')';
+	$config['description'] = 'Новости сайта (Стр. '.$page.')';
 
-	if ($total > 0) {
-		if ($start >= $total) {
-			$start = last_page($total, $config['postnews']);
-		}
+	$news = News::all(array('offset' => $start, 'limit' => $config['postnews'], 'order' => 'created_at desc', 'include' => array('user')));
 
-		$querynews = DB::run() -> query("SELECT * FROM `news` ORDER BY `news_time` DESC LIMIT ".$start.", ".$config['postnews'].";");
+	App::render('news/index', compact('news', 'start', 'total'));
 
-		while ($data = $querynews -> fetch()) {
+/*		while ($data = $querynews -> fetch()) {
 			echo '<div class="b">';
 			echo $data['news_closed'] == 0 ? '<img src="/images/img/document_plus.gif" alt="image" /> ' : '<img src="/images/img/document_minus.gif" alt="image" /> ';
 			echo '<b><a href="index.php?act=read&amp;id='.$data['news_id'].'">'.$data['news_title'].'</a></b><small> ('.date_fixed($data['news_time']).')</small></div>';
@@ -66,6 +63,7 @@ case 'index':
 
 	echo '<img src="/images/img/rss.gif" alt="image" /> <a href="rss.php">RSS подписка</a><br />';
 	echo '<img src="/images/img/balloon.gif" alt="image" /> <a href="comments.php">Комментарии</a><br />';
+	*/
 break;
 
 ############################################################################################
