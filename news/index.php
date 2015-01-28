@@ -33,37 +33,10 @@ case 'index':
 	$page = floor(1 + $start / $config['postnews']);
 	$config['description'] = 'Новости сайта (Стр. '.$page.')';
 
-	$news = News::all(array('offset' => $start, 'limit' => $config['postnews'], 'order' => 'created_at desc', 'include' => array('user')));
+	$news_list = News::all(array('offset' => $start, 'limit' => $config['postnews'], 'order' => 'created_at desc', 'include' => array('user')));
 
-	App::render('news/index', compact('news', 'start', 'total'));
+	App::render('news/index', compact('news_list', 'start', 'total'));
 
-/*		while ($data = $querynews -> fetch()) {
-			echo '<div class="b">';
-			echo $data['news_closed'] == 0 ? '<img src="/images/img/document_plus.gif" alt="image" /> ' : '<img src="/images/img/document_minus.gif" alt="image" /> ';
-			echo '<b><a href="index.php?act=read&amp;id='.$data['news_id'].'">'.$data['news_title'].'</a></b><small> ('.date_fixed($data['news_time']).')</small></div>';
-
-			if (!empty($data['news_image'])) {
-				echo '<div class="img"><a href="/upload/news/'.$data['news_image'].'">'.resize_image('upload/news/', $data['news_image'], 75, $data['news_title']).'</a></div>';
-			}
-
-			if(stristr($data['news_text'], '[cut]')) {
-				$data['news_text'] = current(explode('[cut]', $data['news_text'])).' <a href="index.php?act=read&amp;id='.$data['news_id'].'">Читать далее &raquo;</a>';
-			}
-
-			echo '<div>'.bb_code($data['news_text']).'</div>';
-			echo '<div style="clear:both;">Добавлено: '.profile($data['news_author']).'<br />';
-			echo '<a href="index.php?act=comments&amp;id='.$data['news_id'].'">Комментарии</a> ('.$data['news_comments'].') ';
-			echo '<a href="index.php?act=end&amp;id='.$data['news_id'].'">&raquo;</a></div>';
-		}
-
-		page_strnavigation('index.php?', $config['postnews'], $start, $total);
-	} else {
-		show_error('Новостей еще нет!');
-	}
-
-	echo '<img src="/images/img/rss.gif" alt="image" /> <a href="rss.php">RSS подписка</a><br />';
-	echo '<img src="/images/img/balloon.gif" alt="image" /> <a href="comments.php">Комментарии</a><br />';
-	*/
 break;
 
 ############################################################################################
