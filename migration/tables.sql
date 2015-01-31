@@ -1293,3 +1293,18 @@ CREATE TABLE IF NOT EXISTS `floods` (
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `comments` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) unsigned NOT NULL,
+  `type` enum('news', 'blog', 'down', 'gallery') NOT NULL,
+  `service_id` int(11) unsigned NOT NULL,
+  `text` text NOT NULL,
+  `ip` varchar(15) NOT NULL,
+  `brow` varchar(25) NOT NULL,
+  `updated_at` timestamp NOT NULL,
+  `created_at` timestamp NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`),
+  KEY `type` (`type`, `service_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;

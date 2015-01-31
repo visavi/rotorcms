@@ -1462,17 +1462,22 @@ function last_news() {
 
 	if ($config['lastnews'] > 0) {
 
-		$news = News::all(array('conditions' => 'top = 1', 'limit' => $config['lastnews'], 'order' => 'created_at desc'));
-		$total = count($news);
+		$news = News::all(array('limit' => $config['lastnews'], 'order' => 'created_at desc', 'include' => 'comment_count'));
 
-		if ($total > 0) {
+		if ($news) {
 			foreach ($news as $data) {
-				$data->text = str_replace('[cut]', '', $data->text);
-				echo '<img src="/images/img/act.png" alt="Новость" /> <a href="/news/index.php?act=read&amp;id='.$data->id.'">'.$data->title.'</a> ('.$data->comments.') <img class="news-title" src="/images/img/downs.gif" alt="Открыть" /><br />';
 
-				echo '<div class="news-text">'.bb_code($data->text).'<br />';
-				echo '<a href="/news/index.php?act=comments&amp;id='.$data->id.'">Комментарии</a> ';
-				echo '<a href="/news/index.php?act=end&amp;id='.$data->id.'">&raquo;</a></div>';
+				echo '
+
+			<div class="spoiler">
+				<b class="spoiler-title">'.$data->title.'</b>
+				<div class="spoiler-text" style="display: none;">
+				'.bb_code($data->text).'<br />
+					<a href="/news/index.php?act=comments&amp;id='.$data->id.'">Комментарии</a> ('.$data->commentCount().')
+				</div>
+			</div>
+
+				';
 			}
 		}
 	}
