@@ -1463,23 +1463,7 @@ function last_news() {
 	if ($config['lastnews'] > 0) {
 
 		$news = News::all(array('limit' => $config['lastnews'], 'order' => 'created_at desc', 'include' => 'comment_count'));
-
-		if ($news) {
-			foreach ($news as $data) {
-
-				echo '
-
-			<div class="spoiler">
-				<b class="spoiler-title">'.$data->title.'</b>
-				<div class="spoiler-text" style="display: none;">
-				'.bb_code($data->text).'<br />
-					<a href="/news/index.php?act=comments&amp;id='.$data->id.'">Комментарии</a> ('.$data->commentCount().')
-				</div>
-			</div>
-
-				';
-			}
-		}
+		App::render('news/last_news', compact('news'));
 	}
 }
 

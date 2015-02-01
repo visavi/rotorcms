@@ -81,24 +81,14 @@ body {
   border-bottom: 1px solid #eee;
 }
 
-/*.media-body {
-  display: block;
-  overflow: hidden;
-}
-*/
 .media-heading {
   min-height: 25px;
 }
 
-/*.media-left {
-  float: left;
-  display: block;
+.img-message {
+  max-width: 300px;
+  max-height: 300px;
 }
-
-.media-right {
-  float: right;
-  display: block;
-}*/
 
 blockquote:before {
   content: "\f10d";

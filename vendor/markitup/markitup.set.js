@@ -11,6 +11,9 @@ mySettings = {
 
 		{separator:'---------------' },
 		{title:'Ссылка', name:'<i class="fa fa-link"></i>', className:"bb-link", key:'L', openWith:'[url=[![Ссылка:!:http://]!]]', closeWith:'[/url]', placeHolder:'Текст ссылки...'},
+
+		/*{title:'Изображение', name:'<i class="fa fa-image"></i>', className:"bb-image", openWith:'[img][![URL изображения:!:http://]!]', closeWith:'[/img]'},*/
+
 		{title:'Видео', name:'<i class="fa fa-youtube-play"></i>', className:"bb-youtube", openWith:'[youtube][![Код видео с youtube]!]', closeWith:'[/youtube]'},
 		{title:'Цвет', name:'<i class="fa fa-th"></i>', className:"bb-color", openWith:'[color=[![Код цвета]!]]', closeWith:'[/color]',
 		dropMenu: [

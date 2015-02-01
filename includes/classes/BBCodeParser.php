@@ -54,11 +54,11 @@ class BBCodeParser {
 			'pattern' => '/\[url\=(.*?)\](.*?)\[\/url\]/s',
 			'replace' => '<a href="$1">$2</a>',
 		),
-		//'image' => array(
-		//	'pattern' => '/\[img\](.*?)\[\/img\]/ms',
-		//	'replace' => '<img src="$1">',
-		//),
-/*		'orderedList' => array(
+/*		'image' => array(
+			'pattern' => '/\[img\](.*?)\[\/img\]/s',
+			'callback' => 'img_replace',
+		),
+		'orderedList' => array(
 			'pattern' => '/\[list=1\](.*?)\[\/list\]/s',
 			'replace' => '<ol>$1</ol>',
 		),
@@ -111,6 +111,19 @@ class BBCodeParser {
 			}
 		}
 		return $source;
+	}
+
+	/**
+	 * Обработка изображений
+	 * @param  array $match ссылка на изображение
+	 * @return string картинка
+	 */
+	public function img_replace($match) {
+		if (preg_match('/[\w\-]+\.(jpg|png|gif|jpeg)/', $match[1])) {
+			return '<img src="'.$match[1].'" class="img-responsive img-message" alt="image">';
+		} else {
+			return $match[1];
+		}
 	}
 
 	/**
