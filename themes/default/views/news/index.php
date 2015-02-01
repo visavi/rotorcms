@@ -6,7 +6,7 @@
 
 			<?php if ($news->image): ?>
 				<div>
-					<img src="/upload/news/<?= $news->image ?>" class="pull-left img-responsive" alt="Responsive image">
+					<img src="/upload/news/<?= $news->image ?>" class="pull-left img-responsive img-reduced" alt="<?= $news->title ?>">
 				</div>
 				<?= $news->text ?>
 			<?php endif; ?>
