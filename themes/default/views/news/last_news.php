@@ -1,5 +1,4 @@
 <?php if ($news): ?>
-
 	<?php foreach ($news as $data): ?>
 
 		<div class="spoiler">

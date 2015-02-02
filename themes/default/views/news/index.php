@@ -1,18 +1,18 @@
 <?php if ($total > 0): ?>
 	<?php foreach ($news_list as $news): ?>
 
-		<div class="col-lg-12">
-			<h3><a href="index.php?act=read&amp;id=<?= $news->id ?>"><?= $news->title ?></a></h3>
-
-			<?php if ($news->image): ?>
-				<div>
-					<img src="/upload/news/<?= $news->image ?>" class="pull-left img-responsive img-reduced" alt="<?= $news->title ?>">
+		<div class="media">
+			<div class="media-left">
+				<img src="/upload/news/<?= $news->image ?>" class="img-responsive img-reduced" alt="<?= $news->title ?>">
+			</div>
+			<div class="media-body">
+				<div class="media-heading">
+					<h3 class="author"><a href="index.php?act=read&amp;id=<?= $news->id ?>"><?= $news->title ?></a></h3>
+					<span class="pull-right text-muted small date"><?= $news->created_at ?></span>
 				</div>
-				<?= $news->text ?>
-			<?php endif; ?>
 
-
-			<?= $news->created_at ?>
+				<div class="message"><?= $news->text ?></div>
+			</div>
 		</div>
 
 
