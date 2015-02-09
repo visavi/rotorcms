@@ -210,11 +210,14 @@ function highlight_code($code) {
 }*/
 
 // ------------------ Функция вставки BB-кода --------------------//
-function bb_code($text) {
+function bb_code($text, $parse = true) {
 
 	static $list_smiles;
 
 	$bbcode = new BBCodeParser;
+
+	if ( ! $parse) return $bbcode->clear($text);
+
 	$text = $bbcode->parse($text);
 
 	if (empty($list_smiles)) {
@@ -2044,7 +2047,7 @@ function resize_image($dir, $name, $size, $alt="") {
 		$imgsize = getimagesize(BASEDIR.'/'.$dir.$name);
 
 		if ($imgsize[0] <= $size && $imgsize[1] <= $size) {
-			return '<img src="/'.$dir.$name.'" alt="'.$sign.'" />';
+			return '<img src="/'.$dir.$name.'" alt="'.$sign.'" class="img-responsive img-reduced" />';
 		}
 
 		if (!file_exists(BASEDIR.'/upload/thumbnail/'.$prename.$name) || filesize(BASEDIR.'/upload/thumbnail/'.$prename.$name) < 18) {
@@ -2062,10 +2065,10 @@ function resize_image($dir, $name, $size, $alt="") {
 				$handle -> process(BASEDIR.'/upload/thumbnail/');
 			}
 		}
-		return '<img src="/upload/thumbnail/'.$prename.$name.'" alt="'.$sign.'" />';
+		return '<img src="/upload/thumbnail/'.$prename.$name.'" alt="'.$sign.'" class="img-responsive img-reduced" />';
 	}
-	$param = ($size<100) ? ' height="'.$size.'" width="'.$size.'"' : '';
-	return '<img src="/images/img/photo.jpg" alt="nophoto"'.$param.' />';
+
+	return '<img src="/images/img/photo.jpg" alt="nophoto" class="img-responsive img-reduced" />';
 }
 
 // ------------- Функция переадресации -------------//

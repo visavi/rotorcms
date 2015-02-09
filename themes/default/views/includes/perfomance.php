@@ -13,6 +13,6 @@
 		<?php endif; ?>
 	<?php endif; ?>
 
-	<span data-toggle="tooltip" title="Загрузка страницы"><i class="fa fa-plane"></i> <?= round(microtime(1) - STARTTIME, 4) ?> сек.</span>
+	<span data-toggle="tooltip" title="Загрузка страницы"><i class="fa fa-plane"></i> <?= round(microtime(1) - STARTTIME, 3) ?> сек.</span>
 </div>
 

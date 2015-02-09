@@ -113,6 +113,10 @@ class BBCodeParser {
 		return $source;
 	}
 
+	public function clear($source) {
+		return $source = preg_replace('/\[(.*?)\]/', '', $source);
+	}
+
 	/**
 	 * Обработка изображений
 	 * @param  array $match ссылка на изображение
