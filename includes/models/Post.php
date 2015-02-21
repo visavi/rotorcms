@@ -5,6 +5,7 @@ class Post extends BaseActiveRecord {
 	static $table_name = 'posts';
 
 	static $belongs_to = array(
+		array('forum'),
 		array('topic'),
 		array('user'),
 	);
@@ -14,6 +15,10 @@ class Post extends BaseActiveRecord {
 		//$config['forumtextlength']
 		array('text', 'minimum' => 5, 'too_short' => 'Слишком короткое сообщение, минимум %d симв.'),
 		array('text', 'maximum' => 3000, 'too_long' => 'Слишком длинное сообщение, максимум %d симв.'),
+	);
+
+	static $validates_numericality_of = array(
+		array('user_id', 'greater_than' => 0, 'only_integer' => true, 'message' => 'Пользователь не авторизован'),
 	);
 
 
@@ -27,6 +32,11 @@ class Post extends BaseActiveRecord {
 		// Проверка существования темы
 		if (!$this->topic) {
 			$this->errors->add('topic', 'Темы для данного сообщения не существует!');
+		}
+
+		// Проверка существования раздела
+		if (!$this->forum) {
+			$this->errors->add('forum', 'Раздела для данного сообщения не существует!');
 		}
 
 		// Проверка на открытость темы

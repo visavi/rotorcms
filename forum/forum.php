@@ -94,6 +94,13 @@ case 'add':
 
 	if (is_user()) {
 
+		$connection = Topic::connection();
+
+		$connection->transaction();
+		$connection->commit();
+		$connection->rollback();
+echo 2;
+exit;
 		$topic_data = array(
 			'token' => $token,
 			'forum_id' => $fid,
@@ -103,25 +110,24 @@ case 'add':
 
 		$post_data = array(
 			'token' => $token,
-			'forum_id' => $fid,
-			//'topic_id' => $topic->id,
+			//'forum_id' => $fid,
 			'user_id' => $current_user->id,
 			'text' => $msg,
 			'ip' => $ip,
 			'brow' => $brow,
 		);
 
-
 		$topics = Topic::transaction(function() use ($topic_data, $post_data) {
 
 			$topic = Topic::create($topic_data);
+
+			$post_data['topic_id'] = $topic->id;
 			$post = Post::create($post_data);
 
 			return ($post->is_valid() && $topic->is_valid());
 		});
+var_dump($topics);
 
-var_dump($topic);
-var_dump($post);
 /*		if ($topic && $post) {
 			notice('Новая тема успешно создана!');
 			redirect("topic.php?tid={$topic->id}");
