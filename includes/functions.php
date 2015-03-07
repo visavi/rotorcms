@@ -1166,33 +1166,30 @@ function addmail($mail, $subject, $messages, $sendermail="", $sendername="") {
 }
 
 // ----------------------- Постраничная навигация ------------------------//
-function page_strnavigation($url, $posts, $start, $total, $range = 3) {
+function page_strnavigation($url, $rpp, $current, $total, $crumbs = 3) {
 
 	if ($total > 0) {
+
 		$pages = array();
+		$pg_cnt = ceil($total / $rpp);
+		$idx_fst = max($current - $crumbs, 1);
+		$idx_lst = min($current + $crumbs, $pg_cnt);
 
-		$pg_cnt = ceil($total / $posts);
-		$cur_page = ceil(($start + 1) / $posts);
-		$idx_fst = max($cur_page - $range, 1);
-		$idx_lst = min($cur_page + $range, $pg_cnt);
-
-		if ($cur_page != 1) {
+		if ($current != 1) {
 			$pages[] = array(
-				'start' => (($cur_page - 2) * $posts),
-				'title' => 'Назад',
-				'name' => '&laquo;',
+				'start' => $current - 1,
+				'title' => 'Предыдущая',
+				'name' => '« Предыдущая',
 			);
 		}
-
-		if (($start - $posts) >= 0) {
-			if ($cur_page > ($range + 1)) {
-
+		if (($current - $idx_fst) >= 0) {
+			if ($current > ($crumbs + 1)) {
 				$pages[] = array(
-					'start' => 0,
+					'start' => 1,
 					'title' => '1 страница',
 					'name' => 1,
 				);
-				if ($cur_page != ($range + 2)) {
+				if ($current != ($crumbs + 2)) {
 					$pages[] = array(
 						'separator' => true,
 						'name' => ' ... ',
@@ -1202,44 +1199,40 @@ function page_strnavigation($url, $posts, $start, $total, $range = 3) {
 		}
 
 		for ($i = $idx_fst; $i <= $idx_lst; $i++) {
-			$offset_page = ($i - 1) * $posts;
-			if ($i == $cur_page) {
 
+			if ($i == $current) {
 				$pages[] = array(
 					'current' => true,
 					'name' => $i,
 				);
 			} else {
-
 				$pages[] = array(
-					'start' => $offset_page,
+					'start' => $i,
 					'title' => $i.' страница',
 					'name' => $i,
 				);
 			}
 		}
-
-		if (($start + $posts) < $total) {
-			if ($cur_page < ($pg_cnt - $range)) {
-				if ($cur_page != ($pg_cnt - $range - 1)) {
+		if (($current + $idx_lst) < $total) {
+			if ($current < ($pg_cnt - $crumbs)) {
+				if ($current != ($pg_cnt - $crumbs - 1)) {
 					$pages[] = array(
 						'separator' => true,
 						'name' => ' ... ',
 					);
 				}
 				$pages[] = array(
-					'start' => ($pg_cnt - 1) * $posts,
+					'start' => $pg_cnt,
 					'title' => $pg_cnt . ' страница',
 					'name' => $pg_cnt,
 				);
 			}
 		}
-
-		if ($cur_page != $pg_cnt) {
+		if ($current != $pg_cnt) {
 			$pages[] = array(
-				'start' => $cur_page * $posts,
-				'title' => 'Вперед',
-				'name' => '&raquo;',
+				'start' => $current + 1,
+				'title' => 'Следующая',
+				'name' => 'Следующая »',
 			);
 		}
 

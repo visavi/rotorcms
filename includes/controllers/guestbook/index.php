@@ -1,6 +1,6 @@
 <?php
-$act = (isset($_GET['act'])) ? check($_GET['act']) : 'index';
-$start = (isset($_GET['start'])) ? abs(intval($_GET['start'])) : 0;
+$act = (isset($current_router['params']['action'])) ? check($current_router['params']['action']) : 'index';
+$page = (isset($current_router['params']['page']))? abs(intval($current_router['params']['page'])) : 1;
 
 show_title('Гостевая книга', 'Общение без ограничений');
 
@@ -16,12 +16,13 @@ case 'index':
 		$start = last_page($total, $config['bookpost']);
 	}
 
-	$page = floor(1 + $start / $config['bookpost']);
+	//$page = floor(1 + $start / $config['bookpost']);
+	$offset = intval(($page * $config['bookpost']) - $config['bookpost']);
 	$config['newtitle'] = 'Гостевая книга (Стр. '.$page.')';
 
-	$posts = Guest::all(array('offset' => $start, 'limit' => $config['bookpost'], 'order' => 'created_at desc', 'include' => array('user')));
+	$posts = Guest::all(array('offset' => $offset, 'limit' => $config['bookpost'], 'order' => 'created_at desc', 'include' => array('user')));
 
-	App::render('book/index', compact('posts', 'start', 'total'));
+	App::render('book/index', compact('posts', 'page', 'total'));
 
 break;
 
@@ -30,11 +31,11 @@ break;
 ############################################################################################
 case 'add':
 
-	$msg = check($_POST['msg']);
-	$token = check($_GET['token']);
+	$msg = (isset($_POST['msg'])) ? check($_POST['msg']) : '';
+	$token = (!empty($_POST['token'])) ? check($_POST['token']) : 0;
 
 	if (is_user()) {
-		if (is_flood($log)) {
+		//if (is_flood($log)) {
 
 			$user = User::find_by_id($current_user->id);
 			$user->allguest = $user->allguest + 1;
@@ -57,22 +58,22 @@ case 'add':
 				//Guest::table()->delete(array('id' => array($delete)));
 
 				notice('Сообщение успешно добавлено!');
-				redirect("index.php");
+				redirect('/guestbook');
 			} else {
 				show_error($post->getErrors());
 			}
-		} else {
-			show_error('Антифлуд! Разрешается отправлять сообщения раз в '.flood_period().' секунд!');
-		}
+		//} else {
+		//	show_error('Антифлуд! Разрешается отправлять сообщения раз в '.flood_period().' секунд!');
+		//}
 
 		############################################################################################
 		##                                   Добавление для гостей                                ##
 		############################################################################################
 	} elseif ($config['bookadds'] == 1) {
-		$provkod = check(strtolower($_POST['provkod']));
+		$provkod = (isset($_POST['provkod'])) ? check(strtolower($_POST['provkod'])) : '';
 
 		if ($provkod == $_SESSION['protect']) {
-			if (is_flood($log)) {
+			//if (is_flood($log)) {
 
 				$post = new Guest;
 				$post->user_id = 0;
@@ -82,13 +83,13 @@ case 'add':
 
 				if ($post->save()) {
 					notice('Сообщение успешно добавлено!');
-					redirect("index.php");
+					redirect("/guestbook");
 				} else {
 					show_error($post->getErrors());
 				}
-			} else {
-				show_error('Антифлуд! Разрешается отправлять сообщения раз в '.flood_period().' секунд!');
-			}
+			//} else {
+			//	show_error('Антифлуд! Разрешается отправлять сообщения раз в '.flood_period().' секунд!');
+			//}
 		} else {
 			show_error('Ошибка! Проверочное число не совпало с данными на картинке!');
 		}
@@ -96,7 +97,7 @@ case 'add':
 		show_login('Вы не авторизованы, чтобы добавить сообщение, необходимо');
 	}
 
-	App::render('includes/back', array('link' => 'index.php', 'title' => 'Вернуться'));
+	App::render('includes/back', array('link' => '/guestbook', 'title' => 'Вернуться'));
 break;
 
 ############################################################################################
@@ -170,6 +171,6 @@ case 'editpost':
 break;
 
 default:
-	redirect("index.php");
+	redirect("/guestbook");
 endswitch;
 ?>

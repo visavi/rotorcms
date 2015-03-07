@@ -1,22 +1,27 @@
-RewriteEngine On
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule . index.php [L]
-
 DirectoryIndex index.php
 AddDefaultCharset UTF-8
 Options -Indexes
 
-ErrorDocument 403 /pages/error.php?error=403
-ErrorDocument 404 /pages/error.php?error=404
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^(.*)/$ /$1 [L,R=301]
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ index.php [L]
+</IfModule>
+
+<FilesMatch ".(htaccess|htpasswd|gitignore|md|json|lock|dat)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
 
 <Files ~ "includes|local">
-   Order allow,deny
+    Order Allow,Deny
     Deny from all
 </Files>
-<Files ~ ".(dat|gitignore)$">
-   Order allow,deny
-   Deny from all
-</Files>
+
+ErrorDocument 403 /pages/error.php?error=403
+ErrorDocument 404 /pages/error.php?error=404
 
 FileETag MTime Size
 <ifmodule mod_expires.c>

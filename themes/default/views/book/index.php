@@ -64,7 +64,7 @@
 
 	<?php endforeach; ?>
 
-	<?php page_strnavigation('index.php?', $config['bookpost'], $start, $total); ?>
+	<?php page_strnavigation('/guestbook', $config['bookpost'], $page, $total); ?>
 
 <?php else: ?>
 	<?php show_error('Сообщений нет, будь первым!'); ?>
@@ -73,7 +73,8 @@
 
 <?php if (is_user()): ?>
 	<div class="well">
-		<form action="index.php?act=add&amp;token=<?= $_SESSION['token'] ?>" method="post">
+		<form action="/guestbook/add" method="post">
+			<input type="hidden" name="token" value="<?= $_SESSION['token'] ?>" />
 			<div class="form-group">
 				<textarea class="form-control" id="markItUp" rows="5" name="msg"></textarea>
 			</div>
@@ -84,7 +85,8 @@
 <?php elseif ($config['bookadds'] == 1): ?>
 
 	<div class="well">
-		<form action="index.php?act=add&amp;token=<?= $_SESSION['token'] ?>" method="post">
+		<form action="/guestbook/add" method="post">
+			<input type="hidden" name="token" value="<?= $_SESSION['token'] ?>" />
 			<div class="form-group">
 				<label for="msg">Сообщение:</label>
 				<textarea class="form-control" id="msg" rows="5" name="msg"></textarea>
