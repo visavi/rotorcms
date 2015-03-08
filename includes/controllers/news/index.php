@@ -1,20 +1,7 @@
 <?php
-#---------------------------------------------#
-#      ********* RotorCMS *********           #
-#           Author  :  Vantuz                 #
-#            Email  :  visavi.net@mail.ru     #
-#             Site  :  http://visavi.net      #
-#              ICQ  :  36-44-66               #
-#            Skype  :  vantuzilla             #
-#---------------------------------------------#
-require_once ('../includes/start.php');
-require_once ('../includes/functions.php');
-require_once ('../includes/header.php');
-include_once ('../themes/header.php');
-
-$act = (isset($_GET['act'])) ? check($_GET['act']) : 'index';
-$id = (isset($_GET['id'])) ? abs(intval($_GET['id'])) : 0;
-$start = (isset($_GET['start'])) ? abs(intval($_GET['start'])) : 0;
+$act = isset($current_router['params']['action']) ? check($current_router['params']['action']) : 'index';
+$page = !empty($current_router['params']['page']) ? intval($current_router['params']['page']) : 1;
+$id = isset($current_router['params']['id']) ? check($current_router['params']['id']) : 0;
 
 show_title('Новости сайта');
 
@@ -26,16 +13,21 @@ case 'index':
 
 	$total = News::count();
 
-	if ($total > 0 && $start >= $total) {
-		$start = last_page($total, $config['postnews']);
+	if ($total > 0 && ($page * $config['postnews']) >= $total) {
+		$page = ceil($total / $config['postnews']);
 	}
 
-	$page = floor(1 + $start / $config['postnews']);
-	$config['description'] = 'Новости сайта (Стр. '.$page.')';
+	$config['newtitle'] = 'Новости сайта (Стр. '.$page.')';
+	$offset = intval(($page * $config['postnews']) - $config['postnews']);
 
-	$news_list = News::all(array('offset' => $start, 'limit' => $config['postnews'], 'order' => 'created_at desc', 'include' => array('user')));
+	$news_list = News::all(array(
+		'offset' => $offset,
+		'limit' => $config['postnews'],
+		'order' => 'created_at desc',
+		'include' => array('user'),
+	));
 
-	App::render('news/index', compact('news_list', 'start', 'total'));
+	App::render('news/index', compact('news_list', 'page', 'total'));
 
 break;
 
@@ -315,8 +307,7 @@ case 'end':
 break;
 
 default:
-	redirect("index.php");
+	redirect('/news');
 endswitch;
 
-include_once ('../themes/footer.php');
 ?>

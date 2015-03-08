@@ -1,16 +1,4 @@
 <?php
-#---------------------------------------------#
-#      ********* RotorCMS *********           #
-#           Author  :  Vantuz                 #
-#            Email  :  visavi.net@mail.ru     #
-#             Site  :  http://visavi.net      #
-#              ICQ  :  36-44-66               #
-#            Skype  :  vantuzilla             #
-#---------------------------------------------#
-require_once ('../includes/start.php');
-require_once ('../includes/functions.php');
-require_once ('../includes/header.php');
-
 header("Content-type:application/rss+xml; charset=utf-8");
 echo '<?xml version="1.0" encoding="utf-8"?>';
 echo '<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel>';
@@ -40,4 +28,3 @@ while ($data = $querynews -> fetch()) {
 }
 
 echo '</channel></rss>';
-?>

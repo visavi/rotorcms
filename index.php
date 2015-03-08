@@ -13,12 +13,25 @@ require_once ('includes/header.php');
 include_once ('includes/routes.php');
 include_once ('themes/header.php');
 
-if ($current_router) {
+var_dump($current_router);
+if ($current_router && is_array($current_router['target'])) {
+
+	while (ob_get_level()) {
+		ob_end_clean();
+	}
+	die(include_once BASEDIR.'/includes/controllers/'.$current_router['target']['page']);
+
+} elseif ($current_router && is_callable($current_router['target']) ) {
+
+	call_user_func_array($current_router['target'], $current_router['params'] );
+
+} elseif ($current_router) {
+
 	include_once BASEDIR.'/includes/controllers/'.$current_router['target'];
+
 } else {
-	echo 'Route not found';
-  //header("HTTP/1.0 404 Not Found");
-  //require '404.html';
+
+	include_once BASEDIR.'/includes/controllers/page/404.php';
 }
 
 include_once ('themes/footer.php');

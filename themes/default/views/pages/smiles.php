@@ -1,8 +1,8 @@
 <ul class="breadcrumb">
 	<li><a href="/">Главная</a></li>
+	<li><a href="/<?= key($link) ?>"><?= current($link) ?></a></li>
 	<li class="active">Смайлы</li>
 </ul>
-
 
 <?php if ($smiles > 0): ?>
 	<?php foreach ($smiles as $smile): ?>
@@ -11,7 +11,7 @@
 
 	<?php endforeach; ?>
 
-	<?php page_strnavigation('smiles.php?', $config['smilelist'], $start, $total); ?>
+	<?php App::pagination('/'.key($link).'/smiles', $config['smilelist'], $page, $total); ?>
 
 <?php else: ?>
 	<?php show_error('Смайлов нет!'); ?>

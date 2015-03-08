@@ -29,10 +29,10 @@
 
 	<?php endforeach; ?>
 
-	<?php page_strnavigation('index.php?', $config['postnews'], $start, $total); ?>
+	<?php App::pagination('/news', $config['postnews'], $page, $total); ?>
 
 <?php else: ?>
 	<?php show_error('Сообщений нет, будь первым!'); ?>
 <?php endif; ?>
 
-<i class="fa fa-rss"></i> <a href="/news/rss.php">RSS подписка</a><br />
+<i class="fa fa-rss"></i> <a href="/news/rss">RSS подписка</a><br />

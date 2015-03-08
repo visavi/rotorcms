@@ -8,4 +8,4 @@
 <a href="/forum" class="index touch-link"><span class="fa fa-circle"></span> Форум <span class="badge"><?=stats_forum()?></span></a>
 <?=recenttopics()?>
 
-<a href="/pages/userlist.php" class="index touch-link"><span class="fa fa-circle"></span> Список юзеров <span class="badge"><?=stats_users()?></span></a>
+<a href="/users" class="index touch-link"><span class="fa fa-circle"></span> Список юзеров <span class="badge"><?=stats_users()?></span></a>

@@ -1,7 +1,7 @@
 <ul class="breadcrumb">
-	<li><a href="/pages/rules.php">Правила</a></li>
-	<li><a href="/pages/smiles.php">Смайлы</a></li>
-	<li><a href="/pages/tags.php">Теги</a></li>
+	<li><a href="/guestbook/rules">Правила</a></li>
+	<li><a href="/guestbook/smiles">Смайлы</a></li>
+	<li><a href="/guestbook/tags">Теги</a></li>
 
 	<?php if (is_admin()):?>
 		<li><a href="/admin/book.php">Управление</a></li>

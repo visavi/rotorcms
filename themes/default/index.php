@@ -54,8 +54,8 @@ header("Content-type:text/html; charset=utf-8");
 			</div>
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
-				<li<?= (strstr($current_router['route'], '/guestbook') ? ' class="active"' : '') ?>><a href="/guestbook">Гостевая</a></li>
-				<li<?= (strstr($current_router['route'], '/forum') ? ' class="active"' : '') ?>><a href="/forum">Форум</a></li>
+				<li<?= (isset($current_router) && strstr($current_router['route'], '/guestbook') ? ' class="active"' : '') ?>><a href="/guestbook">Гостевая</a></li>
+				<li<?= (isset($current_router) && strstr($current_router['route'], '/forum') ? ' class="active"' : '') ?>><a href="/forum">Форум</a></li>
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
 					<ul class="dropdown-menu">
