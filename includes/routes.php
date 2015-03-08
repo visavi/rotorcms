@@ -24,5 +24,6 @@ $router->map('GET', '/[guestbook|forum|news:link]/smiles/page/[i:page]', 'page/s
 $router->map('GET', '/[guestbook|forum|news:link]/smiles', 'page/smiles.php');
 $router->map('GET', '/[guestbook|forum|news:link]/tags', 'page/tags.php');
 
-$current_router = $router->match();
-
+if (!$current_router = $router->match()) {
+	header($_SERVER["SERVER_PROTOCOL"].' 404 Not Found');
+}
