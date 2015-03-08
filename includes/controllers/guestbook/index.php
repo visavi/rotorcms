@@ -1,6 +1,6 @@
 <?php
-$act = (isset($current_router['params']['action'])) ? check($current_router['params']['action']) : 'index';
-$page = (isset($current_router['params']['page']))? abs(intval($current_router['params']['page'])) : 1;
+$act = isset($current_router['params']['action']) ? check($current_router['params']['action']) : 'index';
+$page = !empty($current_router['params']['page']) ? intval($current_router['params']['page']) : 1;
 
 show_title('Гостевая книга', 'Общение без ограничений');
 
@@ -12,15 +12,19 @@ case 'index':
 
 	$total = Guest::count();
 
-	if ($total > 0 && $start >= $total) {
-		$start = last_page($total, $config['bookpost']);
+	if ($total > 0 && ($page * $config['bookpost']) >= $total) {
+		$page = ceil($total / $config['bookpost']);
 	}
 
-	//$page = floor(1 + $start / $config['bookpost']);
-	$offset = intval(($page * $config['bookpost']) - $config['bookpost']);
 	$config['newtitle'] = 'Гостевая книга (Стр. '.$page.')';
+	$offset = intval(($page * $config['bookpost']) - $config['bookpost']);
 
-	$posts = Guest::all(array('offset' => $offset, 'limit' => $config['bookpost'], 'order' => 'created_at desc', 'include' => array('user')));
+	$posts = Guest::all(array(
+		'offset' => $offset,
+		'limit' => $config['bookpost'],
+		'order' => 'created_at desc',
+		'include' => array('user'),
+	));
 
 	App::render('book/index', compact('posts', 'page', 'total'));
 
@@ -31,8 +35,8 @@ break;
 ############################################################################################
 case 'add':
 
-	$msg = (isset($_POST['msg'])) ? check($_POST['msg']) : '';
-	$token = (!empty($_POST['token'])) ? check($_POST['token']) : 0;
+	$msg = isset($_POST['msg']) ? check($_POST['msg']) : '';
+	$token = !empty($_POST['token']) ? check($_POST['token']) : 0;
 
 	if (is_user()) {
 		//if (is_flood($log)) {
@@ -106,7 +110,7 @@ break;
 case 'edit':
 	show_title('Редактирование сообщения');
 
-	$id = (isset($_GET['id'])) ? abs(intval($_GET['id'])) : 0;
+	$id = isset($current_router['params']['id']) ? check($current_router['params']['id']) : 0;
 
 	if (is_user()) {
 		$post = Guest::find_by_id_and_user_id($id, $current_user->id);
@@ -128,17 +132,17 @@ case 'edit':
 		show_login('Вы не авторизованы, чтобы редактировать сообщения, необходимо');
 	}
 
-	App::render('includes/back', array('link' => 'index.php?start='.$start, 'title' => 'Вернуться'));
+	App::render('includes/back', array('link' => '/guestbook', 'title' => 'Вернуться'));
 break;
 
 ############################################################################################
 ##                                    Редактирование сообщения                            ##
 ############################################################################################
-case 'editpost':
+case 'change':
 
-	$token = check($_GET['token']);
-	$id = abs(intval($_GET['id']));
-	$msg = check($_POST['msg']);
+	$msg = isset($_POST['msg']) ? check($_POST['msg']) : '';
+	$id = isset($_POST['id']) ? check($_POST['id']) : 0;
+	$token = !empty($_POST['token']) ? check($_POST['token']) : 0;
 
 	if (is_user()) {
 
@@ -151,7 +155,7 @@ case 'editpost':
 				$post->text = $msg;
 				if ($post->save()) {
 					notice('Сообщение успешно отредактировано!');
-					redirect("index.php?start=$start");
+					redirect("/guestbook");
 				} else {
 					show_error($post->getErrors());
 				}
@@ -166,8 +170,8 @@ case 'editpost':
 		show_login('Вы не авторизованы, чтобы редактировать сообщения, необходимо');
 	}
 
-	App::render('includes/back', array('link' => 'index.php?act=edit&amp;id='.$id.'&amp;start='.$start, 'title' => 'Вернуться'));
-	App::render('includes/back', array('link' => 'index.php?start='.$start, 'title' => 'В гостевую', 'icon' => 'fa-arrow-circle-up'));
+	App::render('includes/back', array('link' => '/guestbook/'.$id.'/edit', 'title' => 'Вернуться'));
+	App::render('includes/back', array('link' => '/guestbook', 'title' => 'В гостевую', 'icon' => 'fa-arrow-circle-up'));
 break;
 
 default:

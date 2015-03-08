@@ -4,7 +4,7 @@
 	<li><a href="/pages/tags.php">Теги</a></li>
 
 	<?php if (is_admin()):?>
-		<li><a href="/admin/book.php?start=<?= $start ?>">Управление</a></li>
+		<li><a href="/admin/book.php">Управление</a></li>
 	<?php endif;?>
 </ul>
 
@@ -38,7 +38,7 @@
 					<?php endif; ?>
 
 					<?php if ($current_user->id && $current_user->id == $post->user_id && $post->created_at->getTimestamp() > time() - 600): ?>
-						<li><a href="index.php?act=edit&amp;id=<?= $post->id ?>&amp;start=<?= $start ?>" data-toggle="tooltip" title="Редактировать"><span class="fa fa-pencil text-muted"></span></a></li>
+						<li><a href="/guestbook/<?= $post->id ?>/edit" data-toggle="tooltip" title="Редактировать"><span class="fa fa-pencil text-muted"></span></a></li>
 					<?php endif; ?>
 
 						<li class="text-muted date"><?= $post->created_at ?></li>
@@ -64,7 +64,7 @@
 
 	<?php endforeach; ?>
 
-	<?php page_strnavigation('/guestbook', $config['bookpost'], $page, $total); ?>
+	<?php App::pagination('/guestbook', $config['bookpost'], $page, $total); ?>
 
 <?php else: ?>
 	<?php show_error('Сообщений нет, будь первым!'); ?>

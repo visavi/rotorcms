@@ -2,7 +2,9 @@
 	<?= user_avatars($post->user()->id) ?><h4 class="author"><?= profile($post->user()->getLogin()) ?></h4> <small>(<?= $post->created_at ?>)</small>
 </div>
 <div class="well">
-	<form action="index.php?act=editpost&amp;id=<?= $id ?>&amp;start=<?= $start ?>&amp;token=<?= $_SESSION['token'] ?>" method="post">
+	<form action="/guestbook/change" method="post">
+		<input type="hidden" name="token" value="<?= $_SESSION['token'] ?>" />
+		<input type="hidden" name="id" value="<?= $post->id ?>" />
 		<div class="form-group">
 			<textarea class="form-control" id="markItUp" rows="5" name="msg"><?= $post->text ?></textarea>
 		</div>

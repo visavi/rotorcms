@@ -32,6 +32,89 @@ class App
 	}
 
 	/**
+	 * Постраничная навигация
+	 * @param  string  $url путь для формирования ссылки
+	 * @param  integer  $rpp количество элементов на странице
+	 * @param  integer  $current текущая страница
+	 * @param  integer  $total общее количество элементов
+	 * @param  integer $crumbs количество кнопок справа и слева
+	 * @return string  сформированный блок с кнопками страниц
+	 */
+	public static function pagination($url, $rpp, $current, $total, $crumbs = 3) {
+
+		if ($total > 0) {
+
+			$pages = array();
+			$pg_cnt = ceil($total / $rpp);
+			$idx_fst = max($current - $crumbs, 1);
+			$idx_lst = min($current + $crumbs, $pg_cnt);
+
+			if ($current != 1) {
+				$pages[] = array(
+					'start' => $current - 1,
+					'title' => 'Предыдущая',
+					'name' => '«',
+				);
+			}
+			if (($current - $idx_fst) >= 0) {
+				if ($current > ($crumbs + 1)) {
+					$pages[] = array(
+						'start' => 1,
+						'title' => '1 страница',
+						'name' => 1,
+					);
+					if ($current != ($crumbs + 2)) {
+						$pages[] = array(
+							'separator' => true,
+							'name' => ' ... ',
+						);
+					}
+				}
+			}
+
+			for ($i = $idx_fst; $i <= $idx_lst; $i++) {
+
+				if ($i == $current) {
+					$pages[] = array(
+						'current' => true,
+						'name' => $i,
+					);
+				} else {
+					$pages[] = array(
+						'start' => $i,
+						'title' => $i.' страница',
+						'name' => $i,
+					);
+				}
+			}
+			if (($current + $idx_lst) < $total) {
+				if ($current < ($pg_cnt - $crumbs)) {
+					if ($current != ($pg_cnt - $crumbs - 1)) {
+						$pages[] = array(
+							'separator' => true,
+							'name' => ' ... ',
+						);
+					}
+					$pages[] = array(
+						'start' => $pg_cnt,
+						'title' => $pg_cnt . ' страница',
+						'name' => $pg_cnt,
+					);
+				}
+			}
+			if ($current != $pg_cnt) {
+				$pages[] = array(
+					'start' => $current + 1,
+					'title' => 'Следующая',
+					'name' => '»',
+				);
+			}
+
+			self::render('includes/pagination', compact('pages', 'url'));
+		}
+	}
+
+	/**
 	 * Limit the number of characters in a string.
 	 *
 	 * @param  string  $value

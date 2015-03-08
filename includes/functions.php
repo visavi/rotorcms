@@ -1165,81 +1165,6 @@ function addmail($mail, $subject, $messages, $sendermail="", $sendername="") {
 	return mail($mail, $subject, $messages, $adds);
 }
 
-// ----------------------- Постраничная навигация ------------------------//
-function page_strnavigation($url, $rpp, $current, $total, $crumbs = 3) {
-
-	if ($total > 0) {
-
-		$pages = array();
-		$pg_cnt = ceil($total / $rpp);
-		$idx_fst = max($current - $crumbs, 1);
-		$idx_lst = min($current + $crumbs, $pg_cnt);
-
-		if ($current != 1) {
-			$pages[] = array(
-				'start' => $current - 1,
-				'title' => 'Предыдущая',
-				'name' => '« Предыдущая',
-			);
-		}
-		if (($current - $idx_fst) >= 0) {
-			if ($current > ($crumbs + 1)) {
-				$pages[] = array(
-					'start' => 1,
-					'title' => '1 страница',
-					'name' => 1,
-				);
-				if ($current != ($crumbs + 2)) {
-					$pages[] = array(
-						'separator' => true,
-						'name' => ' ... ',
-					);
-				}
-			}
-		}
-
-		for ($i = $idx_fst; $i <= $idx_lst; $i++) {
-
-			if ($i == $current) {
-				$pages[] = array(
-					'current' => true,
-					'name' => $i,
-				);
-			} else {
-				$pages[] = array(
-					'start' => $i,
-					'title' => $i.' страница',
-					'name' => $i,
-				);
-			}
-		}
-		if (($current + $idx_lst) < $total) {
-			if ($current < ($pg_cnt - $crumbs)) {
-				if ($current != ($pg_cnt - $crumbs - 1)) {
-					$pages[] = array(
-						'separator' => true,
-						'name' => ' ... ',
-					);
-				}
-				$pages[] = array(
-					'start' => $pg_cnt,
-					'title' => $pg_cnt . ' страница',
-					'name' => $pg_cnt,
-				);
-			}
-		}
-		if ($current != $pg_cnt) {
-			$pages[] = array(
-				'start' => $current + 1,
-				'title' => 'Следующая',
-				'name' => 'Следующая »',
-			);
-		}
-
-		App::render('includes/pagination', compact('pages', 'url'));
-	}
-}
-
 // ----------------------- Вывод страниц в форуме ------------------------//
 function forum_navigation($url, $posts, $total) {
 	if ($total > 0) {
@@ -1983,9 +1908,9 @@ function strsearch($str, $arr) {
 }
 
 // --------------- Функция определения последней страницы -----------------//
-function last_page($total, $posts) {
+/*function last_page($total, $posts) {
 	return floor(($total - 1) / $posts) * $posts;
-}
+}*/
 
 // ------------- Функция кэширования пользовательских функций -------------//
 function cache_functions($cache=10800) {
