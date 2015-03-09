@@ -11,6 +11,9 @@ $router->map('GET', '/guestbook/page/[i:page]', 'guestbook/index.php');
 $router->map('GET', '/guestbook/[i:id]/[edit:action]', 'guestbook/index.php');
 $router->map('POST', '/guestbook/[create|update:action]', 'guestbook/index.php');
 
+$router->map('GET', '/forum', 'forum/index.php', 'forum');
+$router->map('GET', '/forum/[i:fid]', 'forum/forum.php');
+
 $router->map('GET', '/news', 'news/index.php', 'news');
 $router->map('GET', '/news/page/[i:page]', 'news/index.php');
 $router->map('GET', '/news/rss', array('page' => 'news/rss.php'), 'news_rss');

@@ -8,7 +8,7 @@
 	<?php foreach($forums as $forum): ?>
 		<div>
 			<h4>
-				<a class="touch-link" href="forum.php?fid=<?= $forum->id ?>">
+				<a class="touch-link" href="forum/<?= $forum->id ?>">
 					<span class="glyphicon glyphicon-comment"></span>
 					<?= $forum->title ?>
 					<span class="badge"><?= $forum->topicCount() ?>/<?= $forum->topicLast()->postCount() ?></span>
@@ -24,7 +24,7 @@
 			<?php foreach($forum->children as $subforum): ?>
 				<h5>
 					<span class="glyphicon glyphicon-folder-open"></span>
-					<a href="forum.php?fid=<?= $subforum->id?>"><?= $subforum->title ?></a>
+					<a href="forum/<?= $subforum->id?>"><?= $subforum->title ?></a>
 					<span class="badge"><?= $subforum->topicCount() ?>/<?= $subforum->topicLast()->postCount() ?></span>
 				</h5>
 			<?php endforeach; ?>
