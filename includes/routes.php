@@ -6,6 +6,8 @@ $router->addMatchTypes(array('s' => '[0-9A-Za-z-_]++'));
 
 $router->map('GET', '/', 'index.php', 'home');
 
+$router->map('GET', '/captcha', array('page' => 'captcha.php'), 'captcha');
+
 $router->map('GET', '/guestbook', 'guestbook/index.php', 'guestbook');
 $router->map('GET', '/guestbook/page/[i:page]', 'guestbook/index.php');
 $router->map('GET', '/guestbook/[i:id]/[edit:action]', 'guestbook/index.php');
