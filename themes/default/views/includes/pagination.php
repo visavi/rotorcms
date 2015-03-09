@@ -6,7 +6,7 @@
 			<?php elseif(isset($page['current'])): ?>
 				<li class="active"><span><?= $page['name'] ?></span></li>
 			<?php else: ?>
-				<li><a href="<?= $url ?>/page/<?= $page['start'] ?>" title="<?= $page['title'] ?>"><?= $page['name'] ?></a></li>
+				<li><a href="<?= $url ?>/page/<?= $page['start'] ?><?= $request ?>" title="<?= $page['title'] ?>"><?= $page['name'] ?></a></li>
 			<?php endif; ?>
 		<?php endforeach; ?>
 	</ul>

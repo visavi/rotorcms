@@ -1,6 +1,6 @@
 <?php if ($users): ?>
 
-	<a class="touch-back<?= ($list == 'all' ? ' bg-success' : '') ?>" href="/pages/userlist.php">Все <span class="badge"><?= $total['users'] ?></span></a> <a class="touch-back<?= ($list == 'admins' ? ' bg-success' : '') ?>" href="/pages/userlist.php?list=admins">Администрация <span class="badge"><?= $total['admins'] ?></span></a>
+	<a class="touch-back<?= (empty($list) || $list == 'all' ? ' bg-success' : '') ?>" href="/users">Все <span class="badge"><?= $total['users'] ?></span></a> <a class="touch-back<?= ($list == 'admins' ? ' bg-success' : '') ?>" href="/users?list=admins">Администрация <span class="badge"><?= $total['admins'] ?></span></a>
 
 	<?php foreach($users as $key => $user): ?>
 
@@ -22,10 +22,10 @@
 		</div>
 	<?php endforeach; ?>
 
-	<?php page_strnavigation('userlist.php?list='.$list.'&amp;', $config['userlist'], $start, $total['all']); ?>
+	<?php App::pagination('/users?list='.$list, $config['userlist'], $page, $total['all']); ?>
 
 	<div class="well">
-		<form class="form-inline" action="userlist.php?act=search&amp;start=<?= $start ?>" method="post">
+		<form class="form-inline" action="/users/search" method="post">
 		<label for="login">Поиск пользователя:</label><br />
 		<div class="form-group">
 			<input type="text" class="form-control" name="login" value="<?= $current_user->getLogin() ?>" />

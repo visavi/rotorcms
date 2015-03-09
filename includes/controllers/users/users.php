@@ -1,19 +1,7 @@
 <?php
-#---------------------------------------------#
-#      ********* RotorCMS *********           #
-#           Author  :  Vantuz                 #
-#            Email  :  visavi.net@mail.ru     #
-#             Site  :  http://visavi.net      #
-#              ICQ  :  36-44-66               #
-#            Skype  :  vantuzilla             #
-#---------------------------------------------#
-require_once ('../includes/start.php');
-require_once ('../includes/functions.php');
-require_once ('../includes/header.php');
-include_once ('../themes/header.php');
+$act = isset($current_router['params']['action']) ? check($current_router['params']['action']) : 'index';
+$page = !empty($current_router['params']['page']) ? intval($current_router['params']['page']) : 1;
 
-$act = (isset($_GET['act'])) ? check($_GET['act']) : 'index';
-$start = (isset($_GET['start'])) ? abs(intval($_GET['start'])) : 0;
 $list = (isset($_GET['list'])) ? check($_GET['list']) : 'all';
 $login = (isset($_REQUEST['login'])) ? check($_REQUEST['login']) : '';
 
@@ -29,7 +17,12 @@ case 'index':
 	$total['admins'] = User::count(array('conditions' => array('level <> ?', 'user')));
 
 	$total['all'] = $total['users'];
-	$start = ($start < $total['all'] ) ? $start : 0;
+
+	if ($total['all'] > 0 && ($page * $config['userlist']) >= $total) {
+		$page = ceil($total / $config['userlist']);
+	}
+
+	$offset = intval(($page * $config['userlist']) - $config['userlist']);
 
 	$condition = array();
 
@@ -38,9 +31,14 @@ case 'index':
 		ActiveRecord\Utils::add_condition($condition, array('level <> ?', 'user'));
 	}
 
-	$users = User::all(array('conditions' => $condition, 'order' => 'point DESC, login ASC', 'offset' => $start, 'limit' => $config['userlist']));
+	$users = User::all(array(
+		'conditions' => $condition,
+		'order' => 'point DESC, login ASC',
+		'offset' => $offset,
+		'limit' => $config['userlist'],
+	));
 
-	App::render('pages/userlist', compact('users', 'start', 'total', 'list', 'login'));
+	App::render('pages/userlist', compact('users', 'page', 'total', 'list', 'login'));
 
 break;
 
@@ -61,10 +59,10 @@ case 'search':
 			}
 
 			if (isset($position)) {
-				$page = floor(($position - 1) / $config['userlist']) * $config['userlist'];
+				$page = ceil($position / $config['userlist']);
 
 				$_SESSION['note'] = 'Позиция в рейтинге: '.$position;
-				redirect("userlist.php?start=$page&login=$user->login");
+				redirect("/users/page/$page?login=$user->login");
 			} else {
 				show_error('Пользователь с данным логином не найден!');
 			}
@@ -75,13 +73,10 @@ case 'search':
 		show_error('Ошибка! Вы не ввели логин или ник пользователя');
 	}
 
-	App::render('includes/back', array('link' => 'userlist.php?start='.$start, 'title' => 'Вернуться'));
+	App::render('includes/back', array('link' => '/users', 'title' => 'Вернуться'));
 
 break;
 
 default:
-	redirect("userlist.php");
+	redirect("/users");
 endswitch;
-
-include_once ('../themes/footer.php');
-?>

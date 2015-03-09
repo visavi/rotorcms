@@ -31,7 +31,7 @@ if ($current_router && is_array($current_router['target'])) {
 
 } else {
 
-	include_once BASEDIR.'/includes/controllers/page/404.php';
+	include_once BASEDIR.'/includes/controllers/pages/404.php';
 }
 
 include_once ('themes/footer.php');

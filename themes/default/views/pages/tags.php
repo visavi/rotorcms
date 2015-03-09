@@ -25,7 +25,6 @@ BB-теги - это набор кодов, основанных на языке
 
 <i class="fa fa-youtube-play"></i> [youtube]Код видео с youtube[/youtube]<br /><?= bb_code('[youtube]yf_YWiqqv34[/youtube]') ?><br />
 
-
 <i class="fa fa-align-center"></i> [center]Текст по центру[/center]<br />
 <i class="fa fa-text-height"></i> [spoiler=Название]Спойлер с названием[/spoiler]<br />
 <i class="fa fa-text-height"></i> [spoiler]Выпадающий текст[/spoiler] <?= bb_code('[spoiler]Текст который показывается при нажатии[/spoiler]') ?><br />

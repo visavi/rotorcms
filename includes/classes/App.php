@@ -43,6 +43,11 @@ class App
 	public static function pagination($url, $rpp, $current, $total, $crumbs = 3) {
 
 		if ($total > 0) {
+			$request = null;
+			if (($strpos = strpos($url, '?')) !== false) {
+				$request = substr($url, $strpos);
+				$url = substr($url, 0, $strpos);
+			}
 
 			$pages = array();
 			$pg_cnt = ceil($total / $rpp);
@@ -110,7 +115,7 @@ class App
 				);
 			}
 
-			self::render('includes/pagination', compact('pages', 'url'));
+			self::render('includes/pagination', compact('pages', 'url', 'request'));
 		}
 	}
 

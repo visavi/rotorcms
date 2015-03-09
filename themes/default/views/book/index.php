@@ -73,7 +73,7 @@
 
 <?php if (is_user()): ?>
 	<div class="well">
-		<form action="/guestbook/add" method="post">
+		<form action="/guestbook/create" method="post">
 			<input type="hidden" name="token" value="<?= $_SESSION['token'] ?>" />
 			<div class="form-group">
 				<textarea class="form-control" id="markItUp" rows="5" name="msg"></textarea>
@@ -85,7 +85,7 @@
 <?php elseif ($config['bookadds'] == 1): ?>
 
 	<div class="well">
-		<form action="/guestbook/add" method="post">
+		<form action="/guestbook/create" method="post">
 			<input type="hidden" name="token" value="<?= $_SESSION['token'] ?>" />
 			<div class="form-group">
 				<label for="msg">Сообщение:</label>
