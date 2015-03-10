@@ -17,7 +17,8 @@
 		"cbschuld/browser.php": "dev-master",
 		"pclzip/pclzip": "dev-master",
 		"mobiledetect/mobiledetectlib": "dev-master",
-		"olamedia/nokogiri": "dev-master"
+		"olamedia/nokogiri": "dev-master",
+		"philo/laravel-blade": "2.*"
 	},
 	"config": {
 		"preferred-install": "dist"

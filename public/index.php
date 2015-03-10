@@ -7,11 +7,11 @@
 #              ICQ  :  36-44-66               #
 #            Skype  :  vantuzilla             #
 #---------------------------------------------#
-require_once ('includes/start.php');
-require_once ('includes/functions.php');
-require_once ('includes/header.php');
-include_once ('includes/routes.php');
-include_once ('themes/header.php');
+require_once __DIR__.'/../bootstrap/start.php';
+require_once __DIR__.'/../bootstrap/functions.php';
+require_once __DIR__.'/../bootstrap/header.php';
+include_once __DIR__.'/../bootstrap/routes.php';
+include_once __DIR__.'/themes/header.php';
 
 var_dump($current_router);
 if ($current_router && is_array($current_router['target'])) {
@@ -34,5 +34,5 @@ if ($current_router && is_array($current_router['target'])) {
 	include_once BASEDIR.'/includes/controllers/pages/404.php';
 }
 
-include_once ('themes/footer.php');
+include_once __DIR__.'/themes/footer.php';
 ?>

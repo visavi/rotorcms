@@ -30,19 +30,27 @@ if (DEBUGMODE) {
 session_name('SID');
 session_start();
 
-include_once BASEDIR.'/includes/connect.php';
+include_once BASEDIR.'/bootstrap/connect.php';
 include_once BASEDIR.'/vendor/autoload.php';
+
+//use Philo\Blade\Blade;
+
+//$views = BASEDIR.'/views';
+//$cache = BASEDIR.'/cache';
+
+//$blade = new Blade($views, $cache);
+//echo $blade->view()->make('hello', compact('router'));
+
 
 // -------- Автозагрузка классов ---------- //
 spl_autoload_register(function ($class) {
-	include_once BASEDIR.'/includes/classes/'.str_replace('\\', '/', $class).'.php';
+	include_once BASEDIR.'/app/classes/'.str_replace('\\', '/', $class).'.php';
 });
 
 // ------------ ActiveRecord -------------- //
-//include_once BASEDIR.'/includes/classes/ActiveRecord.php';
 ActiveRecord\Config::initialize(function($cfg) {
 
-	$cfg->set_model_directory(BASEDIR.'/includes/models');
+	$cfg->set_model_directory(BASEDIR.'/app/models');
 	$cfg->set_connections(array(
 		'development' => 'mysql://'.DBUSER.':'.DBPASS.'@'.DBHOST.'/'.DBNAME.';charset=utf8'
 	));
