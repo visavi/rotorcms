@@ -1,0 +1,8 @@
+<?php $__env->startSection('title', 'xxx - @parent'); ?>
+
+<?php $__env->startSection('content'); ?>
+
+werfwerf
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('hello', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

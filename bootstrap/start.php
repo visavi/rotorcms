@@ -34,14 +34,8 @@ session_start();
 include_once BASEDIR.'/bootstrap/connect.php';
 include_once BASEDIR.'/vendor/autoload.php';
 
-//use Philo\Blade\Blade;
-
-//$views = BASEDIR.'/views';
-//$cache = BASEDIR.'/cache';
-
-//$blade = new Blade($views, $cache);
-//echo $blade->view()->make('hello', compact('router'));
-
+$views = BASEDIR.'/app/views';
+$cache = BASEDIR.'/local/cache';
 
 // -------- Автозагрузка классов ---------- //
 spl_autoload_register(function ($class) {

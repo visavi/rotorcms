@@ -19,7 +19,7 @@ class User extends BaseActiveRecord {
 			return '<img src="/'.$this->avatar.'" alt="" /> ';
 		}
 
-		return '<img src="/images/avatars/noavatar.gif" alt="" /> ';
+		return '<img src="/assets/img/avatars/noavatar.gif" alt="" /> ';
 	}
 
 	/**

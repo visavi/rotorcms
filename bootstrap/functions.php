@@ -151,62 +151,11 @@ function points($sum) {
 }
 
 // ------------------ Функция подсветки кода -------------------------//
-function highlight_code($code) {
+/*function highlight_code($code) {
 
 	if (is_array($code)) $code = $code[1];
 
-/*	$code = nosmiles($code);
-	$code = strtr($code, array('&lt;'=>'<', '&gt;'=>'>', '&amp;'=>'&', '&quot;'=>'"', '&#36;'=>'$', '&#37;'=>'%', '&#39;'=>"'", '&#92;'=>'\\', '&#94;'=>'^', '&#96;'=>'`', '&#124;' => '|', '<br />'=>"\r\n"));
-
-	$code = highlight_string($code, true);
-	$code = strtr($code, array("\r\n"=>'<br />', '://'=>'&#58//', '$'=>'&#36;', "'"=>'&#39;', '%'=>'&#37;', '\\'=>'&#92;', '`'=>'&#96;', '^'=>'&#94;', '|'=>'&#124;'));*/
-
 	return '<pre class="prettyprint linenums">'.$code.'</pre>';
-}
-
-// ----------------------- Функция скрытого текста ------------------------//
-/*function hidden_text($str) {
-
-	if ($str[1]=='') $str[1] = 'Текст отсутствует';
-	if (is_user()) {
-		$text = '<div class="hiding"><span class="strong">Скрытый текст:</span> '.$str[1].'</div>';
-	} else {
-		$text = '<div class="hiding"><span class="strong">Скрытый текст.</span> Для просмотра необходимо авторизоваться!</div>';
-	}
-
-	return $text;
-}*/
-
-// ------------------ Вспомогательная функция для bb-кода --------------------//
-/*function url_replace($url) {
-	global $config;
-
-	if (!isset($url[4])) {
-		$target = (strpos($url[1], $config['home']) === false) ? ' target="_blank" rel="nofollow"' : '';
-		$title = (utf_strlen($url[3]) > 80) ? utf_substr($url[3], 0, 70).'...' : $url[3];
-		return '<a href="'.$url[1].'"'.$target.'>'.check(rawurldecode(html_entity_decode($title, ENT_QUOTES, 'utf-8'))).'</a>';
-	} else {
-		$target = (strpos($url[4], $config['home']) === false) ? ' target="_blank" rel="nofollow"' : '';
-		$title = (utf_strlen($url[4]) > 80) ? utf_substr($url[4], 0, 70).'...' : $url[4];
-		return '<a href="'.$url[4].'"'.$target.'>'.check(rawurldecode(html_entity_decode($title, ENT_QUOTES, 'utf-8'))).'</a>';
-	}
-}*/
-
-// ----------------------- Функция вывода спойлера ------------------------//
-/*function spoiler_text($match) {
-
-	$title = (empty($match[1])) ? 'Спойлер' : $match[1];
-	$text = (empty($match[2])) ? 'Текста нет' : $match[2];
-
-	if (!isset($match[2])) {
-		$title = 'Спойлер';
-		$text = $match[1];
-	}
-
-	return '<div class="spoiler-wrap">
-		<div class="spoiler-head open">'.$title.'</div>
-		<div class="spoiler-body">'.$text.'</div>
-	</div>';
 }*/
 
 // ------------------ Функция вставки BB-кода --------------------//
@@ -233,39 +182,10 @@ function bb_code($text, $parse = true) {
 	}
 
 	foreach($list_smiles as $code => $smile) {
-		$text = str_replace($code, '<img src="/images/smiles/'.$smile.'" alt="'.$code.'" /> ', $text);
+		$text = str_replace($code, '<img src="/assets/img/smiles/'.$smile.'" alt="'.$code.'" /> ', $text);
 	}
 
 	return $text;
-/*	$parser = new JBBCode\Parser();
-	$parser->addCodeDefinitionSet(new JBBCode\NewCodeDefinitionSet());
-
-	$parser->parse($text);
-
-	$smileyVisitor = new \JBBCode\visitors\SmilesVisitor();
-	$parser->accept($smileyVisitor);
-
-	return $parser->getAsHTML();*/
-/*	$text = preg_replace_callback('/\[code\](.*?)\[\/code\]/si', 'highlight_code', $text);
-	$text = preg_replace_callback('#\[hide\](.*?)\[/hide\]#i', 'hidden_text', $text);
-
-	$text = preg_replace_callback('#\[spoiler=(.*?)\](.*?)\[/spoiler\]#si', 'spoiler_text', $text);
-	$text = preg_replace_callback('#\[spoiler\](.*?)\[/spoiler\]#si', 'spoiler_text', $text);
-
-	$text = preg_replace_callback('~\[url=((https?|ftp)://.+?)\](.+?)\[/url\]|((https?|ftp)://[0-9a-zа-яё/.;?=\(\)\_\-&%#]+)~ui', 'url_replace', $text);
-	$text = preg_replace('#\[youtube\](.*?)\[/youtube\]#si', '<iframe width="280" height="210" src="//www.youtube.com/embed/\1" frameborder="0"></iframe>', $text);
-	$text = preg_replace('#\[big\](.*?)\[/big\]#si', '<big>\1</big>', $text);
-	$text = preg_replace('#\[b\](.*?)\[/b\]#si', '<b>\1</b>', $text);
-	$text = preg_replace('#\[i\](.*?)\[/i\]#si', '<i>\1</i>', $text);
-	$text = preg_replace('#\[u\](.*?)\[/u\]#si', '<u>\1</u>', $text);
-	$text = preg_replace('#\[small\](.*?)\[/small\]#si', '<small>\1</small>', $text);
-	$text = preg_replace('#\[red\](.*?)\[/red\]#si', '<span style="color:#ff0000">\1</span>', $text);
-	$text = preg_replace('#\[green\](.*?)\[/green\]#si', '<span style="color:#00cc00">\1</span>', $text);
-	$text = preg_replace('#\[blue\](.*?)\[/blue\]#si', '<span style="color:#0000ff">\1</span>', $text);
-	$text = preg_replace('#\[q\](.*?)\[/q\]#si', '<div class="q">\1</div>', $text);
-	$text = preg_replace('#\[del\](.*?)\[/del\]#si', '<del>\1</del>', $text);
-	$text = nl2br($text);
-	return $text;*/
 }
 
 // ------------------ Функция перекодировки из UTF в WIN --------------------//
@@ -763,7 +683,7 @@ function user_avatars($user_id) {
 
 	$image = array(
 		'class' => 'media-left',
-		'src' => '/images/avatars/guest.png'
+		'src' => '/assets/img/avatars/guest.png'
 	);
 
 	switch ($user_id) {
@@ -779,7 +699,7 @@ function user_avatars($user_id) {
 			if (isset($avatars[$user_id]) && file_exists($avatars[$user_id])) {
 				$image['src'] = $avatars[$user_id];
 			} else {
-				$image['src'] = '/images/avatars/noavatar.png';
+				$image['src'] = '/assets/img/avatars/noavatar.png';
 			}
 	}
 

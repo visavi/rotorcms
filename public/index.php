@@ -12,6 +12,9 @@ require_once __DIR__.'/../bootstrap/functions.php';
 require_once __DIR__.'/../bootstrap/header.php';
 include_once __DIR__.'/../bootstrap/routes.php';
 include_once __DIR__.'/themes/header.php';
+use Philo\Blade\Blade;
+$blade = new Blade($views, $cache);
+echo $blade->view()->make('xxx', compact('router'));
 
 var_dump($current_router);
 if ($current_router && is_array($current_router['target'])) {
