@@ -100,8 +100,8 @@ function getModuleSetting($pModuleName, $pSetting) {
 // --------------------------------------------------//
 $error_setting = 0;
 
-echo 'Версия PHP 5.3.0 и выше: ';
-if (version_compare(PHP_VERSION, '5.3.0') > 0) {
+echo 'Версия PHP 5.4.0 и выше: ';
+if (version_compare(PHP_VERSION, '5.4.0') > 0) {
 	echo '<b><span style="color:#00cc00">ОК</span></b> (Версия ' . phpversion() . ')<br />';
 } else {
 	echo '<b><span style="color:#ff0000">Ошибка</span></b>  (Версия ' . phpversion() . ')<br />';
