@@ -25,7 +25,7 @@ if (file_exists(DATADIR.'/temp/counter7.dat')) {
 
 array_push($host_data, $count->dayhosts);
 // ----------------------------------------------------------------------//
-$img = imageCreateFromPNG(BASEDIR.'/images/img/counter.png');
+$img = imageCreateFromPNG(PUBLICDIR.'/assets/img/images/counter.png');
 $color = imagecolorallocate($img, 0, 0, 0);
 $color2 = imagecolorallocate($img, 102, 102, 102);
 
@@ -64,16 +64,16 @@ foreach ($per_host as $key => $percent) {
 		imagefilledrectangle ($img, $x1-1, $y1, $x2-2, $y2, $col);
 	}
 
-	imageTTFtext($img, 6, 0, $x1, 15, $color, BASEDIR.'/assets/fonts/font.ttf', $arr_week[$week_day]);
+	imageTTFtext($img, 6, 0, $x1, 15, $color, PUBLICDIR.'/assets/fonts/font.ttf', $arr_week[$week_day]);
 
 	$x1 += $coll;
 	$x2 += $coll;
 }
 
-imageTTFtext($img, 6, 0, 13, 23, $color2, BASEDIR.'/assets/fonts/font4.ttf', $count->dayhosts);
-imageTTFtext($img, 6, 0, 13, 29, $color2, BASEDIR.'/assets/fonts/font4.ttf', $count->dayhits);
-imageTTFtext($img, 12, 0, $pos, 29, $color2, BASEDIR.'/assets/fonts/font7.ttf', $online[1]);
+imageTTFtext($img, 6, 0, 13, 23, $color2, PUBLICDIR.'/assets/fonts/font4.ttf', $count->dayhosts);
+imageTTFtext($img, 6, 0, 13, 29, $color2, PUBLICDIR.'/assets/fonts/font4.ttf', $count->dayhits);
+imageTTFtext($img, 12, 0, $pos, 29, $color2, PUBLICDIR.'/assets/fonts/font7.ttf', $online[1]);
 
-ImagePNG($img, BASEDIR.'/upload/counters/counter.png');
+ImagePNG($img, PUBLICDIR.'/upload/counters/counter.png');
 ImageDestroy($img);
 ?>

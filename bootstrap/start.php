@@ -10,6 +10,7 @@
 define('DEBUGMODE', true);
 define('STARTTIME', microtime(1));
 define('BASEDIR', dirname(__DIR__));
+define('PUBLICDIR', BASEDIR.'/public');
 define('DATADIR', BASEDIR.'/local');
 define('SITETIME', time()); //Todo удалить
 define('PCLZIP_TEMPORARY_DIR', BASEDIR.'/local/temp/');
@@ -55,8 +56,8 @@ ActiveRecord\Config::initialize(function($cfg) {
 		'development' => 'mysql://'.DBUSER.':'.DBPASS.'@'.DBHOST.'/'.DBNAME.';charset=utf8'
 	));
 
-	$conf = array('error_prepend' => '<pre class="prettyprint linenums">',
-				  'error_append'  => '</pre>');
+	//$conf = array('error_prepend' => '<pre class="prettyprint linenums">',
+	//			  'error_append'  => '</pre>');
 
 	//$logger = Log::singleton('file', DATADIR.'/temp/mysql.dat');
 	//$logger = Log::singleton('display', '', '', $conf);

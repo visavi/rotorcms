@@ -18,10 +18,10 @@ class App
 			ob_start();
 		}
 
-		if (file_exists(BASEDIR.'/themes/'.$config['themes'].'/views/'.$view.'.php')){
-			include (BASEDIR.'/themes/'.$config['themes'].'/views/'.$view.'.php');
-		} elseif (file_exists(BASEDIR.'/themes/default/views/'.$view.'.php')){
-			include (BASEDIR.'/themes/default/views/'.$view.'.php');
+		if (file_exists(PUBLICDIR.'/themes/'.$config['themes'].'/views/'.$view.'.php')){
+			include (PUBLICDIR.'/themes/'.$config['themes'].'/views/'.$view.'.php');
+		} elseif (file_exists(PUBLICDIR.'/themes/default/views/'.$view.'.php')){
+			include (PUBLICDIR.'/themes/default/views/'.$view.'.php');
 		} else {
 			show_error('Не удалось найти требуемый шаблон "'.$view.'"');
 		}

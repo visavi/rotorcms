@@ -795,7 +795,7 @@ function stats_online($cache = 30) {
 		$online = Online::count(array('conditions' => 'user_id IS NOT NULL'));
 		file_put_contents(DATADIR."/temp/online.dat", serialize(array($online, $total)), LOCK_EX);
 
-		include_once(BASEDIR.'/includes/count.php');
+		include_once(BASEDIR.'/bootstrap/count.php');
 	}
 
 	return unserialize(file_get_contents(DATADIR."/temp/online.dat"));

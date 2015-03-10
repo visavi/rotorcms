@@ -11,7 +11,7 @@ if (!defined('BASEDIR')) {
 	exit(header('Location: /index.php'));
 }
 
-include_once (BASEDIR."/includes/counters.php");
+include_once (BASEDIR."/bootstrap/counters.php");
 
 include_once (DATADIR.'/advert/bottom_all.dat');
 
@@ -45,5 +45,5 @@ if (is_user()) {
 <?php } ?>
 
 <?php
-include_once (BASEDIR.'/themes/'.$config['themes'].'/foot.php');
+include_once (PUBLICDIR.'/themes/'.$config['themes'].'/foot.php');
 ?>

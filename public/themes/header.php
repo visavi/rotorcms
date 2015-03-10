@@ -50,7 +50,7 @@ if (empty($config['themes']) || !file_exists(BASEDIR.'/themes/'.$config['themes'
 	$config['themes'] = 'default';
 }
 
-include_once (BASEDIR.'/themes/'.$config['themes'].'/index.php');
+include_once ('themes/'.$config['themes'].'/index.php');
 ?>
 
 <div style="text-align:center">
