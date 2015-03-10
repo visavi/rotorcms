@@ -1,0 +1,26 @@
+{
+	"name": "visavi/rotorcms",
+	"description": "RotorCMS",
+	"keywords": ["cms", "rotor"],
+	"homepage": "http://visavi.net",
+	"authors": [
+		{
+			"name": "Vantuz",
+			"email": "visavi.net@mail.ru",
+			"homepage": "http://pizdec.ru"
+		}
+	],
+	"require": {
+		"php": ">=5.3.0",
+		"altorouter/altorouter": "1.1.0",
+		"php-activerecord/php-activerecord": "dev-1.1-dev",
+		"cbschuld/browser.php": "dev-master",
+		"pclzip/pclzip": "dev-master",
+		"mobiledetect/mobiledetectlib": "dev-master",
+		"olamedia/nokogiri": "dev-master"
+	},
+	"config": {
+		"preferred-install": "dist"
+	},
+	"minimum-stability": "stable"
+}

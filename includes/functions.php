@@ -668,29 +668,6 @@ function generate_password($length = "") {
 	return $makepass;
 }
 
-// ------------------ Функция для читаемого вывода массива --------------------//
-function text_dump($var, $level = 0) {
-	if (is_array($var)) $type = "array[".count($var)."]";
-	else if (is_object($var)) $type = "object";
-	else $type = "";
-	if ($type) {
-		echo $type.'<br />';
-		for(Reset($var), $level++; list($k, $v) = each($var);) {
-			if (is_array($v) && $k === "GLOBALS") continue;
-			for($i = 0; $i < $level * 3; $i++) echo ' ';
-			echo '<b>'.htmlspecialchars($k).'</b> => ', text_dump($v, $level);
-		}
-	} else echo '"', htmlspecialchars($var), '"<br />';
-}
-
-function dump($var) {
-	if ((is_array($var) || is_object($var)) && count($var)) {
-		echo '<pre>', text_dump($var), '</pre>';
-	} else {
-		echo '<tt>', text_dump($var), '</tt>';
-	}
-}
-
 // --------------- Функция листинга всех файлов и папок ---------------//
 function scan_check($dirname) {
 	global $arr, $config;
@@ -2037,7 +2014,7 @@ function progress_bar($percent, $title = ''){
 // ------------- Добавление пользовательского файла в ZIP-архив -------------//
 function copyright_archive($filename){
 
-	$readme_file = BASEDIR.'/vendor/Visavi_Readme.txt';
+	$readme_file = BASEDIR.'/assets/Visavi_Readme.txt';
 	$ext = getExtension($filename);
 
 	if ($ext == 'zip' && file_exists($readme_file)){

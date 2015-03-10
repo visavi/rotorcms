@@ -92,7 +92,7 @@ if (!file_exists(BASEDIR.$imagecache) || date_fixed(@filemtime(BASEDIR.$imagecac
 		imageLine($img, $x1 + 1, $y1_host, $x2, $y2_host, $color2);
 
 		if ($hits_data[$i] != 0 && $i == $max_index) {
-			imageTTFtext($img, 6, 0, 40, $y2_hits-3, $color_red, BASEDIR.'/vendor/fonts/font.ttf', 'max. '.$maxhost.' / '.$maxhit);
+			imageTTFtext($img, 6, 0, 40, $y2_hits-3, $color_red, BASEDIR.'/assets/fonts/font.ttf', 'max. '.$maxhost.' / '.$maxhit);
 			/**
 			* ImageString($img, 1, $x2-17,  $y2_hits-10, "max", $color_red);
 			* ImageString($img, 1, $x2+2,  $y2_hits-10, $hits_data[$i], $color2);

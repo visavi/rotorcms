@@ -84,7 +84,7 @@ if (!file_exists(BASEDIR.$imagecache) || date_fixed(@filemtime(BASEDIR.$imagecac
 		$counth = 31;
 	}
 
-	imageTTFtext($img, 6, 0, 50, 7, $color_red, BASEDIR.'/vendor/fonts/font.ttf', 'max. '.$maxhost.' / '.$maxhit);
+	imageTTFtext($img, 6, 0, 50, 7, $color_red, BASEDIR.'/assets/fonts/font.ttf', 'max. '.$maxhost.' / '.$maxhit);
 
 	for($i = 1;$i < $counth;$i++) {
 		// хиты

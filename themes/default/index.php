@@ -25,7 +25,7 @@ header("Content-type:text/html; charset=utf-8");
 	<link href="/themes/default/css/font-awesome.min.css" rel="stylesheet" />
 	<link href="/themes/default/css/prettify.css" rel="stylesheet">
 	<link href="/themes/default/css/opensans.css" rel="stylesheet" />
-	<link href="/vendor/markitup/markitup.css" rel="stylesheet" />
+	<link href="/assets/markitup/markitup.css" rel="stylesheet" />
 	<link href="/themes/default/css/app.css" rel="stylesheet" />
 
 	<link rel="image_src" href="/images/img/icon.png" />
@@ -54,8 +54,8 @@ header("Content-type:text/html; charset=utf-8");
 			</div>
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
-				<li<?= (isset($current_router) && strstr($current_router['route'], '/guestbook') ? ' class="active"' : '') ?>><a href="/guestbook">Гостевая</a></li>
-				<li<?= (isset($current_router) && strstr($current_router['route'], '/forum') ? ' class="active"' : '') ?>><a href="/forum">Форум</a></li>
+				<li<?= (strstr($request_uri, '/guestbook') ? ' class="active"' : '') ?>><a href="/guestbook">Гостевая</a></li>
+				<li<?= (strstr($request_uri, '/forum') ? ' class="active"' : '') ?>><a href="/forum">Форум</a></li>
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
 					<ul class="dropdown-menu">

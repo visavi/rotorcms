@@ -11,7 +11,7 @@ define('DEBUGMODE', true);
 define('STARTTIME', microtime(1));
 define('BASEDIR', dirname(__DIR__));
 define('DATADIR', BASEDIR.'/local');
-define('SITETIME', time());
+define('SITETIME', time()); //Todo удалить
 define('PCLZIP_TEMPORARY_DIR', BASEDIR.'/local/temp/');
 
 if (DEBUGMODE) {
@@ -30,7 +30,8 @@ if (DEBUGMODE) {
 session_name('SID');
 session_start();
 
-include_once (BASEDIR.'/includes/connect.php');
+include_once BASEDIR.'/includes/connect.php';
+include_once BASEDIR.'/vendor/autoload.php';
 
 // -------- Автозагрузка классов ---------- //
 spl_autoload_register(function ($class) {
@@ -38,7 +39,7 @@ spl_autoload_register(function ($class) {
 });
 
 // ------------ ActiveRecord -------------- //
-include_once (BASEDIR.'/includes/classes/ActiveRecord.php');
+//include_once BASEDIR.'/includes/classes/ActiveRecord.php';
 ActiveRecord\Config::initialize(function($cfg) {
 
 	$cfg->set_model_directory(BASEDIR.'/includes/models');
