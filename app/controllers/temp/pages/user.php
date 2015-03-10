@@ -42,9 +42,9 @@ case 'index':
 			echo '<div class="info">Должность: <b>'.user_status($data['users_level']).'</b></div>';
 		}
 
-		if (!empty($data['users_picture']) && file_exists(BASEDIR.'/upload/photos/'.$data['users_picture'])) {
-			echo '<div class="imgright"><a href="/upload/photos/'.$data['users_picture'].'">';
-			echo resize_image('upload/photos/', $data['users_picture'], $config['previewsize'], nickname($data['users_login'])).'</a></div>';
+		if (!empty($data['users_picture']) && file_exists(BASEDIR.'/uploads/photos/'.$data['users_picture'])) {
+			echo '<div class="imgright"><a href="/uploads/photos/'.$data['users_picture'].'">';
+			echo resize_image('uploads/photos/', $data['users_picture'], $config['previewsize'], nickname($data['users_login'])).'</a></div>';
 		} else {
 			echo '<div class="imgright"><img src="/images/img/photo.jpg" alt="Фото" /></div>';
 		}

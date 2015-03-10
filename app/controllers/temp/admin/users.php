@@ -445,7 +445,7 @@ if (is_admin(array(101, 102))) {
 
 								// ------ Удаление загруженных файлов -------//
 								foreach($topics as $delDir){
-									removeDir(BASEDIR.'/upload/forum/'.$delDir);
+									removeDir(BASEDIR.'/uploads/forum/'.$delDir);
 								}
 								DB::run() -> query("DELETE FROM `files_forum` WHERE `file_posts_id` IN (".$strtopics.");");
 								// ------ Удаление загруженных файлов -------//
@@ -464,8 +464,8 @@ if (is_admin(array(101, 102))) {
 
 								if (!empty($files)){
 									foreach ($files as $file){
-										if (file_exists(BASEDIR.'/upload/forum/'.$file['file_topics_id'].'/'.$file['file_hash'])){
-											unlink(BASEDIR.'/upload/forum/'.$file['file_topics_id'].'/'.$file['file_hash']);
+										if (file_exists(BASEDIR.'/uploads/forum/'.$file['file_topics_id'].'/'.$file['file_hash'])){
+											unlink(BASEDIR.'/uploads/forum/'.$file['file_topics_id'].'/'.$file['file_hash']);
 										}
 									}
 									DB::run() -> query("DELETE FROM `files_forum` WHERE `file_user`=?;", array($uz));

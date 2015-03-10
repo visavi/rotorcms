@@ -65,12 +65,12 @@ if (is_user()) {
 											$userpic = DB::run() -> querySingle("SELECT `users_picture` FROM `users` WHERE `users_login`=? LIMIT 1;", array($log));
 
 											if (!empty($userpic)){
-												unlink_image('upload/photos/', $userpic);
+												unlink_image('uploads/photos/', $userpic);
 												DB::run() -> query("UPDATE `users` SET `users_picture`=? WHERE `users_login`=?;", array('', $log));
 											}
 											//-------- Удаляем старую фотку ----------//
 
-											$handle -> process(BASEDIR.'/upload/photos/');
+											$handle -> process(BASEDIR.'/uploads/photos/');
 
 											if ($handle -> processed) {
 												DB::run() -> query("UPDATE `users` SET `users_picture`=? WHERE `users_login`=?;", array($handle -> file_dst_name, $log));
@@ -120,7 +120,7 @@ if (is_user()) {
 
 				if (!empty($userpic)){
 
-					unlink_image('upload/photos/', $userpic);
+					unlink_image('uploads/photos/', $userpic);
 					DB::run() -> query("UPDATE `users` SET `users_picture`=? WHERE `users_login`=?", array('', $log));
 
 					$_SESSION['note'] = 'Фотография успешно удалена!';

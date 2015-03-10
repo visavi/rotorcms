@@ -23,7 +23,7 @@ $recentphotos = $queryphotos -> fetchAll();
 
 if (count($recentphotos) > 0) {
 	foreach ($recentphotos as $data) {
-		echo '<a href="/gallery/index.php?act=view&amp;gid='.$data['photo_id'].'">'.resize_image('upload/pictures/', $data['photo_link'], $config['previewsize'], $data['photo_title']).'</a>';
+		echo '<a href="/gallery/index.php?act=view&amp;gid='.$data['photo_id'].'">'.resize_image('uploads/pictures/', $data['photo_link'], $config['previewsize'], $data['photo_title']).'</a>';
 	}
 
 	echo '<br />';

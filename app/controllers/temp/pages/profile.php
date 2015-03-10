@@ -33,9 +33,9 @@ case 'index':
 	echo '<div class="form">';
 	echo '<form method="post" action="profile.php?act=edit&amp;uid='.$_SESSION['token'].'">';
 
-	if (!empty($udata['users_picture']) && file_exists(BASEDIR.'/upload/photos/'.$udata['users_picture'])) {
-		echo '<div class="imgright"><a href="/upload/photos/'.$udata['users_picture'].'">';
-		echo resize_image('upload/photos/', $udata['users_picture'], $config['previewsize'], nickname($udata['users_login'])).'</a><br />';
+	if (!empty($udata['users_picture']) && file_exists(BASEDIR.'/uploads/photos/'.$udata['users_picture'])) {
+		echo '<div class="imgright"><a href="/uploads/photos/'.$udata['users_picture'].'">';
+		echo resize_image('uploads/photos/', $udata['users_picture'], $config['previewsize'], nickname($udata['users_login'])).'</a><br />';
 		echo '<a href="pictures.php">Изменить</a>/<a href="pictures.php?act=del&amp;uid='.$_SESSION['token'].'">Удалить</a></div>';
 	} else {
 		echo '<div class="imgright">';

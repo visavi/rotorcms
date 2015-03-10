@@ -65,8 +65,8 @@ function unlink_image($dir, $image) {
 			unlink(BASEDIR.'/'.$dir.$image);
 		}
 
-		if (file_exists(BASEDIR.'/upload/thumbnail/'.$prename . $image)) {
-			unlink(BASEDIR.'/upload/thumbnail/'.$prename . $image);
+		if (file_exists(BASEDIR.'/uploads/thumbnail/'.$prename . $image)) {
+			unlink(BASEDIR.'/uploads/thumbnail/'.$prename . $image);
 		}
 	}
 }
@@ -77,8 +77,8 @@ function delete_users($user) {
 	/*
 		$userpic = DB::run() -> querySingle("SELECT `users_picture` FROM `users` WHERE `users_login`=? LIMIT 1;", array($user));
 
-		unlink_image('upload/photos/', $userpic);
-		unlink_image('upload/avatars/', $user.'.gif');
+		unlink_image('uploads/photos/', $userpic);
+		unlink_image('uploads/avatars/', $user.'.gif');
 
 		DB::run() -> query("DELETE FROM `inbox` WHERE `inbox_user`=?;", array($user));
 		DB::run() -> query("DELETE FROM `outbox` WHERE `outbox_author`=?;", array($user));
@@ -108,7 +108,7 @@ function delete_album($user) {
 				DB::run() -> query("DELETE FROM `photo` WHERE `photo_id`=?;", array($delete['photo_id']));
 				DB::run() -> query("DELETE FROM `commphoto` WHERE `commphoto_gid`=?;", array($delete['photo_id']));
 
-				unlink_image('upload/pictures/', $delete['photo_link']);
+				unlink_image('uploads/pictures/', $delete['photo_link']);
 			}
 		}
 	}
@@ -1865,7 +1865,7 @@ function resize_image($dir, $name, $size, $alt="") {
 			return '<img src="/'.$dir.$name.'" alt="'.$sign.'" class="img-responsive img-reduced" />';
 		}
 
-		if (!file_exists(BASEDIR.'/upload/thumbnail/'.$prename.$name) || filesize(BASEDIR.'/upload/thumbnail/'.$prename.$name) < 18) {
+		if (!file_exists(BASEDIR.'/uploads/thumbnail/'.$prename.$name) || filesize(BASEDIR.'/uploads/thumbnail/'.$prename.$name) < 18) {
 
 			$handle = new upload(BASEDIR.'/'.$dir.$name);
 
@@ -1877,10 +1877,10 @@ function resize_image($dir, $name, $size, $alt="") {
 				$handle -> image_y = $size;
 				$handle -> image_x = $size;
 				$handle -> file_overwrite = true;
-				$handle -> process(BASEDIR.'/upload/thumbnail/');
+				$handle -> process(BASEDIR.'/uploads/thumbnail/');
 			}
 		}
-		return '<img src="/upload/thumbnail/'.$prename.$name.'" alt="'.$sign.'" class="img-responsive img-reduced" />';
+		return '<img src="/uploads/thumbnail/'.$prename.$name.'" alt="'.$sign.'" class="img-responsive img-reduced" />';
 	}
 
 	return '<img src="/images/img/photo.jpg" alt="nophoto" class="img-responsive img-reduced" />';

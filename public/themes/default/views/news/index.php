@@ -4,7 +4,7 @@
 		<div class="media">
 			<?php if ($news->image): ?>
 				<div class="media-left">
-					<a href="/upload/news/<?= $news->image ?>"><?= resize_image('upload/news/', $news->image, 150, $news->title) ?></a>
+					<a href="/uploads/news/<?= $news->image ?>"><?= resize_image('uploads/news/', $news->image, 150, $news->title) ?></a>
 				</div>
 			<?php endif; ?>
 			<div class="media-body">

@@ -51,11 +51,11 @@ if (is_admin()) {
 				while ($data = $queryphoto -> fetch()) {
 					echo '<div class="b">';
 					echo '<img src="/images/img/gallery.gif" alt="image" /> ';
-					echo '<b><a href="/gallery/index.php?act=view&amp;gid='.$data['photo_id'].'&amp;start='.$start.'">'.$data['photo_title'].'</a></b> ('.read_file(BASEDIR.'/upload/pictures/'.$data['photo_link']).')<br />';
+					echo '<b><a href="/gallery/index.php?act=view&amp;gid='.$data['photo_id'].'&amp;start='.$start.'">'.$data['photo_title'].'</a></b> ('.read_file(BASEDIR.'/uploads/pictures/'.$data['photo_link']).')<br />';
 					echo '<input type="checkbox" name="del[]" value="'.$data['photo_id'].'" /> <a href="gallery.php?act=edit&amp;start='.$start.'&amp;gid='.$data['photo_id'].'">Редактировать</a>';
 					echo '</div>';
 
-					echo '<div><a href="/gallery/index.php?act=view&amp;gid='.$data['photo_id'].'&amp;start='.$start.'">'.resize_image('upload/pictures/', $data['photo_link'], $config['previewsize'], $data['photo_title']).'</a><br />';
+					echo '<div><a href="/gallery/index.php?act=view&amp;gid='.$data['photo_id'].'&amp;start='.$start.'">'.resize_image('uploads/pictures/', $data['photo_link'], $config['previewsize'], $data['photo_title']).'</a><br />';
 
 					if (!empty($data['photo_text'])){
 						echo bb_code($data['photo_text']).'<br />';
@@ -173,7 +173,7 @@ if (is_admin()) {
 				if (!empty($del)) {
 					$del = implode(',', $del);
 
-					if (is_writeable(BASEDIR.'/upload/pictures')) {
+					if (is_writeable(BASEDIR.'/uploads/pictures')) {
 						$querydel = DB::run() -> query("SELECT `photo_id`, `photo_link` FROM `photo` WHERE `photo_id` IN (".$del.");");
 						$arr_photo = $querydel -> fetchAll();
 
@@ -182,7 +182,7 @@ if (is_admin()) {
 								DB::run() -> query("DELETE FROM `photo` WHERE `photo_id`=? LIMIT 1;", array($delete['photo_id']));
 								DB::run() -> query("DELETE FROM `commphoto` WHERE `commphoto_gid`=?;", array($delete['photo_id']));
 
-								unlink_image('upload/pictures/', $delete['photo_link']);
+								unlink_image('uploads/pictures/', $delete['photo_link']);
 							}
 
 							$_SESSION['note'] = 'Выбранные фотографии успешно удалены!';

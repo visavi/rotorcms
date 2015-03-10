@@ -53,7 +53,7 @@ case 'read':
 
 		if (!empty($data['news_image'])) {
 
-			echo '<div class="img"><a href="/upload/news/'.$data['news_image'].'">'.resize_image('upload/news/', $data['news_image'], 75, $data['news_title']).'</a></div>';
+			echo '<div class="img"><a href="/uploads/news/'.$data['news_image'].'">'.resize_image('uploads/news/', $data['news_image'], 75, $data['news_title']).'</a></div>';
 		}
 
 		$data['news_text'] = str_replace('[cut]', '', $data['news_text']);

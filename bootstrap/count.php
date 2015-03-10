@@ -74,6 +74,6 @@ imageTTFtext($img, 6, 0, 13, 23, $color2, PUBLICDIR.'/assets/fonts/font4.ttf', $
 imageTTFtext($img, 6, 0, 13, 29, $color2, PUBLICDIR.'/assets/fonts/font4.ttf', $count->dayhits);
 imageTTFtext($img, 12, 0, $pos, 29, $color2, PUBLICDIR.'/assets/fonts/font7.ttf', $online[1]);
 
-ImagePNG($img, PUBLICDIR.'/upload/counters/counter.png');
+ImagePNG($img, PUBLICDIR.'/uploads/counters/counter.png');
 ImageDestroy($img);
 ?>

@@ -15,5 +15,5 @@
 <?php endif; ?>
 
 <?php if ($config['incount'] == 5): ?>
-	<a href="/pages/counter.php"><img src="/upload/counters/counter.png?<?= SITETIME ?>" alt="counter" /></a><br />
+	<a href="/pages/counter.php"><img src="/uploads/counters/counter.png?<?= SITETIME ?>" alt="counter" /></a><br />
 <?php endif; ?>

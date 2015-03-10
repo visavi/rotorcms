@@ -208,20 +208,20 @@ var_dump($_REQUEST);
 									$filename = utf_substr($filename, 0, 45).'.'.$ext;
 								}
 
-								if (!file_exists(BASEDIR.'/upload/forum/'.$topics['topics_id'])){
+								if (!file_exists(BASEDIR.'/uploads/forum/'.$topics['topics_id'])){
 									$old = umask(0);
-									mkdir(BASEDIR.'/upload/forum/'.$topics['topics_id'], 0777, true);
+									mkdir(BASEDIR.'/uploads/forum/'.$topics['topics_id'], 0777, true);
 									umask($old);
 								}
 
 								$num = 0;
 								$hash = $lastid.'.'.$ext;
-								while(file_exists(BASEDIR.'/upload/forum/'.$topics['topics_id'].'/'.$hash)){
+								while(file_exists(BASEDIR.'/uploads/forum/'.$topics['topics_id'].'/'.$hash)){
 									$num++;
 									$hash = $lastid.'_'.$num.'.'.$ext;
 								}
 
-								move_uploaded_file($_FILES['file']['tmp_name'], BASEDIR.'/upload/forum/'.$topics['topics_id'].'/'.$hash);
+								move_uploaded_file($_FILES['file']['tmp_name'], BASEDIR.'/uploads/forum/'.$topics['topics_id'].'/'.$hash);
 
 								DB::run() -> query("INSERT INTO `files_forum` (`file_topics_id`, `file_posts_id`, `file_hash`, `file_name`, `file_size`, `file_user`, `file_time`) VALUES (?, ?, ?, ?, ?, ?, ?);", array($topics['topics_id'], $lastid, $hash, $filename, $filesize, $log, SITETIME));
 
@@ -317,8 +317,8 @@ case 'del':
 
 							if (!empty($files)){
 								foreach ($files as $file){
-									if (file_exists(BASEDIR.'/upload/forum/'.$topics['topics_id'].'/'.$file)){
-										unlink(BASEDIR.'/upload/forum/'.$topics['topics_id'].'/'.$file);
+									if (file_exists(BASEDIR.'/uploads/forum/'.$topics['topics_id'].'/'.$file)){
+										unlink(BASEDIR.'/uploads/forum/'.$topics['topics_id'].'/'.$file);
 									}
 								}
 								DB::run() -> query("DELETE FROM `files_forum` WHERE `file_posts_id` IN (".$del.");");
@@ -730,8 +730,8 @@ case 'editpost':
 
 								if (!empty($files)){
 									foreach ($files as $file){
-										if (file_exists(BASEDIR.'/upload/forum/'.$file['file_topics_id'].'/'.$file['file_hash'])){
-											unlink(BASEDIR.'/upload/forum/'.$file['file_topics_id'].'/'.$file['file_hash']);
+										if (file_exists(BASEDIR.'/uploads/forum/'.$file['file_topics_id'].'/'.$file['file_hash'])){
+											unlink(BASEDIR.'/uploads/forum/'.$file['file_topics_id'].'/'.$file['file_hash']);
 										}
 									}
 									DB::run() -> query("DELETE FROM `files_forum` WHERE `file_posts_id`=? AND `file_id` IN (".$del.");", array($pid));

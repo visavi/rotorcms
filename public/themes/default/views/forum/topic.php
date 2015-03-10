@@ -120,7 +120,7 @@
 					<?php $ext = getExtension($file['file_hash']); ?>
 					<img src="/images/icons/<?=icons($ext)?>" alt="image" />
 
-					<a href="/upload/forum/<?=$topics['topics_id']?>/<?=$file['file_hash']?>"><?=$file['file_name']?></a> (<?=formatsize($file['file_size'])?>)<br />
+					<a href="/uploads/forum/<?=$topics['topics_id']?>/<?=$file['file_hash']?>"><?=$file['file_name']?></a> (<?=formatsize($file['file_size'])?>)<br />
 				<?php endforeach; ?>
 				</div>
 			<?php endif; ?>

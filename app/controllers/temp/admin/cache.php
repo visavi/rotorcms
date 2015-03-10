@@ -59,7 +59,7 @@ if (is_admin(array(101))) {
 
 		echo '<img src="/images/img/eraser.gif" alt="image" /> <a href="cache.php">Файлы</a> / <b>Изображения</b><br /><br />';
 
-		$cachefiles = glob(BASEDIR.'/upload/thumbnail/*.{gif,png,jpg,jpeg}', GLOB_BRACE);
+		$cachefiles = glob(BASEDIR.'/uploads/thumbnail/*.{gif,png,jpg,jpeg}', GLOB_BRACE);
 		$total = count($cachefiles);
 
 		$totals = ($total>50 && $view!=1) ? 50 : $total;
@@ -124,7 +124,7 @@ if (is_admin(array(101))) {
 
 		if ($uid == $_SESSION['token']) {
 
-			$cachefiles = glob(BASEDIR.'/upload/thumbnail/*.{gif,png,jpg,jpeg}', GLOB_BRACE);
+			$cachefiles = glob(BASEDIR.'/uploads/thumbnail/*.{gif,png,jpg,jpeg}', GLOB_BRACE);
 			$total = count($cachefiles);
 
 			if (is_array($cachefiles) && $total>0){

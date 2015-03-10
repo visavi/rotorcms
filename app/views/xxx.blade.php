@@ -1,8 +1,8 @@
 @extends('hello')
 
-@section('title', 'xxx - @parent')
+@section('title', 'werfwerf<b>'.'xxx - @parent')
 
 @section('content')
 
-werfwerf
+
 @stop

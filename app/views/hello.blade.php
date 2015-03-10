@@ -18,10 +18,6 @@
 	<body>
 		<div class="main-wrapper container">
 
-
-
-
-
 			<article class="main-content">
 				@yield('content')
 			</article>

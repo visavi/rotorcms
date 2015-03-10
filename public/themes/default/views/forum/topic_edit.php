@@ -8,7 +8,7 @@
 			<img src="/images/img/paper-clip.gif" alt="attach" /> <b>Удаление файлов:</b><br />
 			<?php foreach ($files as $file): ?>
 				<input type="checkbox" name="delfile[]" value="<?=$file['file_id']?>" />
-				<a href="/upload/forum/<?=$file['file_topics_id']?>/<?=$file['file_hash']?>" target="_blank"><?=$file['file_name']?></a> (<?=formatsize($file['file_size'])?>)<br />
+				<a href="/uploads/forum/<?=$file['file_topics_id']?>/<?=$file['file_hash']?>" target="_blank"><?=$file['file_name']?></a> (<?=formatsize($file['file_size'])?>)<br />
 			<?php endforeach; ?>
 			<br />
 		<?php endif; ?>

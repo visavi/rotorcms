@@ -66,7 +66,7 @@ if (is_user()) {
 
 						save_avatar();
 
-						unlink_image('upload/avatars/', $log.'.gif');
+						unlink_image('uploads/avatars/', $log.'.gif');
 
 						echo '<img src="/images/img/open.gif" alt="image" /> <b>Аватар успешно выбран!</b><br /><br />';
 					} else {
@@ -130,10 +130,10 @@ if (is_user()) {
 							if ($avatarsize[0] == $config['avatarsize'] && $avatarsize[1] == $config['avatarsize']) {
 								if ($udata['users_point'] >= $config['avatarpoints']) {
 									if ($udata['users_money'] >= $config['avatarupload']) {
-										move_uploaded_file($_FILES['avatar']['tmp_name'], BASEDIR.'/upload/avatars/'.$log.'.gif');
-										chmod(BASEDIR.'/upload/avatars/'.$log.'.gif', 0666);
+										move_uploaded_file($_FILES['avatar']['tmp_name'], BASEDIR.'/uploads/avatars/'.$log.'.gif');
+										chmod(BASEDIR.'/uploads/avatars/'.$log.'.gif', 0666);
 
-										DB::run() -> query("UPDATE `users` SET `users_money`=`users_money`-?, `users_avatar`=? WHERE `users_login`=?;", array($config['avatarupload'], 'upload/avatars/'.$log.'.gif', $log));
+										DB::run() -> query("UPDATE `users` SET `users_money`=`users_money`-?, `users_avatar`=? WHERE `users_login`=?;", array($config['avatarupload'], 'uploads/avatars/'.$log.'.gif', $log));
 
 										save_avatar();
 

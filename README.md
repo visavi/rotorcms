@@ -15,13 +15,13 @@ RotorCMS 5.0 dev
 Прежде чем начать установку убедитесь, что все файлы дистрибутива загружены на сервер, а также выставлены необходимые права доступа для папок и файлов
 
  * **includes/connect.php (chmod 666)**
- * **upload/avatars (chmod 777)**
- * **upload/counters (chmod 777)**
- * **upload/forum (chmod 777)**
- * **upload/news (chmod 777)**
- * **upload/photos (chmod 777)**
- * **upload/pictures (chmod 777)**
- * **upload/thumbnail (chmod 777)**
+ * **uploads/avatars (chmod 777)**
+ * **uploads/counters (chmod 777)**
+ * **uploads/forum (chmod 777)**
+ * **uploads/news (chmod 777)**
+ * **uploads/photos (chmod 777)**
+ * **uploads/pictures (chmod 777)**
+ * **uploads/thumbnail (chmod 777)**
  * **images/avatars (chmod 777)**
  * **images/smiles (chmod 777)**
  * **load/files (chmod 777)**

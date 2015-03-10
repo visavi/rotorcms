@@ -10,7 +10,7 @@
 require_once ('../includes/start.php');
 require_once ('../includes/functions.php');
 
-$imagecache = '/upload/counters/counter24.gif';
+$imagecache = '/uploads/counters/counter24.gif';
 if (!file_exists(BASEDIR.$imagecache) || date_fixed(@filemtime(BASEDIR.$imagecache), "dmYH") != date_fixed(SITETIME, "dmYH")){
 
 	$hours = floor((gmmktime(date("H"), 0, 0, date("m"), date("d"), date("Y")) - gmmktime((date("Z") / 3600), 0, 0, 1, 1, 1970)) / 3600);

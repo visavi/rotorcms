@@ -50,7 +50,7 @@ case 'index':
 			echo '<a href="news.php?act=edit&amp;id='.$data['news_id'].'&amp;start='.$start.'">Редактировать</a></div>';
 
 			if (!empty($data['news_image'])) {
-				echo '<div class="img"><a href="/upload/news/'.$data['news_image'].'">'.resize_image('upload/news/', $data['news_image'], 75, $data['news_title']).'</a></div>';
+				echo '<div class="img"><a href="/uploads/news/'.$data['news_image'].'">'.resize_image('uploads/news/', $data['news_image'], 75, $data['news_title']).'</a></div>';
 			}
 
 			if (!empty($data['news_top'])){
@@ -101,10 +101,10 @@ case 'edit':
 		echo '<input type="text" name="title" size="50" maxlength="50" value="'.$datanews['news_title'].'" /><br />';
 		echo '<textarea id="markItUp" cols="25" rows="10" name="msg">'.$datanews['news_text'].'</textarea><br />';
 
-		if (!empty($datanews['news_image']) && file_exists(BASEDIR.'/upload/news/'.$datanews['news_image'])){
+		if (!empty($datanews['news_image']) && file_exists(BASEDIR.'/uploads/news/'.$datanews['news_image'])){
 
-			echo '<a href="/upload/news/'.$datanews['news_image'].'">'.resize_image('upload/news/', $datanews['news_image'], 75, $datanews['news_title']).'</a><br />';
-			echo '<b>'.$datanews['news_image'].'</b> ('.read_file(BASEDIR.'/upload/news/'.$datanews['news_image']).')<br /><br />';
+			echo '<a href="/uploads/news/'.$datanews['news_image'].'">'.resize_image('uploads/news/', $datanews['news_image'], 75, $datanews['news_title']).'</a><br />';
+			echo '<b>'.$datanews['news_image'].'</b> ('.read_file(BASEDIR.'/uploads/news/'.$datanews['news_image']).')<br /><br />';
 		}
 
 		echo 'Прикрепить картинку:<br /><input type="file" name="image" /><br /><br />';
@@ -158,10 +158,10 @@ case 'change':
 
 				// Удаление старой картинки
 				if (!empty($datanews['news_image'])) {
-					unlink_image('upload/news/', $datanews['news_image']);
+					unlink_image('uploads/news/', $datanews['news_image']);
 				}
 
-				$handle -> process(BASEDIR.'/upload/news/');
+				$handle -> process(BASEDIR.'/uploads/news/');
 
 				if ($handle -> processed) {
 
@@ -245,7 +245,7 @@ case 'addnews':
 			$handle = upload_image2($_FILES['image'], $config['filesize'], $config['fileupfoto'], $lastid);
 			if ($handle) {
 
-				$handle -> process(BASEDIR.'/upload/news/');
+				$handle -> process(BASEDIR.'/uploads/news/');
 
 				if ($handle -> processed) {
 					DB::run() -> query("UPDATE `news` SET `news_image`=? WHERE `news_id`=? LIMIT 1;", array($handle -> file_dst_name, $lastid));
@@ -304,7 +304,7 @@ case 'del':
 
 	if ($uid == $_SESSION['token']) {
 		if (!empty($del)) {
-			if (is_writeable(BASEDIR.'/upload/news')){
+			if (is_writeable(BASEDIR.'/uploads/news')){
 
 				$del = implode(',', $del);
 
@@ -313,7 +313,7 @@ case 'del':
 
 				if (count($arr_image)>0){
 					foreach ($arr_image as $delete){
-						unlink_image('upload/news/', $delete['news_image']);
+						unlink_image('uploads/news/', $delete['news_image']);
 					}
 				}
 

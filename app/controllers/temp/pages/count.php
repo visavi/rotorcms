@@ -15,6 +15,6 @@ header('Content-Type: image/png');
 $img = imageCreateFromPNG($_SERVER['DOCUMENT_ROOT'].'/images/img/counter.png');
 
 
-ImagePNG($img, $_SERVER['DOCUMENT_ROOT'].'/upload/counters/counter.png');
+ImagePNG($img, $_SERVER['DOCUMENT_ROOT'].'/uploads/counters/counter.png');
 ImageDestroy($img);
 ?>

@@ -2,7 +2,7 @@
 /local/backup
 /local/temp
 /local/cache
-/public/upload
+/public/uploads
 .DS_Store
 Thumbs.db
 composer.phar
