@@ -12,47 +12,18 @@ if (!defined('BASEDIR')) {
 }
 
 $ip = real_ip();
-$php_self = (isset($_SERVER['PHP_SELF'])) ? check($_SERVER['PHP_SELF']) : ''; // todo удалить
-$request_uri = (isset($_SERVER['REQUEST_URI'])) ? check(urldecode($_SERVER['REQUEST_URI'])) : '/index.php';
-$http_referer = (isset($_SERVER['HTTP_REFERER'])) ? check(urldecode($_SERVER['HTTP_REFERER'])) : 'Не определено';
 $brow = (empty($_SESSION['browser'])) ? $_SESSION['browser'] = get_user_agent() : $_SESSION['browser'];
-############################################################################################
-##                                 Проверка на ip-бан                                     ##
-############################################################################################
-if (file_exists(DATADIR.'/temp/ipban.dat')) {
-	$arrbanip = unserialize(file_get_contents(DATADIR.'/temp/ipban.dat'));
-} else {
-	$arrbanip = save_ipban();
-}
 
-if (is_array($arrbanip) && count($arrbanip) > 0) {
-	foreach($arrbanip as $ipdata) {
-		$ipmatch = 0;
-		$ipsplit = explode('.', $ip);
-		$dbsplit = explode('.', $ipdata);
-
-		for($i = 0; $i < 4; $i++) {
-			if ($ipsplit[$i] == $dbsplit[$i] || $dbsplit[$i] == '*') {
-				$ipmatch += 1;
-			}
-		}
-
-		if ($ipmatch == 4) {
-			redirect('/pages/banip.php');
-		} //бан по IP
-	}
-}
-
-############################################################################################
-##                            Сжатие и буферизация данныx                                 ##
-############################################################################################
+/**
+ *  Сжатие и буферизация данныx
+ */
 if (!empty($config['gzip'])) {
 	Compressor::start();
 }
 
-############################################################################################
-##                               Авторизация по cookies                                   ##
-############################################################################################
+/**
+ * Авторизация по cookies
+ */
 if (empty($_SESSION['id']) && empty($_SESSION['password'])) {
 	if (!empty($_COOKIE['id']) && !empty($_COOKIE['password'])) {
 

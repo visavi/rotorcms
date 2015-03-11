@@ -120,10 +120,10 @@ class App
 	 * Данные роутов
 	 * @return object данные роутов
 	 */
-	public static function router()
+	public static function router($key)
 	{
 		if (Registry::has('router')) {
-			return Registry::get('router');
+			return Registry::get('router')[$key];
 		}
 	}
 
@@ -131,11 +131,31 @@ class App
 	 * Настройки сайта
 	 * @return object настройки сайта
 	 */
-	public static function setting()
+	public static function setting($key)
 	{
 		if (Registry::has('setting')) {
-			return Registry::get('setting');
+			return Registry::get('setting')[$key];
 		}
+	}
+
+	/**
+	 * Собирает из коллекции составной массив ключ->значение
+	 * @param  object|array $enumerable  массив массивов или объектов
+	 * @param  string $key ключ
+	 * @param  string $val значение
+	 * @return array составной массив
+	 */
+	public static function assoc($enumerable, $key, $val)
+	{
+		$ret = array();
+		foreach ($enumerable as $value)
+		{
+			if (is_array($value))
+				$ret[$value[$key]] = $value[$val];
+			else
+				$ret[$value->$key] = $value->$val;
+		}
+		return $ret;
 	}
 
 	/**
