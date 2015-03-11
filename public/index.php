@@ -11,31 +11,17 @@ require_once __DIR__.'/../bootstrap/start.php';
 require_once __DIR__.'/../bootstrap/functions.php';
 require_once __DIR__.'/../bootstrap/header.php';
 include_once __DIR__.'/../bootstrap/routes.php';
-//include_once __DIR__.'/themes/header.php';
 
-var_dump($current_router);
-/*if ($current_router && is_array($current_router['target'])) {
-
-	while (ob_get_level()) {
-		ob_end_clean();
-	}
-	die(include_once BASEDIR.'/app/controllers/'.$current_router['target']['page']);
-
-} else*/
 if ($current_router && is_callable($current_router['target']) ) {
 
-	call_user_func_array($current_router['target'], $current_router['params'] );
+	call_user_func_array($current_router['target'], $current_router['params']);
 
 } elseif ($current_router) {
-
-	//echo $blade->view()->make($current_router['target'], compact('router', 'config', 'request_uri', 'current_user'));
 
 	include_once BASEDIR.'/app/controllers/'.$current_router['target'].'.php';
 
 } else {
-
-	include_once BASEDIR.'/app/controllers/pages/404.php';
+	App::view('pages.404');
 }
 
-//include_once 'themes/footer.php';
 ?>

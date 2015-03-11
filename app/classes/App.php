@@ -5,36 +5,15 @@ class App
 	 * Метод подключения шаблонов
 	 * @param  string  $view   имя шаблона
 	 * @param  array   $params массив параметров
-	 * @param  boolean $return возвращать код иди записывать в переменную
 	 * @return string сформированный код
 	 */
-	public static function render($view, $params = []){
+	public static function view($view, $params = []){
 		global $config, $router, $request_uri;
 
-		$views = BASEDIR.'/app/views';
-		$cache = DATADIR.'/cache';
-
-		$blade = new Philo\Blade\Blade($views, $cache);
+		$blade = new Philo\Blade\Blade(BASEDIR.'/app/views', DATADIR.'/cache');
 
 		$params += compact('router', 'config', 'request_uri');
 		echo $blade->view()->make($view, $params);
-/*		extract($params);
-
-		if ($return) {
-			ob_start();
-		}
-
-		if (file_exists(PUBLICDIR.'/themes/'.$config['themes'].'/views/'.$view.'.php')){
-			include (PUBLICDIR.'/themes/'.$config['themes'].'/views/'.$view.'.php');
-		} elseif (file_exists(PUBLICDIR.'/themes/default/views/'.$view.'.php')){
-			include (PUBLICDIR.'/themes/default/views/'.$view.'.php');
-		} else {
-			show_error('Не удалось найти требуемый шаблон "'.$view.'"');
-		}
-
-		if ($return) {
-			return ob_get_clean();
-		}*/
 	}
 
 	/**
