@@ -11,9 +11,9 @@ define('DEBUGMODE', true);
 define('STARTTIME', microtime(1));
 define('BASEDIR', dirname(__DIR__));
 define('PUBLICDIR', BASEDIR.'/public');
-define('DATADIR', BASEDIR.'/local');
+define('DATADIR', BASEDIR.'/storage');
 define('SITETIME', time()); //Todo удалить
-define('PCLZIP_TEMPORARY_DIR', BASEDIR.'/local/temp/');
+define('PCLZIP_TEMPORARY_DIR', BASEDIR.'/storage/temp/');
 
 if (DEBUGMODE) {
 	@error_reporting(E_ALL);
@@ -35,7 +35,10 @@ include_once BASEDIR.'/bootstrap/connect.php';
 include_once BASEDIR.'/vendor/autoload.php';
 
 $views = BASEDIR.'/app/views';
-$cache = BASEDIR.'/local/cache';
+$cache = DATADIR.'/cache';
+
+use Philo\Blade\Blade;
+$blade = new Blade($views, $cache);
 
 // -------- Автозагрузка классов ---------- //
 spl_autoload_register(function ($class) {

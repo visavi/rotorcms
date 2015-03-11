@@ -11,10 +11,7 @@ require_once __DIR__.'/../bootstrap/start.php';
 require_once __DIR__.'/../bootstrap/functions.php';
 require_once __DIR__.'/../bootstrap/header.php';
 include_once __DIR__.'/../bootstrap/routes.php';
-include_once __DIR__.'/themes/header.php';
-use Philo\Blade\Blade;
-$blade = new Blade($views, $cache);
-echo $blade->view()->make('xxx', compact('router'));
+//include_once __DIR__.'/themes/header.php';
 
 var_dump($current_router);
 if ($current_router && is_array($current_router['target'])) {
@@ -30,12 +27,14 @@ if ($current_router && is_array($current_router['target'])) {
 
 } elseif ($current_router) {
 
-	include_once BASEDIR.'/app/controllers/'.$current_router['target'];
+	echo $blade->view()->make($current_router['target'], compact('router', 'config', 'request_uri', 'current_user'));
+
+	//include_once BASEDIR.'/app/controllers/'.$current_router['target'];
 
 } else {
 
 	include_once BASEDIR.'/app/controllers/pages/404.php';
 }
 
-include_once 'themes/footer.php';
+//include_once 'themes/footer.php';
 ?>
