@@ -4,10 +4,11 @@ class App
 	/**
 	 * Метод подключения шаблонов
 	 * @param  string  $view   имя шаблона
-	 * @param  array   $params массив параметров
+	 * @param  array $params массив параметров
 	 * @return string сформированный код
 	 */
-	public static function view($view, $params = []){
+	public static function view($view, $params = [])
+	{
 		global $config, $router, $request_uri;
 
 		$blade = new Philo\Blade\Blade(BASEDIR.'/app/views', DATADIR.'/cache');
@@ -25,8 +26,8 @@ class App
 	 * @param  integer $crumbs количество кнопок справа и слева
 	 * @return string  сформированный блок с кнопками страниц
 	 */
-	public static function pagination($url, $rpp, $current, $total, $crumbs = 3) {
-
+	public static function pagination($url, $rpp, $current, $total, $crumbs = 3)
+	{
 		if ($total > 0) {
 			$request = null;
 			if (($strpos = strpos($url, '?')) !== false) {
@@ -34,30 +35,30 @@ class App
 				$url = substr($url, 0, $strpos);
 			}
 
-			$pages = array();
+			$pages = [];
 			$pg_cnt = ceil($total / $rpp);
 			$idx_fst = max($current - $crumbs, 1);
 			$idx_lst = min($current + $crumbs, $pg_cnt);
 
 			if ($current != 1) {
-				$pages[] = array(
+				$pages[] = [
 					'start' => $current - 1,
 					'title' => 'Предыдущая',
 					'name' => '«',
-				);
+				];
 			}
 			if (($current - $idx_fst) >= 0) {
 				if ($current > ($crumbs + 1)) {
-					$pages[] = array(
+					$pages[] = [
 						'start' => 1,
 						'title' => '1 страница',
 						'name' => 1,
-					);
+					];
 					if ($current != ($crumbs + 2)) {
-						$pages[] = array(
+						$pages[] = [
 							'separator' => true,
 							'name' => ' ... ',
-						);
+						];
 					}
 				}
 			}
@@ -65,42 +66,75 @@ class App
 			for ($i = $idx_fst; $i <= $idx_lst; $i++) {
 
 				if ($i == $current) {
-					$pages[] = array(
+					$pages[] = [
 						'current' => true,
 						'name' => $i,
-					);
+					];
 				} else {
-					$pages[] = array(
+					$pages[] = [
 						'start' => $i,
 						'title' => $i.' страница',
 						'name' => $i,
-					);
+					];
 				}
 			}
 			if (($current + $idx_lst) < $total) {
 				if ($current < ($pg_cnt - $crumbs)) {
 					if ($current != ($pg_cnt - $crumbs - 1)) {
-						$pages[] = array(
+						$pages[] = [
 							'separator' => true,
 							'name' => ' ... ',
-						);
+						];
 					}
-					$pages[] = array(
+					$pages[] = [
 						'start' => $pg_cnt,
 						'title' => $pg_cnt . ' страница',
 						'name' => $pg_cnt,
-					);
+					];
 				}
 			}
 			if ($current != $pg_cnt) {
-				$pages[] = array(
+				$pages[] = [
 					'start' => $current + 1,
 					'title' => 'Следующая',
 					'name' => '»',
-				);
+				];
 			}
 
 			self::render('includes/pagination', compact('pages', 'url', 'request'));
+		}
+	}
+
+	/**
+	 * Данные пользователя
+	 * @return object данные пользователя
+	 */
+	public static function user()
+	{
+		if (Registry::has('user')) {
+			return Registry::get('user');
+		}
+	}
+
+	/**
+	 * Данные роутов
+	 * @return object данные роутов
+	 */
+	public static function router()
+	{
+		if (Registry::has('router')) {
+			return Registry::get('router');
+		}
+	}
+
+	/**
+	 * Настройки сайта
+	 * @return object настройки сайта
+	 */
+	public static function setting()
+	{
+		if (Registry::has('setting')) {
+			return Registry::get('setting');
 		}
 	}
 

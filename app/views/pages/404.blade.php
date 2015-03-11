@@ -1,3 +1,4 @@
+{{ header($_SERVER["SERVER_PROTOCOL"].' 404 Not Found'); }}
 @extends('layout')
 
 @section('title', 'Ошибка 404 - @parent')

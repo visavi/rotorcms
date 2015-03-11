@@ -1,32 +1,51 @@
 <?php
 class Registry
 {
-    static private $_instance = null;
+	static private $_instance = null;
 
-    private $_registry = array();
+	private $_registry = array();
 
-    static public function getInstance() {
-        if (is_null(self::$_instance)) {
-            self::$_instance = new self;
-        }
+	static public function getInstance()
+	{
+		if (is_null(self::$_instance)) {
+			self::$_instance = new self;
+		}
 
-        return self::$_instance;
-    }
+		return self::$_instance;
+	}
 
-    static public function set($key, $object) {
-        self::getInstance()->_registry[$key] = $object;
-    }
+	static public function set($key, $object)
+	{
+		self::getInstance()->_registry[$key] = $object;
+	}
 
-    static public function get($key) {
-        return self::getInstance()->_registry[$key];
-    }
+	static public function get($key)
+	{
+		return self::getInstance()->_registry[$key];
+	}
 
-    private function __wakeup() {
-    }
+	static public function has($name)
+	{
+		if ( ! isset(self::getInstance()->_registry[$name])) {
+			return false;
+		}
 
-    private function __construct() {
-    }
+		return true;
+	}
 
-    private function __clone() {
-    }
+	static public function remove($name)
+	{
+		if (self::has($name)) {
+			unset(self::getInstance()->_registry[$name]);
+		}
+	}
+
+	private function __wakeup() {
+	}
+
+	private function __construct() {
+	}
+
+	private function __clone() {
+	}
 }
