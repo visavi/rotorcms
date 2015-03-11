@@ -1,7 +1,7 @@
 /vendor
-/local/backup
-/local/temp
-/local/cache
+/storage/backup
+/storage/temp
+/storage/cache
 /public/uploads
 .DS_Store
 Thumbs.db
