@@ -1299,6 +1299,7 @@ function check_user($user_id) {
 
 // ------------------------- Функция проверки авторизации  ------------------------//
 function is_user() {
+
 	global $config;
 	static $result = false;
 
@@ -1320,6 +1321,7 @@ function is_user() {
 
 // ------------------------- Функция проверки администрации  ------------------------//
 function is_admin($access = array()) {
+
 	if (empty($access)) {
 		$access = array('superadmin', 'admin', 'supermoder', 'moder');
 	}

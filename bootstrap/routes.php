@@ -8,10 +8,10 @@ $router->map('GET', '/', 'index', 'home');
 
 $router->map('GET', '/captcha', array('page' => 'captcha.php'), 'captcha');
 
-$router->map('GET', '/guestbook', 'guestbook/index.php', 'guestbook');
-$router->map('GET', '/guestbook/page/[i:page]', 'guestbook/index.php');
-$router->map('GET', '/guestbook/[i:id]/[edit:action]', 'guestbook/index.php');
-$router->map('POST', '/guestbook/[create|update:action]', 'guestbook/index.php');
+$router->map('GET', '/guestbook', 'guestbook/index', 'guestbook');
+$router->map('GET', '/guestbook/page/[i:page]', 'guestbook/index');
+$router->map('GET', '/guestbook/[i:id]/[edit:action]', 'guestbook/index');
+$router->map('POST', '/guestbook/[create|update:action]', 'guestbook/index');
 
 $router->map('GET', '/forum', 'forum/index.php', 'forum');
 $router->map('GET', '/forum/[i:fid]', 'forum/forum.php');

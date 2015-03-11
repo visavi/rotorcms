@@ -14,22 +14,23 @@ include_once __DIR__.'/../bootstrap/routes.php';
 //include_once __DIR__.'/themes/header.php';
 
 var_dump($current_router);
-if ($current_router && is_array($current_router['target'])) {
+/*if ($current_router && is_array($current_router['target'])) {
 
 	while (ob_get_level()) {
 		ob_end_clean();
 	}
 	die(include_once BASEDIR.'/app/controllers/'.$current_router['target']['page']);
 
-} elseif ($current_router && is_callable($current_router['target']) ) {
+} else*/
+if ($current_router && is_callable($current_router['target']) ) {
 
 	call_user_func_array($current_router['target'], $current_router['params'] );
 
 } elseif ($current_router) {
 
-	echo $blade->view()->make($current_router['target'], compact('router', 'config', 'request_uri', 'current_user'));
+	//echo $blade->view()->make($current_router['target'], compact('router', 'config', 'request_uri', 'current_user'));
 
-	//include_once BASEDIR.'/app/controllers/'.$current_router['target'];
+	include_once BASEDIR.'/app/controllers/'.$current_router['target'].'.php';
 
 } else {
 

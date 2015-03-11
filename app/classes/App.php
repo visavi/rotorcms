@@ -1,5 +1,4 @@
 <?php
-
 class App
 {
 	/**
@@ -9,10 +8,17 @@ class App
 	 * @param  boolean $return возвращать код иди записывать в переменную
 	 * @return string сформированный код
 	 */
-	public static function render($view, $params = array(), $return = false){
-		global $config, $current_user;
+	public static function render($view, $params = []){
+		global $config, $router, $request_uri;
 
-		extract($params);
+		$views = BASEDIR.'/app/views';
+		$cache = DATADIR.'/cache';
+
+		$blade = new Philo\Blade\Blade($views, $cache);
+
+		$params += compact('router', 'config', 'request_uri');
+		echo $blade->view()->make($view, $params);
+/*		extract($params);
 
 		if ($return) {
 			ob_start();
@@ -28,7 +34,7 @@ class App
 
 		if ($return) {
 			return ob_get_clean();
-		}
+		}*/
 	}
 
 	/**
