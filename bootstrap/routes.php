@@ -30,4 +30,4 @@ $router->map('GET', '/[guestbook|forum|news:link]/smiles/page/[i:page]', 'pages/
 $router->map('GET', '/[guestbook|forum|news:link]/smiles', 'pages/smiles');
 $router->map('GET', '/[guestbook|forum|news:link]/tags', 'pages/tags');
 
-Registry::set('router', (object) $router->match());
+Registry::set('router', $router->match());

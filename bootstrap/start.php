@@ -31,19 +31,15 @@ if (DEBUGMODE) {
 session_name('SID');
 session_start();
 
-include_once BASEDIR.'/bootstrap/connect.php';
 include_once BASEDIR.'/vendor/autoload.php';
-
-$views = BASEDIR.'/app/views';
-$cache = DATADIR.'/cache';
-
-use Philo\Blade\Blade;
-$blade = new Blade($views, $cache);
 
 // -------- Автозагрузка классов ---------- //
 spl_autoload_register(function ($class) {
 	include_once BASEDIR.'/app/classes/'.str_replace('\\', '/', $class).'.php';
 });
+
+include_once BASEDIR.'/bootstrap/routes.php';
+include_once BASEDIR.'/bootstrap/connect.php';
 
 // ------------ ActiveRecord -------------- //
 ActiveRecord\Config::initialize(function($cfg) {
