@@ -5,10 +5,10 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="keywords" content="%KEYWORDS%" />
 	<meta name="description" content="%DESCRIPTION%" />
-	<meta name="generator" content="RotorCMS <?= $config['rotorversion'] ?>" />
+	<meta name="generator" content="RotorCMS {{{ Setting::get('rotorversion') }}}" />
 	<title>
 		@section('title')
-			{{{ $config['title'] }}}
+			{{{ Setting::get('title') }}}
 		@show
 	</title>
 
@@ -44,12 +44,12 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="/"><?= $config['title'] ?></a>
+				<a class="navbar-brand" href="/">{{{ Setting::get('title') }}}</a>
 			</div>
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
-				<li<?= (strstr($request_uri, '/guestbook') ? ' class="active"' : '') ?>><a href="/guestbook">Гостевая</a></li>
-				<li<?= (strstr($request_uri, '/forum') ? ' class="active"' : '') ?>><a href="/forum">Форум</a></li>
+				<li<?= (strstr(App::requestURI(), '/guestbook') ? ' class="active"' : '') ?>><a href="/guestbook">Гостевая</a></li>
+				<li<?= (strstr(App::requestURI(), '/forum') ? ' class="active"' : '') ?>><a href="/forum">Форум</a></li>
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
 					<ul class="dropdown-menu">
@@ -65,9 +65,9 @@
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 
-					<?php if (is_user()): ?>
+					<?php if (User::check()): ?>
 						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><?= Registry::get('user')->getLogin() ?> <b class="caret"></b></a>
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><?= User::get('user')->getLogin() ?> <b class="caret"></b></a>
 							<ul class="dropdown-menu">
 
 								<?php if (is_admin()): ?>
@@ -79,8 +79,8 @@
 						</li>
 
 					<?php else: ?>
-						<li<?= ($request_uri == '/pages/login.php') ? ' class="active"' : '' ?>><a href="/pages/login.php">Вход</a></li>
-						<li<?= ($request_uri == '/pages/registration.php') ? ' class="active"' : '' ?>><a href="/pages/registration.php">Регистрация</a></li>
+						<li<?= (App::requestURI() == '/pages/login.php') ? ' class="active"' : '' ?>><a href="/pages/login.php">Вход</a></li>
+						<li<?= (App::requestURI() == '/pages/registration.php') ? ' class="active"' : '' ?>><a href="/pages/registration.php">Регистрация</a></li>
 					<?php endif; ?>
 				</ul>
 			</div><!--/.nav-collapse -->

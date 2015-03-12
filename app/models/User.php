@@ -3,6 +3,23 @@ class User extends BaseActiveRecord {
 
 	static $table_name = 'users';
 
+	/**
+	 * Данные пользователя
+	 * @return string данные пользователя
+	 */
+	public static function get($key)
+	{
+		if (Registry::has('user')) {
+			return Registry::get('user')->$key;
+		}
+	}
+
+	public static function check()
+	{
+		return (self::get('id') !== null);
+	}
+
+
 	public function getId()
 	{
 		return $this->id ? $this->id : 0;

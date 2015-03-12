@@ -1,8 +1,9 @@
 <?php
-$act = isset($current_router['params']['action']) ? check($current_router['params']['action']) : 'index';
-$page = !empty($current_router['params']['page']) ? intval($current_router['params']['page']) : 1;
+$act = isset(App::router('params')['action']) ? check(App::router('params')['action']) : 'index';
+$page = !empty(App::router('params')['page']) ? intval(App::router('params')['page']) : 1;
 
-show_title('Гостевая книга', 'Общение без ограничений');
+
+//show_title('Гостевая книга', 'Общение без ограничений');
 
 switch ($act):
 ############################################################################################
@@ -12,21 +13,21 @@ case 'index':
 
 	$total = Guest::count();
 
-	if ($total > 0 && ($page * $config['bookpost']) >= $total) {
-		$page = ceil($total / $config['bookpost']);
+	if ($total > 0 && ($page * Setting::get('bookpost')) >= $total) {
+		$page = ceil($total / Setting::get('bookpost'));
 	}
 
-	$config['newtitle'] = 'Гостевая книга (Стр. '.$page.')';
-	$offset = intval(($page * $config['bookpost']) - $config['bookpost']);
+	//$config['newtitle'] = 'Гостевая книга (Стр. '.$page.')';
+	$offset = intval(($page * Setting::get('bookpost')) - Setting::get('bookpost'));
 
 	$posts = Guest::all(array(
 		'offset' => $offset,
-		'limit' => $config['bookpost'],
+		'limit' => Setting::get('bookpost'),
 		'order' => 'created_at desc',
 		'include' => array('user'),
 	));
 
-	App::render('book/index', compact('posts', 'page', 'total'));
+	App::view('guestbook/index', compact('posts', 'page', 'total'));
 
 break;
 

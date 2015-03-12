@@ -14,7 +14,7 @@ if (!defined('BASEDIR')) {
 
 // libxml_use_internal_errors(true);
 
-if (@filemtime(DATADIR."/temp/courses.dat") < time()-3600 || @filesize(DATADIR."/temp/courses.dat") == 0) {
+if (@filemtime(STORAGE."/temp/courses.dat") < time()-3600 || @filesize(STORAGE."/temp/courses.dat") == 0) {
 
 	#$xml_str = file_get_contents("http://www.cbr.ru/scripts/XML_daily.asp");
 	if ($xml_str = curl_connect("http://www.cbr.ru/scripts/XML_daily.asp")){
@@ -28,11 +28,11 @@ if (@filemtime(DATADIR."/temp/courses.dat") < time()-3600 || @filesize(DATADIR."
 			$courses[strval($item->CharCode)] =  array('name' => strval($item->Name), 'value' => strval($item->Value), 'nominal' => strval($item->Nominal));
 		}
 
-		file_put_contents(DATADIR."/temp/courses.dat", serialize($courses), LOCK_EX);
+		file_put_contents(STORAGE."/temp/courses.dat", serialize($courses), LOCK_EX);
 	}
 }
 
-$courses = @unserialize(file_get_contents(DATADIR."/temp/courses.dat"));
+$courses = @unserialize(file_get_contents(STORAGE."/temp/courses.dat"));
 
 if (!empty($courses)){
 

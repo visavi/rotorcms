@@ -5,14 +5,15 @@ class Setting extends BaseActiveRecord {
 
 	/**
 	 * Получение настроек
-	 * @param  string $name Имя настройки
+	 * @param  string $key Имя настройки
 	 * @return string Значение настройки
 	 */
-	public static function get($name) {
-		$setting = self::all();
+	public static function get($key)
+	{
+		if (!Registry::has('setting')) {
+			Registry::set('setting', App::assoc(self::all(), 'name', 'value'));
+		}
 
-		$setting = ActiveRecord\assoc($setting, 'name', 'value');
-
-		return isset($setting[$name]) ? $setting[$name] : '';
+		return Registry::get('setting')[$key];
 	}
 }

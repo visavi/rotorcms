@@ -38,7 +38,7 @@ if (is_admin(array(101)) && $log == $config['nickname']) {
 		case 'index':
 
 			$arrfiles = array();
-			$globfiles = glob(DATADIR."/main/*.dat");
+			$globfiles = glob(STORAGE."/main/*.dat");
 			foreach ($globfiles as $filename) {
 				$arrfiles[] = basename($filename);
 			}
@@ -56,8 +56,8 @@ if (is_admin(array(101)) && $log == $config['nickname']) {
 				}
 				for ($i = $start; $i < $end; $i++) {
 					$filename = str_replace('.dat', '', $arrfiles[$i]);
-					$size = formatsize(filesize(DATADIR."/main/$arrfiles[$i]"));
-					$strok = count(file(DATADIR."/main/$arrfiles[$i]"));
+					$size = formatsize(filesize(STORAGE."/main/$arrfiles[$i]"));
+					$strok = count(file(STORAGE."/main/$arrfiles[$i]"));
 
 					if ($arrfiles[$i] == 'index.dat') {
 						echo '<div class="b"><img src="/images/img/edit.gif" alt="image" /> ';
@@ -65,7 +65,7 @@ if (is_admin(array(101)) && $log == $config['nickname']) {
 						echo '<a href="files.php?act=edit&amp;file='.$arrfiles[$i].'">Редактировать</a> | ';
 						echo '<a href="files.php?act=obzor&amp;file='.$arrfiles[$i].'">Просмотр</a></div>';
 						echo '<div>Кол. строк: '.$strok.'<br />';
-						echo 'Изменен: '.date_fixed(filemtime(DATADIR."/main/$arrfiles[$i]")).'</div>';
+						echo 'Изменен: '.date_fixed(filemtime(STORAGE."/main/$arrfiles[$i]")).'</div>';
 					} else {
 						echo '<div class="b"><img src="/images/img/edit.gif" alt="image" /> ';
 						echo '<b><a href="/pages/index.php?act='.$filename.'">'.$arrfiles[$i].'</a></b> ('.$size.')<br />';
@@ -73,7 +73,7 @@ if (is_admin(array(101)) && $log == $config['nickname']) {
 						echo '<a href="files.php?act=obzor&amp;file='.$arrfiles[$i].'">Просмотр</a> | ';
 						echo '<a href="files.php?act=poddel&amp;file='.$arrfiles[$i].'">Удалить</a></div>';
 						echo '<div>Кол. строк: '.$strok.'<br />';
-						echo 'Изменен: '.date_fixed(filemtime(DATADIR."/main/$arrfiles[$i]")).'</div>';
+						echo 'Изменен: '.date_fixed(filemtime(STORAGE."/main/$arrfiles[$i]")).'</div>';
 					}
 				}
 
@@ -93,11 +93,11 @@ if (is_admin(array(101)) && $log == $config['nickname']) {
 		case 'obzor':
 
 			if (preg_match('|^[a-z0-9_\.\-]+$|i', $file)) {
-				if (file_exists(DATADIR."/main/$file")) {
+				if (file_exists(STORAGE."/main/$file")) {
 					echo '<b>Просмотр файла '.$file.'</b><br />';
 
-					$opis = file_get_contents(DATADIR."/main/$file");
-					$count = count(file(DATADIR."/main/$file"));
+					$opis = file_get_contents(STORAGE."/main/$file");
+					$count = count(file(STORAGE."/main/$file"));
 
 					echo 'Строк: '.(int)$count.'<br /><br />';
 
@@ -121,11 +121,11 @@ if (is_admin(array(101)) && $log == $config['nickname']) {
 		case 'edit':
 
 			if (preg_match('|^[a-z0-9_\.\-]+$|i', $file)) {
-				if (file_exists(DATADIR."/main/$file")) {
+				if (file_exists(STORAGE."/main/$file")) {
 					$filename = str_replace(".dat", "", $file);
 
-					if (is_writeable(DATADIR."/main/$file")) {
-						$mainfile = file_get_contents(DATADIR."/main/$file");
+					if (is_writeable(STORAGE."/main/$file")) {
+						$mainfile = file_get_contents(STORAGE."/main/$file");
 						$mainfile = str_replace('&amp;', '&', $mainfile);
 
 						echo '<div class="form" id="form">';
@@ -160,11 +160,11 @@ if (is_admin(array(101)) && $log == $config['nickname']) {
 
 			if ($uid == $_SESSION['token']) {
 				if (preg_match('|^[a-z0-9_\.\-]+$|i', $file)) {
-					if (file_exists(DATADIR.'/main/'.$file)) {
+					if (file_exists(STORAGE.'/main/'.$file)) {
 						$msg = str_replace('&', '&amp;', $msg);
 						$msg = str_replace('&amp;&amp;', '&&', $msg);
 
-						$fp = fopen(DATADIR.'/main/'.$file, "a+");
+						$fp = fopen(STORAGE.'/main/'.$file, "a+");
 						flock ($fp, LOCK_EX);
 						ftruncate($fp, 0);
 						fputs ($fp, $msg);
@@ -195,7 +195,7 @@ if (is_admin(array(101)) && $log == $config['nickname']) {
 
 			echo '<b>Создание нового файла</b><br /><br />';
 
-			if (is_writeable(DATADIR."/main")) {
+			if (is_writeable(STORAGE."/main")) {
 				echo '<div class="form"><form action="files.php?act=addnew&amp;uid='.$_SESSION['token'].'" method="post">';
 				echo 'Название файла:<br />';
 				echo '<input type="text" name="newfile" maxlength="20" /><br /><br />';
@@ -218,14 +218,14 @@ if (is_admin(array(101)) && $log == $config['nickname']) {
 
 			if ($uid == $_SESSION['token']) {
 				if (preg_match('|^[a-z0-9_\-]+$|i', $newfile)) {
-					if (!file_exists(DATADIR.'/main/'.$newfile.'.dat')) {
-						$fp = fopen(DATADIR.'/main/'.$newfile.'.dat', "a+");
+					if (!file_exists(STORAGE.'/main/'.$newfile.'.dat')) {
+						$fp = fopen(STORAGE.'/main/'.$newfile.'.dat', "a+");
 						flock ($fp, LOCK_EX);
 						fputs ($fp, '');
 						fflush($fp);
 						flock ($fp, LOCK_UN);
 						fclose($fp);
-						chmod(DATADIR.'/main/'.$newfile.'.dat', 0666);
+						chmod(STORAGE.'/main/'.$newfile.'.dat', 0666);
 
 						$_SESSION['note'] = 'Новый файл успешно создан!';
 						redirect ('files.php?act=edit&file='.$newfile.'.dat');
@@ -249,7 +249,7 @@ if (is_admin(array(101)) && $log == $config['nickname']) {
 		case 'poddel':
 
 			if (preg_match('|^[a-z0-9_\.\-]+$|i', $file)) {
-				if (file_exists(DATADIR."/main/$file")) {
+				if (file_exists(STORAGE."/main/$file")) {
 					echo 'Вы подтверждаете что хотите удалить файл <b>'.$file.'</b><br />';
 					echo '<img src="/images/img/error.gif" alt="image" /> <b><a href="files.php?act=del&amp;file='.$file.'&amp;uid='.$_SESSION['token'].'">Удалить</a></b><br /><br />';
 				} else {
@@ -271,9 +271,9 @@ if (is_admin(array(101)) && $log == $config['nickname']) {
 
 			if ($uid == $_SESSION['token']) {
 				if (preg_match('|^[a-z0-9_\.\-]+$|i', $file)) {
-					if (file_exists(DATADIR."/main/$file")) {
+					if (file_exists(STORAGE."/main/$file")) {
 						if ($file != 'index.dat') {
-							if (unlink (DATADIR."/main/$file")) {
+							if (unlink (STORAGE."/main/$file")) {
 								$_SESSION['note'] = 'Файл успешно удален!';
 								redirect ('files.php');
 

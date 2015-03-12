@@ -17,7 +17,7 @@ if (App::router('target') && is_callable(App::router('target'))) {
 
 } elseif (App::router('target')) {
 
-	include_once BASEDIR.'/app/controllers/'.App::router('target').'.php';
+	include_once APP.'/controllers/'.App::router('target').'.php';
 
 } else {
 	App::view('pages.404');

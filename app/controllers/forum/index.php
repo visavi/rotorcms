@@ -3,7 +3,7 @@
 show_title('Форум '.$config['title']);
 $config['newtitle'] = 'Форум - Список разделов';
 
-include_once (DATADIR.'/advert/forum.dat');
+include_once (STORAGE.'/advert/forum.dat');
 
 $forums = Forum::all(array(
 	'conditions' => array('parent_id = ?', 0),

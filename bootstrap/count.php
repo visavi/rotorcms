@@ -17,8 +17,8 @@ $arr_week = array('вс', 'пн', 'вт', 'ср', 'чт', 'пт', 'сб');
 $count = stats_counter();
 $online = stats_online();
 
-if (file_exists(DATADIR.'/temp/counter7.dat')) {
-	$host_data = unserialize(file_get_contents(DATADIR.'/temp/counter7.dat'));
+if (file_exists(STORAGE.'/temp/counter7.dat')) {
+	$host_data = unserialize(file_get_contents(STORAGE.'/temp/counter7.dat'));
 } else {
 	$host_data = array_fill(0, 6, 0);
 }

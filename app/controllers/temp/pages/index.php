@@ -22,9 +22,9 @@ if (!empty($_GET['act'])){
 
 	if (preg_match('|^[a-z0-9_\-]+$|i', $act) && $act!='index'){
 
-		if (file_exists(DATADIR.'/main/'.$act.'.dat') && (is_user() || $act!='menu')){
+		if (file_exists(STORAGE.'/main/'.$act.'.dat') && (is_user() || $act!='menu')){
 
-			include (DATADIR.'/main/'.$act.'.dat');
+			include (STORAGE.'/main/'.$act.'.dat');
 
 		} else {
 			$_SESSION['note'] = 'Ошибка! Данной страницы не существует!';
@@ -35,7 +35,7 @@ if (!empty($_GET['act'])){
 		redirect("index.php");
 	}
 } else {
-	include_once (DATADIR.'/main/pages.dat');
+	include_once (STORAGE.'/main/pages.dat');
 }
 
 include_once ('../themes/footer.php');

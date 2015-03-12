@@ -10,9 +10,12 @@
 define('DEBUGMODE', true);
 define('STARTTIME', microtime(1));
 define('BASEDIR', dirname(__DIR__));
-define('PUBLICDIR', BASEDIR.'/public');
-define('DATADIR', BASEDIR.'/storage');
-define('PCLZIP_TEMPORARY_DIR', DATADIR.'/temp/');
+define('APP', BASEDIR.'/app');
+define('PUBLIC', BASEDIR.'/public');
+define('STORAGE', BASEDIR.'/storage');
+define('VIEW', APP.'/views');
+define('CACHE', STORAGE.'/cache');
+define('PCLZIP_TEMPORARY_DIR', STORAGE.'/temp/');
 
 if (DEBUGMODE) {
 	@error_reporting(E_ALL);
@@ -51,16 +54,13 @@ ActiveRecord\Config::initialize(function($cfg) {
 	$conf = array('error_prepend' => '<pre class="prettyprint linenums">',
 				  'error_append'  => '</pre>');
 
-	//$logger = Log::singleton('file', DATADIR.'/temp/mysql.dat');
-	$logger = Log::singleton('display', '', '', $conf);
+	//$logger = Log::singleton('file', STORAGE.'/temp/mysql.dat');
+	//$logger = Log::singleton('display', '', '', $conf);
 
-	$cfg->set_logger($logger);
-	$cfg->set_logging(DEBUGMODE);
+	//$cfg->set_logger($logger);
+	//$cfg->set_logging(DEBUGMODE);
 });
 
 ActiveRecord\DateTime::$DEFAULT_FORMAT = 'd.m.y / H:i';
 
-Registry::set('setting', App::assoc(Setting::all(), 'name', 'value'));
-Registry::set('request', isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '/');
-
-date_default_timezone_set(App::setting('timezone'));
+date_default_timezone_set(Setting::get('timezone'));

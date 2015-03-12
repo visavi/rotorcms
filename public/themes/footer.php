@@ -13,7 +13,7 @@ if (!defined('BASEDIR')) {
 
 include_once (BASEDIR."/bootstrap/counters.php");
 
-include_once (DATADIR.'/advert/bottom_all.dat');
+include_once (STORAGE.'/advert/bottom_all.dat');
 
 // -------- Удаление флеш сообщения ---------//
 if (isset($_SESSION['note'])) {

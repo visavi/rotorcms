@@ -127,7 +127,7 @@ if ($online[1] < 150 || is_user()) {
 			array_unshift($host_data, (isset($weeks[$tekdays])) ? $weeks[$tekdays] : 0);
 		}
 
-		file_put_contents(DATADIR.'/temp/counter7.dat', serialize($host_data), LOCK_EX);
+		file_put_contents(STORAGE.'/temp/counter7.dat', serialize($host_data), LOCK_EX);
 
 		//
 		/*
@@ -143,7 +143,7 @@ if ($online[1] < 150 || is_user()) {
 			array_unshift($host_data, (isset($counts[$tekdays])) ? $counts[$tekdays] : 0);
 		}
 
-		file_put_contents(DATADIR.'/temp/counter7.dat', serialize($host_data), LOCK_EX);
+		file_put_contents(STORAGE.'/temp/counter7.dat', serialize($host_data), LOCK_EX);
 		*/
 	}
 	// -----------------------------------------------------------//

@@ -32,8 +32,8 @@ if (is_admin()) {
 	############################################################################################
 		case 'index':
 
-			if (file_exists(DATADIR."/temp/changes.dat")) {
-				$data = file_get_contents(DATADIR."/temp/changes.dat");
+			if (file_exists(STORAGE."/temp/changes.dat")) {
+				$data = file_get_contents(STORAGE."/temp/changes.dat");
 
 				if (is_serialized($data)) {
 					$data = unserialize($data);
@@ -90,10 +90,10 @@ if (is_admin()) {
 		############################################################################################
 		case 'reload':
 
-			if (@copy("http://visavi.net/rotorcms/rotor.txt", DATADIR."/temp/changes.dat")) {
+			if (@copy("http://visavi.net/rotorcms/rotor.txt", STORAGE."/temp/changes.dat")) {
 			} else {
 				$data = curl_connect("http://visavi.net/rotorcms/rotor.txt");
-				file_put_contents(DATADIR."/temp/changes.dat", $data);
+				file_put_contents(STORAGE."/temp/changes.dat", $data);
 			}
 
 			$_SESSION['note'] = 'Новости RotorCMS успешно обновлены!';

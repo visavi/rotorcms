@@ -34,7 +34,7 @@ if (is_admin(array(101))) {
 
 			echo '<img src="/images/img/eraser.gif" alt="image" /> <b>Файлы</b> / <a href="cache.php?act=image">Изображения</a><br /><br />';
 
-			$cachefiles = glob(DATADIR.'/temp/*.dat');
+			$cachefiles = glob(STORAGE.'/temp/*.dat');
 			$total = count($cachefiles);
 
 			if (is_array($cachefiles) && $total>0){
@@ -91,8 +91,8 @@ if (is_admin(array(101))) {
 
 		if ($uid == $_SESSION['token']) {
 
-			$cachefiles = glob(DATADIR.'/temp/*.dat');
-			$cachefiles = array_diff($cachefiles, array(DATADIR.'/temp/checker.dat', DATADIR.'/temp/counter7.dat'));
+			$cachefiles = glob(STORAGE.'/temp/*.dat');
+			$cachefiles = array_diff($cachefiles, array(STORAGE.'/temp/checker.dat', STORAGE.'/temp/counter7.dat'));
 
 			if (is_array($cachefiles) && count($cachefiles)>0){
 				foreach ($cachefiles as $file) {

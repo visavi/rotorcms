@@ -171,14 +171,14 @@ function bb_code($text, $parse = true) {
 
 	if (empty($list_smiles)) {
 
-		if (!file_exists(DATADIR."/temp/smiles.dat")) {
+		if (!file_exists(STORAGE."/temp/smiles.dat")) {
 
 			$smiles = \Smile::all(array('order' => 'LENGTH(code) desc'));
 			$smiles = \ActiveRecord\assoc($smiles, 'code', 'name');
-			file_put_contents(DATADIR."/temp/smiles.dat", serialize($smiles));
+			file_put_contents(STORAGE."/temp/smiles.dat", serialize($smiles));
 		}
 
-		$list_smiles = unserialize(file_get_contents(DATADIR."/temp/smiles.dat"));
+		$list_smiles = unserialize(file_get_contents(STORAGE."/temp/smiles.dat"));
 	}
 
 	foreach($list_smiles as $code => $smile) {
@@ -395,7 +395,7 @@ function user_status($level) {
 
 // ---------------- Функция кэширования статусов ------------------//
 function save_title($time = 0) {
-	if (empty($time) || @filemtime(DATADIR.'/temp/status.dat') < time() - $time) {
+	if (empty($time) || @filemtime(STORAGE.'/temp/status.dat') < time() - $time) {
 
 		$users = User::all(array(
 			'select' => 'u.id, u.status, s.name, s.color',
@@ -419,7 +419,7 @@ function save_title($time = 0) {
 			$allstat[$user->id] = $user->name;
 		}
 
-		file_put_contents(DATADIR.'/temp/status.dat', serialize($allstat), LOCK_EX);
+		file_put_contents(STORAGE.'/temp/status.dat', serialize($allstat), LOCK_EX);
 	}
 }
 
@@ -430,7 +430,7 @@ function user_title($user_id) {
 
 	if (empty($arrstat)) {
 		save_title(3600);
-		$arrstat = unserialize(file_get_contents(DATADIR.'/temp/status.dat'));
+		$arrstat = unserialize(file_get_contents(STORAGE.'/temp/status.dat'));
 	}
 
 	return (isset($arrstat[$user_id])) ? $arrstat[$user_id] : $config['statusdef'];
@@ -438,10 +438,10 @@ function user_title($user_id) {
 
 // --------------- Функция кэширования ников -------------------//
 function save_nickname($time = 0) {
-	if (empty($time) || @filemtime(DATADIR.'/temp/nickname.dat') < time() - $time) {
+	if (empty($time) || @filemtime(STORAGE.'/temp/nickname.dat') < time() - $time) {
 		$querynick = DB::run() -> query("SELECT `users_login`, `users_nickname` FROM `users` WHERE `users_nickname`<>?;", array(''));
 		$allnick = $querynick -> fetchAssoc();
-		file_put_contents(DATADIR.'/temp/nickname.dat', serialize($allnick), LOCK_EX);
+		file_put_contents(STORAGE.'/temp/nickname.dat', serialize($allnick), LOCK_EX);
 	}
 }
 
@@ -451,7 +451,7 @@ function nickname($login) {
 
 	if (empty($arrnick)) {
 		save_nickname(10800);
-		$arrnick = unserialize(file_get_contents(DATADIR."/temp/nickname.dat"));
+		$arrnick = unserialize(file_get_contents(STORAGE."/temp/nickname.dat"));
 	}
 
 	return (isset($arrnick[$login])) ? $arrnick[$login] : $login;
@@ -461,7 +461,7 @@ function nickname($login) {
 function save_setting() {
 	$queryset = DB::run() -> query("SELECT `setting_name`, `setting_value` FROM `setting`;");
 	$config = $queryset -> fetchAssoc();
-	file_put_contents(DATADIR."/temp/setting.dat", serialize($config), LOCK_EX);
+	file_put_contents(STORAGE."/temp/setting.dat", serialize($config), LOCK_EX);
 }
 
 // --------------- Функция кэширования забаненных IP -------------------//
@@ -469,7 +469,7 @@ function save_ipban() {
 	$query = Ban::all(array('select' => 'ip'));
 	$banip = ActiveRecord\collect($query, 'ip');
 
-	file_put_contents(DATADIR."/temp/ipban.dat", serialize($banip), LOCK_EX);
+	file_put_contents(STORAGE."/temp/ipban.dat", serialize($banip), LOCK_EX);
 	return $banip;
 }
 
@@ -663,7 +663,7 @@ function user_mail($user_id) {
 
 // --------------- Функция кэширования аватаров -------------------//
 function save_avatar($time = 0) {
-	if (empty($time) || @filemtime(DATADIR."/temp/avatars.dat") < time() - $time) {
+	if (empty($time) || @filemtime(STORAGE."/temp/avatars.dat") < time() - $time) {
 
 		$allavat = array();
 		$avatars = User::all(array('select' => 'id, avatar', 'conditions' => 'avatar IS NOT NULL'));
@@ -672,12 +672,13 @@ function save_avatar($time = 0) {
 			$allavat[$avatar->id] = $avatar->avatar;
 		}
 
-		file_put_contents(DATADIR."/temp/avatars.dat", serialize($allavat), LOCK_EX);
+		file_put_contents(STORAGE."/temp/avatars.dat", serialize($allavat), LOCK_EX);
 	}
 }
 
 // --------------- Функция вывода аватара пользователя ---------------//
 function user_avatars($user_id) {
+	return true;
 	global $config;
 	static $avatars;
 
@@ -693,7 +694,7 @@ function user_avatars($user_id) {
 		default:
 			if (empty($avatars)) {
 				save_avatar(3600);
-				$avatars = unserialize(file_get_contents(DATADIR."/temp/avatars.dat"));
+				$avatars = unserialize(file_get_contents(STORAGE."/temp/avatars.dat"));
 			}
 
 			if (isset($avatars[$user_id]) && file_exists($avatars[$user_id])) {
@@ -703,22 +704,22 @@ function user_avatars($user_id) {
 			}
 	}
 
-	return App::render('includes/avatar', compact('image'));
+	return App::view('includes/avatar', compact('image'));
 }
 
 
 // ------------------ Функция подсчета пользователей онлайн -----------------//
 function stats_online($cache = 30) {
-	if (@filemtime(DATADIR."/temp/online.dat") < time()-$cache) {
+	if (@filemtime(STORAGE."/temp/online.dat") < time()-$cache) {
 
 		$total = Online::count();
 		$online = Online::count(array('conditions' => 'user_id IS NOT NULL'));
-		file_put_contents(DATADIR."/temp/online.dat", serialize(array($online, $total)), LOCK_EX);
+		file_put_contents(STORAGE."/temp/online.dat", serialize(array($online, $total)), LOCK_EX);
 
 		include_once(BASEDIR.'/bootstrap/count.php');
 	}
 
-	return unserialize(file_get_contents(DATADIR."/temp/online.dat"));
+	return unserialize(file_get_contents(STORAGE."/temp/online.dat"));
 }
 
 // ------------------ Функция вывода пользователей онлайн -----------------//
@@ -733,13 +734,13 @@ function show_online() {
 
 // ------------------ Функция подсчета посещений -----------------//
 function stats_counter() {
-	if (@filemtime(DATADIR."/temp/counter.dat") < time()-10) {
+	if (@filemtime(STORAGE."/temp/counter.dat") < time()-10) {
 
 		$counts = Counter::first();
-		file_put_contents(DATADIR."/temp/counter.dat", $counts->to_json(), LOCK_EX);
+		file_put_contents(STORAGE."/temp/counter.dat", $counts->to_json(), LOCK_EX);
 	}
 
-	return json_decode(file_get_contents(DATADIR."/temp/counter.dat"));
+	return json_decode(file_get_contents(STORAGE."/temp/counter.dat"));
 }
 
 // ------------------ Функция вывода счетчика посещений -----------------//
@@ -756,7 +757,7 @@ function show_counter() {
 
 // --------------- Функция вывода количества зарегистрированных ---------------//
 function stats_users() {
-	if (@filemtime(DATADIR."/temp/statusers.dat") < time()-3600) {
+	if (@filemtime(STORAGE."/temp/statusers.dat") < time()-3600) {
 		$total = User::count();
 		$new = User::count(array('conditions' => 'DATE(created_at) = DATE(NOW())'));
 
@@ -766,10 +767,10 @@ function stats_users() {
 			$stat = $total.'/+'.$new;
 		}
 
-		file_put_contents(DATADIR."/temp/statusers.dat", $stat, LOCK_EX);
+		file_put_contents(STORAGE."/temp/statusers.dat", $stat, LOCK_EX);
 	}
 
-	return file_get_contents(DATADIR."/temp/statusers.dat");
+	return file_get_contents(STORAGE."/temp/statusers.dat");
 }
 
 // --------------- Функция вывода количества жалоб --------------------//
@@ -802,7 +803,7 @@ function stats_ipbanned() {
 
 // --------------- Функция вывода количества фотографий --------------------//
 function stats_gallery() {
-	if (@filemtime(DATADIR."/temp/statgallery.dat") < time()-900) {
+	if (@filemtime(STORAGE."/temp/statgallery.dat") < time()-900) {
 
 		$total = Photo::count();
 		$totalnew = Photo::count(array('conditions' => 'created_at > NOW()-INTERVAL 3 DAY'));
@@ -813,10 +814,10 @@ function stats_gallery() {
 			$stat = $total.'/+'.$totalnew;
 		}
 
-		file_put_contents(DATADIR."/temp/statgallery.dat", $stat, LOCK_EX);
+		file_put_contents(STORAGE."/temp/statgallery.dat", $stat, LOCK_EX);
 	}
 
-	return file_get_contents(DATADIR."/temp/statgallery.dat");
+	return file_get_contents(STORAGE."/temp/statgallery.dat");
 }
 
 // --------------- Функция вывода количества новостей--------------------//
@@ -850,8 +851,8 @@ function stats_avatars() {
 
 // ----------- Функция вывода даты последнего сканирования -------------//
 function stats_checker() {
-	if (file_exists(DATADIR."/temp/checker.dat")) {
-		return date_fixed(filemtime(DATADIR."/temp/checker.dat"), "j.m.y");
+	if (file_exists(STORAGE."/temp/checker.dat")) {
+		return date_fixed(filemtime(STORAGE."/temp/checker.dat"), "j.m.y");
 	} else {
 		return 0;
 	}
@@ -876,15 +877,15 @@ function user_online($user_id) {
 	$statwho = '<span class="fa fa-asterisk text-danger"></span>';
 
 	if (empty($arrvisit)) {
-		if (@filemtime(DATADIR."/temp/visit.dat") < time()-10) {
+		if (@filemtime(STORAGE."/temp/visit.dat") < time()-10) {
 
 			$visits = Visit::all(array('conditions' => 'created_at > NOW()-INTERVAL 10 MINUTE'));
 			$allvisits = ActiveRecord\collect($visits, 'user_id');
 
-			file_put_contents(DATADIR."/temp/visit.dat", serialize($allvisits), LOCK_EX);
+			file_put_contents(STORAGE."/temp/visit.dat", serialize($allvisits), LOCK_EX);
 		}
 
-		$arrvisit = unserialize(file_get_contents(DATADIR."/temp/visit.dat"));
+		$arrvisit = unserialize(file_get_contents(STORAGE."/temp/visit.dat"));
 	}
 
 	if (is_array($arrvisit) && in_array($user_id, $arrvisit)) {
@@ -901,15 +902,15 @@ function user_gender($user_id) {
 	$gender = 'fa-male';
 
 	if (empty($arrgender)) {
-		if (@filemtime(DATADIR."/temp/gender.dat") < time()-600) {
+		if (@filemtime(STORAGE."/temp/gender.dat") < time()-600) {
 			$genders = User::all(array('conditions' => array('gender = ?', 2), 'select' => 'id'));
 			$allgender = ActiveRecord\collect($genders, 'id');
 
 			//$querygender = DB::run() -> query("SELECT `users_login` FROM `users` WHERE `users_gender`=?;", array(2));
 			//$allgender = $querygender -> fetchAll(PDO::FETCH_COLUMN);
-			file_put_contents(DATADIR."/temp/gender.dat", serialize($allgender), LOCK_EX);
+			file_put_contents(STORAGE."/temp/gender.dat", serialize($allgender), LOCK_EX);
 		}
-		$arrgender = unserialize(file_get_contents(DATADIR."/temp/gender.dat"));
+		$arrgender = unserialize(file_get_contents(STORAGE."/temp/gender.dat"));
 	}
 
 	if (in_array($user_id, $arrgender)) {
@@ -921,13 +922,13 @@ function user_gender($user_id) {
 
 // --------------- Функция вывода пользователей онлайн ---------------//
 function allonline() {
-	if (@filemtime(DATADIR."/temp/allonline.dat") < time()-30) {
+	if (@filemtime(STORAGE."/temp/allonline.dat") < time()-30) {
 		$queryvisit = DB::run() -> query("SELECT `visit_user` FROM `visit` WHERE `visit_nowtime`>? ORDER BY `visit_nowtime` DESC;", array(SITETIME-600));
 		$allvisits = $queryvisit -> fetchAll(PDO::FETCH_COLUMN);
-		file_put_contents(DATADIR."/temp/allonline.dat", serialize($allvisits), LOCK_EX);
+		file_put_contents(STORAGE."/temp/allonline.dat", serialize($allvisits), LOCK_EX);
 	}
 
-	return unserialize(file_get_contents(DATADIR."/temp/allonline.dat"));
+	return unserialize(file_get_contents(STORAGE."/temp/allonline.dat"));
 }
 
 // ------------------ Функция определение последнего посещения ----------------//
@@ -1116,7 +1117,7 @@ function photo_navigation($id) {
 // --------------------- Функция вывода статистики блогов ------------------------//
 function stats_blog() {
 
-	if (@filemtime(DATADIR."/temp/statblog.dat") < time()-900) {
+	if (@filemtime(STORAGE."/temp/statblog.dat") < time()-900) {
 
 		$totalblog = BlogCategory::find(array('select' => 'SUM(count) as sum'));
 		$totalnew = Blog::count(array('conditions' => 'created_at > NOW()-INTERVAL 3 DAY'));
@@ -1127,29 +1128,29 @@ function stats_blog() {
 			$stat = intval($totalblog->sum).'/+'.intval($totalnew);
 		}
 
-		file_put_contents(DATADIR."/temp/statblog.dat", $stat, LOCK_EX);
+		file_put_contents(STORAGE."/temp/statblog.dat", $stat, LOCK_EX);
 	}
 
-	return file_get_contents(DATADIR."/temp/statblog.dat");
+	return file_get_contents(STORAGE."/temp/statblog.dat");
 }
 
 // --------------------- Функция вывода статистики форума ------------------------//
 function stats_forum() {
-	if (@filemtime(DATADIR."/temp/statforum.dat") < time()-600) {
+	if (@filemtime(STORAGE."/temp/statforum.dat") < time()-600) {
 
 		//$forums = Forum::find(array('select' => 'SUM(topics) as topics, SUM(posts) as posts'));
 		$topics = Forum::count();
 		$posts = Post::count();
 
-		file_put_contents(DATADIR."/temp/statforum.dat", $topics.'/'.$posts, LOCK_EX);
+		file_put_contents(STORAGE."/temp/statforum.dat", $topics.'/'.$posts, LOCK_EX);
 	}
 
-	return file_get_contents(DATADIR."/temp/statforum.dat");
+	return file_get_contents(STORAGE."/temp/statforum.dat");
 }
 
 // --------------------- Функция вывода статистики гостевой ------------------------//
 function stats_guest() {
-	if (@filemtime(DATADIR."/temp/statguest.dat") < time()-600) {
+	if (@filemtime(STORAGE."/temp/statguest.dat") < time()-600) {
 		global $config;
 
 		$total = Guest::count();
@@ -1161,10 +1162,10 @@ function stats_guest() {
 			$stat = $total;
 		}
 
-		file_put_contents(DATADIR."/temp/statguest.dat", (int)$stat, LOCK_EX);
+		file_put_contents(STORAGE."/temp/statguest.dat", (int)$stat, LOCK_EX);
 	}
 
-	return file_get_contents(DATADIR."/temp/statguest.dat");
+	return file_get_contents(STORAGE."/temp/statguest.dat");
 }
 
 // -------------------- Функция вывода статистики админ-чата -----------------------//
@@ -1188,7 +1189,7 @@ function stats_newchat() {
 // --------------------- Функция вывода статистики загрузок ------------------------//
 function stats_load() {
 
-	if (@filemtime(DATADIR."/temp/statload.dat") < time()-900) {
+	if (@filemtime(STORAGE."/temp/statload.dat") < time()-900) {
 
 		$total = Down::count();
 		$totalnew = Down::count(array('conditions' => 'active = 1 AND created_at > NOW()-INTERVAL 5 DAY'));
@@ -1198,10 +1199,10 @@ function stats_load() {
 		} else {
 			$stat = $total.'/+'.$totalnew;
 		}
-		file_put_contents(DATADIR."/temp/statload.dat", $stat, LOCK_EX);
+		file_put_contents(STORAGE."/temp/statload.dat", $stat, LOCK_EX);
 	}
 
-	return file_get_contents(DATADIR."/temp/statload.dat");
+	return file_get_contents(STORAGE."/temp/statload.dat");
 }
 
 // --------------------- Функция подсчета непроверенных файлов ------------------------//
@@ -1240,22 +1241,22 @@ function intar($string) {
 
 // ------------------- Функция подсчета голосований --------------------//
 function stats_votes() {  //Удалить функцию
-	if (@filemtime(DATADIR."/temp/statvote.dat") < time()-900) {
+	if (@filemtime(STORAGE."/temp/statvote.dat") < time()-900) {
 		$data = DB::run() -> queryFetch("SELECT count(*) AS `count`, SUM(`vote_count`) AS `sum` FROM `vote` WHERE `vote_closed`=?;", array(0));
 
 		if (empty($data['sum'])) {
 			$data['sum'] = 0;
 		}
 
-		file_put_contents(DATADIR."/temp/statvote.dat", $data['count'].'/'.$data['sum'], LOCK_EX);
+		file_put_contents(STORAGE."/temp/statvote.dat", $data['count'].'/'.$data['sum'], LOCK_EX);
 	}
 
-	return file_get_contents(DATADIR."/temp/statvote.dat");
+	return file_get_contents(STORAGE."/temp/statvote.dat");
 }
 
 // ------------------- Функция показа даты последней новости --------------------//
 function stats_news() {
-	if (@filemtime(DATADIR."/temp/statnews.dat") < time()-900) {
+	if (@filemtime(STORAGE."/temp/statnews.dat") < time()-900) {
 		$stat = 0;
 
 		$news = News::last(array('select' => 'created_at'));
@@ -1268,10 +1269,10 @@ function stats_news() {
 			}
 		}
 
-		file_put_contents(DATADIR."/temp/statnews.dat", $stat, LOCK_EX);
+		file_put_contents(STORAGE."/temp/statnews.dat", $stat, LOCK_EX);
 	}
 
-	return file_get_contents(DATADIR."/temp/statnews.dat");
+	return file_get_contents(STORAGE."/temp/statnews.dat");
 }
 
 // --------------------------- Функция вывода новостей -------------------------//
@@ -1300,7 +1301,7 @@ function check_user($user_id) {
 // ------------------------- Функция проверки авторизации  ------------------------//
 function is_user() {
 
-	global $config;
+/*	global $config;
 	static $result = false;
 
 	if (!$result) {
@@ -1316,7 +1317,7 @@ function is_user() {
 		}
 	}
 
-	return $result;
+	return $result;*/
 }
 
 // ------------------------- Функция проверки администрации  ------------------------//
@@ -1338,7 +1339,7 @@ function is_admin($access = array()) {
 
 // ------------------------- Функция вывода заголовков ------------------------//
 function show_title($header, $subheader = false) {
-	global $config;
+/*	global $config;
 	static $show;
 
 	$config['newtitle'] = $header;
@@ -1349,7 +1350,7 @@ function show_title($header, $subheader = false) {
 		echo $show = App::render('includes/title', array(), true);
 	}
 
-	return $config;
+	return $config;*/
 }
 
 // ------------------------- Функция вывода ошибок ------------------------//
@@ -1449,11 +1450,11 @@ function strip_str($str, $words = 20) {
 function show_advertadmin() {
 
 	return false; // Временно
-	if (@filemtime(DATADIR."/temp/rekadmin.dat") < time()-1800) {
+	if (@filemtime(STORAGE."/temp/rekadmin.dat") < time()-1800) {
 		save_advertadmin();
 	}
 
-	$datafile = unserialize(file_get_contents(DATADIR."/temp/rekadmin.dat"));
+	$datafile = unserialize(file_get_contents(STORAGE."/temp/rekadmin.dat"));
 
 	if (!empty($datafile)) {
 		$quot_rand = array_rand($datafile);
@@ -1478,7 +1479,7 @@ function save_advertadmin() {
 		}
 	}
 
-	file_put_contents(DATADIR."/temp/rekadmin.dat", serialize($arraylink), LOCK_EX);
+	file_put_contents(STORAGE."/temp/rekadmin.dat", serialize($arraylink), LOCK_EX);
 }
 
 // ------------------ Функция вывода пользовательской рекламы --------------------//
@@ -1488,11 +1489,11 @@ function show_advertuser() {
 	global $config;
 
 	if (!empty($config['rekusershow'])) {
-		if (@filemtime(DATADIR."/temp/rekuser.dat") < time()-1800) {
+		if (@filemtime(STORAGE."/temp/rekuser.dat") < time()-1800) {
 			save_advertuser();
 		}
 
-		$datafile = unserialize(file_get_contents(DATADIR."/temp/rekuser.dat"));
+		$datafile = unserialize(file_get_contents(STORAGE."/temp/rekuser.dat"));
 		$total = count($datafile);
 
 		if ($total > 0) {
@@ -1539,7 +1540,7 @@ function save_advertuser() {
 		}
 	}
 
-	file_put_contents(DATADIR."/temp/rekuser.dat", serialize($arraylink), LOCK_EX);
+	file_put_contents(STORAGE."/temp/rekuser.dat", serialize($arraylink), LOCK_EX);
 }
 
 // ----------- Функция проверки лицензии и обновления ------------//
@@ -1553,8 +1554,8 @@ function site_verification() {
 	}
 
 	if (stats_changes() > $config['rotorversion']) {
-		if (file_exists(DATADIR.'/upgrade_'.stats_changes().'.dat')) {
-			include_once (DATADIR.'/upgrade_'.stats_changes().'.dat');
+		if (file_exists(STORAGE.'/upgrade_'.stats_changes().'.dat')) {
+			include_once (STORAGE.'/upgrade_'.stats_changes().'.dat');
 		} else {
 			echo '<img src="/images/img/custom.gif" alt="image" />  <b><a href="changes.php?"><span style="color:#ff0000">Доступна новая версия '.stats_changes().'</span></a></b><br /><br />';
 		}
@@ -1601,15 +1602,15 @@ function license_verification() {
 function stats_changes() {
 	global $config;
 
-	if (@filemtime(DATADIR."/temp/changes.dat") < time()-86400) {
-		if (@copy("http://visavi.net/rotorcms/rotor.txt", DATADIR."/temp/changes.dat")) {
+	if (@filemtime(STORAGE."/temp/changes.dat") < time()-86400) {
+		if (@copy("http://visavi.net/rotorcms/rotor.txt", STORAGE."/temp/changes.dat")) {
 		} else {
 			$data = curl_connect("http://visavi.net/rotorcms/rotor.txt");
-			file_put_contents(DATADIR."/temp/changes.dat", $data);
+			file_put_contents(STORAGE."/temp/changes.dat", $data);
 		}
 	}
 
-	$data = file_get_contents(DATADIR."/temp/changes.dat");
+	$data = file_get_contents(STORAGE."/temp/changes.dat");
 
 	if (is_serialized($data)) {
 		$data = unserialize($data);
@@ -1646,14 +1647,14 @@ function curl_connect($url, $user_agent = 'Mozilla/5.0') {
 
 // --------------- Функция кэширования последних тем форума -------------------//
 function recenttopics($show = 5) { return false;
-	if (@filemtime(DATADIR."/temp/recenttopics.dat") < time()-180) {
+	if (@filemtime(STORAGE."/temp/recenttopics.dat") < time()-180) {
 		$querytopic = DB::run() -> query("SELECT * FROM `topics` ORDER BY `topics_last_time` DESC LIMIT ".$show.";");
 		$recent = $querytopic -> fetchAll();
 
-		file_put_contents(DATADIR."/temp/recenttopics.dat", serialize($recent), LOCK_EX);
+		file_put_contents(STORAGE."/temp/recenttopics.dat", serialize($recent), LOCK_EX);
 	}
 
-	$topics = unserialize(file_get_contents(DATADIR."/temp/recenttopics.dat"));
+	$topics = unserialize(file_get_contents(STORAGE."/temp/recenttopics.dat"));
 
 	if (count($topics) > 0) {
 		foreach ($topics as $topic) {
@@ -1668,14 +1669,14 @@ function recenttopics($show = 5) { return false;
 
 // ------------- Функция кэширования последних файлов в загрузках -----------------//
 function recentfiles($show = 5) {  return false;
-	if (@filemtime(DATADIR."/temp/recentfiles.dat") < time()-600) {
+	if (@filemtime(STORAGE."/temp/recentfiles.dat") < time()-600) {
 		$queryfiles = DB::run() -> query("SELECT * FROM `downs` WHERE `downs_active`=? ORDER BY `downs_time` DESC LIMIT ".$show.";", array(1));
 		$recent = $queryfiles -> fetchAll();
 
-		file_put_contents(DATADIR."/temp/recentfiles.dat", serialize($recent), LOCK_EX);
+		file_put_contents(STORAGE."/temp/recentfiles.dat", serialize($recent), LOCK_EX);
 	}
 
-	$files = unserialize(file_get_contents(DATADIR."/temp/recentfiles.dat"));
+	$files = unserialize(file_get_contents(STORAGE."/temp/recentfiles.dat"));
 
 	if (count($files) > 0) {
 		foreach ($files as $file){
@@ -1689,14 +1690,14 @@ function recentfiles($show = 5) {  return false;
 
 // ------------- Функция кэширования последних статей в блогах -----------------//
 function recentblogs() {  return false;
-	if (@filemtime(DATADIR."/temp/recentblog.dat") < time()-600) {
+	if (@filemtime(STORAGE."/temp/recentblog.dat") < time()-600) {
 		$queryblogs = DB::run() -> query("SELECT * FROM `blogs` ORDER BY `blogs_time` DESC LIMIT 5;");
 		$recent = $queryblogs -> fetchAll();
 
-		file_put_contents(DATADIR."/temp/recentblog.dat", serialize($recent), LOCK_EX);
+		file_put_contents(STORAGE."/temp/recentblog.dat", serialize($recent), LOCK_EX);
 	}
 
-	$blogs = unserialize(file_get_contents(DATADIR."/temp/recentblog.dat"));
+	$blogs = unserialize(file_get_contents(STORAGE."/temp/recentblog.dat"));
 
 	if (count($blogs) > 0) {
 		foreach ($blogs as $blog) {
@@ -1813,18 +1814,18 @@ function strsearch($str, $arr) {
 
 // ------------- Функция кэширования пользовательских функций -------------//
 function cache_functions($cache=10800) {
-	if (@filemtime(DATADIR.'/temp/functions.dat') < time()-$cache) {
+/*	if (@filemtime(STORAGE.'/temp/functions.dat') < time()-$cache) {
 		$files = array_diff(scandir(BASEDIR.'/includes/functions'), array('.', '..', '.htaccess'));
 
-		file_put_contents(DATADIR.'/temp/functions.dat', serialize($files), LOCK_EX);
+		file_put_contents(STORAGE.'/temp/functions.dat', serialize($files), LOCK_EX);
 	}
 
-	return unserialize(file_get_contents(DATADIR.'/temp/functions.dat'));
+	return unserialize(file_get_contents(STORAGE.'/temp/functions.dat'));*/
 }
 
 // ------------- Функция кэширования админских ссылок -------------//
 function cache_admin_links($cache=10800) {
-	if (@filemtime(DATADIR.'/temp/adminlinks.dat') < time()-$cache) {
+	if (@filemtime(STORAGE.'/temp/adminlinks.dat') < time()-$cache) {
 		$files = array_diff(scandir(BASEDIR.'/admin/links'), array('.', '..', '.htaccess'));
 
 		$links = array();
@@ -1834,10 +1835,10 @@ function cache_admin_links($cache=10800) {
 			$links[$access][] = $file;
 		}
 
-		file_put_contents(DATADIR.'/temp/adminlinks.dat', serialize($links), LOCK_EX);
+		file_put_contents(STORAGE.'/temp/adminlinks.dat', serialize($links), LOCK_EX);
 	}
 
-	return unserialize(file_get_contents(DATADIR.'/temp/adminlinks.dat'));
+	return unserialize(file_get_contents(STORAGE.'/temp/adminlinks.dat'));
 }
 
 // ------------- Функция вывода админских ссылок -------------//

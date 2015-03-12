@@ -17,7 +17,7 @@ $brow = (empty($_SESSION['browser'])) ? $_SESSION['browser'] = get_user_agent() 
 /**
  *  Сжатие и буферизация данныx
  */
-if (!empty($config['gzip'])) {
+if (Setting::get('gzip')) {
 	Compressor::start();
 }
 
@@ -52,46 +52,20 @@ ob_start('ob_processing');
 ############################################################################################
 ##                            Получение данных пользователя                               ##
 ############################################################################################
-$user = Registry::set('user', is_user());
-
-if ($user) {
-
-	$config['themes'] = $current_user->themes; # Скин/тема по умолчанию
-
-	if ($current_user->ban) {
-		if (!strsearch($php_self, array('/pages/ban.php', '/pages/rules.php'))) {
-			redirect('/pages/ban.php?user='.$current_user->id);
-		}
-	}
-
-	if ($config['regkeys'] > 0 && $current_user->confirmreg > 0 && empty($current_user->ban)) {
-		if (!strsearch($php_self, array('/pages/key.php', '/pages/login.php'))) {
-			redirect('/pages/key.php?user='.$current_user->id);
-		}
-	}
-
-	// --------------------- Проверка соответствия ip-адреса ---------------------//
-	if (!empty($current_user->ipbinding)) {
-		if ($_SESSION['ip'] != $ip) {
-			$_SESSION = array();
-			setcookie(session_name(), '', 0, '/', '');
-			session_destroy();
-			redirect(html_entity_decode($request_uri));
-		}
-	}
-
+if (User::check()) {
 	// ---------------------- Получение ежедневного бонуса -----------------------//
-	if (!$current_user->timebonus || $current_user->timebonus->getTimestamp()  < SITETIME - 82800) {
+	if (!User::get('timebonus') || User::get('timebonus')->getTimestamp()  < SITETIME - 82800) {
 
-		$current_user->timebonus = new DateTime();
-		$current_user->money = $current_user->money + $config['bonusmoney'];
-		$current_user->save();
+		$user = User::first(User::get('id'));
+		$user->timebonus = new DateTime();
+		$user->money = $user->money + Setting::get('bonusmoney');
+		$user->save();
 
-		notice('Получен ежедневный бонус '.moneys($config['bonusmoney']).'!');
+		notice('Получен ежедневный бонус '.moneys(Setting::get('bonusmoney')).'!');
 	}
 
 	// ------------------ Запись текущей страницы для админов --------------------//
-	if (strstr($php_self, '/admin')) {
+/*	if (strstr($php_self, '/admin')) {
 
 		$attributes = array(
 			'user_id' => $current_user->id,
@@ -108,7 +82,7 @@ if ($user) {
 			$delete = ActiveRecord\collect($logs, 'id');
 			Log::table()->delete(array('id' => $delete));
 		}
-	}
+	}*/
 } else {
-	$current_user = new User;
+	Registry::set('user', new User);
 }

@@ -54,7 +54,7 @@ include_once ('themes/'.$config['themes'].'/index.php');
 ?>
 
 <div style="text-align:center">
-	<?php include_once (DATADIR.'/advert/top_all.dat'); ?>
+	<?php include_once (STORAGE.'/advert/top_all.dat'); ?>
 
 	<?= show_advertadmin(); /* Админска реклама */ ?>
 	<?= show_advertuser(); /* Реклама за игровые деньги */ ?>

@@ -1,6 +1,6 @@
 <?php
-include_once (DATADIR.'/advert/top.dat');
+include_once (STORAGE.'/advert/top.dat');
 
 App::view('index');
 
-include_once (DATADIR.'/advert/bottom.dat');
+include_once (STORAGE.'/advert/bottom.dat');

@@ -9,11 +9,8 @@ class App
 	 */
 	public static function view($view, $params = [])
 	{
-		global $config, $router, $request_uri;
+		$blade = new Philo\Blade\Blade(VIEW, CACHE);
 
-		$blade = new Philo\Blade\Blade(BASEDIR.'/app/views', DATADIR.'/cache');
-
-		$params += compact('router', 'config', 'request_uri');
 		echo $blade->view()->make($view, $params);
 	}
 
@@ -101,18 +98,7 @@ class App
 				];
 			}
 
-			self::render('includes/pagination', compact('pages', 'url', 'request'));
-		}
-	}
-
-	/**
-	 * Данные пользователя
-	 * @return object данные пользователя
-	 */
-	public static function user()
-	{
-		if (Registry::has('user')) {
-			return Registry::get('user');
+			self::view('includes/pagination', compact('pages', 'url'));
 		}
 	}
 
@@ -128,14 +114,12 @@ class App
 	}
 
 	/**
-	 * Настройки сайта
-	 * @return object настройки сайта
+	 * Получает текущую страницу
+	 * @return string текущая страница
 	 */
-	public static function setting($key)
+	public static function requestURI()
 	{
-		if (Registry::has('setting')) {
-			return Registry::get('setting')[$key];
-		}
+		return isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '/';
 	}
 
 	/**
