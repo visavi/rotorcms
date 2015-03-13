@@ -2,6 +2,26 @@
 class App
 {
 	/**
+	 * Данные роутов
+	 * @return object данные роутов
+	 */
+	public static function router($key)
+	{
+		if (Registry::has('router')) {
+			return Registry::get('router')[$key];
+		}
+	}
+
+	/**
+	 * Получает текущую страницу
+	 * @return string текущая страница
+	 */
+	public static function requestURI()
+	{
+		return isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '/';
+	}
+
+	/**
 	 * Метод подключения шаблонов
 	 * @param  string  $view   имя шаблона
 	 * @param  array $params массив параметров
@@ -100,26 +120,6 @@ class App
 
 			self::view('includes/pagination', compact('pages', 'url'));
 		}
-	}
-
-	/**
-	 * Данные роутов
-	 * @return object данные роутов
-	 */
-	public static function router($key)
-	{
-		if (Registry::has('router')) {
-			return Registry::get('router')[$key];
-		}
-	}
-
-	/**
-	 * Получает текущую страницу
-	 * @return string текущая страница
-	 */
-	public static function requestURI()
-	{
-		return isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '/';
 	}
 
 	/**

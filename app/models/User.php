@@ -3,33 +3,42 @@ class User extends BaseActiveRecord {
 
 	static $table_name = 'users';
 
+
 	/**
 	 * Данные пользователя
-	 * @return string данные пользователя
+	 * @param  string $key название поля в таблице
+	 * @return string|object данные пользователя
 	 */
-	public static function get($key)
+	public static function get($key = null)
 	{
 		if (Registry::has('user')) {
-			return Registry::get('user')->$key;
+			$user = Registry::get('user');
+			return $key ? $user->$key : $user;
 		}
 	}
 
+	/**
+	 * Проверка авторизован ли пользователь
+	 * @return boolean авторизован ли пользователь
+	 */
 	public static function check()
 	{
 		return (self::get('id') !== null);
 	}
 
-
-	public function getId()
-	{
-		return $this->id ? $this->id : 0;
-	}
-
+	/**
+	 * Возвращает логин пользователя
+	 * @return string логин пользователя
+	 */
 	public function getLogin()
 	{
 		return $this->login ? $this->login : 'Гость';
 	}
 
+	/**
+	 * Возвращает аватар пользователя
+	 * @return string аватар пользователя
+	 */
 	public function getAvatar()
 	{
 		if ($this->avatar) {
@@ -55,9 +64,9 @@ class User extends BaseActiveRecord {
 			$social = Social::find_by_network_and_uid($network['network'], $network['uid']);
 			if ($social && $social->user()->id) {
 
-				$_SESSION['ip'] = $ip;
+				$_SESSION['ip'] = Registry::get('ip');
 				$_SESSION['id'] = $social->user()->id;
-				$_SESSION['password'] = md5(Setting::get('keypass').$social->user()->password);
+				$_SESSION['pass'] = md5(Setting::get('keypass').$social->user()->password);
 
 				notice('Вы успешно авторизованы!');
 				redirect('/');

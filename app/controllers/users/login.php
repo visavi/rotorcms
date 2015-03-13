@@ -1,51 +1,34 @@
 <?php
-#---------------------------------------------#
-#      ********* RotorCMS *********           #
-#           Author  :  Vantuz                 #
-#            Email  :  visavi.net@mail.ru     #
-#             Site  :  http://visavi.net      #
-#              ICQ  :  36-44-66               #
-#            Skype  :  vantuzilla             #
-#---------------------------------------------#
-require_once ('../includes/start.php');
-require_once ('../includes/functions.php');
-require_once ('../includes/header.php');
-include_once ('../themes/header.php');
-
-$act = (isset($_GET['act'])) ? check($_GET['act']) : 'index';
-$domain = check_string($config['home']);
-
-show_title('Авторизация');
+$act = App::router('name') ?: 'login';
 
 switch ($act):
 ############################################################################################
 ##                                    Главная страница                                    ##
 ############################################################################################
-case 'index':
+case 'login':
 
-	if (!is_user()) {
-
+	if (!User::check()) {
 		if (isset($_POST['login']) && isset($_POST['password'])) {
 
 			$login = isset($_POST['login']) ? check($_POST['login']) : '';
-			$password = isset($_POST['password']) ? md5(md5(trim($_POST['password']))) : '';
+			$password = isset($_POST['password']) ? trim($_POST['password']) : '';
 			$haunter = isset($_POST['haunter']) ? 1 : 0;
 
 			if (!empty($login) && !empty($password)) {
 
 				$field = strpos($login, '@') ? 'email' : 'login';
 
-				$user = User::first(array('conditions' => array("$field=? and password=?", $login, $password)));
-				if ($user) {
+				$user = User::first(array('conditions' => array("$field=?", $login)));
+				if ($user && password_verify($password, $user->password)) {
 
 					if (empty($haunter)) {
-						setcookie('id', $user->id, time() + 3600 * 24 * 365, '/', $domain);
-						setcookie('password', md5($password.$config['keypass']), time() + 3600 * 24 * 365, '/', $domain, null, true);
+						setcookie('id', $user->id, time() + 3600 * 24 * 365, '/', $_SERVER['HTTP_HOST'], null, true);
+						setcookie('pass', md5($user->password.Setting::get('keypass')), time() + 3600 * 24 * 365, '/', $_SERVER['HTTP_HOST'], null, true);
 					}
 
-					$_SESSION['ip'] = $ip;
+					$_SESSION['ip'] = Registry::get('ip');
 					$_SESSION['id'] = $user->id;
-					$_SESSION['password'] = md5($config['keypass'].$password);
+					$_SESSION['pass'] = md5(Setting::get('keypass').$user->password);
 
 					if (!empty($_SESSION['social'])) {
 						$social = new Social;
@@ -58,18 +41,17 @@ case 'index':
 					notice('Вы успешно авторизованы!');
 					redirect('/');
 				}
-
 			}
 
 			notice('Ошибка авторизации. Неправильный логин или пароль!');
-			redirect('/pages/login.php');
+			redirect('/login');
 		}
 
 		if (isset($_POST['token'])) {
 			User::socialLogin($_POST['token']);
 		}
 
-		App::render('pages/login');
+		App::view('users/login');
 	} else {
 		redirect('/');
 	}
@@ -78,18 +60,16 @@ break;
 ############################################################################################
 ##                                       Выход                                            ##
 ############################################################################################
-case 'exit':
+case 'logout':
 	$_SESSION = array();
-	setcookie('password', '', time() - 3600, '/', $domain, null, true);
+	setcookie('pass', '', time() - 3600, '/', $_SERVER['HTTP_HOST'], null, true);
 	setcookie(session_name(), '', time() - 3600, '/', '');
 	session_destroy();
 
-	redirect('/index.php');
+	redirect('/');
 break;
 
 default:
-	redirect("login.php");
+	redirect('/login');
 endswitch;
 
-include_once ('../themes/footer.php');
-?>

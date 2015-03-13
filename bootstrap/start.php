@@ -52,7 +52,7 @@ ActiveRecord\Config::initialize(function($cfg) {
 	));
 
 	$conf = array('append' => false, 'lineFormat' => '[%3$s] %4$s [%1$s]');
-	$logger = Log::singleton('file', DATADIR.'/temp/mysql.dat', null, $conf);
+	$logger = Log::singleton('file', STORAGE.'/temp/mysql.dat', null, $conf);
 
 	$cfg->set_logger($logger);
 	$cfg->set_logging(DEBUGMODE);

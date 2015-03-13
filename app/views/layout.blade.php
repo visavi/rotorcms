@@ -23,7 +23,7 @@
 	@show
 
 	<link rel="image_src" href="/images/img/icon.png" />
-	<link rel="alternate" href="/news/rss.php" title="RSS News" type="application/rss+xml" />
+	<link rel="alternate" href="/news/rss" title="RSS News" type="application/rss+xml" />
 	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -67,20 +67,20 @@
 
 					<?php if (User::check()): ?>
 						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><?= User::get('user')->getLogin() ?> <b class="caret"></b></a>
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><?= User::get()->getLogin() ?> <b class="caret"></b></a>
 							<ul class="dropdown-menu">
 
 								<?php if (is_admin()): ?>
 									<li><a href="/admin">Админ-панель</a></li>
 								<?php endif; ?>
-								<li><a href="/pages/user.php?id=<?= Registry::get('user')->id ?>">Профиль</a></li>
-								<li><a href="/pages/login.php?act=exit">Выход</a></li>
+								<li><a href="/user/<?= User::get()->id ?>">Профиль</a></li>
+								<li><a href="/logout">Выход</a></li>
 							</ul>
 						</li>
 
 					<?php else: ?>
-						<li<?= (App::requestURI() == '/pages/login.php') ? ' class="active"' : '' ?>><a href="/pages/login.php">Вход</a></li>
-						<li<?= (App::requestURI() == '/pages/registration.php') ? ' class="active"' : '' ?>><a href="/pages/registration.php">Регистрация</a></li>
+						<li<?= (App::requestURI() == '/login') ? ' class="active"' : '' ?>><a href="/login">Вход</a></li>
+						<li<?= (App::requestURI() == '/register') ? ' class="active"' : '' ?>><a href="/register">Регистрация</a></li>
 					<?php endif; ?>
 				</ul>
 			</div><!--/.nav-collapse -->

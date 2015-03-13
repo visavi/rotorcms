@@ -1,0 +1,49 @@
+@extends('layout')
+
+@section('title', 'Авторизация - @parent')
+
+@section('content')
+	@if (isset($_SESSION['social']))
+		<div class="bg-success padding">
+		<img class="img-circle border" alt="photo" src="<?= $_SESSION['social']['photo'] ?>" style="width: 48px; height: 48px;">
+			<span class="label label-primary"><?= $_SESSION['social']['network'] ?></span> <?= $_SESSION['social']['first_name'] ?> <?= $_SESSION['social']['last_name'] ?> <?= isset($_SESSION['social']['nickname']) ? '('.$_SESSION['social']['nickname'].')' : ''; ?>
+		</div>
+		<div class="bg-info padding" style="margin-bottom: 30px;">Профиль не связан с какой-либо учетной записью на сайте. Войдите на сайт или зарегистирируйтесь, чтобы связать свою учетную запись с профилем социальной сети.<br />
+		Или выберите другую социальную сеть для входа.</div>
+	@endif
+
+	<script src="//ulogin.ru/js/ulogin.js"></script>
+	<div class="col-sm-offset-2" style="padding: 5px;" id="uLogin" data-ulogin="display=panel;fields=first_name,last_name,photo;optional=sex,email,nickname;providers=vkontakte,odnoklassniki,mailru,facebook,twitter,google,yandex;redirect_uri=http%3A%2F%2F{{{ Setting::get('home') }}}%2Flogin">
+	</div>
+
+	<form class="form-horizontal" role="form" method="post" action="/login">
+		<div class="form-group">
+			<label for="inputLogin" class="col-sm-2 control-label">Email / Логин</label>
+			<div class="col-sm-5">
+				<input name="login" type="text" class="form-control" id="inputLogin"  maxlength="50" placeholder="Email или Логин">
+			</div>
+		</div>
+		<div class="form-group has-feedback">
+			<label for="inputPassword" class="col-sm-2 control-label">Пароль</label>
+			<div class="col-sm-5">
+				<input name="password" type="password" class="form-control eye" id="inputPassword" maxlength="30" placeholder="Пароль">
+				<span class="glyphicon glyphicon-eye-close form-control-feedback reveal" style="cursor: pointer;" onclick="revealPassword(this);"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-sm-offset-2 col-sm-5">
+				<div class="checkbox">
+					<label>
+						<input name="haunter" type="checkbox"> Чужой компьютер
+					</label>
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-sm-offset-2 col-sm-5">
+				<button type="submit" class="btn btn-default">Войти</button>
+				<a class="btn btn-info col-lg-offset-2 pull-right" href="/login/recovery">Напомнить пароль</a>
+			</div>
+		</div>
+	</form>
+@stop

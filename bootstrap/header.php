@@ -11,8 +11,8 @@ if (!defined('BASEDIR')) {
 	exit(header('Location: /index.php'));
 }
 
-$ip = real_ip();
-$brow = (empty($_SESSION['browser'])) ? $_SESSION['browser'] = get_user_agent() : $_SESSION['browser'];
+Registry::set('ip', real_ip());
+Registry::set('brow', get_user_agent());
 
 /**
  *  Сжатие и буферизация данныx
@@ -24,23 +24,35 @@ if (Setting::get('gzip')) {
 /**
  * Авторизация по cookies
  */
-if (empty($_SESSION['id']) && empty($_SESSION['password'])) {
-	if (!empty($_COOKIE['id']) && !empty($_COOKIE['password'])) {
+if (empty($_SESSION['id']) || empty($_SESSION['auth'])) {
+	if (!empty($_COOKIE['id']) && !empty($_COOKIE['pass'])) {
 
 		$id = intval($_COOKIE['id']);
-		$password = check($_COOKIE['password']);
+		$pass = strval($_COOKIE['pass']);
 
-		$user = User::first($id);
-
-		if ($user) {
-			if ($password == md5($user->password.$config['keypass'])) {
+		if ($user = User::first($id)) {
+			if ($pass === md5($user->password.Setting::get('keypass'))) {
 				session_regenerate_id(1);
 
-				$_SESSION['ip'] = $ip;
+				$_SESSION['ip'] = Registry::get('ip');
 				$_SESSION['id'] = $user->id;
-				$_SESSION['password'] = md5($config['keypass'].$user->password);
+				$_SESSION['pass'] = md5(Setting::get('keypass').$user->password);
 			}
 		}
+	}
+}
+
+/**
+ * Получение данных пользователя
+ */
+if (!empty($_SESSION['id']) && !empty($_SESSION['pass'])) {
+
+	$user = User::first($_SESSION['id']);
+
+	if ($user && $_SESSION['pass'] == md5(Setting::get('keypass').$user->password)) {
+		Registry::set('user', $user);
+	} else {
+		Registry::set('user', new User);
 	}
 }
 
@@ -48,13 +60,13 @@ if (!isset($_SESSION['token'])) {
 	$_SESSION['token'] = empty($config['session']) ? 0 : generate_password(6);
 }
 
-ob_start('ob_processing');
+//ob_start('ob_processing');
 ############################################################################################
 ##                            Получение данных пользователя                               ##
 ############################################################################################
 if (User::check()) {
 	// ---------------------- Получение ежедневного бонуса -----------------------//
-	if (!User::get('timebonus') || User::get('timebonus')->getTimestamp()  < SITETIME - 82800) {
+	if (!User::get('timebonus') || User::get('timebonus') < new DateTime('-1 day')) {
 
 		$user = User::first(User::get('id'));
 		$user->timebonus = new DateTime();
@@ -83,6 +95,4 @@ if (User::check()) {
 			Log::table()->delete(array('id' => $delete));
 		}
 	}*/
-} else {
-	Registry::set('user', new User);
 }

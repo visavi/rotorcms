@@ -8,6 +8,9 @@ $router->map('GET', '/', 'index', 'home');
 
 $router->map('GET', '/captcha', 'captcha', 'captcha');
 
+$router->map('GET|POST', '/login', 'users/login', 'login');
+$router->map('GET', '/logout', 'users/login', 'logout');
+
 $router->map('GET', '/guestbook', 'guestbook/index', 'guestbook');
 $router->map('GET', '/guestbook/page/[i:page]', 'guestbook/index');
 $router->map('GET', '/guestbook/[i:id]/[edit:action]', 'guestbook/index');
