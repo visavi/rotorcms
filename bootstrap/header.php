@@ -24,7 +24,7 @@ if (Setting::get('gzip')) {
 /**
  * Авторизация по cookies
  */
-if (empty($_SESSION['id']) || empty($_SESSION['auth'])) {
+if (empty($_SESSION['id']) || empty($_SESSION['pass'])) {
 	if (!empty($_COOKIE['id']) && !empty($_COOKIE['pass'])) {
 
 		$id = intval($_COOKIE['id']);
