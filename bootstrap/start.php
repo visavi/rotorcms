@@ -51,14 +51,11 @@ ActiveRecord\Config::initialize(function($cfg) {
 		'development' => 'mysql://'.DBUSER.':'.DBPASS.'@'.DBHOST.'/'.DBNAME.';charset=utf8'
 	));
 
-	$conf = array('error_prepend' => '<pre class="prettyprint linenums">',
-				  'error_append'  => '</pre>');
+	$conf = array('append' => false, 'lineFormat' => '[%3$s] %4$s [%1$s]');
+	$logger = Log::singleton('file', DATADIR.'/temp/mysql.dat', null, $conf);
 
-	//$logger = Log::singleton('file', STORAGE.'/temp/mysql.dat');
-	//$logger = Log::singleton('display', '', '', $conf);
-
-	//$cfg->set_logger($logger);
-	//$cfg->set_logging(DEBUGMODE);
+	$cfg->set_logger($logger);
+	$cfg->set_logging(DEBUGMODE);
 });
 
 ActiveRecord\DateTime::$DEFAULT_FORMAT = 'd.m.y / H:i';

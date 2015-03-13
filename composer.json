@@ -18,7 +18,8 @@
 		"mobiledetect/mobiledetectlib": "dev-master",
 		"olamedia/nokogiri": "dev-master",
 		"philo/laravel-blade": "2.*",
-		"pear/log": "dev-topics/composer-for-pear"
+		"pear/log": "dev-topics/composer-for-pear",
+		"ircmaxell/password-compat": "dev-master"
 	},
 	"config": {
 		"preferred-install": "dist"
