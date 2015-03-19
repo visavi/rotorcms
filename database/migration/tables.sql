@@ -45,7 +45,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `login` varchar(20) NOT NULL,
   `password` varchar(40) NOT NULL,
   `email` varchar(50) NOT NULL,
-  `gender` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `gender` enum('male', 'female') NOT NULL,
   `level` enum('user', 'moder', 'supermoder', 'admin', 'superamdin') NOT NULL DEFAULT 'user',
   `name` varchar(20) NULL DEFAULT NULL,
   `country` varchar(30) NULL DEFAULT NULL,
