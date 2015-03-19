@@ -19,7 +19,8 @@
 		"olamedia/nokogiri": "dev-master",
 		"philo/laravel-blade": "2.*",
 		"pear/log": "dev-topics/composer-for-pear",
-		"ircmaxell/password-compat": "dev-master"
+		"ircmaxell/password-compat": "dev-master",
+		"filp/whoops": "~1.1"
 	},
 	"config": {
 		"preferred-install": "dist"

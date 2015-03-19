@@ -35,6 +35,11 @@ session_start();
 
 include_once BASEDIR.'/vendor/autoload.php';
 
+if (DEBUGMODE) {
+	$whoops = new \Whoops\Run;
+	$whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
+	$whoops->register();
+}
 // -------- Автозагрузка классов ---------- //
 spl_autoload_register(function ($class) {
 	include_once BASEDIR.'/app/classes/'.str_replace('\\', '/', $class).'.php';
