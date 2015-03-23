@@ -52,7 +52,8 @@ include_once BASEDIR.'/bootstrap/connect.php';
  * Регистрация классов
  */
 $aliases = [
-	'Blade' => 'Philo\Blade\Blade',
+	'Blade'  => 'Philo\Blade\Blade',
+	'Carbon' => 'Carbon\Carbon',
 ];
 
 AliasLoader::getInstance($aliases)->register();

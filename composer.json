@@ -21,7 +21,8 @@
 		"pear/log": "dev-topics/composer-for-pear",
 		"ircmaxell/password-compat": "dev-master",
 		"verot/class.upload.php": "dev-master",
-		"filp/whoops": "~1.1"
+		"filp/whoops": "~1.1",
+		"nesbot/carbon": "~1.14"
 	},
 	"config": {
 		"preferred-install": "dist"
