@@ -40,7 +40,9 @@ if (DEBUGMODE) {
 	$whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
 	$whoops->register();
 }
-// -------- Автозагрузка классов ---------- //
+/**
+ * Автозагрузка классов
+ */
 spl_autoload_register(function ($class) {
 	include_once BASEDIR.'/app/classes/'.str_replace('\\', '/', $class).'.php';
 });
@@ -48,7 +50,18 @@ spl_autoload_register(function ($class) {
 include_once BASEDIR.'/bootstrap/routes.php';
 include_once BASEDIR.'/bootstrap/connect.php';
 
-// ------------ ActiveRecord -------------- //
+/**
+ * Register Class Imports
+ */
+$aliases = [
+	'Blade' => 'Philo\Blade\Blade',
+];
+
+AliasLoader::getInstance($aliases)->register();
+
+/**
+ * ActiveRecord initialize
+ */
 ActiveRecord\Config::initialize(function($cfg) {
 
 	$cfg->set_model_directory(BASEDIR.'/app/models');

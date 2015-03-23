@@ -29,7 +29,7 @@ class App
 	 */
 	public static function view($view, $params = [])
 	{
-		$blade = new Philo\Blade\Blade(VIEW, CACHE);
+		$blade = new Blade(VIEW, CACHE);
 
 		echo $blade->view()->make($view, $params);
 	}
