@@ -29,7 +29,7 @@ class App
 	 */
 	public static function view($view, $params = [])
 	{
-		$blade = new Blade(VIEW, CACHE);
+		$blade = new Blade(APP.'/views', STORAGE.'/cache');
 
 		echo $blade->view()->make($view, $params);
 	}

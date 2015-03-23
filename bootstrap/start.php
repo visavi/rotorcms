@@ -11,10 +11,8 @@ define('DEBUGMODE', true);
 define('STARTTIME', microtime(1));
 define('BASEDIR', dirname(__DIR__));
 define('APP', BASEDIR.'/app');
-define('PUBLIC', BASEDIR.'/public');
+define('HOME', BASEDIR.'/public');
 define('STORAGE', BASEDIR.'/storage');
-define('VIEW', APP.'/views');
-define('CACHE', STORAGE.'/cache');
 define('PCLZIP_TEMPORARY_DIR', STORAGE.'/temp/');
 
 if (DEBUGMODE) {
@@ -51,7 +49,7 @@ include_once BASEDIR.'/bootstrap/routes.php';
 include_once BASEDIR.'/bootstrap/connect.php';
 
 /**
- * Register Class Imports
+ * Регистрация классов
  */
 $aliases = [
 	'Blade' => 'Philo\Blade\Blade',
@@ -65,11 +63,11 @@ AliasLoader::getInstance($aliases)->register();
 ActiveRecord\Config::initialize(function($cfg) {
 
 	$cfg->set_model_directory(BASEDIR.'/app/models');
-	$cfg->set_connections(array(
+	$cfg->set_connections([
 		'development' => 'mysql://'.DBUSER.':'.DBPASS.'@'.DBHOST.'/'.DBNAME.';charset=utf8'
-	));
+	]);
 
-	$conf = array('append' => false, 'lineFormat' => '[%3$s] %4$s [%1$s]');
+	$conf = ['append' => false, 'lineFormat' => '[%3$s] %4$s [%1$s]'];
 	$logger = Log::singleton('file', STORAGE.'/temp/mysql.dat', null, $conf);
 
 	$cfg->set_logger($logger);
