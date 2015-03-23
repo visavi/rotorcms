@@ -48,8 +48,8 @@
 			</div>
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
-				<li<?= (strstr(App::requestURI(), '/guestbook') ? ' class="active"' : '') ?>><a href="/guestbook">Гостевая</a></li>
-				<li<?= (strstr(App::requestURI(), '/forum') ? ' class="active"' : '') ?>><a href="/forum">Форум</a></li>
+				<li<?= (strstr(App::requestUrl(), '/guestbook') ? ' class="active"' : '') ?>><a href="/guestbook">Гостевая</a></li>
+				<li<?= (strstr(App::requestUrl(), '/forum') ? ' class="active"' : '') ?>><a href="/forum">Форум</a></li>
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
 					<ul class="dropdown-menu">
@@ -79,8 +79,8 @@
 						</li>
 
 					<?php else: ?>
-						<li<?= (App::requestURI() == '/login') ? ' class="active"' : '' ?>><a href="/login">Вход</a></li>
-						<li<?= (App::requestURI() == '/register') ? ' class="active"' : '' ?>><a href="/register">Регистрация</a></li>
+						<li<?= (App::requestUrl() == '/login') ? ' class="active"' : '' ?>><a href="/login">Вход</a></li>
+						<li<?= (App::requestUrl() == '/register') ? ' class="active"' : '' ?>><a href="/register">Регистрация</a></li>
 					<?php endif; ?>
 				</ul>
 			</div><!--/.nav-collapse -->

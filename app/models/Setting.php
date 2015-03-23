@@ -11,7 +11,7 @@ class Setting extends BaseActiveRecord {
 	public static function get($key)
 	{
 		if (!Registry::has('setting')) {
-			Registry::set('setting', App::assoc(self::all(), 'name', 'value'));
+			Registry::set('setting', App::arrayAssoc(self::all(), 'name', 'value'));
 		}
 
 		return Registry::get('setting')[$key];
