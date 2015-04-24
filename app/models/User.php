@@ -83,4 +83,46 @@ class User extends BaseActiveRecord {
 		}
 	}
 
+	/**
+	 * Авторизация пользователя
+	 * @param  string  $login    Логин или email пользователя
+	 * @param  string  $password Пароль пользователя
+	 * @param  boolean $remember Чужой компьютер
+	 * @return boolean           Результат авторизации
+	 */
+	public static function login($login, $password, $remember = true)
+	{
+		if (!empty($login) && !empty($password)) {
+			$field = strpos($login, '@') ? 'email' : 'login';
+
+			$user = User::first(array('conditions' => array("$field=?", $login)));
+
+			if ($user && password_verify($password, $user->password)) {
+
+				if ($remember) {
+					setcookie('id', $user->id, time() + 3600 * 24 * 365, '/', $_SERVER['HTTP_HOST'], null, true);
+					setcookie('pass', md5($user->password.Setting::get('keypass')), time() + 3600 * 24 * 365, '/', $_SERVER['HTTP_HOST'], null, true);
+				}
+
+				//$user->update_attribute('reset_code', null);
+
+				$_SESSION['id'] = $user->id;
+				$_SESSION['pass'] = md5(Setting::get('keypass').$user->password);
+
+				if (!empty($_SESSION['social'])) {
+					$social = new Social;
+					$social->user_id = $user->id;
+					$social->network = $_SESSION['social']['network'];
+					$social->uid = $_SESSION['social']['uid'];
+					$social->save();
+				}
+
+				return $user;
+			}
+		}
+
+		return false;
+	}
+
+
 }

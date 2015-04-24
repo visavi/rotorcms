@@ -41,12 +41,12 @@ $(document).ready(function(){
  */
 function revealPassword(el) {
 
-	if ($('.eye').attr('type') == 'password') {
+	if ($(el).prev('.eye').attr('type') == 'password') {
 		$(el).removeClass('glyphicon-eye-close').addClass('glyphicon-eye-open');
-		$('.eye').attr('type', 'text');
+		$(el).prev('.eye').attr('type', 'text');
 	} else {
 		$(el).removeClass('glyphicon-eye-open').addClass('glyphicon-eye-close');
-		$('.eye').attr('type', 'password');
+		$(el).prev('.eye').attr('type', 'password');
 	}
 }
 

@@ -142,19 +142,19 @@ Class UserController Extends BaseController {
 
 		if (User::check()) App::redirect('/');
 
-		if (isset($_POST['email']) && isset($_POST['password'])) {
+		if (isset($_POST['login']) && isset($_POST['password'])) {
 
-			$email = Request::input('email');
+			$login = Request::input('login');
 			$password = Request::input('password');
 			$remember = Request::has('remember') ? 1 : 0;
 
-			if ($user = User::login($email, $password, $remember)) {
-				App::setFlash('success', 'Добро пожаловать, '.$user->first_name.'!');
+			if ($user = User::login($login, $password, $remember)) {
+				App::setFlash('success', 'Добро пожаловать, '.$user->login.'!');
 				if ($return) { App::redirect($return); } else { App::redirect('/'); }
 			}
 
 			App::setInput($_POST);
-			App::setFlash('danger', 'Ошибка авторизации. Неправильный email или пароль!');
+			App::setFlash('danger', 'Ошибка авторизации. Неправильный логин или пароль!');
 			App::redirect('/login');
 		}
 
