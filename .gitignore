@@ -1,7 +1,5 @@
 /vendor
-/storage/backup
-/storage/temp
-/storage/cache
+/storage
 /public/uploads
 .DS_Store
 Thumbs.db
