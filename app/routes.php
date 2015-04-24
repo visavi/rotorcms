@@ -4,7 +4,7 @@ $router = new AltoRouter();
 
 $router->addMatchTypes(array('s' => '[0-9A-Za-z-_]++'));
 
-$router->map('GET', '/', 'index', 'home');
+$router->map('GET', '/', 'HomeController@index', 'home');
 
 $router->map('GET', '/captcha', 'captcha', 'captcha');
 

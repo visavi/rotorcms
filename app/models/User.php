@@ -27,6 +27,15 @@ class User extends BaseActiveRecord {
 	}
 
 	/**
+	 * Проверяет является ли пользователь администатором
+	 * @return boolean результат проверки
+	 */
+	public static function isAdmin()
+	{
+		return (self::get('level') == 'admin');
+	}
+
+	/**
 	 * Возвращает логин пользователя
 	 * @return string логин пользователя
 	 */

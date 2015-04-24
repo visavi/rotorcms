@@ -2,9 +2,11 @@
 <html lang="ru">
 <head>
 	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="keywords" content="%KEYWORDS%" />
 	<meta name="description" content="%DESCRIPTION%" />
+	<meta name="author" content="Vantuz (visavi.net@mail.ru)">
 	<meta name="generator" content="RotorCMS {{{ Setting::get('rotorversion') }}}" />
 	<title>
 		@section('title')
@@ -44,7 +46,7 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="/">{{{ Setting::get('title') }}}</a>
+				<a class="navbar-brand text-uppercase" href="/">{{{ Setting::get('title') }}}</a>
 			</div>
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
@@ -65,23 +67,23 @@
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 
-					<?php if (User::check()): ?>
+					@if (User::check())
 						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><?= User::get()->getLogin() ?> <b class="caret"></b></a>
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ User::get()->getLogin() }} <b class="caret"></b></a>
 							<ul class="dropdown-menu">
 
-								<?php if (is_admin()): ?>
+								@if (User::isAdmin())
 									<li><a href="/admin">Админ-панель</a></li>
-								<?php endif; ?>
-								<li><a href="/user/<?= User::get()->id ?>">Профиль</a></li>
+								@endif
+								<li><a href="/user/{{ User::get()->id }}">Профиль</a></li>
 								<li><a href="/logout">Выход</a></li>
 							</ul>
 						</li>
 
-					<?php else: ?>
+					@else
 						<li<?= (App::requestUrl() == '/login') ? ' class="active"' : '' ?>><a href="/login">Вход</a></li>
 						<li<?= (App::requestUrl() == '/register') ? ' class="active"' : '' ?>><a href="/register">Регистрация</a></li>
-					<?php endif; ?>
+					@endif
 				</ul>
 			</div><!--/.nav-collapse -->
 		</div>
@@ -105,8 +107,8 @@
 		<div class="container">
 		<?php /*
 			<div class="pull-left"><?= show_online() ?></div>
-			<div class="pull-right"><?= show_counter() ?></div> */?>
-				{{ perfomance() }}
+			<div class="pull-right"><?= show_counter() ?></div>
+				{{ perfomance() }}*/?>
 		</div>
 	</div>
 

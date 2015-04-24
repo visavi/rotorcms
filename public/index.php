@@ -7,20 +7,27 @@
 #              ICQ  :  36-44-66               #
 #            Skype  :  vantuzilla             #
 #---------------------------------------------#
-require_once __DIR__.'/../bootstrap/start.php';
-require_once __DIR__.'/../bootstrap/functions.php';
-require_once __DIR__.'/../bootstrap/header.php';
+include_once __DIR__.'/../app/start.php';
+
+$params = App::router('params');
 
 if (App::router('target') && is_callable(App::router('target'))) {
 
-	call_user_func_array(App::router('target'), App::router('params'));
+	call_user_func_array(App::router('target'), $params);
 
 } elseif (App::router('target')) {
 
-	include_once APP.'/controllers/'.App::router('target').'.php';
+	$target = explode('@', App::router('target'));
+	$action = isset($target[1]) ? $target[1] : $params['action'];
+
+	$controller = new $target[0];
+	$controller->$action($params);
 
 } else {
-	App::view('pages.404');
+	App::abort(404);
 }
+
+if (isset($_SESSION['input'])) unset($_SESSION['input']);
+
 
 ?>

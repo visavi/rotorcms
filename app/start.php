@@ -1,9 +1,19 @@
 <?php
+#---------------------------------------------#
+#      ********* RotorCMS *********           #
+#           Author  :  Vantuz                 #
+#            Email  :  visavi.net@mail.ru     #
+#             Site  :  http://visavi.net      #
+#              ICQ  :  36-44-66               #
+#            Skype  :  vantuzilla             #
+#---------------------------------------------#
 define('DEBUGMODE', true);
+define('STARTTIME', microtime(1));
 define('BASEDIR', dirname(__DIR__));
 define('APP', BASEDIR.'/app');
 define('HOME', BASEDIR.'/public');
 define('STORAGE', BASEDIR.'/storage');
+define('PCLZIP_TEMPORARY_DIR', STORAGE.'/temp/');
 
 if (DEBUGMODE) {
 	@error_reporting(E_ALL);
