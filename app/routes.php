@@ -5,11 +5,13 @@ $router = new AltoRouter();
 $router->addMatchTypes(array('s' => '[0-9A-Za-z-_]++'));
 
 $router->map('GET', '/', 'HomeController@index', 'home');
+$router->map('GET', '/captcha', 'HomeController@captcha', 'captcha');
 
-$router->map('GET', '/captcha', 'captcha', 'captcha');
-
-$router->map('GET|POST', '/login', 'users/login', 'login');
-$router->map('GET', '/logout', 'users/login', 'logout');
+$router->map('GET|POST', '/register', 'UserController@register', 'register');
+$router->map('GET|POST', '/login', 'UserController@login', 'login');
+$router->map('GET|POST', '/recovery', 'UserController@recovery', 'recovery');
+$router->map('GET|POST', '/reset', 'UserController@reset', 'reset');
+$router->map('GET', '/logout', 'UserController@logout', 'logout');
 
 $router->map('GET', '/guestbook', 'guestbook/index', 'guestbook');
 $router->map('GET', '/guestbook/page/[i:page]', 'guestbook/index');
