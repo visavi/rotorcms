@@ -17,12 +17,17 @@
 		"pclzip/pclzip": "dev-master",
 		"mobiledetect/mobiledetectlib": "dev-master",
 		"olamedia/nokogiri": "dev-master",
-		"philo/laravel-blade": "2.*",
+		"philo/laravel-blade": "~2.3",
 		"pear/log": "dev-topics/composer-for-pear",
 		"ircmaxell/password-compat": "dev-master",
-		"verot/class.upload.php": "dev-master",
+		"gregwar/captcha": "dev-master",
+		"swiftmailer/swiftmailer": "~5.4",
+		"abeautifulsite/simpleimage": "~2.5",
+		"nesbot/carbon": "~1.14",
 		"filp/whoops": "~1.1",
-		"nesbot/carbon": "~1.14"
+		"patchwork/utf8": "~1.2",
+		"pear/log": "dev-topics/composer-for-pear",
+		"illuminate/http": "~5.0"
 	},
 	"config": {
 		"preferred-install": "dist"

@@ -14,11 +14,18 @@ class App
 
 	/**
 	 * Получает текущую страницу
+	 * @param  boolean $path показывать только путь
 	 * @return string текущая страница
 	 */
-	public static function requestUrl()
+	public static function requestUrl($path = false)
 	{
-		return isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '/';
+		$current = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '/';
+
+		if ($path && ($strpos = strpos($current, '?')) !== false) {
+			$current = substr($current, 0, $strpos);
+		}
+
+		return $current;
 	}
 
 	/**
@@ -31,54 +38,68 @@ class App
 	}
 
 	/**
+	 * Получает текущую страницу
+	 * @return string текущая страница
+	 */
+	public static function returnUrl($page, $url = null)
+	{
+		if (App::requestUrl() == '/') return $page;
+
+		$query = Request::has('return') ? Request::input('return') : App::requestUrl();
+		return $page.'?return='.urlencode(is_null($url) ? $query : $url);
+	}
+
+	/**
 	 * Метод подключения шаблонов
 	 * @param  string  $view   имя шаблона
-	 * @param  array $params массив параметров
-	 * @return string сформированный код
+	 * @param  array   $params массив параметров
+	 * @param  boolean $return выводить или возвращать код
+	 * @return string          сформированный код
 	 */
 	public static function view($view, $params = [], $return = false)
 	{
 		$blade = new Blade(APP.'/views', STORAGE.'/cache');
 
 		if ($return) {
-			return $blade->view()->make($view, $params);
+			return $blade->view()->make($view, $params)->render();
 		} else {
-			echo $blade->view()->make($view, $params);
+			echo $blade->view()->make($view, $params)->render();
 		}
 	}
 
 	/**
 	 * Метод вывода страницы с ошибками
-	 * @param integer $code код ошибки
-	 * @param  string $message текст ошибки
-	 * @return сформированная страница с ошибкой
+	 * @param  integer $code    код ошибки
+	 * @param  string  $message текст ошибки
+	 * @return string  сформированная страница с ошибкой
 	 */
 	public static function abort($code, $message = '')
 	{
+		if ($code == 403) {
+			header($_SERVER["SERVER_PROTOCOL"].' 403 Forbidden');
+		}
+
 		if ($code == 404) {
 			header($_SERVER["SERVER_PROTOCOL"].' 404 Not Found');
 		}
 
-		App::view('pages.'.$code, compact('message'));
+		exit(App::view('errors.'.$code, compact('message')));
 	}
 
 	/**
 	 * Постраничная навигация
-	 * @param  string  $url путь для формирования ссылки
-	 * @param  integer  $rpp количество элементов на странице
-	 * @param  integer  $current текущая страница
-	 * @param  integer  $total общее количество элементов
-	 * @param  integer $crumbs количество кнопок справа и слева
+	 * @param  integer $rpp     количество элементов на странице
+	 * @param  integer $current текущая страница
+	 * @param  integer $total   общее количество элементов
+	 * @param  integer $crumbs  количество кнопок справа и слева
 	 * @return string  сформированный блок с кнопками страниц
 	 */
-	public static function pagination($url, $rpp, $current, $total, $crumbs = 3)
+	public static function pagination($rpp, $current, $total, $crumbs = 3)
 	{
 		if ($total > 0) {
-			$request = null;
-			if (($strpos = strpos($url, '?')) !== false) {
-				$request = substr($url, $strpos);
-				$url = substr($url, 0, $strpos);
-			}
+
+			$url = array_except($_GET, 'page');
+			$request = $url ? '&'.http_build_query($url) : null;
 
 			$pages = [];
 			$pg_cnt = ceil($total / $rpp);
@@ -87,7 +108,7 @@ class App
 
 			if ($current != 1) {
 				$pages[] = [
-					'start' => $current - 1,
+					'page' => $current - 1,
 					'title' => 'Предыдущая',
 					'name' => '«',
 				];
@@ -95,7 +116,7 @@ class App
 			if (($current - $idx_fst) >= 0) {
 				if ($current > ($crumbs + 1)) {
 					$pages[] = [
-						'start' => 1,
+						'page' => 1,
 						'title' => '1 страница',
 						'name' => 1,
 					];
@@ -117,7 +138,7 @@ class App
 					];
 				} else {
 					$pages[] = [
-						'start' => $i,
+						'page' => $i,
 						'title' => $i.' страница',
 						'name' => $i,
 					];
@@ -132,7 +153,7 @@ class App
 						];
 					}
 					$pages[] = [
-						'start' => $pg_cnt,
+						'page' => $pg_cnt,
 						'title' => $pg_cnt . ' страница',
 						'name' => $pg_cnt,
 					];
@@ -140,37 +161,19 @@ class App
 			}
 			if ($current != $pg_cnt) {
 				$pages[] = [
-					'start' => $current + 1,
+					'page' => $current + 1,
 					'title' => 'Следующая',
 					'name' => '»',
 				];
 			}
 
-			self::view('includes/pagination', compact('pages', 'url'));
+			self::view('app._pagination', compact('pages', 'request'));
 		}
 	}
 
-	/**
-	 * Функция экранирование небезопасных символов
-	 * @param  string|array $value строка или массив
-	 * @return string|array обработанный текст
-	 */
-	public static function check($value)
+	public static function breadcrumbs($crumbs, $return = false)
 	{
-		if (is_array($value)) {
-			foreach($value as $key => $val) {
-				$value[$key] = check($val);
-			}
-		} else {
-
-			$value = htmlspecialchars(stripslashes(trim($value)), ENT_QUOTES, 'UTF-8');
-
-			$search = array("\0", "\x00", "\x1A", chr(226).chr(128).chr(174));
-
-			$value = str_replace($search, '', $value);
-		}
-
-		return $value;
+		return self::view('app._breadcrumbs', compact('crumbs'), $return);
 	}
 
 	/**
@@ -183,7 +186,7 @@ class App
 		if ($permanent){
 			header('HTTP/1.1 301 Moved Permanently');
 		}
-		if (isset($_SESSION['captcha'])) unset($_SESSION['captcha']);
+		if (isset($_SESSION['captcha'])) $_SESSION['captcha'] = null;
 
 		exit(header('Location: '.$url));
 	}
@@ -205,7 +208,7 @@ class App
 	 */
 	public static function getFlash()
 	{
-		self::view('app/flash');
+		self::view('app._flash');
 	}
 
 	/**
@@ -255,10 +258,133 @@ class App
 	 * @param  string  $email адрес email
 	 * @return boolean результат проверки
 	 */
-	public static function isEmail($email)
+	public static function isMail($email)
 	{
 		return preg_match('#^([a-z0-9_\-\.])+\@([a-z0-9_\-\.])+(\.([a-z0-9])+)+$#', $email);
 	}
+
+	/**
+	 * Отправка уведомления на email
+	 * @param  mixed   $to      Получатель
+	 * @param  string  $subject Тема письма
+	 * @param  string  $body    Текст сообщения
+	 * @param  array   $headers Дополнительные параметры
+	 * @return boolean  Результат отправки
+	 */
+	public static function sendMail($to, $subject, $body, $headers = [])
+	{
+		if (empty($headers['from'])) $headers['from'] = [Setting::get('email') => Setting::get('admin')];
+
+		$message = Swift_Message::newInstance()
+			->setTo($to)
+			->setSubject($subject)
+			->setBody($body, 'text/html')
+			->setFrom($headers['from'])
+			->setReturnPath(Setting::get('email'));
+
+		if (Setting::get('mail_protocol') == 'smtp') {
+			$smtp = explode(',', Setting::get('mail_smtp'));
+			$transport = Swift_SmtpTransport::newInstance($smtp[0], $smtp[1], $smtp[2])
+				->setUsername(Setting::get('mail_username'))
+				->setPassword(Setting::get('mail_password'));
+		} else {
+			$transport = new Swift_MailTransport();
+		}
+
+		$mailer = new Swift_Mailer($transport);
+		return $mailer->send($message);
+	}
+
+	/**
+	 * Форматирование даты
+	 * @param string $format отформатированная дата
+	 * @param mixed  $date временная метки или дата
+	 * @return string отформатированная дата
+	 */
+	public static function date($format, $date = null)
+	{
+		$date = (is_null($date)) ? time() : strtotime($date);
+
+		$eng = array('January','February','March','April','May','June','July','August','September','October','November','December');
+		$rus = array('января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря');
+		return str_replace($eng, $rus, date($format, $date));
+	}
+
+	/**
+	 * Получение расширения файла
+	 * @param  string $filename имя файла
+	 * @return string расширение
+	 */
+	public static function getExtension($filename)
+	{
+		return pathinfo($filename, PATHINFO_EXTENSION);
+	}
+
+	/**
+	 * Красивый вывод размера файла
+	 * @param  string  $filename путь к файлу
+	 * @param  integer $decimals кол. чисел после запятой
+	 * @return string            форматированный вывод размера
+	 */
+	public static function filesize($filename, $decimals = 1)
+	{
+		if (!file_exists($filename)) return 0;
+
+		$bytes = filesize($filename);
+		$size = array('B','kB','MB','GB','TB','PB','EB','ZB','YB');
+		$factor = floor((strlen($bytes) - 1) / 3);
+		return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)) . @$size[$factor];
+	}
+
+	/**
+	 * Склонение чисел
+	 * @param  integer $num  число
+	 * @param  array   $forms массив склоняемых слов
+	 * @return string  форматированная строка
+	 */
+	public static function plural($num, $forms)
+	{
+		if ($num % 100 > 10 &&  $num % 100 < 15) return $num.' '.$forms[2];
+		if ($num % 10 == 1) return $num.' '.$forms[0];
+		if ($num % 10 > 1 && $num %10 < 5) return $num.' '.$forms[1];
+		return $num.' '.$forms[2];
+	}
+
+	/**
+	 * Метод валидации дат
+	 * @param  string $date   дата
+	 * @param  string $format формат даты
+	 * @return boolean        результат валидации
+	 */
+	public static function validateDate($date, $format = 'Y-m-d H:i:s')
+	{
+		$d = DateTime::createFromFormat($format, $date);
+		return $d && $d->format($format) == $date;
+	}
+
+	/**
+	 * Метод обработки массивов
+	 * @param  array $array необработанный массив
+	 * @return array обработанный массив
+	 */
+	public static function arrayPrepare($array)
+	{
+		$array_prepare = array();
+		if ( is_array($array) )
+		{
+			foreach($array as $property => $keys) {
+				if (is_array($keys)) {
+					foreach($keys as $key => $value) {
+						$array_prepare[$key][$property] = $value;
+					}
+				} else {
+					$array_prepare[$property] = $keys;
+				}
+			}
+		}
+		return $array_prepare;
+	}
+
 
 	/**
 	 * Собирает из коллекции составной массив ключ->значение
