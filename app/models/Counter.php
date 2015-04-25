@@ -1,5 +1,5 @@
 <?php
-class Counter extends BaseActiveRecord {
+class Counter extends BaseModel {
 
 	static $table_name = 'counter';
 

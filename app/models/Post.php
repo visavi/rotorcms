@@ -1,5 +1,5 @@
 <?php
-class Post extends BaseActiveRecord {
+class Post extends BaseModel {
 
 	public $token;
 	static $table_name = 'posts';

@@ -1,5 +1,5 @@
 <?php
-class Ban extends BaseActiveRecord {
+class Ban extends BaseModel {
 
 	static $table_name = 'ban';
 

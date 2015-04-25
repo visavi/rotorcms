@@ -1,5 +1,5 @@
 <?php
-class Forum extends BaseActiveRecord {
+class Forum extends BaseModel {
 
 	static $table_name = 'forums';
 

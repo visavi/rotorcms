@@ -1,5 +1,5 @@
 <?php
-class Visit extends BaseActiveRecord {
+class Visit extends BaseModel {
 
 	static $table_name = 'visit';
 

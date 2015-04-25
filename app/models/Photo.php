@@ -1,5 +1,5 @@
 <?php
-class Photo extends BaseActiveRecord {
+class Photo extends BaseModel {
 
 	static $table_name = 'photo';
 

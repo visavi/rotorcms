@@ -21,7 +21,7 @@ Class UserController Extends BaseController {
 
 		$user = User::get();
 
-		if (App::requestMethod() == 'POST') {
+			if (Request::isMethod('post')) {
 
 			$user->token = Request::input('token', true);
 			$user->email = Request::input('email');
@@ -59,7 +59,7 @@ Class UserController Extends BaseController {
 
 		$user = User::get();
 
-		if (App::requestMethod() == 'POST') {
+		if (Request::isMethod('post')) {
 
 			$old_password = Request::input('old_password');
 			$new_password = Request::input('new_password');
@@ -185,7 +185,7 @@ Class UserController Extends BaseController {
 	{
 		if (User::check()) App::abort(403);
 
-		if (App::requestMethod() == 'POST') {
+		if (Request::isMethod('post')) {
 
 			$email = Request::input('email');
 			$captcha = Request::input('captcha');
@@ -268,27 +268,5 @@ Class UserController Extends BaseController {
 			App::setFlash('danger', $errors);
 			App::redirect('/');
 		}
-	}
-
-	/**
-	 * Мои заявки
-	 */
-	public function bids()
-	{
-		if (!User::check()) App::abort(403);
-
-		$sales = Sale::all([
-			'conditions' => ['user_id = ?', User::get('id')],
-			'order' => 'updated_at desc',
-			'include' => array('user'),
-		]);
-
-		$purchases = Purchase::all([
-			'conditions' => ['user_id = ?', User::get('id')],
-			'order' => 'updated_at desc',
-			'include' => array('user'),
-		]);
-
-		App::view('users.bids', compact('sales', 'purchases'));
 	}
 }

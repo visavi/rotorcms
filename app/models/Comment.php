@@ -1,5 +1,5 @@
 <?php
-class Comment extends BaseActiveRecord {
+class Comment extends BaseModel {
 
 	static $table_name = 'comments';
 

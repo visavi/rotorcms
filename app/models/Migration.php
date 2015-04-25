@@ -1,5 +1,5 @@
 <?php
-class Migration extends BaseActiveRecord {
+class Migration extends BaseModel {
 
 	static $table_name = 'migrations';
 	static $operations = array();

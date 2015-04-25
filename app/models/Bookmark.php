@@ -1,5 +1,5 @@
 <?php
-class Bookmark extends BaseActiveRecord {
+class Bookmark extends BaseModel {
 
 	static $table_name = 'bookmarks';
 

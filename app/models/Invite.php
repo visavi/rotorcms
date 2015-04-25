@@ -1,5 +1,5 @@
 <?php
-class Invite extends BaseActiveRecord {
+class Invite extends BaseModel {
 
 	static $table_name = 'invite';
 

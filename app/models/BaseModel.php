@@ -1,23 +1,24 @@
 <?php
 
-class BaseActiveRecord extends ActiveRecord\Model
+class BaseModel extends ActiveRecord\Model
 {
 	/**
 	 * Возвращает все ошибки в виде строки
 	 * @param string $separator разделитель между ошибками
 	 * @return string ошибки в виде строки
 	 */
-	public function getErrors($separator = '<br />') {
+	public function getErrors() {
 
 		if ($this->errors->size()) {
 			$result = array();
 			$raw_errors = $this->errors->get_raw_errors();
 			foreach ($raw_errors as $attribute => $errors) {
 				foreach ($errors as $error) {
-					$result[] = $error;
+					$result[$attribute] = $error;
 				}
 			}
-			return implode($separator, $result);
+
+			return $result;
 		}
 		return false;
 	}

@@ -1,8 +1,33 @@
 <?php
-class User extends BaseActiveRecord {
+class User extends BaseModel {
 
 	static $table_name = 'users';
 
+	public $captcha;
+	public $token;
+	public $old_password;
+	public $new_password;
+
+	/**
+	 * Валидация данных
+	 */
+	public function validate()
+	{
+		//if ($this->is_new_record()) {
+		//  Проверка капчи
+		if ($this->captcha && $this->captcha != $_SESSION['captcha']) {
+			$this->errors->add('captcha', 'Неверный проверочный код');
+		}
+		//}
+		//
+		if ($this->token && $this->token != $_SESSION['token']) {
+			$this->errors->add('token', 'Неверный идентификатор сессии, повторите действие!');
+		}
+
+		if ($this->old_password && !password_verify($this->old_password, $this->password)) {
+			$this->errors->add('old_password', 'Старый пароль не совпадает');
+		}
+	}
 
 	/**
 	 * Данные пользователя
