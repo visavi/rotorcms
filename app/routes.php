@@ -8,6 +8,7 @@ $router->map('GET', '/', 'HomeController@index', 'home');
 $router->map('GET', '/captcha', 'HomeController@captcha', 'captcha');
 
 $router->map('GET|POST', '/register', 'UserController@register', 'register');
+$router->map('GET|POST', '/register/2', 'UserController@register', 'register2');
 $router->map('GET|POST', '/login', 'UserController@login', 'login');
 $router->map('GET|POST', '/recovery', 'UserController@recovery', 'recovery');
 $router->map('GET|POST', '/reset', 'UserController@reset', 'reset');

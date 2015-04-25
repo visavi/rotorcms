@@ -6,13 +6,28 @@
 
 	<h1>Регистрация</h1>
 
+	@if (isset($_SESSION['social']))
+		<div class="bg-success padding" style="margin-top: 20px;">
+		<img class="img-circle border" alt="photo" src="{{ $_SESSION['social']->photo }}" style="width: 48px; height: 48px;">
+			<span class="label label-primary">{{ $_SESSION['social']->network }}</span> {{ $_SESSION['social']->first_name }} {{ $_SESSION['social']->last_name }} {{ isset($_SESSION['social']->nickname) ? '('.$_SESSION['social']->nickname.')' : '' }}
+		</div>
+		<div class="bg-info padding" style="margin-bottom: 30px;">
+			Профиль не связан с какой-либо учетной записью на сайте. Войдите на сайт или зарегистирируйтесь, чтобы связать свою учетную запись с профилем социальной сети.<br>
+			Или выберите другую социальную сеть для входа.
+		</div>
+	@endif
+
+	<script src="//ulogin.ru/js/ulogin.js"></script>
+	<div class="col-sm-offset-2" style="padding: 10px 5px;" id="uLogin" data-ulogin="display=panel;fields=first_name,last_name,photo;optional=sex,email,nickname;providers=vkontakte,odnoklassniki,mailru,facebook,twitter,google,yandex;redirect_uri=http%3A%2F%2F{{ Setting::get('home') }}%2Fregister">
+	</div>
+
 	<form class="form-horizontal" role="form" method="post">
 
-		<div class="form-group{{ App::hasError('email') }}">
-			<label for="inputEmail" class="col-sm-2 control-label">Email</label>
+		<div class="form-group{{ App::hasError('login') }}">
+			<label for="inputLogin" class="col-sm-2 control-label">Логин</label>
 			<div class="col-sm-5">
-				<input name="email" type="text" class="form-control" id="inputEmail" maxlength="50" placeholder="Email" value="{{ App::getInput('email') }}" required>
-				{!! App::textError('email') !!}
+				<input name="login" type="text" class="form-control" id="inputLogin" maxlength="20" placeholder="Логин" value="{{ App::getInput('login') }}" required>
+				{!! App::textError('login', $_SESSION['social']->nickname or '') !!}
 			</div>
 		</div>
 
@@ -23,6 +38,14 @@
 				<span class="glyphicon glyphicon-eye-close form-control-feedback reveal" style="cursor: pointer;" onclick="revealPassword(this);"></span>
 				{!! App::textError('password') !!}
 				<span class="help-block">Минимальная длина пароля 6 символов</span>
+			</div>
+		</div>
+
+		<div class="form-group{{ App::hasError('email') }}">
+			<label for="inputEmail" class="col-sm-2 control-label">Email</label>
+			<div class="col-sm-5">
+				<input name="email" type="text" class="form-control" id="inputEmail" maxlength="50" placeholder="Email" value="{{ App::getInput('email') }}" required>
+				{!! App::textError('email') !!}
 			</div>
 		</div>
 
@@ -58,10 +81,10 @@
 			<label for="inputCaptcha" class="col-sm-2 control-label">Проверочный код</label>
 			<div class="col-sm-5">
 				<div class="row">
-					<div class="col-sm-7">
+					<div class="col-sm-6">
 						<input name="captcha" type="text" class="form-control" id="inputCaptcha" maxlength="6" placeholder="Проверочный код" required>
 					</div>
-					<div class="col-sm-5">
+					<div class="col-sm-6">
 						<img src="/captcha" id="captcha" onclick="this.src='/captcha?'+Math.random()" class="img-rounded" alt="" style="cursor: pointer;" /> <span style="border-bottom: 1px dashed #f00; color: #f00; cursor: pointer;" onclick="document.getElementById('captcha').src='/captcha?'+Math.random()">Обновить</span>
 					</div>
 				</div>

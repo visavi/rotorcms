@@ -44,14 +44,14 @@
 					<span class="sr-only">Toggle navigation</span>
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>requestUrl
 				</button>
 				<a class="navbar-brand text-uppercase" href="/">{{{ Setting::get('title') }}}</a>
 			</div>
 			<div class="collapse navbar-collapse">
 				<ul class="nav navbar-nav">
-				<li<?= (strstr(App::requestUrl(), '/guestbook') ? ' class="active"' : '') ?>><a href="/guestbook">Гостевая</a></li>
-				<li<?= (strstr(App::requestUrl(), '/forum') ? ' class="active"' : '') ?>><a href="/forum">Форум</a></li>
+				<li{!! Request::is('guestbook*') ? ' class="active"' : '' !!}><a href="/guestbook">Гостевая</a></li>
+				<li{!! Request::is('forum*') ? ' class="active"' : '' !!}><a href="/forum">Форум</a></li>
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
 					<ul class="dropdown-menu">
@@ -81,8 +81,8 @@
 						</li>
 
 					@else
-						<li{{ (App::requestUrl() == '/login') ? ' class="active"' : '' }}><a href="/login">Вход</a></li>
-						<li{{ (App::requestUrl() == '/register') ? ' class="active"' : '' }}><a href="/register">Регистрация</a></li>
+						<li{!! Request::is('login*') ? ' class="active"' : '' !!}><a href="/login">Вход</a></li>
+						<li{!! Request::is('register*') ? ' class="active"' : '' !!}><a href="/register">Регистрация</a></li>
 					@endif
 				</ul>
 			</div><!--/.nav-collapse -->

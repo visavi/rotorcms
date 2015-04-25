@@ -91,7 +91,7 @@ Class UserController Extends BaseController {
 	{
 		if (User::check()) App::redirect('/');
 
-		if (App::requestMethod() == 'POST') {
+		if (Request::isMethod('post')) {
 
 			$first_name = Request::input('first_name');
 			$email = Request::input('email');
@@ -138,11 +138,11 @@ Class UserController Extends BaseController {
 	 */
 	public function login()
 	{
-		$return = isset($_GET['return']) ? $_GET['return'] : '';
+		$return = Request::input('return', '');
 
 		if (User::check()) App::redirect('/');
 
-		if (isset($_POST['login']) && isset($_POST['password'])) {
+		if (Request::has('login') && Request::has('password')) {
 
 			$login = Request::input('login');
 			$password = Request::input('password');
@@ -156,6 +156,10 @@ Class UserController Extends BaseController {
 			App::setInput($_POST);
 			App::setFlash('danger', 'Ошибка авторизации. Неправильный логин или пароль!');
 			App::redirect('/login');
+		}
+
+		if (Request::has('token')) {
+			User::socialLogin(Request::input('token'));
 		}
 
 		App::view('users.login');

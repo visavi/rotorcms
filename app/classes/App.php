@@ -17,7 +17,7 @@ class App
 	 * @param  boolean $path показывать только путь
 	 * @return string текущая страница
 	 */
-	public static function requestUrl($path = false)
+/*	public static function requestUrl($path = false)
 	{
 		$current = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '/';
 
@@ -26,16 +26,16 @@ class App
 		}
 
 		return $current;
-	}
+	}*/
 
-	/**
+/*	/**
 	 * Получает текущий метод запроса
 	 * @return string текущий метод запроса
-	 */
+
 	public static function requestMethod()
 	{
 		return isset($_SERVER['REQUEST_METHOD']) ? $_SERVER['REQUEST_METHOD'] : 'GET';
-	}
+	}*/
 
 	/**
 	 * Получает текущую страницу
@@ -43,9 +43,9 @@ class App
 	 */
 	public static function returnUrl($page, $url = null)
 	{
-		if (App::requestUrl() == '/') return $page;
+		if (Request::path() == '/') return $page;
 
-		$query = Request::has('return') ? Request::input('return') : App::requestUrl();
+		$query = Request::has('return') ? Request::input('return') : Request::path();
 		return $page.'?return='.urlencode(is_null($url) ? $query : $url);
 	}
 
@@ -171,6 +171,12 @@ class App
 		}
 	}
 
+	/**
+	 * Навигация
+	 * @param  array   $crumbs массив ссылок
+	 * @param  boolean $return возвращать или выводить
+	 * @return string          сформированный код
+	 */
 	public static function breadcrumbs($crumbs, $return = false)
 	{
 		return self::view('app._breadcrumbs', compact('crumbs'), $return);

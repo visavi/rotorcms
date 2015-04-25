@@ -61,21 +61,23 @@ class User extends BaseActiveRecord {
 	 * Авторизация через социальные сети
 	 * @param string $token идентификатор Ulogin
 	 */
-	public static function socialLogin($token){
+	public static function socialLogin($token)
+	{
+		$curl = new Curl();
+		$network = $curl->get('http://ulogin.ru/token.php', [
+			'token' => $token,
+			'host' => $_SERVER['HTTP_HOST']
+		]);
 
-		$query = curl_connect('http://ulogin.ru/token.php?token='.check($token).'&amp;host='.$_SERVER['HTTP_HOST']);
-
-		$network = json_decode($query, true);
-
-		if ($network && !isset($network['error'])) {
+		if ($network && empty($network->error)) {
 			$_SESSION['social'] = $network;
 
-			$social = Social::find_by_network_and_uid($network['network'], $network['uid']);
-			if ($social && $social->user()->id) {
+			$social = Social::find_by_network_and_uid($network->network, $network->uid);
+			if ($social && $social->user('id')) {
 
-				$_SESSION['ip'] = Registry::get('ip');
-				$_SESSION['id'] = $social->user()->id;
-				$_SESSION['pass'] = md5(Setting::get('keypass').$social->user()->password);
+				//$_SESSION['ip'] = Registry::get('ip');
+				$_SESSION['id'] = $social->user('id');
+				$_SESSION['pass'] = md5(Setting::get('keypass').$social->user('password'));
 
 				notice('Вы успешно авторизованы!');
 				redirect('/');

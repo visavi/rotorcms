@@ -28,6 +28,3 @@ if (App::router('target') && is_callable(App::router('target'))) {
 }
 
 if (isset($_SESSION['input'])) unset($_SESSION['input']);
-
-
-?>

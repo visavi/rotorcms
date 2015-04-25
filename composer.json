@@ -27,7 +27,9 @@
 		"filp/whoops": "~1.1",
 		"patchwork/utf8": "~1.2",
 		"pear/log": "dev-topics/composer-for-pear",
-		"illuminate/http": "~5.0"
+		"illuminate/http": "~5.0",
+		"php-curl-class/php-curl-class": "~3.5",
+		"robmorgan/phinx": "0.4.*"
 	},
 	"config": {
 		"preferred-install": "dist"

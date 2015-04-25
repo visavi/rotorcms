@@ -56,6 +56,7 @@ $aliases = [
 	'Carbon'      => 'Carbon\Carbon',
 	'SimpleImage' => 'abeautifulsite\SimpleImage',
 	'Utf8'        => 'Patchwork\Utf8',
+	'Curl'        => '\Curl\Curl',
 ];
 
 AliasLoader::getInstance($aliases)->register();
