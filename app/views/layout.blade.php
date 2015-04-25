@@ -4,10 +4,10 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="keywords" content="%KEYWORDS%" />
-	<meta name="description" content="%DESCRIPTION%" />
+	<meta name="keywords" content="%KEYWORDS%">
+	<meta name="description" content="%DESCRIPTION%">
 	<meta name="author" content="Vantuz (visavi.net@mail.ru)">
-	<meta name="generator" content="RotorCMS {{{ Setting::get('rotorversion') }}}" />
+	<meta name="generator" content="RotorCMS {{{ Setting::get('rotorversion') }}}">
 	<title>
 		@section('title')
 			{{{ Setting::get('title') }}}
@@ -48,7 +48,7 @@
 				</button>
 				<a class="navbar-brand text-uppercase" href="/">{{{ Setting::get('title') }}}</a>
 			</div>
-			<div class="navbar-collapse collapse">
+			<div class="collapse navbar-collapse">
 				<ul class="nav navbar-nav">
 				<li<?= (strstr(App::requestUrl(), '/guestbook') ? ' class="active"' : '') ?>><a href="/guestbook">Гостевая</a></li>
 				<li<?= (strstr(App::requestUrl(), '/forum') ? ' class="active"' : '') ?>><a href="/forum">Форум</a></li>
@@ -75,14 +75,14 @@
 								@if (User::isAdmin())
 									<li><a href="/admin">Админ-панель</a></li>
 								@endif
-								<li><a href="/user/{{ User::get()->id }}">Профиль</a></li>
-								<li><a href="/logout">Выход</a></li>
+								<li><a href="/user/{{ User::get('id') }}">Профиль</a></li>
+								<li><a href="/logout" onclick="return confirm('Вы уверены, что хотите выйти?');">Выход</a></li>
 							</ul>
 						</li>
 
 					@else
-						<li<?= (App::requestUrl() == '/login') ? ' class="active"' : '' ?>><a href="/login">Вход</a></li>
-						<li<?= (App::requestUrl() == '/register') ? ' class="active"' : '' ?>><a href="/register">Регистрация</a></li>
+						<li{{ (App::requestUrl() == '/login') ? ' class="active"' : '' }}><a href="/login">Вход</a></li>
+						<li{{ (App::requestUrl() == '/register') ? ' class="active"' : '' }}><a href="/register">Регистрация</a></li>
 					@endif
 				</ul>
 			</div><!--/.nav-collapse -->
@@ -93,7 +93,11 @@
 	<div class="container">
 		<div class="row main">
 		<?php /*App::render('includes/note', compact('php_self')); */?>
+
+			{{ App::getFlash() }}
+
 			<div class="col-lg-9">
+				@yield('breadcrumbs', isset($crumbs) ? $crumbs : '')
 				@yield('content')
 			</div>
 

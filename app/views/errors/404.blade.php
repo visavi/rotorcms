@@ -1,11 +1,10 @@
-{{ header($_SERVER["SERVER_PROTOCOL"].' 404 Not Found'); }}
 @extends('layout')
 
 @section('title', 'Ошибка 404 - @parent')
 
 @section('content')
 
-	<?php $images = glob(PUBLICDIR.'/assets/img/errors/*.png'); ?>
+	<?php $images = glob(HOME.'/assets/img/errors/*.png'); ?>
 
 	<div class="row">
 		<div class="col-md-5 text-right">
@@ -16,4 +15,5 @@
 			<div class="lead">Такой страницы не существует!</div>
 		</div>
 	</div>
+
 @stop
