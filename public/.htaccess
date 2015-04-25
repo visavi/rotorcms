@@ -3,129 +3,47 @@ AddDefaultCharset UTF-8
 Options -Indexes
 
 <IfModule mod_rewrite.c>
-    RewriteEngine On
-    RewriteRule ^(.*)/$ /$1 [L,R=301]
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteRule ^ index.php [L]
+	RewriteEngine On
+	RewriteRule ^(.*)/$ /$1 [L,R=301]
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteRule ^ index.php [L]
 </IfModule>
 
 <FilesMatch ".(htaccess|htpasswd|gitignore|md|json|lock|dat)$">
-    Order Allow,Deny
-    Deny from all
+	Order Allow,Deny
+	Deny from all
 </FilesMatch>
 
 <Files ~ "includes|local">
-    Order Allow,Deny
-    Deny from all
+	Order Allow,Deny
+	Deny from all
 </Files>
 
-ErrorDocument 403 /pages/error.php?error=403
-ErrorDocument 404 /pages/error.php?error=404
-
 FileETag MTime Size
-<ifmodule mod_expires.c>
-<filesmatch ".(ico|jpg|gif|png|css|js)$">
- ExpiresActive on
- ExpiresDefault "access plus 1 month"
-</filesmatch>
-</ifmodule>
+<IfModule mod_expires.c>
+	<FilesMatch ".(ico|jpg|gif|png|css|js)$">
+		ExpiresActive on
+		ExpiresDefault "access plus 1 month"
+	</FilesMatch>
+</IfModule>
 
 <IfModule mod_expires.c>
-ExpiresActive On
- ExpiresByType image/x-icon "access plus 2 weeks"
- ExpiresByType image/png "access plus 2 weeks"
- ExpiresByType image/jpeg "access plus 2 weeks"
- ExpiresByType image/gif "access plus 2 weeks"
- ExpiresByType text/javascript "access plus 1 week"
- ExpiresByType text/css "access plus 1 week"
+	ExpiresActive On
+	ExpiresByType image/x-icon "access plus 2 weeks"
+	ExpiresByType image/png "access plus 2 weeks"
+	ExpiresByType image/jpeg "access plus 2 weeks"
+	ExpiresByType image/gif "access plus 2 weeks"
+	ExpiresByType text/javascript "access plus 1 week"
+	ExpiresByType text/css "access plus 1 week"
 </IfModule>
 
 <IfModule mod_headers.c>
-<FilesMatch .*\.(js|css)$>
- Header set Cache-control: private
-</FilesMatch>
+	<FilesMatch .*\.(js|css)$>
+		Header set Cache-control: private
+	</FilesMatch>
 
-<FilesMatch .*\.(gif|jpg|png)$>
- Header set Cache-control: public
-</FilesMatch>
+	<FilesMatch .*\.(gif|jpg|png)$>
+		Header set Cache-control: public
+	</FilesMatch>
 </IfModule>
-
-AddType audio/basic .au .snd
-AddType audio/mpeg .mpga .mp2 .mp3
-AddType audio/x-pn-realaudio-plugin .rpm
-AddType audio/x-realaudio .ra
-AddType audio/x-wav .wav
-AddType video/x-sgi-movie .movie
-AddType model/vrml .wrl .vrml
-AddType text/css .css
-AddType text/richtext .rtx
-AddType text/sgml .sgml .sgm
-AddType text/xml .xml
-AddType application/msword .doc
-AddType application/vnd.ms-excel .xls
-AddType application/vnd.ms-powerpoint .ppt
-AddType application/postscript .ai .eps .ps
-AddType application/x-shockwave-flash .swf
-AddType text/html .html .htm
-AddType text/plain .txt .asc
-AddType application/octet-stream .bin .exe
-AddType application/oda .oda
-AddType application/pdf .pdf
-AddType application/rtf .rtf
-AddType image/gif .gif .GIF
-AddType image/ief .ief
-AddType image/jpeg .jpeg .jpg .jpe .JPG
-AddType image/tiff .tiff .tif
-AddType image/x-portable-anymap .pnm
-AddType image/x-portable-bitmap .pbm
-AddType image/x-portable-graymap .pgm
-AddType image/x-portable-pixmap .ppm
-AddType image/x-rgb .rgb
-AddType image/x-xbitmap .xbm
-AddType image/x-xpixmap .xpm
-AddType image/x-xwindowdump .xwd
-AddType audio/x-aiff .aif .aiff .aifc
-AddType audio/x-pn-realaudio .ram .rm
-AddType video/mpeg .mpeg .mpg .mpe
-AddType video/quicktime .qt .mov
-AddType video/x-msvideo .avi
-AddType application/vnd.sonyericsson.mms-template tpl
-AddType application/vnd.wap.wmlc .wmlc
-AddType application/vnd.wap.wmlscriptc .wmlsc
-AddType application/vnd.eri.thm .thm
-AddType application/vnd.mophun.application .mpn
-AddType application/vnd.mophun.certificate .mpc
-AddType application/x-gtar .gtar
-AddType application/x-tar .tar
-AddType application/x-zip-compressed .zip
-AddType application/x-rar-compressed .rar
-AddType application/vnd.wap.mms-message .mms
-AddType application/smil .smil
-AddType application/smil .smi
-AddType application/java-archive .jar
-AddType application/vnd.symbian.install .sis
-AddType application/vnd.smaf .mmf
-AddType application/x-tar .hid
-AddType application/vnd.android.package-archive .apk
-AddType text/vnd.wap.wml;charset=utf-8 .wml
-AddType text/vnd.wap.wmlscript .wmls
-AddType text/x-vmel .mel
-AddType text/vnd.sun.j2me.app-descriptor;charset=UTF-8 .jad
-AddType text/x-vmel .emy
-AddType text/x-imelody .imy
-AddType text/x-emelody .emy
-AddType text/x-vcard .vcf
-AddType text/x-vcalendar .vcs
-AddType text/calendar .ics
-AddType audio/imelody .imy
-AddType audio/amr .amr
-AddType audio/x-wav .wav
-AddType audio/wav .wav
-AddType audio/midi .midi .mid
-AddType audio/rmf .rmf
-AddType image/png .png
-AddType image/bmp .bmp
-AddType image/vnd.wap.wbmp .wbmp
-AddType video/mp4 .mp4
-AddType video/3gpp .3gp
