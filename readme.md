@@ -14,29 +14,13 @@ RotorCMS 5.0 dev
 
 Прежде чем начать установку убедитесь, что все файлы дистрибутива загружены на сервер, а также выставлены необходимые права доступа для папок и файлов
 
- * **public/uploads/avatars (chmod 777)**
- * **public/uploads/counters (chmod 777)**
- * **public/uploads/forum (chmod 777)**
- * **public/uploads/news (chmod 777)**
- * **public/uploads/photos (chmod 777)**
- * **public/uploads/pictures (chmod 777)**
- * **public/uploads/thumbnail (chmod 777)**
- * **public/assets/img/avatars (chmod 777)**
- * **public/assets/img/smiles (chmod 777)**
- * **storage/antidos (chmod 777)**
- * **storage/backup (chmod 777)**
- * **storage/main (chmod 777)**
- * **storage/temp (chmod 777)**
- * **storage/cache (chmod 777)**
- * **А также всем файлам внутри папки storage/main (chmod 666)**
-
 Минимальная версия PHP необходимая для работы движка PHP 5.4
 
 1. Настройте сайт с учетом того что корневая директория `public`, а все остальное лежит ниже корня сайта и недоступно по прямому пути
 
 2. Установите и настройте менеджер зависимостей [Composer](https://getcomposer.org/), можно установить глобально и выполнить из консоли команду `composer update` или скачать архив composer.phar и выполнить команду php composer.phar update
 
-4. Создайте базу данных и пользователя для нее из панели управления на вашем сервере, во время установки скрипта необходимо будет вписать эти данные для соединения в файл bootstrap/connect.php
+4. Создайте базу данных и пользователя для нее из панели управления на вашем сервере, во время установки скрипта необходимо будет вписать эти данные для соединения в файл app/connect.php
 
 4. Вручную залейте таблицы и данные из файла database/migration/tables.sql
 
@@ -47,3 +31,7 @@ RotorCMS 5.0 dev
 Надеемся, что работа с нашим скриптом доставит вам только удовольствие.
 
 Приятной Вам работы
+
+### License
+
+The RotorCMS is open-sourced software licensed under the [GPL-3.0 license](http://opensource.org/licenses/gpl-3.0.html)
