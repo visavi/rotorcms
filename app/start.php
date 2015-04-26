@@ -16,26 +16,27 @@ define('PCLZIP_TEMPORARY_DIR', STORAGE.'/temp/');
 
 session_start();
 
+/**
+ * Автозагрузка классов
+ */
 include_once BASEDIR.'/vendor/autoload.php';
+
+$loader = new \Composer\Autoload\ClassLoader();
+$loader->add('', BASEDIR.'/app/classes');
+$loader->add('', BASEDIR.'/app/controllers');
+$loader->register();
+
+include_once APP.'/routes.php';
 include_once APP.'/helpers.php';
 
 Dotenv::load(BASEDIR);
+Patchwork\Utf8\Bootup::initAll();
 
 if (env('APP_DEBUG')) {
 	$whoops = new \Whoops\Run;
 	$whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
 	$whoops->register();
 }
-/**
- * Автозагрузка классов
- */
-$loader = new \Composer\Autoload\ClassLoader();
-$loader->add('', BASEDIR.'/app/classes');
-$loader->add('', BASEDIR.'/app/controllers');
-$loader->register();
-
-include_once BASEDIR.'/app/routes.php';
-include_once BASEDIR.'/app/connect.php';
 
 /**
  * Регистрация классов
@@ -49,24 +50,24 @@ $aliases = [
 ];
 
 AliasLoader::getInstance($aliases)->register();
-\Patchwork\Utf8\Bootup::initAll();
 
 /**
  * ActiveRecord initialize
  */
-ActiveRecord\Config::initialize(function($cfg) use ($connect) {
+ActiveRecord\Config::initialize(function($cfg) {
 
 	$cfg->set_model_directory(BASEDIR.'/app/models');
 	$cfg->set_connections(array(
-		'development' => 'mysql://'.$connect['dbuser'].':'.$connect['dbpass'].'@'.$connect['dbhost'].'/'.$connect['dbname'].';charset=utf8'
+		'development' => 'mysql://'.env('DB_USERNAME').':'.env('DB_PASSWORD').'@'.env('DB_HOST').'/'.env('DB_DATABASE').';charset=utf8'
 	));
 
-	$conf = ['append' => false, 'lineFormat' => '[%3$s] %4$s [%1$s]'];
-	$logger = Log::singleton('file', STORAGE.'/mysql.dat', null, $conf);
+	if (env('APP_DEBUG')) {
+		$conf = ['append' => false, 'lineFormat' => '[%3$s] %4$s [%1$s]'];
+		$logger = Log::singleton('file', STORAGE.'/mysql.dat', null, $conf);
 
-	$cfg->set_logger($logger);
-	$cfg->set_logging(env('APP_DEBUG'));
-
+		$cfg->set_logger($logger);
+		$cfg->set_logging(true);
+	}
 });
 
 if (!isset($_SESSION['token'])) $_SESSION['token'] = str_random(16);
