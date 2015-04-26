@@ -36,12 +36,11 @@
 	},
 	"scripts": {
 		"post-create-project-cmd": [
-			"php -r \"copy('.env.example', '.env');\"",
-			"php rotor key:generate"
+			"php -r \"copy('.env.example', '.env');\""
 		]
 	},
 	"config": {
-		"preferred-install": "dist"
+		"preferred-install": "dev"
 	},
-	"minimum-stability": "dev"
+	"minimum-stability": "stable"
 }
