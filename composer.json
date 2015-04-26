@@ -12,7 +12,7 @@
 		}
 	],
 	"require": {
-		"php":">=5.4.0",
+		"php": ">=5.4.0",
 		"altorouter/altorouter": "1.1.0",
 		"php-activerecord/php-activerecord": "dev-1.1-dev",
 		"cbschuld/browser.php": "dev-master",
@@ -39,8 +39,13 @@
 			"php -r \"copy('.env.example', '.env');\""
 		]
 	},
+	"extra": {
+		"branch-alias": {
+			"dev-master": "dev-develop"
+		}
+	},
 	"config": {
-		"preferred-install": "dev"
+		"preferred-install": "dist"
 	},
 	"minimum-stability": "stable"
 }
