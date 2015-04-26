@@ -123,10 +123,10 @@ class User extends BaseModel {
 	public function getAvatar()
 	{
 		if ($this->avatar) {
-			return '<img src="/'.$this->avatar.'" alt="" /> ';
+			return '<img src="/'.$this->avatar.'" alt=""> ';
 		}
 
-		return '<img src="/assets/img/avatars/noavatar.gif" alt="" /> ';
+		return '<img src="/assets/img/avatars/noavatar.png" alt=""> ';
 	}
 
 	/**

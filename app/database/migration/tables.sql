@@ -123,7 +123,8 @@ INSERT INTO `setting` (`name`, `value`) VALUES
 ('mail_protocol', 'mail'),
 ('mail_smtp', 'smtp.yandex.ru,465,ssl'),
 ('mail_username', ''),
-('mail_password', '');
+('mail_password', ''),
+('guestbook_per_page', 10);
 
 /*('addbansend', '1'),
 ('advertpoint', '2000'),

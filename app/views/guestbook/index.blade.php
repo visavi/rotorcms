@@ -1,34 +1,32 @@
-<ul class="breadcrumb">
-	<li><a href="/guestbook/rules">Правила</a></li>
-	<li><a href="/guestbook/smiles">Смайлы</a></li>
-	<li><a href="/guestbook/tags">Теги</a></li>
+@extends('layout')
 
-	<?php if (is_admin()):?>
-		<li><a href="/admin/book.php">Управление</a></li>
-	<?php endif;?>
-</ul>
+@section('title', 'Гостевая книга - @parent')
 
-<?php if ($total > 0): ?>
-	<?php foreach ($posts as $post): ?>
+@section('breadcrumbs')
+	{{ App::breadcrumbs(['Гостевая книга']) }}
+@stop
+
+@section('content')
+
+@if ($total)
+	@foreach ($posts as $post)
 
 		<div class="media">
 
-			<?= user_avatars($post->user()->id) ?>
+			{!! $post->user()->getAvatar() !!}
 
 			<div class="media-body">
 				<div class="media-heading">
 
-				<?php if ($post->user()->login): ?>
-					<h4 class="author"><?= profile($post->user()->getLogin()) ?></h4>
-					<?= user_title($post->user_id) ?> <?= user_online($post->user_id) ?>
-
-				<?php else: ?>
+				@if ($post->user()->login)
+					<h4 class="author"><a href="/user/{{ $post->user()->getLogin() }}">{{ $post->user()->getLogin() }}</a></h4>
+				@else
 					<h4 class="author"><?= $post->user()->getLogin() ?></h4>
-				<?php endif; ?>
+				@endif
 
 					<ul class="list-inline small pull-right">
 
-					<?php if ($current_user->id && $current_user->id != $post->user_id): ?>
+					<?php if (User::check() && User::get('id') != $post->user_id): ?>
 						<li><a href="#" onclick="return postReply('<?= $post->user()->getLogin() ?>');" data-toggle="tooltip" title="Ответить"><span class="fa fa-reply text-muted"></span></a></li>
 
 						<li><a href="#" onclick="return postQuote(this);" data-toggle="tooltip" title="Цитировать"><span class="fa fa-quote-right text-muted"></span></a></li>
@@ -37,7 +35,7 @@
 
 					<?php endif; ?>
 
-					<?php if ($current_user->id && $current_user->id == $post->user_id && $post->created_at->getTimestamp() > time() - 600): ?>
+					<?php if (User::check() && User::get('id') == $post->user_id && $post->created_at->getTimestamp() > time() - 600): ?>
 						<li><a href="/guestbook/<?= $post->id ?>/edit" data-toggle="tooltip" title="Редактировать"><span class="fa fa-pencil text-muted"></span></a></li>
 					<?php endif; ?>
 
@@ -45,7 +43,7 @@
 					</ul>
 				</div>
 
-				<div class="message"><?= bb_code($post->text) ?></div>
+				<div class="message"><?= App::bbCode($post->text) ?></div>
 
 				<?php if (!empty($post->edit_user_id)): ?>
 					<div class="small text-muted"><span class="glyphicon glyphicon-pencil"></span> Отредактировано: <?= $post->user()->login ?> (<?= $post->updated_at ?>)</div>
@@ -55,23 +53,23 @@
 					<div class="bg-danger padding">Ответ: <?= $post->reply ?></div>
 				<?php endif; ?>
 
-				<?php if (is_admin()): ?>
+				<?php if (User::isAdmin()): ?>
 					<div class="small text-danger"><?= $post->ip ?>, <?= $post->brow ?></div>
 				<?php endif; ?>
 
 			</div>
 		</div>
 
-	<?php endforeach; ?>
+	@endforeach
 
-	<?php App::pagination('/guestbook', $config['bookpost'], $page, $total); ?>
+	{{ App::pagination(Setting::get('guestbook_per_page'), $page, $total) }}
 
-<?php else: ?>
-	<?php show_error('Сообщений нет, будь первым!'); ?>
-<?php endif; ?>
+@else
+	<div class="alert alert-danger">Сообщений нет, будь первым!</div>
+@endif
 
 
-<?php if (is_user()): ?>
+<?php if (User::check()): ?>
 	<div class="well">
 		<form action="/guestbook/create" method="post">
 			<input type="hidden" name="token" value="<?= $_SESSION['token'] ?>" />
@@ -103,4 +101,4 @@
 <?php else: ?>
 	<?php show_login('Вы не авторизованы, чтобы добавить сообщение, необходимо'); ?>
 <?php endif; ?>
-
+@stop
