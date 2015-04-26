@@ -3,6 +3,7 @@
 	"description": "RotorCMS",
 	"keywords": ["cms", "rotor"],
 	"homepage": "http://visavi.net",
+	"license": "GPL-3.0",
 	"authors": [
 		{
 			"name": "Vantuz",
@@ -11,6 +12,7 @@
 		}
 	],
 	"require": {
+		"php":">=5.4.0",
 		"altorouter/altorouter": "1.1.0",
 		"php-activerecord/php-activerecord": "dev-1.1-dev",
 		"cbschuld/browser.php": "dev-master",
