@@ -15,16 +15,15 @@
 	</title>
 
 	@section('styles')
-		<link href="/themes/default/css/bootstrap.min.css" rel="stylesheet" />
-		<link href="/themes/default/css/bootstrap-theme.min.css" rel="stylesheet" />
-		<link href="/themes/default/css/font-awesome.min.css" rel="stylesheet" />
-		<link href="/themes/default/css/prettify.css" rel="stylesheet">
-		<link href="/themes/default/css/opensans.css" rel="stylesheet" />
+		<link href="/assets/css/bootstrap.min.css" rel="stylesheet" />
+		<link href="/assets/css/bootstrap-theme.min.css" rel="stylesheet" />
+		<link href="/assets/css/font-awesome.min.css" rel="stylesheet" />
+		<link href="/assets/css/prettify.css" rel="stylesheet">
 		<link href="/assets/markitup/markitup.css" rel="stylesheet" />
-		<link href="/themes/default/css/app.css" rel="stylesheet" />
+		<link href="/assets/css/app.css" rel="stylesheet" />
 	@show
 
-	<link rel="image_src" href="/images/img/icon.png" />
+	<link rel="image_src" href="/assets/img/images/icon.png" />
 	<link rel="alternate" href="/news/rss" title="RSS News" type="application/rss+xml" />
 	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -117,13 +116,13 @@
 	</div>
 
 	@section('scripts')
-		<script src="/themes/default/js/jquery-1.11.2.min.js"></script>
-		<script src="/themes/default/js/bootstrap.min.js"></script>
-		<script src="/themes/default/js/notify.min.js"></script>
-		<script src="/themes/default/js/prettify.js"></script>
+		<script src="/assets/js/jquery-1.11.2.min.js"></script>
+		<script src="/assets/js/bootstrap.min.js"></script>
+		<script src="/assets/js/notify.min.js"></script>
+		<script src="/assets/js/prettify.js"></script>
 		<script src="/assets/markitup/jquery.markitup.js"></script>
 		<script src="/assets/markitup/markitup.set.js"></script>
-		<script src="/themes/default/js/app.js"></script>
+		<script src="/assets/js/app.js"></script>
 	@show
 </body>
 </html>

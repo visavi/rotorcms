@@ -5,9 +5,13 @@ Class UserController Extends BaseController {
 	/**
 	 * Профиль пользователя
 	 */
-	public function view($id)
+	public function view($login)
 	{
-		$user = User::find_by_id($id);
+		//$field =  is_numeric($id['id']) ? 'id' : 'login';
+
+		//if (!$user = User::first(['conditions' => ["$field=?", $id]])) App::abort('default', 'Пользователь не найден!');
+
+		if (!$user = User::find_by_login($login)) App::abort('default', 'Пользователь не найден!');
 
 		App::view('users.profile', compact('user'));
 	}

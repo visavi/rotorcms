@@ -13,9 +13,13 @@ class User extends BaseModel {
 	 * @var array список статусов
 	 */
 	public static $levelList = [
-		'banned' => '<span class="label label-danger">Забаненный</span>',
-		'user' => '<span class="label label-primary">Пользователь</span>',
-		'admin' => '<span class="label label-success">Администратор</span>'
+		'banned' => 'Забаненный',
+		'guest' => 'Зарегистрированный',
+		'user' => 'Пользователь',
+		'moder' => 'Модератор',
+		'supermoder' => 'Супер модератор',
+		'admin' => 'Администратор',
+		'superadmin' => 'Суперадмин',
 	];
 
 	static $validates_presence_of = [

@@ -17,7 +17,7 @@
 		"pclzip/pclzip": "dev-master",
 		"mobiledetect/mobiledetectlib": "dev-master",
 		"olamedia/nokogiri": "dev-master",
-		"philo/laravel-blade": "~2.3",
+		"philo/laravel-blade": "~3.0",
 		"pear/log": "dev-topics/composer-for-pear",
 		"ircmaxell/password-compat": "dev-master",
 		"gregwar/captcha": "dev-master",
