@@ -29,7 +29,14 @@
 		"pear/log": "dev-topics/composer-for-pear",
 		"illuminate/http": "~5.0",
 		"php-curl-class/php-curl-class": "~3.5",
-		"robmorgan/phinx": "0.4.*"
+		"robmorgan/phinx": "0.4.*",
+		"vlucas/phpdotenv": "~1.1"
+	},
+	"scripts": {
+		"post-create-project-cmd": [
+			"php -r \"copy('.env.example', '.env');\"",
+			"php rotor key:generate"
+		]
 	},
 	"config": {
 		"preferred-install": "dist"

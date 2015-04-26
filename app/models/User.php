@@ -187,7 +187,7 @@ class User extends BaseModel {
 					setcookie('pass', md5($user->password.Setting::get('salt')), time() + 3600 * 24 * 365, '/', $_SERVER['HTTP_HOST'], null, true);
 				}
 
-				//$user->update_attribute('reset_code', null);
+				$user->update_attribute('reset_code', null);
 
 				$_SESSION['id'] = $user->id;
 				$_SESSION['pass'] = md5(Setting::get('salt').$user->password);

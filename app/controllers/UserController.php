@@ -211,9 +211,9 @@ Class UserController Extends BaseController {
 
 				$reset_link = 'http://'.Setting::get('sitelink').'/reset?key='.$user->reset_code;
 
-				$message = 'Здравствуйте, '.e($user->first_name).'<br />Вами была произведена операция по восстановлению пароля на сайте '.Setting::get('sitelink').'<br />Для того, чтобы восстановить пароль, необходимо нажать на кнопку восстановления<br /><br />Если это письмо попало к вам по ошибке или вы не собираетесь восстанавливать пароль, то просто проигнорируйте его';
+				$message = 'Здравствуйте, '.e($user->login).'<br />Вами была произведена операция по восстановлению пароля на сайте '.Setting::get('sitelink').'<br />Для того, чтобы восстановить пароль, необходимо нажать на кнопку восстановления<br /><br />Если это письмо попало к вам по ошибке или вы не собираетесь восстанавливать пароль, то просто проигнорируйте его';
 
-				$to = [$user->email => $user->first_name];
+				$to = [$user->email => $user->login];
 				$subject = 'Восстановление пароля';
 				$body = App::view('mailer.recovery', compact('subject', 'message', 'reset_link'), true);
 

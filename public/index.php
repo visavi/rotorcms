@@ -9,6 +9,7 @@
 #---------------------------------------------#
 include_once __DIR__.'/../app/start.php';
 
+var_dump(env('APP_KEY', 'SomeRandomString'));
 $params = App::router('params');
 
 if (App::router('target') && is_callable(App::router('target'))) {

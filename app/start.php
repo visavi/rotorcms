@@ -31,6 +31,8 @@ session_start();
 
 include_once BASEDIR.'/vendor/autoload.php';
 
+Dotenv::load(BASEDIR);
+
 if (DEBUGMODE) {
 	$whoops = new \Whoops\Run;
 	$whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);

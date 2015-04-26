@@ -1,6 +1,7 @@
 /vendor
 /storage
 /public/uploads
+.env
 .DS_Store
 Thumbs.db
 composer.phar
