@@ -91,26 +91,26 @@ Class UserController Extends BaseController {
 	{
 		if (User::check()) App::redirect('/');
 
-		if (Request::isMethod('post')) {
+		if (Request::isMethod('post') && !Request::has('token')) {
 
-			$first_name = Request::input('first_name');
+			$captcha = Request::input('captcha');
+			$login = Request::input('login');
 			$email = Request::input('email');
 			$password = Request::input('password');
-			$phone = Request::input('phone');
-			$captcha = Request::input('captcha');
+			$gender = Request::input('gender');
 
 			$user = new User;
 			$user->captcha = $captcha;
-			$user->email = $email;
+			$user->login = $login;
 			$user->new_password = $password;
-			$user->first_name = $first_name;
-			$user->phone = $phone;
+			$user->email = $email;
+			$user->gender = $gender;
 
 			if ($user->save()) {
 
-				$message = 'Добро пожаловать, '.e($first_name).'<br>Теперь вы зарегистрированный пользователь сайта '.Setting::get('sitelink').' , сохраните ваш пароль в надежном месте<br>Ваши данные для входа на сайт<br>Email: '.e($email).'<br>Пароль: '.e($password).'<br>Если это письмо попало к вам по ошибке, то просто проигнорируйте его';
+				$message = 'Добро пожаловать, '.e($login).'<br>Теперь вы зарегистрированный пользователь сайта '.Setting::get('sitelink').' , сохраните ваш пароль в надежном месте<br>Ваши данные для входа на сайт<br>Email: '.e($email).'<br>Пароль: '.e($password).'<br>Если это письмо попало к вам по ошибке, то просто проигнорируйте его';
 
-				$to = [$email => $first_name];
+				$to = [$email => $login];
 				$subject = 'Регистрация на сайте';
 				$body = App::view('mailer.register', compact('subject', 'message'), true);
 
@@ -120,7 +120,7 @@ Class UserController Extends BaseController {
 				// Авторизация
 				User::login($email, $password);
 
-				App::setFlash('success', 'Добро пожаловать, '.e($user->first_name).'! Вы успешно зарегистрированы!');
+				App::setFlash('success', 'Добро пожаловать, '.e($user->login).'! Вы успешно зарегистрированы!');
 				App::redirect('/');
 
 			} else {
@@ -128,6 +128,10 @@ Class UserController Extends BaseController {
 				App::setInput($_POST);
 				App::redirect('/register');
 			}
+		}
+
+		if (Request::has('token')) {
+			User::socialLogin(Request::input('token'));
 		}
 
 		App::view('users.register');
@@ -149,7 +153,7 @@ Class UserController Extends BaseController {
 			$remember = Request::has('remember') ? 1 : 0;
 
 			if ($user = User::login($login, $password, $remember)) {
-				App::setFlash('success', 'Добро пожаловать, '.$user->login.'!');
+				App::setFlash('success', 'Добро пожаловать, '.e($user->login).'!');
 				if ($return) { App::redirect($return); } else { App::redirect('/'); }
 			}
 

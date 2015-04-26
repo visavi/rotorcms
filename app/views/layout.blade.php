@@ -7,10 +7,10 @@
 	<meta name="keywords" content="%KEYWORDS%">
 	<meta name="description" content="%DESCRIPTION%">
 	<meta name="author" content="Vantuz (visavi.net@mail.ru)">
-	<meta name="generator" content="RotorCMS {{{ Setting::get('rotorversion') }}}">
+	<meta name="generator" content="RotorCMS {{{ Setting::get('version') }}}">
 	<title>
 		@section('title')
-			{{{ Setting::get('title') }}}
+			{{ Setting::get('sitetitle') }}
 		@show
 	</title>
 
@@ -46,7 +46,7 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>requestUrl
 				</button>
-				<a class="navbar-brand text-uppercase" href="/">{{{ Setting::get('title') }}}</a>
+				<a class="navbar-brand text-uppercase" href="/">{{ Setting::get('sitetitle') }}</a>
 			</div>
 			<div class="collapse navbar-collapse">
 				<ul class="nav navbar-nav">

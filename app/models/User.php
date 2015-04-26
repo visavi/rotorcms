@@ -9,6 +9,39 @@ class User extends BaseModel {
 	public $new_password;
 
 	/**
+	 * Список статусов
+	 * @var array список статусов
+	 */
+	public static $levelList = [
+		'banned' => '<span class="label label-danger">Забаненный</span>',
+		'user' => '<span class="label label-primary">Пользователь</span>',
+		'admin' => '<span class="label label-success">Администратор</span>'
+	];
+
+	static $validates_presence_of = [
+		['login', 'message' => 'Необходимо заполнить логин пользователя'],
+	];
+
+	static $validates_size_of = [
+		['new_password', 'minimum' => 6, 'allow_null' => true, 'too_short' => 'Слишком короткий пароль, минимум %d симв.'],
+	];
+
+	static $validates_uniqueness_of = array(
+		['login', 'message' => 'Пользователь с данным логином уже зарегистрирован'],
+		['email', 'message' => 'Пользователь с данным email уже зарегистрирован'],
+	);
+
+	static $validates_inclusion_of = [
+		['level', 'in' => ['banned', 'user', 'moder', 'supermoder', 'admin', 'superamdin'], 'message' => 'Неверно указан уровень пользователя'],
+		['gender', 'in' => ['male', 'female'], 'message' => 'Неверно указан пол пользователя'],
+	];
+
+	static $validates_format_of = [
+		['email', 'with' => '/^([a-z0-9_\-\.])+\@([a-z0-9_\-\.])+(\.([a-z0-9])+)+$/', 'message' => 'Неверный формат адреса email'],
+		//['phone', 'with' => '/^\+[0-9]{11,12}$/', 'message' => 'Неверный формат номера телефона, пример +7 (900) 123-45-67'],
+	];
+
+	/**
 	 * Валидация данных
 	 */
 	public function validate()
@@ -26,6 +59,16 @@ class User extends BaseModel {
 
 		if ($this->old_password && !password_verify($this->old_password, $this->password)) {
 			$this->errors->add('old_password', 'Старый пароль не совпадает');
+		}
+	}
+
+	/**
+	 * Метод вызываемый перед сохранением
+	 */
+	function before_save()
+	{
+		if ($this->new_password) {
+			$this->password = password_hash($this->new_password, PASSWORD_BCRYPT);
 		}
 	}
 
@@ -57,7 +100,7 @@ class User extends BaseModel {
 	 */
 	public static function isAdmin()
 	{
-		return (self::get('level') == 'admin');
+		return in_array(self::get('level'), ['moder', 'supermoder', 'admin', 'superamdin']);
 	}
 
 	/**
@@ -83,6 +126,15 @@ class User extends BaseModel {
 	}
 
 	/**
+	 * Статус
+	 * @return string статус
+	 */
+	public function getLevel()
+	{
+		return self::$levelList[$this->level];
+	}
+
+	/**
 	 * Авторизация через социальные сети
 	 * @param string $token идентификатор Ulogin
 	 */
@@ -98,14 +150,14 @@ class User extends BaseModel {
 			$_SESSION['social'] = $network;
 
 			$social = Social::find_by_network_and_uid($network->network, $network->uid);
-			if ($social && $social->user('id')) {
+			if ($social && $social->user()) {
 
 				//$_SESSION['ip'] = Registry::get('ip');
-				$_SESSION['id'] = $social->user('id');
-				$_SESSION['pass'] = md5(Setting::get('keypass').$social->user('password'));
+				$_SESSION['id'] = $social->user()->id;
+				$_SESSION['pass'] = md5(Setting::get('salt').$social->user()->password);
 
-				notice('Вы успешно авторизованы!');
-				redirect('/');
+				App::setFlash('success', 'Добро пожаловать, '.e($social->user()->login).'!');
+				App::redirect('/');
 			}
 		}
 	}
@@ -128,19 +180,19 @@ class User extends BaseModel {
 
 				if ($remember) {
 					setcookie('id', $user->id, time() + 3600 * 24 * 365, '/', $_SERVER['HTTP_HOST'], null, true);
-					setcookie('pass', md5($user->password.Setting::get('keypass')), time() + 3600 * 24 * 365, '/', $_SERVER['HTTP_HOST'], null, true);
+					setcookie('pass', md5($user->password.Setting::get('salt')), time() + 3600 * 24 * 365, '/', $_SERVER['HTTP_HOST'], null, true);
 				}
 
 				//$user->update_attribute('reset_code', null);
 
 				$_SESSION['id'] = $user->id;
-				$_SESSION['pass'] = md5(Setting::get('keypass').$user->password);
+				$_SESSION['pass'] = md5(Setting::get('salt').$user->password);
 
 				if (!empty($_SESSION['social'])) {
 					$social = new Social;
 					$social->user_id = $user->id;
-					$social->network = $_SESSION['social']['network'];
-					$social->uid = $_SESSION['social']['uid'];
+					$social->network = $_SESSION['social']->network;
+					$social->uid = $_SESSION['social']->uid;
 					$social->save();
 				}
 

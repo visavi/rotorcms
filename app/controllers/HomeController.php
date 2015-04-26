@@ -28,35 +28,6 @@ Class HomeController Extends BaseController {
 	}
 
 	/**
-	 * Счет на оплату
-	 */
-	public function invoice()
-	{
-		$user = User::get();
-		if (empty($user->company_name)
-			|| empty($user->company_inn)
-			|| empty($user->company_kpp)
-			|| empty($user->company_address))
-		{
-			App::setFlash('danger', 'Для формирования счета на оплату необходимо заполнить поля (Название компании, адрес, ИНН и КПП)');
-			App::redirect('user/edit');
-		}
-
-		App::view('invoice', compact('user'));
-
-		// Отправляем письмо
-		$message = 'От пользователя <a href="http://'.Setting::get('sitelink').'/user/'.$user->getId().'">'.e($user->getFullName()).'</a> поступил новый счет на оплату';
-
-		$headers['from'] = [$user->email => $user->getFullName()];
-		$to = [Setting::get('email') => Setting::get('admin')];
-		$subject = 'Новый счет на оплату';
-		$body = App::view('mailer.default', compact('subject', 'message'), true);
-
-		// Отправка письма
-		App::sendMail($to, $subject, $body, $headers);
-	}
-
-	/**
 	 * Обратная связь
 	 */
 	public function contact()

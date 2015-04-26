@@ -23,12 +23,12 @@ case 'login':
 
 					if (empty($haunter)) {
 						setcookie('id', $user->id, time() + 3600 * 24 * 365, '/', $_SERVER['HTTP_HOST'], null, true);
-						setcookie('pass', md5($user->password.Setting::get('keypass')), time() + 3600 * 24 * 365, '/', $_SERVER['HTTP_HOST'], null, true);
+						setcookie('pass', md5($user->password.Setting::get('salt')), time() + 3600 * 24 * 365, '/', $_SERVER['HTTP_HOST'], null, true);
 					}
 
 					$_SESSION['ip'] = Registry::get('ip');
 					$_SESSION['id'] = $user->id;
-					$_SESSION['pass'] = md5(Setting::get('keypass').$user->password);
+					$_SESSION['pass'] = md5(Setting::get('salt').$user->password);
 
 					if (!empty($_SESSION['social'])) {
 						$social = new Social;

@@ -18,21 +18,21 @@
 	@endif
 
 	<script src="//ulogin.ru/js/ulogin.js"></script>
-	<div class="col-sm-offset-2" style="padding: 10px 5px;" id="uLogin" data-ulogin="display=panel;fields=first_name,last_name,photo;optional=sex,email,nickname;providers=vkontakte,odnoklassniki,mailru,facebook,twitter,google,yandex;redirect_uri=http%3A%2F%2F{{ Setting::get('home') }}%2Fregister">
+	<div class="col-sm-offset-3" style="padding: 10px 5px;" id="uLogin" data-ulogin="display=panel;fields=first_name,last_name,photo;optional=sex,email,nickname;providers=vkontakte,odnoklassniki,mailru,facebook,twitter,google,yandex;redirect_uri=http%3A%2F%2F{{ Setting::get('sitelink') }}%2Fregister">
 	</div>
 
 	<form class="form-horizontal" role="form" method="post">
 
 		<div class="form-group{{ App::hasError('login') }}">
-			<label for="inputLogin" class="col-sm-2 control-label">Логин</label>
+			<label for="inputLogin" class="col-sm-3 control-label">Логин</label>
 			<div class="col-sm-5">
-				<input name="login" type="text" class="form-control" id="inputLogin" maxlength="20" placeholder="Логин" value="{{ App::getInput('login') }}" required>
-				{!! App::textError('login', $_SESSION['social']->nickname or '') !!}
+				<input name="login" type="text" class="form-control" id="inputLogin" maxlength="20" placeholder="Логин" value="{{ App::getInput('login', isset($_SESSION['social']->nickname) ? $_SESSION['social']->nickname : '') }}" required>
+				{!! App::textError('login') !!}
 			</div>
 		</div>
 
 		<div class="form-group has-feedback{{ App::hasError('password') }}">
-			<label for="inputPassword" class="col-sm-2 control-label">Пароль</label>
+			<label for="inputPassword" class="col-sm-3 control-label">Пароль</label>
 			<div class="col-sm-5">
 				<input name="password" type="password" class="form-control eye" id="inputPassword" maxlength="50" placeholder="Пароль" required>
 				<span class="glyphicon glyphicon-eye-close form-control-feedback reveal" style="cursor: pointer;" onclick="revealPassword(this);"></span>
@@ -42,50 +42,36 @@
 		</div>
 
 		<div class="form-group{{ App::hasError('email') }}">
-			<label for="inputEmail" class="col-sm-2 control-label">Email</label>
+			<label for="inputEmail" class="col-sm-3 control-label">Email</label>
 			<div class="col-sm-5">
-				<input name="email" type="text" class="form-control" id="inputEmail" maxlength="50" placeholder="Email" value="{{ App::getInput('email') }}" required>
+				<input name="email" type="text" class="form-control" id="inputEmail" maxlength="50" placeholder="Email" value="{{ App::getInput('email', isset($_SESSION['social']->email) ? $_SESSION['social']->email : '') }}" required>
 				{!! App::textError('email') !!}
 			</div>
 		</div>
 
-		<div class="form-group{{ App::hasError('first_name') }}">
-			<label for="inputFirstName" class="col-sm-2 control-label">Имя</label>
-			<div class="col-sm-5">
-				<input name="first_name" type="text" class="form-control" id="inputFirstName" maxlength="50" placeholder="Имя" value="{{ App::getInput('first_name') }}" required>
-				{!! App::textError('first_name') !!}
-			</div>
-		</div>
+		<?php $sex = (isset($_SESSION['social']->sex) && $_SESSION['social']->sex == 1) ? 'female' : 'male'; ?>
 
-		<div class="form-group{{ App::hasError('phone') }}">
-			<label for="inputPhone" class="col-sm-2 control-label">Телефон</label>
+ 		<div class="form-group{{ App::hasError('gender') }}">
+			<label for="inputGender" class="col-sm-3 control-label">Пол</label>
 			<div class="col-sm-5">
-				<input name="phone" type="text" class="form-control phone" id="inputPhone" placeholder="+7 (900) 123-45-67" value="{{ App::getInput('phone') }}" required>
-				{!! App::textError('phone') !!}
-			</div>
-		</div>
-
-{{-- 		<div class="form-group{{ App::hasError('gender') }}">
-			<label for="inputGender" class="col-sm-2 control-label">Пол</label>
-			<div class="col-sm-5">
-				<input type="radio" name="gender" id="inputGenderMale" value="male"{{ (App::getInput('gender') == 'male' ? ' checked="checked"' : '') }}>
+				<input type="radio" name="gender" id="inputGenderMale" value="male"{{ (App::getInput('gender', $sex) == 'male' ? ' checked="checked"' : '') }}>
 				<label for="inputGenderMale">Мужской</label>
 
-				<input type="radio" name="gender" id="inputGenderFemale" value="female"{{ (App::getInput('gender') == 'female' ? ' checked="checked"' : '') }}>
+				<input type="radio" name="gender" id="inputGenderFemale" value="female"{{ (App::getInput('gender', $sex) == 'female' ? ' checked="checked"' : '') }}>
 				<label for="inputGenderFemale">Женский</label>
 				{!! App::textError('gender') !!}
 			</div>
-		</div> --}}
+		</div>
 
 		<div class="form-group{{ App::hasError('captcha') }}">
-			<label for="inputCaptcha" class="col-sm-2 control-label">Проверочный код</label>
+			<label for="inputCaptcha" class="col-sm-3 control-label">Проверочный код</label>
 			<div class="col-sm-5">
 				<div class="row">
 					<div class="col-sm-6">
 						<input name="captcha" type="text" class="form-control" id="inputCaptcha" maxlength="6" placeholder="Проверочный код" required>
 					</div>
 					<div class="col-sm-6">
-						<img src="/captcha" id="captcha" onclick="this.src='/captcha?'+Math.random()" class="img-rounded" alt="" style="cursor: pointer;" /> <span style="border-bottom: 1px dashed #f00; color: #f00; cursor: pointer;" onclick="document.getElementById('captcha').src='/captcha?'+Math.random()">Обновить</span>
+						<img src="/captcha" id="captcha" onclick="this.src='/captcha?'+Math.random()" class="img-rounded" alt="" style="cursor: pointer;" />
 					</div>
 				</div>
 				{!! App::textError('captcha') !!}
@@ -93,7 +79,7 @@
 		</div>
 
 		<div class="form-group">
-			<div class="col-sm-offset-2 col-sm-5">
+			<div class="col-sm-offset-3 col-sm-5">
 				<button type="submit" class="btn btn-primary">Регистрация</button>
 			</div>
 		</div>

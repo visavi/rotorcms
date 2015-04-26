@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `password` varchar(40) NOT NULL,
   `email` varchar(50) NOT NULL,
   `gender` enum('male', 'female') NOT NULL,
-  `level` enum('user', 'moder', 'supermoder', 'admin', 'superamdin') NOT NULL DEFAULT 'user',
+  `level` enum('banned', 'guest', 'user', 'moder', 'supermoder', 'admin', 'superamdin') NOT NULL DEFAULT 'guest',
   `name` varchar(20) NULL DEFAULT NULL,
   `country` varchar(30) NULL DEFAULT NULL,
   `city` varchar(50) NULL DEFAULT NULL,
@@ -112,7 +112,19 @@ CREATE TABLE IF NOT EXISTS `setting` (
 
 
 INSERT INTO `setting` (`name`, `value`) VALUES
-('addbansend', '1'),
+('sitelink', 'rotorcms.ll'),
+('sitename', 'Сайт на движке Rotor'),
+('sitetitle', 'Rotor 1.0'),
+('admin', 'Админ'),
+('email', 'visavi.net@mail.ru'),
+('version', '1.0'),
+('salt', ''),
+('mail_protocol', 'mail'),
+('mail_smtp', 'smtp.yandex.ru,465,ssl'),
+('mail_username', ''),
+('mail_password', '');
+
+/*('addbansend', '1'),
 ('advertpoint', '2000'),
 ('allowextload', 'zip,rar,txt,jpg,jpeg,gif,png,mp3,mp4,3gp,wav,mmf,mid,midi,sis,jar,jad'),
 ('avatarpoints', '150'),
@@ -156,7 +168,7 @@ INSERT INTO `setting` (`name`, `value`) VALUES
 ('editstatus', '0'),
 ('editstatusmoney', '3000'),
 ('editstatuspoint', '1000'),
-('emails', ''),
+('email', 'visavi.net@mail.ru'),
 ('errorlog', '1'),
 ('expiresloads', '72'),
 ('expiresmail', '3'),
@@ -176,7 +188,6 @@ INSERT INTO `setting` (`name`, `value`) VALUES
 ('guesttextlength', '1000'),
 ('gzip', '0'),
 ('headlines', '20'),
-('home', 'rotorcms.ll'),
 ('includenick', '1'),
 ('incount', '5'),
 ('invite', '0'),
@@ -189,7 +200,6 @@ INSERT INTO `setting` (`name`, `value`) VALUES
 ('limitmail', '300'),
 ('limitoutmail', '100'),
 ('loglist', '10'),
-('logos', 'Сайт на движке RotorCMS'),
 ('logotip', ''),
 ('maxbantime', '43200'),
 ('maxblogcomm', '300'),
@@ -247,7 +257,7 @@ INSERT INTO `setting` (`name`, `value`) VALUES
 ('touchthemes', '0'),
 ('userlist', '10'),
 ('webthemes', 'default'),
-('ziplist', '20');
+('ziplist', '20');*/
 
 CREATE TABLE IF NOT EXISTS `blacklist` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,

@@ -31,12 +31,12 @@ if (empty($_SESSION['id']) || empty($_SESSION['pass'])) {
 		$pass = strval($_COOKIE['pass']);
 
 		if ($user = User::first($id)) {
-			if ($pass === md5($user->password.Setting::get('keypass'))) {
+			if ($pass === md5($user->password.Setting::get('salt'))) {
 				session_regenerate_id(1);
 
 				$_SESSION['ip'] = Registry::get('ip');
 				$_SESSION['id'] = $user->id;
-				$_SESSION['pass'] = md5(Setting::get('keypass').$user->password);
+				$_SESSION['pass'] = md5(Setting::get('salt').$user->password);
 			}
 		}
 	}
@@ -49,7 +49,7 @@ if (!empty($_SESSION['id']) && !empty($_SESSION['pass'])) {
 
 	$user = User::first($_SESSION['id']);
 
-	if ($user && $_SESSION['pass'] == md5(Setting::get('keypass').$user->password)) {
+	if ($user && $_SESSION['pass'] == md5(Setting::get('salt').$user->password)) {
 		Registry::set('user', $user);
 	} else {
 		Registry::set('user', new User);
