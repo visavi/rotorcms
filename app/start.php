@@ -7,7 +7,6 @@
 #              ICQ  :  36-44-66               #
 #            Skype  :  vantuzilla             #
 #---------------------------------------------#
-define('DEBUGMODE', true);
 define('STARTTIME', microtime(1));
 define('BASEDIR', dirname(__DIR__));
 define('APP', BASEDIR.'/app');
@@ -15,30 +14,18 @@ define('HOME', BASEDIR.'/public');
 define('STORAGE', BASEDIR.'/storage');
 define('PCLZIP_TEMPORARY_DIR', STORAGE.'/temp/');
 
-if (DEBUGMODE) {
-	@error_reporting(E_ALL);
-	@ini_set('display_errors', true);
-	@ini_set('html_errors', true);
-	@ini_set('error_reporting', E_ALL);
-} else {
-	@error_reporting(E_ALL ^ E_NOTICE);
-	@ini_set('display_errors', false);
-	@ini_set('html_errors', false);
-	@ini_set('error_reporting', E_ALL ^ E_NOTICE);
-}
-
 session_start();
 
 include_once BASEDIR.'/vendor/autoload.php';
+include_once APP.'/helpers.php';
 
 Dotenv::load(BASEDIR);
 
-if (DEBUGMODE) {
+if (env('APP_DEBUG')) {
 	$whoops = new \Whoops\Run;
 	$whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
 	$whoops->register();
 }
-
 /**
  * Автозагрузка классов
  */
@@ -78,7 +65,7 @@ ActiveRecord\Config::initialize(function($cfg) use ($connect) {
 	$logger = Log::singleton('file', STORAGE.'/mysql.dat', null, $conf);
 
 	$cfg->set_logger($logger);
-	$cfg->set_logging(DEBUGMODE);
+	$cfg->set_logging(env('APP_DEBUG'));
 
 });
 

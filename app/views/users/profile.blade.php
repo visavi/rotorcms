@@ -24,7 +24,7 @@
 				<td>{!! $user->getLevel() !!}</td>
 			</tr>
 			<tr>
-				<th>Имя</th>
+				<th>Логин</th>
 				<td>{{ $user->login }}</td>
 			</tr>
 			<tr>
