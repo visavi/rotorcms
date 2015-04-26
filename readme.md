@@ -2,6 +2,10 @@ RotorCMS 5.0 dev
 =========
 
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/visavi/rotorcms?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Latest Stable Version](https://poser.pugx.org/visavi/rotorcms/v/stable)](https://packagist.org/packages/visavi/rotorcms)
+[![Total Downloads](https://poser.pugx.org/visavi/rotorcms/downloads)](https://packagist.org/packages/visavi/rotorcms)
+[![Latest Unstable Version](https://poser.pugx.org/visavi/rotorcms/v/unstable)](https://packagist.org/packages/visavi/rotorcms)
+[![License](https://poser.pugx.org/visavi/rotorcms/license)](https://packagist.org/packages/visavi/rotorcms)
 
 Добро пожаловать!
 Мы благодарим Вас за то, что Вы решили использовать наш скрипт для своего сайта. RotorCMS - функционально законченная система управления контентом с открытым кодом написанная на PHP. Она использует базу данных MySQL для хранения содержимого вашего сайта.
@@ -18,13 +22,13 @@ RotorCMS 5.0 dev
 
 2. Установите и настройте менеджер зависимостей [Composer](https://getcomposer.org/)
 
-3. `composer create-project visavi/rotor --prefer-dist .`
+3. `composer create-project visavi/rotorcms -s dev .`
 
-4. Создайте базу данных и пользователя для нее из панели управления на вашем сервере, во время установки скрипта необходимо будет вписать эти данные для соединения в файл app/connect.php
+4. Создайте базу данных и пользователя для нее из панели управления на вашем сервере, во время установки скрипта необходимо будет вписать эти данные для соединения в файл .env
 
 5. Вручную залейте таблицы и данные из файла database/migration/tables.sql
 
-6. Зарегистрируйтесь и назначьте права `superamdin` в таблице users поле level
+6. Зарегистрируйтесь и назначьте права `admin` в таблице users поле level
 
 7. Composer можно установить глобально и выполнить из консоли команду `composer update` или скачать архив composer.phar и выполнить команду php composer.phar update
 
