@@ -116,14 +116,7 @@ INSERT INTO `setting` (`name`, `value`) VALUES
 ('sitelink', 'rotorcms.ll'),
 ('sitename', 'Сайт на движке Rotor'),
 ('sitetitle', 'Rotor 1.0'),
-('admin', 'Админ'),
-('email', 'visavi.net@mail.ru'),
 ('version', '1.0'),
-('salt', ''),
-('mail_protocol', 'mail'),
-('mail_smtp', 'smtp.yandex.ru,465,ssl'),
-('mail_username', ''),
-('mail_password', ''),
 ('guestbook_per_page', 10);
 
 /*('addbansend', '1'),

@@ -34,7 +34,7 @@ Class HomeController Extends BaseController {
 	{
 		$request = Request::input('request');
 
-		if (App::requestMethod() == 'POST') {
+		if (Request::isMethod('post')) {
 
 			$email = Request::input('email');
 			$name = Request::input('name');
@@ -50,7 +50,7 @@ Class HomeController Extends BaseController {
 			if (!$errors) {
 				$message = nl2br(e($message));
 
-				$to = [Setting::get('email') => Setting::get('admin')];
+				$to = [env('SITE_EMAIL') => env('SITE_ADMIN')];
 				$subject = 'Новое письмо с сайта';
 				$body = App::view('mailer.contact', compact('subject', 'message', 'request'), true);
 				$headers['from'] = [$email => $name];

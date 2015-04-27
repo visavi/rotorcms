@@ -248,7 +248,7 @@ Class UserController Extends BaseController {
 
 		if (!$errors) {
 
-			if (App::requestMethod() == 'POST') {
+			if (Request::isMethod('post')) {
 
 				$new_password = Request::input('password');
 

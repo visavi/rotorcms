@@ -87,10 +87,10 @@ if (empty($_SESSION['id']) || empty($_SESSION['pass'])) {
 		$pass = strval($_COOKIE['pass']);
 
 		if ($user = User::find_by_id($id)) {
-			if ($pass === md5($user->password.Setting::get('salt'))) {
+			if ($pass === md5($user->password.env('APP_KEY'))) {
 
 				$_SESSION['id'] = $user->id;
-				$_SESSION['pass'] = md5(Setting::get('salt').$user->password);
+				$_SESSION['pass'] = md5(env('APP_KEY').$user->password);
 			}
 		}
 	}
@@ -103,7 +103,7 @@ if (!empty($_SESSION['id']) && !empty($_SESSION['pass'])) {
 
 	$user = User::find_by_id($_SESSION['id']);
 
-	if ($user && $_SESSION['pass'] == md5(Setting::get('salt').$user->password)) {
+	if ($user && $_SESSION['pass'] == md5(env('APP_KEY').$user->password)) {
 		Registry::set('user', $user);
 	} else {
 		Registry::set('user', new User);

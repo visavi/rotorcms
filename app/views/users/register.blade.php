@@ -71,7 +71,7 @@
 						<input name="captcha" type="text" class="form-control" id="inputCaptcha" maxlength="6" placeholder="Проверочный код" required>
 					</div>
 					<div class="col-sm-6">
-						<img src="/captcha" id="captcha" onclick="this.src='/captcha?'+Math.random()" class="img-rounded" alt="" style="cursor: pointer;" />
+						<img src="/captcha" id="captcha" onclick="this.src='/captcha?'+Math.random()" class="img-rounded" alt="" style="cursor: pointer;">
 					</div>
 				</div>
 				{!! App::textError('captcha') !!}

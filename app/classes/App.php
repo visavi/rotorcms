@@ -279,20 +279,19 @@ class App
 	 */
 	public static function sendMail($to, $subject, $body, $headers = [])
 	{
-		if (empty($headers['from'])) $headers['from'] = [Setting::get('email') => Setting::get('admin')];
+		if (empty($headers['from'])) $headers['from'] = [env('SITE_EMAIL') => env('SITE_ADMIN')];
 
 		$message = Swift_Message::newInstance()
 			->setTo($to)
 			->setSubject($subject)
 			->setBody($body, 'text/html')
 			->setFrom($headers['from'])
-			->setReturnPath(Setting::get('email'));
+			->setReturnPath(env('SITE_EMAIL'));
 
-		if (Setting::get('mail_protocol') == 'smtp') {
-			$smtp = explode(',', Setting::get('mail_smtp'));
-			$transport = Swift_SmtpTransport::newInstance($smtp[0], $smtp[1], $smtp[2])
-				->setUsername(Setting::get('mail_username'))
-				->setPassword(Setting::get('mail_password'));
+		if (env('MAIL_DRIVER') == 'smtp') {
+			$transport = Swift_SmtpTransport::newInstance(env('MAIL_HOST'), env('MAIL_PORT'), 'ssl')
+				->setUsername(env('MAIL_USERNAME'))
+				->setPassword(env('MAIL_PASSWORD'));
 		} else {
 			$transport = new Swift_MailTransport();
 		}
@@ -355,35 +354,6 @@ class App
 		if ($num % 10 > 1 && $num %10 < 5) return $num.' '.$forms[1];
 		return $num.' '.$forms[2];
 	}
-
-public static function bbCode($text, $parse = true) {
-
-	static $list_smiles;
-
-	$bbcode = new BBCodeParser;
-
-	if ( ! $parse) return $bbcode->clear($text);
-
-	$text = $bbcode->parse($text);
-
-	if (empty($list_smiles)) {
-
-		if (!file_exists(STORAGE.'/temp/smiles.dat')) {
-
-			$smiles = Smile::all(array('order' => 'LENGTH(code) desc'));
-			$smiles = self::arrayAssoc($smiles, 'code', 'name');
-			file_put_contents(STORAGE.'/temp/smiles.dat', serialize($smiles));
-		}
-
-		$list_smiles = unserialize(file_get_contents(STORAGE."/temp/smiles.dat"));
-	}
-
-	foreach($list_smiles as $code => $smile) {
-		$text = str_replace($code, '<img src="/assets/img/smiles/'.$smile.'" alt="'.$code.'" /> ', $text);
-	}
-
-	return $text;
-}
 
 	/**
 	 * Метод валидации дат

@@ -158,7 +158,7 @@ class User extends BaseModel {
 
 				//$_SESSION['ip'] = Registry::get('ip');
 				$_SESSION['id'] = $social->user()->id;
-				$_SESSION['pass'] = md5(Setting::get('salt').$social->user()->password);
+				$_SESSION['pass'] = md5(env('APP_KEY').$social->user()->password);
 
 				App::setFlash('success', 'Добро пожаловать, '.e($social->user()->login).'!');
 				App::redirect('/');
@@ -184,13 +184,13 @@ class User extends BaseModel {
 
 				if ($remember) {
 					setcookie('id', $user->id, time() + 3600 * 24 * 365, '/', $_SERVER['HTTP_HOST'], null, true);
-					setcookie('pass', md5($user->password.Setting::get('salt')), time() + 3600 * 24 * 365, '/', $_SERVER['HTTP_HOST'], null, true);
+					setcookie('pass', md5($user->password.env('APP_KEY')), time() + 3600 * 24 * 365, '/', $_SERVER['HTTP_HOST'], null, true);
 				}
 
 				$user->update_attribute('reset_code', null);
 
 				$_SESSION['id'] = $user->id;
-				$_SESSION['pass'] = md5(Setting::get('salt').$user->password);
+				$_SESSION['pass'] = md5(env('APP_KEY').$user->password);
 
 				if (!empty($_SESSION['social'])) {
 					$social = new Social;
