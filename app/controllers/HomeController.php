@@ -28,6 +28,36 @@ Class HomeController Extends BaseController {
 	}
 
 	/**
+	 * Отправка жалобы
+	 */
+	public function complaint ()
+	{
+		if (!Request::ajax()) App::redirect('/');
+
+		$token = Request::input('token', true);
+		$section = Request::input('section');
+		$post_id = Request::input('post_id');
+
+		if (User::check() && $token == $_SESSION['token']) {
+
+			$spam = Spam::first(['conditions' => ['section = ? AND post_id = ?', $section, $post_id]]);
+
+			if (!$spam) {
+				$spam = new Spam;
+				$spam->section = $section;
+				$spam->post_id = $post_id;
+				$spam->user_id = User::get('id');
+				if ($spam->save())
+					exit(json_encode(['status' => 'added']));
+			} else {
+				exit(json_encode(['status' => 'exists']));
+			}
+		}
+
+		exit(json_encode(['status' => 'error']));
+	}
+
+	/**
 	 * Обратная связь
 	 */
 	public function contact()

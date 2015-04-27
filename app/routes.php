@@ -6,13 +6,14 @@ $router->addMatchTypes(array('s' => '[0-9A-Za-z-_]++'));
 
 $router->map('GET', '/', 'HomeController@index', 'home');
 $router->map('GET', '/captcha', 'HomeController@captcha', 'captcha');
+$router->map('POST', '/complaint', 'HomeController@complaint', 'complaint');
 
 $router->map('GET|POST', '/register', 'UserController@register', 'register');
 $router->map('GET|POST', '/login', 'UserController@login', 'login');
 $router->map('GET|POST', '/recovery', 'UserController@recovery', 'recovery');
 $router->map('GET|POST', '/reset', 'UserController@reset', 'reset');
-$router->map('GET', '/logout', 'UserController@logout', 'logout');
 $router->map('GET|POST', '/user/[edit|password:action]', 'UserController');
+$router->map('GET', '/logout', 'UserController@logout', 'logout');
 
 $router->map('GET', '/user/[s:login]', 'UserController@view', 'profile');
 $router->map('GET', '/users', 'users/users', 'users');

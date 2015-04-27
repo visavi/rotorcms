@@ -79,13 +79,13 @@ function changeBookmark(el, topic) {
 }
 
 /* Отправка жалобы на спам */
-function sendComplaint(el, section, post) {
+function sendComplaint(el, section, post_id) {
 
 	if (!confirm('Вы действительно хотите отправить жалобу?')) return false;
 
 	$.ajax({
-		dataType: "JSON", type: "GET", url: "/ajax/complaint.php",
-		data: {post: post, section: section, token: $(el).data('token')},
+		dataType: "JSON", type: "POST", url: "/complaint",
+		data: {post_id: post_id, section: section, token: $(el).data('token')},
 		success: function(data) {
 			if (data.status == 'error'){
 				$.notify("Ошибка отправки жалобы!", "error");
