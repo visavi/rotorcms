@@ -22,7 +22,7 @@ RotorCMS 5.0 dev
 
 2. Установите и настройте менеджер зависимостей [Composer](https://getcomposer.org/)
 
-3. `composer create-project visavi/rotorcms -s dev .`
+3. Установите rotorcms выполнил команду в консоле `composer create-project visavi/rotorcms -s dev .`
 
 4. Создайте базу данных и пользователя для нее из панели управления на вашем сервере, во время установки скрипта необходимо будет вписать эти данные для соединения в файл .env
 
