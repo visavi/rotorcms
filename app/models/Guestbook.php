@@ -1,18 +1,22 @@
 <?php
-class Guest extends BaseModel {
+class Guestbook extends BaseModel {
 
 	static $table_name = 'guest';
 
 	public $token;
-
-	/**
-	 * @var array названия функций вызываемых перед сохранением
-	 */
-	static $before_save = array('before_save');
+	public $captcha;
 
 	static $belongs_to = array(
 		array('user'),
 	);
+
+	/**
+	 * Данные пользователя
+	 * @return object User модель пользователей
+	 */
+	public function user() {
+		return $this->user ? $this->user : new User;
+	}
 
 	//$config['guesttextlength']
 	static $validates_size_of = array(
@@ -23,12 +27,13 @@ class Guest extends BaseModel {
 	public function validate() {
 
 		//  Проверка токена
-		if ($this->user()->id && $this->token != $_SESSION['token']) {
+		if ($this->token && $this->token != $_SESSION['token']) {
 			$this->errors->add('token', 'Неверный идентификатор сессии, повторите действие!');
 		}
 
-		//  Антифлуд
-
+		if (!User::check() && $this->captcha != $_SESSION['captcha']) {
+			$this->errors->add('captcha', 'Неверный проверочный код');
+		}
 	}
 
 	/**
@@ -36,14 +41,6 @@ class Guest extends BaseModel {
 	 */
 	public function before_save()
 	{
-		$this->text = antimat($this->text);
-	}
-
-	/**
-	 * Данные пользователя
-	 * @return object User модель пользователей
-	 */
-	public function user() {
-		return $this->user ? $this->user : new User;
+		//$this->text = antimat($this->text);
 	}
 }

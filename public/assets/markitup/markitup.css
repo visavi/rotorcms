@@ -12,16 +12,13 @@
 	text-decoration:none;
 	border: none;
 }
-.markItUp  {
-	margin-bottom:-15px;
-}
 .markItUpContainer  {
 	font:11px Verdana, Arial, Helvetica, sans-serif;
 }
 .markItUpEditor {
 	padding:5px;
-	clear:both; display:block;
-	line-height:15px;
+	clear:both;
+	display:block;
 	overflow:auto;
 }
 .markItUpPreviewFrame	{
