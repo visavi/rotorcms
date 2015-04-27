@@ -7,7 +7,7 @@ Class GuestbookController Extends BaseController {
 	 */
 	public function index()
 	{
-		$page = !empty($_GET['page']) ? intval($_GET['page']) : 1;
+		$page = Request::input('page', 1);
 		$total = Guestbook::count();
 
 		if ($total > 0 && ($page * Setting::get('guestbook_per_page')) >= $total) {

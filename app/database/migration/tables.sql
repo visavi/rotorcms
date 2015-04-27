@@ -28,7 +28,7 @@ INSERT INTO `status` (`id`, `point`, `topoint`, `name`, `color`) VALUES
 
 CREATE TABLE IF NOT EXISTS `guest` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) unsigned NOT NULL,
+  `user_id` int(11) unsigned NULL DEFAULT NULL,
   `text` text NOT NULL,
   `ip` varchar(15) NOT NULL,
   `brow` varchar(25) NOT NULL,

@@ -93,7 +93,9 @@
 		<div class="row main">
 		<?php /*App::render('includes/note', compact('php_self')); */?>
 
-			{{ App::getFlash() }}
+			<div class="col-lg-12">
+				{{ App::getFlash() }}
+			</div>
 
 			<div class="col-lg-9">
 				@yield('breadcrumbs', isset($crumbs) ? $crumbs : '')

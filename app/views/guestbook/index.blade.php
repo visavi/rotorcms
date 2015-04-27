@@ -8,6 +8,8 @@
 
 @section('content')
 
+	<h1>Гостевая книга</h1>
+
 	@if ($total)
 		@foreach ($posts as $post)
 
