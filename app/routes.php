@@ -21,8 +21,8 @@ $router->map('GET', '/users/page/[i:page]', 'users/users');
 $router->map('POST', '/users/[search:action]', 'users/users');
 
 $router->map('GET', '/guestbook', 'GuestbookController@index', 'guestbook');
-$router->map('POST', '/guestbook/[create|update:action]', 'GuestbookController');
-$router->map('GET', '/guestbook/[i:id]/[edit:action]', 'GuestbookController');
+$router->map('POST', '/guestbook/create', 'GuestbookController@create');
+$router->map('GET|POST', '/guestbook/[i:id]/edit', 'GuestbookController@edit');
 
 $router->map('GET', '/forum', 'forum/index', 'forum');
 $router->map('GET', '/forum/[i:fid]', 'forum/forum');

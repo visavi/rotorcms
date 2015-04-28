@@ -56,4 +56,34 @@ Class GuestbookController Extends BaseController {
 
 		App::redirect('/guestbook');
 	}
+
+	/**
+	 *  Редактирование сообщения
+	 */
+	public function edit($id)
+	{
+		if (!User::check()) App::abort(403);
+
+		if (!$guest = Guestbook::find_by_id_and_user_id($id, User::get('id'))) App::abort('default', 'Сообщение не найдено!');
+
+		if ($guest->created_at < Carbon::now()->subMinutes(10)) {
+			App::abort('default', 'Редактирование невозможно, прошло более 10 мин.');
+		}
+
+		if (Request::isMethod('post')) {
+
+			$guest->token = Request::input('token', true);
+			$guest->text = Request::input('text');
+
+			if ($guest->save()) {
+				App::setFlash('success', 'Сообщение успешно изменено!');
+				App::redirect('/guestbook');
+			} else {
+				App::setFlash('danger', $guest->getErrors());
+				App::setInput($_POST);
+			}
+		}
+
+		App::view('guestbook.edit', compact('guest'));
+	}
 }
