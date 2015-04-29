@@ -24,13 +24,22 @@
 					</ul>
 
 					<div>
-						<?= $user->point ?> / <?= $user->money ?> / Репутация: <?= ($user->rating > 0) ? '+'.$user->rating : $user->rating ?>
+						{{ $user->point }} / {{ $user->money }} / Репутация: {{ ($user->rating > 0) ? '+'.$user->rating : $user->rating }}
 					</div>
 				</div>
 			</div>
 		@endforeach
 
 		{{ App::pagination(Setting::get('users_per_page'), $page, $total['all']) }}
+
+		<div class="well">
+			<form class="form-inline" method="post">
+			<label for="login">Поиск пользователя:</label><br />
+			<div class="form-group">
+				<input type="text" class="form-control" name="login" value="{{ User::get('login') }}" />
+			</div>
+			<input type="submit" class="btn btn-default" value="Поиск" /></form>
+		</div>
 
 	@else
 		<div class="alert alert-danger">Пользователей еще нет!</div>
