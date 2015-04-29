@@ -1,10 +1,7 @@
 @extends('layout')
 
 @section('title', 'Профиль '.$user->login.' - @parent')
-
-@section('breadcrumbs')
-	{{ App::breadcrumbs(['/users' => 'Пользователи', $user->login]) }}
-@stop
+@section('breadcrumbs', App::breadcrumbs(['/users' => 'Пользователи', $user->login]))
 
 @section('content')
 
@@ -29,7 +26,7 @@
 			</tr>
 			<tr>
 				<th>Дата регистрации</th>
-				<td>{{ $user->created_at->format('d.m.Y, H:i') }}</td>
+				<td>{{ Carbon::parse($user->created_at)->format('d.m.y / H:i') }}</td>
 			</tr>
 		</tbody>
 	</table>

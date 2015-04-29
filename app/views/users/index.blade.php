@@ -1,51 +1,36 @@
 @extends('layout')
 
 @section('title', 'Список пользователей - @parent')
+@section('breadcrumbs', App::breadcrumbs(['Пользователи']))
 
 @section('content')
 
 	<h1>Список пользователей</h1>
 
 	@if ($total)
-		<table class="table table-hover table-striped" style="background-color: #fff;">
-			<thead>
-				<tr>
-					<th>#</th>
-					<th>ФИО</th>
-					<th>Телефон</th>
-					<th>E-mail</th>
-					<th>Статус</th>
-					<th>Дата регистрации</th>
-					@if (User::isAdmin())
-						<th class="bg-info">Действие</th>
-					@endif
-				</tr>
-			</thead>
 
-			<tbody>
-				@foreach ($users as $user)
-					<tr onclick="location.href='/user/{{ $user->id }}'" style="cursor:pointer">
-						<td>{{ $user->id }}</td>
-						<td>{{ $user->getFullName() }}</td>
-						<td>{{ $user->getPhone() }}</td>
-						<td>{{ $user->email }}</td>
-						<td>{!! $user->getLevel() !!}</td>
-						<td>{{ $user->created_at->format('d.m.Y, H:i') }}</td>
+		<a class="touch-back<?= (empty($list) || $list == 'all' ? ' bg-success' : '') ?>" href="/users">Все <span class="badge"><?= $total['users'] ?></span></a> <a class="touch-back<?= ($list == 'admins' ? ' bg-success' : '') ?>" href="/users?list=admins">Администрация <span class="badge"><?= $total['admins'] ?></span></a>
 
-						@if (User::isAdmin())
-							<td>
-								<a href="/admin/users/edit/{{ $user->id }}" data-toggle="tooltip" title="Редактировать"><i class="fa fa-pencil"></i></a>
+		@foreach ($users as $key => $user)
+			<div class="media{{ $login == $user->getLogin() ? ' bg-success padding' : '' }}">
+				<div class="media-left">
+					{!! $user->getAvatar() !!}
+				</div>
+				<div class="media-body">
 
-								<a href="/admin/users/delete/{{ $user->id }}?token={{ $_SESSION['token'] }}" data-toggle="tooltip" title="Удалить" onclick="return confirm('Вы уверены, что хотите удалить этого пользователя?');"><i class="fa fa-trash"></i></a>
-							</td>
-						@endif
+					{{ ($key + 1) }}. <h4 class="author"><a href="/user/{{ $user->getLogin() }}">{{ $user->getLogin() }}</a></h4>
+					<ul class="list-inline small pull-right">
+						<li class="text-muted">Регистрация: {{ Carbon::parse($user->created_at)->format('d.m.y / H:i') }}</li>
+					</ul>
 
-					</tr>
-				@endforeach
-			</tbody>
-		</table>
+					<div>
+						<?= $user->point ?> / <?= $user->money ?> / Репутация: <?= ($user->rating > 0) ? '+'.$user->rating : $user->rating ?>
+					</div>
+				</div>
+			</div>
+		@endforeach
 
-		{{ App::pagination(Setting::get('users_per_page'), $page, $total) }}
+		{{ App::pagination(Setting::get('users_per_page'), $page, $total['all']) }}
 
 	@else
 		<div class="alert alert-danger">Пользователей еще нет!</div>

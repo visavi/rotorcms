@@ -47,8 +47,8 @@ if ( ! function_exists('env'))
 	 * @param  boolean $parse Обрабатывать или вырезать код
 	 * @return string         Обработанный текст
 	 */
-	function bb_code($text, $parse = true) {
-
+	function bb_code($text, $parse = true)
+	{
 		static $list_smiles;
 
 		$bbcode = new BBCodeParser;
@@ -74,5 +74,15 @@ if ( ! function_exists('env'))
 		}
 
 		return $text;
+	}
+
+	function count_users()
+	{
+		return User::count();
+	}
+
+	function count_guestbook()
+	{
+		return Guestbook::count();
 	}
 }

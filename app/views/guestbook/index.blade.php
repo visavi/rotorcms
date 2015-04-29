@@ -1,10 +1,7 @@
 @extends('layout')
 
 @section('title', 'Гостевая книга - @parent')
-
-@section('breadcrumbs')
-	{{ App::breadcrumbs(['Гостевая книга']) }}
-@stop
+@section('breadcrumbs', App::breadcrumbs(['Гостевая книга']))
 
 @section('content')
 

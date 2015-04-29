@@ -115,9 +115,10 @@ CREATE TABLE IF NOT EXISTS `setting` (
 INSERT INTO `setting` (`name`, `value`) VALUES
 ('sitelink', 'rotorcms.ll'),
 ('sitename', 'Сайт на движке Rotor'),
-('sitetitle', 'Rotor 1.0'),
-('version', '1.0'),
-('guestbook_per_page', 10);
+('sitetitle', 'Rotor 5.0'),
+('version', '5.0'),
+('guestbook_per_page', 10),
+('users_per_page', 10);
 
 /*('addbansend', '1'),
 ('advertpoint', '2000'),

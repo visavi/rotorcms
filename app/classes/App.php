@@ -14,31 +14,6 @@ class App
 
 	/**
 	 * Получает текущую страницу
-	 * @param  boolean $path показывать только путь
-	 * @return string текущая страница
-	 */
-/*	public static function requestUrl($path = false)
-	{
-		$current = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '/';
-
-		if ($path && ($strpos = strpos($current, '?')) !== false) {
-			$current = substr($current, 0, $strpos);
-		}
-
-		return $current;
-	}*/
-
-/*	/**
-	 * Получает текущий метод запроса
-	 * @return string текущий метод запроса
-
-	public static function requestMethod()
-	{
-		return isset($_SERVER['REQUEST_METHOD']) ? $_SERVER['REQUEST_METHOD'] : 'GET';
-	}*/
-
-	/**
-	 * Получает текущую страницу
 	 * @return string текущая страница
 	 */
 	public static function returnUrl($page, $url = null)
@@ -177,9 +152,9 @@ class App
 	 * @param  boolean $return возвращать или выводить
 	 * @return string          сформированный код
 	 */
-	public static function breadcrumbs($crumbs, $return = false)
+	public static function breadcrumbs($crumbs)
 	{
-		return self::view('app._breadcrumbs', compact('crumbs'), $return);
+		return self::view('app._breadcrumbs', compact('crumbs'), true);
 	}
 
 	/**

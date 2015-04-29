@@ -3,6 +3,43 @@
 Class UserController Extends BaseController {
 
 	/**
+	 * Список пользователей
+	 */
+	public function index()
+	{
+		$page = Request::input('page', 1);
+		$list = Request::input('list');
+		$login = Request::input('login');
+
+		$total['users'] = User::count();
+		$total['admins'] = User::count(['conditions' => ['level in (?)', ['moder', 'admin']]]);
+
+		$total['all'] = $total['users'];
+
+		if ($total['all'] > 0 && ($page * Setting::get('users_per_page')) >= $total) {
+			$page = ceil($total / Setting::get('users_per_page'));
+		}
+
+		$offset = intval(($page * Setting::get('users_per_page')) - Setting::get('users_per_page'));
+
+		$condition = [];
+
+		if ($list == 'admins') {
+			$total['all'] = $total['admins'];
+			$condition = ['level IN(?)', ['moder', 'admin']];
+		}
+
+		$users = User::all(array(
+			'conditions' => $condition,
+			'offset' => $offset,
+			'limit' => Setting::get('users_per_page'),
+			'order' => 'point DESC, login ASC',
+		));
+
+		App::view('users.index', compact('users', 'page', 'total', 'list', 'login'));
+	}
+
+	/**
 	 * Профиль пользователя
 	 */
 	public function view($login)
