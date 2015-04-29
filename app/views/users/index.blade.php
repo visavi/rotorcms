@@ -34,11 +34,12 @@
 
 		<div class="well">
 			<form class="form-inline" method="post">
-			<label for="login">Поиск пользователя:</label><br />
-			<div class="form-group">
-				<input type="text" class="form-control" name="login" value="{{ User::get('login') }}" />
-			</div>
-			<input type="submit" class="btn btn-default" value="Поиск" /></form>
+				<label for="inputLogin">Поиск пользователя:</label><br>
+				<div class="form-group">
+					<input type="text" class="form-control" name="login" id="inputLogin" value="{{ $login or User::get('login') }}">
+				</div>
+				<button type="submit" class="btn btn-default">Поиск</button>
+			</form>
 		</div>
 
 	@else

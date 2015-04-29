@@ -11,6 +11,24 @@ Class UserController Extends BaseController {
 		$list = Request::input('list');
 		$login = Request::input('login');
 
+		if (Request::isMethod('post')) {
+			$users = User::all(array('select' => 'login', 'order' => 'point DESC, login ASC'));
+			foreach ($users as $key => $val) {
+				if ($login == $val->login) {
+					$position = $key + 1;
+				}
+			}
+
+			if (isset($position)) {
+				$page = ceil($position / Setting::get('users_per_page'));
+
+				App::setFlash('success', 'Позиция в рейтинге: '.$position);
+				App::redirect("/users?page=$page&login=$login");
+			} else {
+				App::setFlash('danger', 'Пользователь с данным логином не найден!');
+			}
+		}
+
 		$total['users'] = User::count();
 		$total['admins'] = User::count(['conditions' => ['level in (?)', ['moder', 'admin']]]);
 
@@ -62,7 +80,7 @@ Class UserController Extends BaseController {
 
 		$user = User::get();
 
-			if (Request::isMethod('post')) {
+		if (Request::isMethod('post')) {
 
 			$user->token = Request::input('token', true);
 			$user->email = Request::input('email');
