@@ -84,16 +84,7 @@ Class UserController Extends BaseController {
 
 			$user->token = Request::input('token', true);
 			$user->email = Request::input('email');
-			$user->first_name = Request::input('first_name');
-			$user->last_name = Request::input('last_name');
-			$user->middle_name = Request::input('middle_name');
-			$user->phone = Request::input('phone');
-			$user->company_name = Request::input('company_name');
-			$user->company_address = Request::input('company_address');
-			$user->company_inn = Request::input('company_inn');
-			$user->company_kpp = Request::input('company_kpp');
-			$user->company_ogrn = Request::input('company_ogrn');
-			$user->info = Request::input('info');
+			$user->gender = Request::input('gender');
 
 			if ($user->save()) {
 				App::setFlash('success', 'Данные успешно сохранены!');

@@ -17,9 +17,7 @@ class User extends BaseModel {
 		'guest' => 'Зарегистрированный',
 		'user' => 'Пользователь',
 		'moder' => 'Модератор',
-		'supermoder' => 'Супер модератор',
 		'admin' => 'Администратор',
-		'superadmin' => 'Суперадмин',
 	];
 
 	static $validates_presence_of = [
@@ -104,7 +102,7 @@ class User extends BaseModel {
 	 */
 	public static function isAdmin()
 	{
-		return in_array(self::get('level'), ['moder', 'supermoder', 'admin', 'superamdin']);
+		return in_array(self::get('level'), ['moder', 'admin']);
 	}
 
 	/**
@@ -206,6 +204,4 @@ class User extends BaseModel {
 
 		return false;
 	}
-
-
 }

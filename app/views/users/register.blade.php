@@ -51,7 +51,7 @@
 
 		<?php $sex = (isset($_SESSION['social']->sex) && $_SESSION['social']->sex == 1) ? 'female' : 'male'; ?>
 
- 		<div class="form-group{{ App::hasError('gender') }}">
+		<div class="form-group{{ App::hasError('gender') }}">
 			<label for="inputGender" class="col-sm-3 control-label">Пол</label>
 			<div class="col-sm-5">
 				<input type="radio" name="gender" id="inputGenderMale" value="male"{{ (App::getInput('gender', $sex) == 'male' ? ' checked="checked"' : '') }}>

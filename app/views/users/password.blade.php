@@ -1,10 +1,7 @@
 @extends('layout')
 
 @section('title', 'Изменение пароля - @parent')
-
-@section('breadcrumbs')
-	{{ App::breadcrumbs(['/users' => 'Пользователи', '/user/'.$user->login => $user->login, 'Изменение пароля']) }}
-@stop
+@section('breadcrumbs', App::breadcrumbs(['/users' => 'Пользователи', '/user/'.$user->login => $user->login, 'Изменение пароля']))
 
 @section('content')
 
