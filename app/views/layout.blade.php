@@ -4,8 +4,8 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="keywords" content="%KEYWORDS%">
-	<meta name="description" content="%DESCRIPTION%">
+	<meta name="description" content="@yield('description', Setting::get('description'))">
+	<meta name="keywords" content="@yield('keywords', Setting::get('keywords'))">
 	<meta name="author" content="Vantuz (visavi.net@mail.ru)">
 	<meta name="generator" content="RotorCMS {{{ Setting::get('version') }}}">
 	<title>
@@ -15,17 +15,17 @@
 	</title>
 
 	@section('styles')
-		<link href="/assets/css/bootstrap.min.css" rel="stylesheet" />
-		<link href="/assets/css/bootstrap-theme.min.css" rel="stylesheet" />
-		<link href="/assets/css/font-awesome.min.css" rel="stylesheet" />
+		<link href="/assets/css/bootstrap.min.css" rel="stylesheet">
+		<link href="/assets/css/bootstrap-theme.min.css" rel="stylesheet">
+		<link href="/assets/css/font-awesome.min.css" rel="stylesheet">
 		<link href="/assets/css/prettify.css" rel="stylesheet">
-		<link href="/assets/markitup/markitup.css" rel="stylesheet" />
-		<link href="/assets/css/app.css" rel="stylesheet" />
+		<link href="/assets/markitup/markitup.css" rel="stylesheet">
+		<link href="/assets/css/app.css" rel="stylesheet">
 	@show
 
-	<link rel="image_src" href="/assets/img/images/icon.png" />
-	<link rel="alternate" href="/news/rss" title="RSS News" type="application/rss+xml" />
-	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+	<link rel="image_src" href="/assets/img/images/icon.png">
+	<link rel="alternate" href="/news/rss" title="RSS News" type="application/rss+xml">
+	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 	<!--[if lt IE 9]>
@@ -49,8 +49,8 @@
 			</div>
 			<div class="collapse navbar-collapse">
 				<ul class="nav navbar-nav">
-				<li{!! Request::is('guestbook*') ? ' class="active"' : '' !!}><a href="/guestbook">Гостевая</a></li>
-				<li{!! Request::is('forum*') ? ' class="active"' : '' !!}><a href="/forum">Форум</a></li>
+				<li class="{{ Request::is('guestbook*') ? ' active' : '' }}"><a href="/guestbook">Гостевая</a></li>
+				<li class="{{ Request::is('forum*') ? ' active' : '' }}"><a href="/forum">Форум</a></li>
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
 					<ul class="dropdown-menu">

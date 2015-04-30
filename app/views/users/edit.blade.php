@@ -1,6 +1,7 @@
 @extends('layout')
 
 @section('title', 'Редактирование профиля - @parent')
+@section('breadcrumbs', App::breadcrumbs(['/users' => 'Пользователи', '/user/'.User::get('login') => User::get('login'), 'Редактирование']))
 
 @section('content')
 

@@ -1,6 +1,7 @@
 @extends('layout')
 
 @section('title', 'Регистрация - @parent')
+@section('breadcrumbs', App::breadcrumbs(['Регистрация']))
 
 @section('content')
 

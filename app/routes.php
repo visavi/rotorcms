@@ -15,18 +15,14 @@ $router->map('GET|POST', '/reset', 'UserController@reset', 'reset');
 $router->map('GET|POST', '/user/[edit|password:action]', 'UserController');
 $router->map('GET|POST', '/users', 'UserController@index');
 $router->map('GET', '/logout', 'UserController@logout', 'logout');
-
 $router->map('GET', '/user/[s:login]', 'UserController@view', 'profile');
-$router->map('GET', '/users', 'users/users', 'users');
-$router->map('GET', '/users/page/[i:page]', 'users/users');
-$router->map('POST', '/users/[search:action]', 'users/users');
 
 $router->map('GET', '/guestbook', 'GuestbookController@index', 'guestbook');
 $router->map('POST', '/guestbook/create', 'GuestbookController@create');
 $router->map('GET|POST', '/guestbook/[i:id]/edit', 'GuestbookController@edit');
 
-$router->map('GET', '/forum', 'forum/index', 'forum');
-$router->map('GET', '/forum/[i:fid]', 'forum/forum');
+$router->map('GET', '/forum', 'ForumController@index', 'forum');
+$router->map('GET', '/forum/[i:id]', 'ForumController@forum');
 
 $router->map('GET', '/news', 'news/index', 'news');
 $router->map('GET', '/news/page/[i:page]', 'news/index');

@@ -118,7 +118,11 @@ INSERT INTO `setting` (`name`, `value`) VALUES
 ('sitetitle', 'Rotor 5.0'),
 ('version', '5.0'),
 ('guestbook_per_page', 10),
-('users_per_page', 10);
+('users_per_page', 10),
+('topics_per_page', 10),
+('posts_per_page', 10),
+('description', 'Описание'),
+('keywords', 'Ключевые слова');
 
 /*('addbansend', '1'),
 ('advertpoint', '2000'),

@@ -1,6 +1,7 @@
 @extends('layout')
 
 @section('title', 'Сброс пароля - @parent')
+@section('breadcrumbs', App::breadcrumbs(['Сброс пароля']))
 
 @section('content')
 
