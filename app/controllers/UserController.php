@@ -8,13 +8,13 @@ Class UserController Extends BaseController {
 	public function index()
 	{
 		$page = Request::input('page', 1);
-		$list = Request::input('list');
+		$list = Request::input('list', 'all');
 		$login = Request::input('login');
 
 		if (Request::isMethod('post')) {
 			$users = User::all(array('select' => 'login', 'order' => 'point DESC, login ASC'));
 			foreach ($users as $key => $val) {
-				if ($login == $val->login) {
+				if (strtolower($login) == strtolower($val->login)) {
 					$position = $key + 1;
 				}
 			}

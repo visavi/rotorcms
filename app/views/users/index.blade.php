@@ -9,10 +9,10 @@
 
 	@if ($total)
 
-		<a class="touch-back<?= (empty($list) || $list == 'all' ? ' bg-success' : '') ?>" href="/users">Все <span class="badge"><?= $total['users'] ?></span></a> <a class="touch-back<?= ($list == 'admins' ? ' bg-success' : '') ?>" href="/users?list=admins">Администрация <span class="badge"><?= $total['admins'] ?></span></a>
+		<a class="touch-back{{ $list == 'all' ? ' bg-success' : '' }}" href="/users">Все <span class="badge">{{ $total['users'] }}</span></a> <a class="touch-back{{ $list == 'admins' ? ' bg-success' : '' }}" href="/users?list=admins">Администрация <span class="badge">{{ $total['admins'] }}</span></a>
 
 		@foreach ($users as $key => $user)
-			<div class="media{{ $login == $user->getLogin() ? ' bg-success padding' : '' }}">
+			<div class="media{{ strtolower($login) == strtolower($user->getLogin()) ? ' bg-success padding' : '' }}">
 				<div class="media-left">
 					{!! $user->getAvatar() !!}
 				</div>
@@ -36,7 +36,7 @@
 			<form class="form-inline" method="post">
 				<label for="inputLogin">Поиск пользователя:</label><br>
 				<div class="form-group">
-					<input type="text" class="form-control" name="login" id="inputLogin" value="{{ $login or User::get('login') }}">
+					<input type="text" class="form-control" name="login" id="inputLogin" value="{{ !empty($login) ? $login : User::get('login') }}">
 				</div>
 				<button type="submit" class="btn btn-default">Поиск</button>
 			</form>
