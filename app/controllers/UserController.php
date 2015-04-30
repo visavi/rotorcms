@@ -34,8 +34,8 @@ Class UserController Extends BaseController {
 
 		$total['all'] = $total['users'];
 
-		if ($total['all'] > 0 && ($page * Setting::get('users_per_page')) >= $total) {
-			$page = ceil($total / Setting::get('users_per_page'));
+		if ($total['all'] > 0 && ($page * Setting::get('users_per_page')) >= $total['all']) {
+			$page = ceil($total['all'] / Setting::get('users_per_page'));
 		}
 
 		$offset = intval(($page * Setting::get('users_per_page')) - Setting::get('users_per_page'));

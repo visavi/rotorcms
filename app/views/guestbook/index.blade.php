@@ -7,7 +7,7 @@
 
 	<h1>Гостевая книга</h1>
 
-	@if ($total)
+	@if ($posts)
 		@foreach ($posts as $post)
 
 			<div class="media">
@@ -62,7 +62,7 @@
 
 		@endforeach
 
-		{{ App::pagination(Setting::get('guestbook_per_page'), $page, $total) }}
+		{{ App::pagination($page) }}
 
 	@else
 		<div class="alert alert-danger">Сообщений нет, будь первым!</div>

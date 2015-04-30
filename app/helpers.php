@@ -76,13 +76,41 @@ if ( ! function_exists('env'))
 		return $text;
 	}
 
+	/**
+	 *  Количество пользователей
+	 * @return integer Количество пользователей
+	 */
 	function count_users()
 	{
 		return User::count();
 	}
 
+	/**
+	 *  Количество сообщений в гостевой
+	 * @return integer сообщений в гостевой
+	 */
 	function count_guestbook()
 	{
 		return Guestbook::count();
+	}
+
+	/**
+	 * Обработчик постраничной навигации
+	 * @param  integer $limit элементов на страницу
+	 * @param  integer $total всего элементов
+	 * @return array          массив подготовленных данных
+	 */
+	function getPage($limit, $total)
+	{
+		$current = Request::input('page');
+		if ($current < 1) $current = 1;
+
+		if ($current * $limit >= $total) {
+			$current = ceil($total / $limit);
+		}
+
+		$offset = intval(($current * $limit) - $limit);
+
+		return compact('current', 'limit', 'offset', 'total');
 	}
 }

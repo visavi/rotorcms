@@ -63,39 +63,38 @@ class App
 
 	/**
 	 * Постраничная навигация
-	 * @param  integer $rpp     количество элементов на странице
-	 * @param  integer $current текущая страница
-	 * @param  integer $total   общее количество элементов
-	 * @param  integer $crumbs  количество кнопок справа и слева
+	 * @param  array $page массив данных
 	 * @return string  сформированный блок с кнопками страниц
 	 */
-	public static function pagination($rpp, $current, $total, $crumbs = 3)
+	public static function pagination($page)
 	{
-		if ($total > 0) {
+		if ($page['total'] > 0) {
+
+			if (empty($page['crumbs'])) $page['crumbs'] = 3;
 
 			$url = array_except($_GET, 'page');
 			$request = $url ? '&'.http_build_query($url) : null;
 
 			$pages = [];
-			$pg_cnt = ceil($total / $rpp);
-			$idx_fst = max($current - $crumbs, 1);
-			$idx_lst = min($current + $crumbs, $pg_cnt);
+			$pg_cnt = ceil($page['total'] / $page['limit']);
+			$idx_fst = max($page['current'] - $page['crumbs'], 1);
+			$idx_lst = min($page['current'] + $page['crumbs'], $pg_cnt);
 
-			if ($current != 1) {
+			if ($page['current'] != 1) {
 				$pages[] = [
-					'page' => $current - 1,
+					'page' => $page['current'] - 1,
 					'title' => 'Предыдущая',
 					'name' => '«',
 				];
 			}
-			if (($current - $idx_fst) >= 0) {
-				if ($current > ($crumbs + 1)) {
+			if (($page['current'] - $idx_fst) >= 0) {
+				if ($page['current'] > ($page['crumbs'] + 1)) {
 					$pages[] = [
 						'page' => 1,
 						'title' => '1 страница',
 						'name' => 1,
 					];
-					if ($current != ($crumbs + 2)) {
+					if ($page['current'] != ($page['crumbs'] + 2)) {
 						$pages[] = [
 							'separator' => true,
 							'name' => ' ... ',
@@ -106,7 +105,7 @@ class App
 
 			for ($i = $idx_fst; $i <= $idx_lst; $i++) {
 
-				if ($i == $current) {
+				if ($i == $page['current']) {
 					$pages[] = [
 						'current' => true,
 						'name' => $i,
@@ -119,9 +118,9 @@ class App
 					];
 				}
 			}
-			if (($current + $idx_lst) < $total) {
-				if ($current < ($pg_cnt - $crumbs)) {
-					if ($current != ($pg_cnt - $crumbs - 1)) {
+			if (($page['current'] + $idx_lst) < $page['total']) {
+				if ($page['current'] < ($pg_cnt - $page['crumbs'])) {
+					if ($page['current'] != ($pg_cnt - $page['crumbs'] - 1)) {
 						$pages[] = [
 							'separator' => true,
 							'name' => ' ... ',
@@ -134,9 +133,9 @@ class App
 					];
 				}
 			}
-			if ($current != $pg_cnt) {
+			if ($page['current'] != $pg_cnt) {
 				$pages[] = [
-					'page' => $current + 1,
+					'page' => $page['current'] + 1,
 					'title' => 'Следующая',
 					'name' => '»',
 				];

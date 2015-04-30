@@ -7,23 +7,17 @@ Class GuestbookController Extends BaseController {
 	 */
 	public function index()
 	{
-		$page = Request::input('page', 1);
 		$total = Guestbook::count();
-
-		if ($total > 0 && ($page * Setting::get('guestbook_per_page')) >= $total) {
-			$page = ceil($total / Setting::get('guestbook_per_page'));
-		}
-
-		$offset = intval(($page * Setting::get('guestbook_per_page')) - Setting::get('guestbook_per_page'));
+		$page = getPage(Setting::get('guestbook_per_page'), $total);
 
 		$posts = Guestbook::all([
-			'offset' => $offset,
-			'limit' => Setting::get('guestbook_per_page'),
+			'offset' => $page['offset'],
+			'limit' => $page['limit'],
 			'order' => 'created_at desc',
 			'include' => array('user'),
 		]);
 
-		App::view('guestbook.index', compact('posts', 'page', 'total'));
+		App::view('guestbook.index', compact('posts', 'page'));
 	}
 
 	/**
