@@ -1,6 +1,6 @@
 @extends('layout')
 
-@section('title', 'Регистрация - @parent')
+@section('title', 'Форум - @parent')
 @section('breadcrumbs', App::breadcrumbs(['Форум']))
 
 @section('content')

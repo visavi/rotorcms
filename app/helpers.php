@@ -94,6 +94,15 @@ function count_guestbook()
 }
 
 /**
+ *  Количество сообщений в форума
+ * @return integer сообщений в форуме
+ */
+function count_forum()
+{
+	return Topic::count().'/'.Post::count();
+}
+
+/**
  * Обработчик постраничной навигации
  * @param  integer $limit элементов на страницу
  * @param  integer $total всего элементов

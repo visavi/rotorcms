@@ -14,7 +14,7 @@ Class GuestbookController Extends BaseController {
 			'offset' => $page['offset'],
 			'limit' => $page['limit'],
 			'order' => 'created_at desc',
-			'include' => array('user'),
+			'include' => ['user'],
 		]);
 
 		App::view('guestbook.index', compact('posts', 'page'));
