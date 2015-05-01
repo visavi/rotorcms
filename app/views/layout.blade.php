@@ -43,7 +43,7 @@
 					<span class="sr-only">Toggle navigation</span>
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>requestUrl
+					<span class="icon-bar"></span>
 				</button>
 				<a class="navbar-brand text-uppercase" href="/">{{ Setting::get('sitetitle') }}</a>
 			</div>
@@ -80,8 +80,8 @@
 						</li>
 
 					@else
-						<li{!! Request::is('login*') ? ' class="active"' : '' !!}><a href="/login">Вход</a></li>
-						<li{!! Request::is('register*') ? ' class="active"' : '' !!}><a href="/register">Регистрация</a></li>
+						<li class="{{ Request::is('login*') ? ' active' : '' }}"><a href="/login">Вход</a></li>
+						<li class="{{ Request::is('register*') ? ' active' : '' }}"><a href="/register">Регистрация</a></li>
 					@endif
 				</ul>
 			</div><!--/.nav-collapse -->
@@ -98,7 +98,7 @@
 			</div>
 
 			<div class="col-lg-9">
-				@yield('breadcrumbs', isset($crumbs) ? $crumbs : '')
+				@yield('breadcrumbs')
 				@yield('content')
 			</div>
 

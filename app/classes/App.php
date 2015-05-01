@@ -87,24 +87,22 @@ class App
 					'name' => '«',
 				];
 			}
-			if (($page['current'] - $idx_fst) >= 0) {
-				if ($page['current'] > ($page['crumbs'] + 1)) {
+
+			if ($page['current'] > $page['crumbs'] + 1) {
+				$pages[] = [
+					'page' => 1,
+					'title' => '1 страница',
+					'name' => 1,
+				];
+				if ($page['current'] != $page['crumbs'] + 2) {
 					$pages[] = [
-						'page' => 1,
-						'title' => '1 страница',
-						'name' => 1,
+						'separator' => true,
+						'name' => ' ... ',
 					];
-					if ($page['current'] != ($page['crumbs'] + 2)) {
-						$pages[] = [
-							'separator' => true,
-							'name' => ' ... ',
-						];
-					}
 				}
 			}
 
 			for ($i = $idx_fst; $i <= $idx_lst; $i++) {
-
 				if ($i == $page['current']) {
 					$pages[] = [
 						'current' => true,
@@ -118,21 +116,21 @@ class App
 					];
 				}
 			}
-			if (($page['current'] + $idx_lst) < $page['total']) {
-				if ($page['current'] < ($pg_cnt - $page['crumbs'])) {
-					if ($page['current'] != ($pg_cnt - $page['crumbs'] - 1)) {
-						$pages[] = [
-							'separator' => true,
-							'name' => ' ... ',
-						];
-					}
+
+			if ($page['current'] < $pg_cnt - $page['crumbs']) {
+				if ($page['current'] != $pg_cnt - $page['crumbs'] - 1) {
 					$pages[] = [
-						'page' => $pg_cnt,
-						'title' => $pg_cnt . ' страница',
-						'name' => $pg_cnt,
+						'separator' => true,
+						'name' => ' ... ',
 					];
 				}
+				$pages[] = [
+					'page' => $pg_cnt,
+					'title' => $pg_cnt . ' страница',
+					'name' => $pg_cnt,
+				];
 			}
+
 			if ($page['current'] != $pg_cnt) {
 				$pages[] = [
 					'page' => $page['current'] + 1,

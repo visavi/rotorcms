@@ -22,8 +22,8 @@ session_start();
 include_once BASEDIR.'/vendor/autoload.php';
 
 $loader = new \Composer\Autoload\ClassLoader();
-$loader->add('', BASEDIR.'/app/classes');
-$loader->add('', BASEDIR.'/app/controllers');
+$loader->add('', APP.'/classes');
+$loader->add('', APP.'/controllers');
 $loader->register();
 
 include_once APP.'/routes.php';
@@ -56,7 +56,7 @@ AliasLoader::getInstance($aliases)->register();
  */
 ActiveRecord\Config::initialize(function($cfg) {
 
-	$cfg->set_model_directory(BASEDIR.'/app/models');
+	$cfg->set_model_directory(APP.'/models');
 	$cfg->set_connections(array(
 		'development' => 'mysql://'.env('DB_USERNAME').':'.env('DB_PASSWORD').'@'.env('DB_HOST').'/'.env('DB_DATABASE').';charset=utf8'
 	));
