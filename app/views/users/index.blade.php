@@ -7,9 +7,9 @@
 
 	<h1>Список пользователей</h1>
 
-	@if ($total)
+	@if ($users)
 
-		<a class="touch-back{{ $list == 'all' ? ' bg-success' : '' }}" href="/users">Все <span class="badge">{{ $total['users'] }}</span></a> <a class="touch-back{{ $list == 'admins' ? ' bg-success' : '' }}" href="/users?list=admins">Администрация <span class="badge">{{ $total['admins'] }}</span></a>
+		<a class="touch-back{{ $list == 'all' ? ' bg-success' : '' }}" href="/users">Все <span class="badge">{{ $count['users'] }}</span></a> <a class="touch-back{{ $list == 'admins' ? ' bg-success' : '' }}" href="/users?list=admins">Администрация <span class="badge">{{ $count['admins'] }}</span></a>
 
 		@foreach ($users as $key => $user)
 			<div class="media{{ strtolower($login) == strtolower($user->getLogin()) ? ' bg-success padding' : '' }}">
@@ -18,7 +18,7 @@
 				</div>
 				<div class="media-body">
 
-					{{ ($key + 1) }}. <h4 class="author"><a href="/user/{{ $user->getLogin() }}">{{ $user->getLogin() }}</a></h4>
+					{{ ($key + $page['offset'] + 1) }}. <h4 class="author"><a href="/user/{{ $user->getLogin() }}">{{ $user->getLogin() }}</a></h4>
 					<ul class="list-inline small pull-right">
 						<li class="text-muted">Регистрация: {{ Carbon::parse($user->created_at)->format('d.m.y / H:i') }}</li>
 					</ul>
@@ -30,7 +30,7 @@
 			</div>
 		@endforeach
 
-		{{ App::pagination(Setting::get('users_per_page'), $page, $total['all']) }}
+		{{ App::pagination($page) }}
 
 		<div class="well">
 			<form class="form-inline" method="post">

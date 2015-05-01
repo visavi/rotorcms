@@ -7,110 +7,108 @@
 #              ICQ  :  36-44-66               #
 #            Skype  :  vantuzilla             #
 #---------------------------------------------#
-if ( ! function_exists('env'))
+
+/**
+ * Gets the value of an environment variable. Supports boolean, empty and null.
+ * @param  string  $key
+ * @param  mixed   $default
+ * @return mixed
+ */
+function env($key, $default = null)
 {
-	/**
-	 * Gets the value of an environment variable. Supports boolean, empty and null.
-	 * @param  string  $key
-	 * @param  mixed   $default
-	 * @return mixed
-	 */
-	function env($key, $default = null)
+	$value = getenv($key);
+	if ($value === false) return value($default);
+	switch (strtolower($value))
 	{
-		$value = getenv($key);
-		if ($value === false) return value($default);
-		switch (strtolower($value))
-		{
-			case 'true':
-			case '(true)':
-				return true;
-			case 'false':
-			case '(false)':
-				return false;
-			case 'empty':
-			case '(empty)':
-				return '';
-			case 'null':
-			case '(null)':
-				return;
-		}
-		if (starts_with($value, '"') && str_finish($value, '"'))
-		{
-			return substr($value, 1, -1);
-		}
-		return $value;
+		case 'true':
+		case '(true)':
+			return true;
+		case 'false':
+		case '(false)':
+			return false;
+		case 'empty':
+		case '(empty)':
+			return '';
+		case 'null':
+		case '(null)':
+			return;
 	}
-
-	/**
-	 * Обработка BB-кодов
-	 * @param  string  $text  Необработанный текст
-	 * @param  boolean $parse Обрабатывать или вырезать код
-	 * @return string         Обработанный текст
-	 */
-	function bb_code($text, $parse = true)
+	if (starts_with($value, '"') && str_finish($value, '"'))
 	{
-		static $list_smiles;
+		return substr($value, 1, -1);
+	}
+	return $value;
+}
 
-		$bbcode = new BBCodeParser;
+/**
+ * Обработка BB-кодов
+ * @param  string  $text  Необработанный текст
+ * @param  boolean $parse Обрабатывать или вырезать код
+ * @return string         Обработанный текст
+ */
+function bb_code($text, $parse = true)
+{
+	static $list_smiles;
 
-		if ( ! $parse) return $bbcode->clear($text);
+	$bbcode = new BBCodeParser;
 
-		$text = $bbcode->parse($text);
+	if ( ! $parse) return $bbcode->clear($text);
 
-		if (empty($list_smiles)) {
+	$text = $bbcode->parse($text);
 
-			if (!file_exists(STORAGE.'/temp/smiles.dat')) {
+	if (empty($list_smiles)) {
 
-				$smiles = Smile::all(array('order' => 'LENGTH(code) desc'));
-				$smiles = self::arrayAssoc($smiles, 'code', 'name');
-				file_put_contents(STORAGE.'/temp/smiles.dat', serialize($smiles));
-			}
+		if (!file_exists(STORAGE.'/temp/smiles.dat')) {
 
-			$list_smiles = unserialize(file_get_contents(STORAGE."/temp/smiles.dat"));
+			$smiles = Smile::all(array('order' => 'LENGTH(code) desc'));
+			$smiles = self::arrayAssoc($smiles, 'code', 'name');
+			file_put_contents(STORAGE.'/temp/smiles.dat', serialize($smiles));
 		}
 
-		foreach($list_smiles as $code => $smile) {
-			$text = str_replace($code, '<img src="/assets/img/smiles/'.$smile.'" alt="'.$code.'"> ', $text);
-		}
-
-		return $text;
+		$list_smiles = unserialize(file_get_contents(STORAGE."/temp/smiles.dat"));
 	}
 
-	/**
-	 *  Количество пользователей
-	 * @return integer Количество пользователей
-	 */
-	function count_users()
-	{
-		return User::count();
+	foreach($list_smiles as $code => $smile) {
+		$text = str_replace($code, '<img src="/assets/img/smiles/'.$smile.'" alt="'.$code.'"> ', $text);
 	}
 
-	/**
-	 *  Количество сообщений в гостевой
-	 * @return integer сообщений в гостевой
-	 */
-	function count_guestbook()
-	{
-		return Guestbook::count();
+	return $text;
+}
+
+/**
+ *  Количество пользователей
+ * @return integer Количество пользователей
+ */
+function count_users()
+{
+	return User::count();
+}
+
+/**
+ *  Количество сообщений в гостевой
+ * @return integer сообщений в гостевой
+ */
+function count_guestbook()
+{
+	return Guestbook::count();
+}
+
+/**
+ * Обработчик постраничной навигации
+ * @param  integer $limit элементов на страницу
+ * @param  integer $total всего элементов
+ * @return array          массив подготовленных данных
+ */
+function getPage($limit, $total)
+{
+	$current = Request::input('page');
+	if ($current < 1) $current = 1;
+
+	if ($current * $limit >= $total) {
+		$current = ceil($total / $limit);
 	}
 
-	/**
-	 * Обработчик постраничной навигации
-	 * @param  integer $limit элементов на страницу
-	 * @param  integer $total всего элементов
-	 * @return array          массив подготовленных данных
-	 */
-	function getPage($limit, $total)
-	{
-		$current = Request::input('page');
-		if ($current < 1) $current = 1;
+	$offset = intval(($current * $limit) - $limit);
 
-		if ($current * $limit >= $total) {
-			$current = ceil($total / $limit);
-		}
-
-		$offset = intval(($current * $limit) - $limit);
-
-		return compact('current', 'limit', 'offset', 'total');
-	}
+	return compact('current', 'limit', 'offset', 'total');
 }

@@ -7,7 +7,6 @@ Class UserController Extends BaseController {
 	 */
 	public function index()
 	{
-		$page = Request::input('page', 1);
 		$list = Request::input('list', 'all');
 		$login = Request::input('login');
 
@@ -29,32 +28,26 @@ Class UserController Extends BaseController {
 			}
 		}
 
-		$total['users'] = User::count();
-		$total['admins'] = User::count(['conditions' => ['level in (?)', ['moder', 'admin']]]);
-
-		$total['all'] = $total['users'];
-
-		if ($total['all'] > 0 && ($page * Setting::get('users_per_page')) >= $total['all']) {
-			$page = ceil($total['all'] / Setting::get('users_per_page'));
-		}
-
-		$offset = intval(($page * Setting::get('users_per_page')) - Setting::get('users_per_page'));
+		$count['users'] = $total = User::count();
+		$count['admins'] = User::count(['conditions' => ['level in (?)', ['moder', 'admin']]]);
 
 		$condition = [];
 
 		if ($list == 'admins') {
-			$total['all'] = $total['admins'];
+			$total = $count['admins'];
 			$condition = ['level IN(?)', ['moder', 'admin']];
 		}
 
+		$page = getPage(Setting::get('users_per_page'), $total);
+
 		$users = User::all(array(
 			'conditions' => $condition,
-			'offset' => $offset,
-			'limit' => Setting::get('users_per_page'),
+			'offset' => $page['offset'],
+			'limit' => $page['limit'],
 			'order' => 'point DESC, login ASC',
 		));
 
-		App::view('users.index', compact('users', 'page', 'total', 'list', 'login'));
+		App::view('users.index', compact('users', 'page', 'count', 'list', 'login'));
 	}
 
 	/**
