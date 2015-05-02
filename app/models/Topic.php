@@ -8,36 +8,36 @@ class Topic extends BaseModel {
 	/**
 	 * Связи
 	 */
-	static $has_many = array(
-		array('posts', 'order' => 'created_at'),
-	);
+	static $has_many = [
+		['posts', 'order' => 'created_at'],
+	];
 
-	static $belongs_to = array(
-		array('forum'),
-		array('user'),
-	);
+	static $belongs_to = [
+		['forum'],
+		['user'],
+	];
 
-	static $has_one = array(
-		array('post_count', 'select' => 'count(*) as count, topic_id', 'class' => 'Post'),
-		array('post_last', 'order' => 'created_at DESC', 'class' => 'Post'),
-	);
+	static $has_one = [
+		['post_count', 'select' => 'count(*) as count, topic_id', 'class' => 'Post'],
+		['post_last', 'order' => 'created_at DESC', 'class' => 'Post'],
+	];
 
 	/* Валидаторы */
-	static $validates_size_of = array(
-		array('title', 'minimum' => 5, 'too_short' => 'Слишком короткое название темы, минимум %d симв.'),
-		array('title', 'maximum' => 50, 'too_long' => 'Слишком длинное название темы, максимум %d симв.'),
-		array('note', 'maximum' => 250, 'message' => 'Слишком длиная заметка темы (до %d симв.)'),
-	);
+	static $validates_size_of = [
+		['title', 'minimum' => 5, 'too_short' => 'Слишком короткое название темы, минимум %d симв.'],
+		['title', 'maximum' => 50, 'too_long' => 'Слишком длинное название темы, максимум %d симв.'],
+		['note', 'maximum' => 250, 'message' => 'Слишком длинная заметка темы (до %d симв.)'],
+	];
 
-	static $validates_numericality_of = array(
-		array('forum_id', 'greater_than' => 0, 'only_integer' => true, 'message' => 'Не указан раздел форума'),
-		array('user_id', 'greater_than' => 0, 'only_integer' => true, 'message' => 'Пользователь не авторизован'),
-	);
+	static $validates_numericality_of = [
+		['forum_id', 'greater_than' => 0, 'only_integer' => true, 'message' => 'Не указан раздел форума'],
+		['user_id', 'greater_than' => 0, 'only_integer' => true, 'message' => 'Пользователь не авторизован'],
+	];
 
 	public function validate() {
 
 		//  Проверка токена
-		if ($this->token != $_SESSION['token']) {
+		if ($this->token && $this->token != $_SESSION['token']) {
 			$this->errors->add('token', 'Неверный идентификатор сессии, повторите действие!');
 		}
 
@@ -124,7 +124,9 @@ class Topic extends BaseModel {
 	 * @param  integer  $user_id id пользователя
 	 * @return boolean  имеется ли тема в закладках
 	 */
-	public function is_bookmarked($user_id) {
-		return Bookmark::exists(array('conditions' => array('topic_id = ? AND user_id = ?', $this->id, $user_id)));
+	public function isBookmarked($user_id) {
+		return Bookmark::exists([
+			'conditions' => ['topic_id = ? AND user_id = ?', $this->id, $user_id],
+		]);
 	}
 }

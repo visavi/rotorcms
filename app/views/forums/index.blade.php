@@ -20,7 +20,7 @@
 					<a class="touch-link" href="forum/{{ $forum->id }}">
 						<span class="glyphicon glyphicon-comment"></span>
 						{{ $forum->title }}
-						<span class="badge">{{ $forum->topicCount() }}/{{ $forum->topicLast()->postCount() }}</span>
+						<span class="badge">{{ App::plural($forum->topicCount(), ['темы', 'тема', 'тем']) }}</span>
 					</a>
 				</h4>
 

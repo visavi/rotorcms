@@ -6,19 +6,19 @@ class Forum extends BaseModel {
 	/**
 	 * Связи
 	 */
-	static $has_many = array(
-		array('topics', 'order' => 'locked DESC, created_at DESC'),
-		array('children', 'foreign_key' => 'parent_id', 'order' => 'sort DESC', 'class' => 'Forum'),
-	);
+	static $has_many = [
+		['topics', 'order' => 'locked DESC, created_at DESC'],
+		['children', 'foreign_key' => 'parent_id', 'order' => 'sort DESC', 'class' => 'Forum'],
+	];
 
-	static $belongs_to = array(
-		array('parent', 'foreign_key' => 'parent_id', 'class' => 'Forum'),
-	);
+	static $belongs_to = [
+		['parent', 'foreign_key' => 'parent_id', 'class' => 'Forum'],
+	];
 
-	static $has_one = array(
-		array('topic_last', 'order' => 'created_at', 'class' => 'Topic'),
-		array('topic_count', 'select' => 'count(*) as count, forum_id', 'class' => 'Topic'),
-	);
+	static $has_one = [
+		['topic_last', 'order' => 'created_at', 'class' => 'Topic'],
+		['topic_count', 'select' => 'count(*) as count, forum_id', 'class' => 'Topic'],
+	];
 
 	/**
 	 * Родительский форум

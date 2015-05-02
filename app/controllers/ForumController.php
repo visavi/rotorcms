@@ -37,4 +37,12 @@ Class ForumController Extends BaseController {
 
 		App::view('forums.forum', compact('forum', 'topics', 'page'));
 	}
+
+	/**
+	 * Список сообщений
+	 */
+	public function topic($id)
+	{
+		echo 'topic';
+	}
 }
