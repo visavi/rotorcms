@@ -1,19 +1,21 @@
 @extends('layout')
 
 @section('title', $forum->title.' - @parent')
-@section('breadcrumbs', App::breadcrumbs(['/forum' => 'Форум', $forum->title]))
+@section('breadcrumbs', App::breadcrumbs($crumbs))
 
 @section('content')
-	<h1 class="inline-block">{{ $forum->title }}
 
-	@if (!$forum->closed)
-		 <a class="btn btn-success pull-right" href="/forum/{{ $forum->id }}/create">Создать тему</a>
-	@endif
-</h1>
+	<div class="row">
+		<div class="col-sm-10">
+			<h1>{{ $forum->title }}</h1>
+		</div>
 
-	@if ($forum->parent_id)
-		/ <a href="forum.php?fid=<?= $forum->parent_id ?>"><?= $forum->parent()->title ?></a>
-	@endif
+		<div class="col-sm-2">
+			@if (!$forum->closed)
+				<a class="btn btn-success" href="/forum/{{ $forum->id }}/create">Создать тему</a>
+			@endif
+		</div>
+	</div>
 
 
 <?php /*if ($forum->children && empty($start)): ?>
@@ -45,37 +47,34 @@
 	<?php endforeach; ?>
 <?php endif;*/ ?>
 
-@if ($topics)
-	@foreach ($topics as $topic)
-		<h5 id="topic_{{ $topic->id }}">
+	@if ($topics)
+		@foreach ($topics as $topic)
+			<h5 id="topic_{{ $topic->id }}">
 
-			<a class="touch-link" href="/topic/{{ $topic->id }}">
-				<span class="glyphicon {{ $topic->getIcon() }}"></span>
-				{{ $topic->title }}
-				<span class="badge">{{ $topic->postCount() }}</span>
-			</a>
-		</h5>
-		<div>
-			Страницы: <?php /* forum_navigation('topic.php?tid='.$topic->id.'&amp;', $config['forumpost'], $topic->postCount()) */?>
+				<a class="touch-link" href="/topic/{{ $topic->id }}">
+					<span class="glyphicon {{ $topic->getIcon() }}"></span>
+					{{ $topic->title }}
+					<span class="badge">{{ $topic->postCount() }}</span>
+				</a>
+			</h5>
+			<div>
+				@if ($topic->postLast()->user()->id)
+					Сообщение: {{ $topic->postLast()->user()->getLogin() }} ({{ Carbon::parse($topic->postLast()->created_at)->format('d.m.y / H:i') }})
+				@endif
+			</div>
+		@endforeach
 
-			@if ($topic->postLast()->user()->id)
-				Сообщение: {{ $topic->postLast()->user()->getLogin() }} ({{ Carbon::parse($topic->postLast()->created_at)->format('d.m.y / H:i') }})
-			@endif
+		{{ App::pagination($page) }}
 
-		</div>
-	@endforeach
+	@elseif ($forum->closed)
+		<div class="alert alert-danger">В данном разделе запрещено создавать темы!</div>
+	@else
+		<div class="alert alert-danger">Тем еще нет, будь первым!</div>
+	@endif
 
-	{{ App::pagination($page) }}
-
-@elseif ($forum->closed)
-	<div class="alert alert-danger">В данном разделе запрещено создавать темы!</div>
-@else
-	<div class="alert alert-danger">Тем еще нет, будь первым!</div>
-@endif
-
-<p>
-	<a href="/rules">Правила</a> /
-	<a href="/forum/top?act=themes">Топ тем</a> /
-	<a href="/forum/search">Поиск</a>
-</p>
+	<p>
+		<a href="/rules">Правила</a> /
+		<a href="/forum/top?act=themes">Топ тем</a> /
+		<a href="/forum/search">Поиск</a>
+	</p>
 @stop
