@@ -113,11 +113,11 @@ function getPage($limit, $total)
 	$current = Request::input('page');
 	if ($current < 1) $current = 1;
 
-	if ($current * $limit >= $total) {
+	if ($total && $current * $limit >= $total) {
 		$current = ceil($total / $limit);
 	}
 
 	$offset = intval(($current * $limit) - $limit);
 
-	return compact('current', 'limit', 'offset', 'total');
+	return compact('current', 'offset', 'limit', 'total');
 }

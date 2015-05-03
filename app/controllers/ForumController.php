@@ -26,7 +26,6 @@ Class ForumController Extends BaseController {
 		$total = Topic::count(['conditions' => ['forum_id = ?', $id]]);
 		$page = getPage(Setting::get('topics_per_page'), $total);
 
-
 		$topics = Topic::all([
 			'conditions' => ['forum_id = ?', $id],
 			'offset' => $page['offset'],

@@ -18,9 +18,9 @@
 			<div>
 				<h4>
 					<a class="touch-link" href="forum/{{ $forum->id }}">
-						<span class="glyphicon glyphicon-comment"></span>
+						<i class="fa fa-comment"></i>
 						{{ $forum->title }}
-						<span class="badge">{{ App::plural($forum->topicCount(), ['темы', 'тема', 'тем']) }}</span>
+						<span class="badge">{{ App::plural($forum->topicCount(), ['тема', 'темы', 'тем']) }}</span>
 					</a>
 				</h4>
 
@@ -31,7 +31,7 @@
 			@if ($forum->children)
 				@foreach($forum->children as $subforum)
 					<h5>
-						<span class="glyphicon glyphicon-folder-open"></span>
+						<i class="fa fa-folder-open"></i>
 						<a href="forum/{{ $subforum->id }}">{{ $subforum->title }}</a>
 						<span class="badge">{{ $subforum->topicCount() }}/{{ $subforum->topicLast()->postCount() }}</span>
 					</h5>
@@ -39,9 +39,9 @@
 			@endif
 
 			@if ($forum->topic_last)
-				Тема: <a href="topic.php?act=end&amp;tid={{ $forum->topicLast()->id }}">{{ $forum->topicLast()->title }}</a><br>
+				Тема: <a href="/topic/{{ $forum->topicLast()->id }}">{{ $forum->topicLast()->title }}</a><br>
 				@if ($forum->topicLast()->postLast()->user()->id)
-					Сообщение: {{ $forum->topicLast()->postLast()->user()->getLogin() }} ({{ $forum->topicLast()->postLast()->created_at }})
+					Сообщение: {{ $forum->topicLast()->postLast()->user()->getLogin() }} ({{ Carbon::parse($forum->topicLast()->postLast()->created_at)->format('d.m.y / H:i') }})
 				@endif
 			@else
 				Темы еще не созданы!
@@ -54,5 +54,5 @@
 		<div class="alert alert-danger">Разделы форума еще не созданы!</div>
 	@endif
 
-	<p><a href="/pages/rules.php">Правила</a> / <a href="top.php?act=themes">Топ тем</a> / <a href="search.php">Поиск</a></p>
+	<p><a href="/rules">Правила</a> / <a href="/forum/top?act=themes">Топ тем</a> / <a href="/forum/search">Поиск</a></p>
 @stop
