@@ -27,11 +27,11 @@
 						<ul class="list-inline small pull-right">
 
 						@if (User::check() && User::get('id') != $post->user_id)
-							<li><a href="#" onclick="return postReply('{{ $post->user()->getLogin() }}');" data-toggle="tooltip" title="Ответить"><span class="fa fa-reply text-muted"></span></a></li>
+							<li><a href="#" onclick="return postReply('{{ $post->user()->getLogin() }}')" data-toggle="tooltip" title="Ответить"><span class="fa fa-reply text-muted"></span></a></li>
 
-							<li><a href="#" onclick="return postQuote(this);" data-toggle="tooltip" title="Цитировать"><span class="fa fa-quote-right text-muted"></span></a></li>
+							<li><a href="#" onclick="return postQuote(this)" data-toggle="tooltip" title="Цитировать"><span class="fa fa-quote-right text-muted"></span></a></li>
 
-							<li><a href="#" onclick="return sendComplaint(this, 'guest', {{ $post->id }});" data-token="{{ $_SESSION['token'] }}" rel="nofollow" data-toggle="tooltip" title="Жалоба"><span class="fa fa-bell text-muted"></span></a></li>
+							<li><a href="#" onclick="return sendComplaint(this)" data-type="guest" data-id="{{ $post->id }}" data-token="{{ $_SESSION['token'] }}" rel="nofollow" data-toggle="tooltip" title="Жалоба"><span class="fa fa-bell text-muted"></span></a></li>
 
 						@endif
 

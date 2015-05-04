@@ -47,6 +47,80 @@ Class ForumController Extends BaseController {
 	 */
 	public function topic($id)
 	{
-		echo 'topic';
+		if (!$topic = Topic::find_by_id($id)) App::abort('default', 'Данной темы не существует!');
+
+		if (User::check()) {
+			$bookmark = Bookmark::find_by_topic_id_and_user_id($id, User::get('id'));
+
+			if ($bookmark && $topic->postCount() > $bookmark->posts) {
+
+				$bookmark->posts = $topic->postCount();
+				$bookmark->save();
+			}
+		}
+
+		$total = Post::count(['conditions' => ['topic_id = ?', $id]]);
+		$page = getPage(Setting::get('posts_per_page'), $total);
+
+		$posts = Post::all([
+			'conditions' => ['topic_id = ?', $id],
+			'offset' => $page['offset'],
+			'limit' => $page['limit'],
+			'order' => 'updated_at desc',
+			'include' => ['user'],
+		]);
+
+		$crumbs = ['/forum' => 'Форум', '/forum/'.$topic->forum()->id => $topic->forum()->title, $topic->title];
+		if ($topic->forum()->parent_id) {
+			array_splice($crumbs, 1, 0, ['/forum/'.$topic->forum()->parent_id => $topic->forum()->parent()->title]);
+		}
+
+		App::view('forums.topic', compact('topic', 'posts', 'page', 'crumbs'));
+	}
+
+	/**
+	 * Добавление сообщения
+	 */
+	public function create($id)
+	{
+		//if (!$topic = Topic::find_by_id($id)) App::abort('default', 'Данной темы не существует!');
+		var_dump($id);
+	}
+
+	/**
+	 * Добавление в закладки
+	 */
+	public function bookmark()
+	{
+		if (!Request::ajax()) App::redirect('/');
+
+		$token = Request::input('token', true);
+		$topic_id = Request::input('id');
+
+		if (User::check() && $token == $_SESSION['token']) {
+
+			/* Проверка темы на существование */
+			if ($topic = Topic::find_by_id($topic_id)) {
+
+				/* Добавление темы в закладки */
+				if ($bookmark = Bookmark::find_by_topic_id_and_user_id($topic_id, User::get('id'))) {
+
+					if ($bookmark->delete())
+						exit(json_encode(array('status' => 'deleted')));
+
+				} else {
+					$bookmark = new Bookmark;
+					$bookmark->topic_id = $topic->id;
+					$bookmark->forum_id = $topic->forum_id;
+					$bookmark->user_id = User::get('id');
+					$bookmark->posts = $topic->postCount();
+
+					if ($bookmark->save())
+						exit(json_encode(array('status' => 'added')));
+				}
+			}
+		}
+
+		exit(json_encode(['status' => 'error']));
 	}
 }

@@ -462,8 +462,8 @@ CREATE TABLE IF NOT EXISTS `visit` (
 
 CREATE TABLE IF NOT EXISTS `spam` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `section` enum('guest', 'forum') NOT NULL,
-  `post_id` int(11) unsigned NOT NULL,
+  `relate_type` enum('guest', 'forum') NOT NULL,
+  `relate_id` int(11) unsigned NOT NULL,
   `user_id` int(11) unsigned NOT NULL,
   `created_at` timestamp NOT NULL,
   PRIMARY KEY (`id`),

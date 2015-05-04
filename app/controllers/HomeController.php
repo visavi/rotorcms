@@ -35,17 +35,17 @@ Class HomeController Extends BaseController {
 		if (!Request::ajax()) App::redirect('/');
 
 		$token = Request::input('token', true);
-		$section = Request::input('section');
-		$post_id = Request::input('post_id');
+		$relate_type = Request::input('type');
+		$relate_id = Request::input('id');
 
 		if (User::check() && $token == $_SESSION['token']) {
 
-			$spam = Spam::first(['conditions' => ['section = ? AND post_id = ?', $section, $post_id]]);
+			$spam = Spam::first(['conditions' => ['relate_type = ? AND relate_id = ?', $relate_type, $relate_id]]);
 
 			if (!$spam) {
 				$spam = new Spam;
-				$spam->section = $section;
-				$spam->post_id = $post_id;
+				$spam->relate_type = $relate_type;
+				$spam->relate_id = $relate_id;
 				$spam->user_id = User::get('id');
 				if ($spam->save())
 					exit(json_encode(['status' => 'added']));

@@ -51,11 +51,11 @@ function revealPassword(el) {
 }
 
 /* Добавление темы в закладки */
-function changeBookmark(el, topic) {
+function changeBookmark(el) {
 
 	$.ajax({
-		dataType: "JSON", type: "GET", url: "/ajax/bookmark.php",
-		data: {topic: topic, token: $(el).data('token')},
+		dataType: "JSON", type: "POST", url: "/topic/bookmark",
+		data: {id: $(el).data('id'), token: $(el).data('token')},
 		success: function(data) {
 
 			if (data.status == 'error'){
@@ -79,13 +79,13 @@ function changeBookmark(el, topic) {
 }
 
 /* Отправка жалобы на спам */
-function sendComplaint(el, section, post_id) {
+function sendComplaint(el) {
 
 	if (!confirm('Вы действительно хотите отправить жалобу?')) return false;
 
 	$.ajax({
 		dataType: "JSON", type: "POST", url: "/complaint",
-		data: {post_id: post_id, section: section, token: $(el).data('token')},
+		data: {id: $(el).data('id'), type: $(el).data('type'), token: $(el).data('token')},
 		success: function(data) {
 			if (data.status == 'error'){
 				$.notify("Ошибка отправки жалобы!", "error");

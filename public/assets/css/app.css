@@ -42,6 +42,10 @@
   background-color: #eee;
 }
 
+textarea {
+  resize: vertical;
+}
+
 .padding {
   padding: 10px;
 }

@@ -20,8 +20,7 @@ if (App::router('target') && is_callable(App::router('target'))) {
 	$target = explode('@', App::router('target'));
 	$action = isset($target[1]) ? $target[1] : $params['action'];
 
-	$controller = new $target[0];
-	$controller->$action($params);
+	call_user_func_array([new $target[0], $action], $params);
 
 } else {
 	App::abort(404);
