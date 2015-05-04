@@ -79,12 +79,37 @@ Class ForumController Extends BaseController {
 	}
 
 	/**
-	 * Добавление сообщения
+	 * Создание темы
 	 */
-	public function create($id)
+	public function createTopic($id)
 	{
-		//if (!$topic = Topic::find_by_id($id)) App::abort('default', 'Данной темы не существует!');
 		var_dump($id);
+	}
+
+	/**
+	 * Создание сообщения
+	 */
+	public function createPost($id)
+	{
+		if (!$topic = Topic::find_by_id($id)) App::abort('default', 'Данной темы не существует!');
+
+		$post = new Post;
+		$post->token = Request::input('token', true);
+		$post->forum_id = $topic->forum()->id;
+		$post->topic_id = $topic->id;
+		$post->user_id = User::get('id');
+		$post->text = Request::input('text');
+		//$post->ip = $ip;
+		//$post->brow = $brow;
+
+		if ($post->save()) {
+			App::setFlash('success', 'Сообщение успешно добавлено!');
+		} else {
+			App::setFlash('danger', $post->getErrors());
+			App::setInput($_POST);
+		}
+
+		App::redirect('/topic/'.$id);
 	}
 
 	/**

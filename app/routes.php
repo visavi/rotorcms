@@ -25,8 +25,8 @@ $router->map('GET', '/forum', 'ForumController@index', 'forum');
 $router->map('GET', '/forum/[i:id]', 'ForumController@forum');
 $router->map('GET', '/topic/[i:id]', 'ForumController@topic');
 $router->map('POST', '/topic/bookmark', 'ForumController@bookmark');
-$router->map('POST', '/[forum|topic:type]/[i:id]/create', 'ForumController@create');
-
+$router->map('POST', '/topic/[i:id]/create', 'ForumController@createPost');
+$router->map('POST', '/forum/[i:id]/create', 'ForumController@createTopic');
 
 $router->map('GET', '/news', 'news/index', 'news');
 $router->map('GET', '/news/page/[i:page]', 'news/index');
