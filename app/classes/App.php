@@ -362,6 +362,18 @@ class App
 		return $array_prepare;
 	}
 
+	/**
+	 * Определение браузера
+	 * @return string браузер и версия браузера
+	 */
+	public static function getUserAgent()
+	{
+		$browser = new Browser();
+		$brow = $browser->getBrowser();
+		$version = implode('.', array_slice(explode('.', $browser->getVersion()), 0, 2));
+
+		return $version == 'unknown' ? $brow : $brow.' '.$version;
+	}
 
 	/**
 	 * Собирает из коллекции составной массив ключ->значение

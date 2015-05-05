@@ -30,6 +30,7 @@ Class GuestbookController Extends BaseController {
 		$guest->captcha = Request::input('captcha');
 		$guest->user_id = User::get('id');
 		$guest->text = Request::input('text');
+		$guest->brow = App::getUserAgent();
 
 		if ($guest->save()) {
 

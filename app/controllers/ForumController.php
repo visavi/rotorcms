@@ -66,7 +66,7 @@ Class ForumController Extends BaseController {
 			'conditions' => ['topic_id = ?', $id],
 			'offset' => $page['offset'],
 			'limit' => $page['limit'],
-			'order' => 'updated_at desc',
+			'order' => 'created_at',
 			'include' => ['user'],
 		]);
 
@@ -83,7 +83,9 @@ Class ForumController Extends BaseController {
 	 */
 	public function createTopic($id)
 	{
-		var_dump($id);
+		$forums = Forum::getAll();
+
+		App::view('forums.new', compact('id', 'forums'));
 	}
 
 	/**
@@ -99,8 +101,8 @@ Class ForumController Extends BaseController {
 		$post->topic_id = $topic->id;
 		$post->user_id = User::get('id');
 		$post->text = Request::input('text');
+		$post->brow = App::getUserAgent();
 		//$post->ip = $ip;
-		//$post->brow = $brow;
 
 		if ($post->save()) {
 			App::setFlash('success', 'Сообщение успешно добавлено!');

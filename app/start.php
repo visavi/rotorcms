@@ -21,7 +21,7 @@ session_start();
  */
 include_once BASEDIR.'/vendor/autoload.php';
 
-$loader = new \Composer\Autoload\ClassLoader();
+$loader = new Composer\Autoload\ClassLoader();
 $loader->add('', APP.'/classes');
 $loader->add('', APP.'/controllers');
 $loader->register();
@@ -33,8 +33,8 @@ Dotenv::load(BASEDIR);
 Patchwork\Utf8\Bootup::initAll();
 
 if (env('APP_DEBUG')) {
-	$whoops = new \Whoops\Run;
-	$whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
+	$whoops = new Whoops\Run;
+	$whoops->pushHandler(new Whoops\Handler\PrettyPageHandler);
 	$whoops->register();
 }
 

@@ -51,4 +51,13 @@ class Forum extends BaseModel {
 	public function topicCount() {
 		return $this->topic_count ? $this->topic_count->count : 0;
 	}
+
+	/**
+	 * Список всех раздело
+	 * @return array ассоциативный массив регионов
+	 */
+	public static function getAll()
+	{
+		return App::arrayAssoc(self::all(), 'id', 'title');
+	}
 }
