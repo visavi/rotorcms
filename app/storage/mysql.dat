@@ -1,0 +1,35 @@
+[info] SHOW COLUMNS FROM `users` [мая 05 16:56:09]
+[info] SELECT * FROM `users` WHERE `id`=? LIMIT 0,1 [мая 05 16:56:09]
+[info] array (
+  0 => 1,
+) [мая 05 16:56:09]
+[info] SHOW COLUMNS FROM `forums` [мая 05 16:56:09]
+[info] SELECT * FROM `forums` WHERE parent_id = ? ORDER BY sort [мая 05 16:56:09]
+[info] array (
+  0 => 0,
+) [мая 05 16:56:09]
+[info] SELECT * FROM `forums` WHERE `parent_id` IN(?) ORDER BY sort DESC [мая 05 16:56:09]
+[info] array (
+  0 => 1,
+) [мая 05 16:56:09]
+[info] SHOW COLUMNS FROM `topics` [мая 05 16:56:09]
+[info] SELECT * FROM `topics` WHERE `forum_id` IN(?) ORDER BY created_at [мая 05 16:56:09]
+[info] array (
+  0 => 1,
+) [мая 05 16:56:09]
+[info] SELECT count(*) as count, forum_id FROM `topics` WHERE `forum_id` IN(?) [мая 05 16:56:09]
+[info] array (
+  0 => 1,
+) [мая 05 16:56:09]
+[info] SHOW COLUMNS FROM `posts` [мая 05 16:56:09]
+[info] SELECT * FROM `posts` WHERE `topic_id`=? ORDER BY created_at DESC LIMIT 0,1 [мая 05 16:56:09]
+[info] array (
+  0 => 1,
+) [мая 05 16:56:09]
+[info] SHOW COLUMNS FROM `users` [мая 05 16:56:09]
+[info] SELECT * FROM `users` WHERE `id`=? LIMIT 0,1 [мая 05 16:56:09]
+[info] array (
+  0 => 1,
+) [мая 05 16:56:09]
+[info] SHOW COLUMNS FROM `setting` [мая 05 16:56:09]
+[info] SELECT * FROM `setting` [мая 05 16:56:09]

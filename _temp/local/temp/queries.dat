@@ -1,0 +1,7 @@
+{SHOW COLUMNS FROM `setting` Mar 12 13:08:01 [info]}
+{SELECT * FROM `setting` Mar 12 13:08:01 [info]}
+{SHOW COLUMNS FROM `users` Mar 12 13:08:01 [info]}
+{SELECT * FROM `users` WHERE `id` IN(?) LIMIT 0,1 Mar 12 13:08:01 [info]}
+{array (
+  0 => 1,
+) Mar 12 13:08:01 [info]}

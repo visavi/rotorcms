@@ -11,7 +11,7 @@ define('STARTTIME', microtime(1));
 define('BASEDIR', dirname(__DIR__));
 define('APP', BASEDIR.'/app');
 define('HOME', BASEDIR.'/public');
-define('STORAGE', BASEDIR.'/storage');
+define('STORAGE', APP.'/storage');
 define('PCLZIP_TEMPORARY_DIR', STORAGE.'/temp/');
 
 session_start();
