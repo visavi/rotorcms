@@ -13,25 +13,27 @@
 	],
 	"require": {
 		"php": ">=5.4.0",
+		"philo/laravel-blade": "~3.0",
 		"altorouter/altorouter": "1.1.0",
 		"php-activerecord/php-activerecord": "dev-1.1-dev",
-		"cbschuld/browser.php": "dev-master",
-		"pclzip/pclzip": "dev-master",
 		"mobiledetect/mobiledetectlib": "dev-master",
+		"pclzip/pclzip": "dev-master",
 		"olamedia/nokogiri": "dev-master",
-		"philo/laravel-blade": "~3.0",
-		"pear/log": "dev-topics/composer-for-pear",
 		"ircmaxell/password-compat": "dev-master",
 		"gregwar/captcha": "dev-master",
 		"swiftmailer/swiftmailer": "~5.4",
 		"abeautifulsite/simpleimage": "~2.5",
 		"nesbot/carbon": "~1.14",
-		"filp/whoops": "~1.1",
 		"patchwork/utf8": "~1.2",
 		"illuminate/http": "~5.0",
 		"php-curl-class/php-curl-class": "~3.5",
 		"robmorgan/phinx": "0.4.*",
 		"vlucas/phpdotenv": "~1.1"
+	},
+	"require-dev": {
+		"filp/whoops": "~1.1",
+		"pear/log": "dev-topics/composer-for-pear",
+		"phpunit/phpunit": "~4.0"
 	},
 	"scripts": {
 		"post-create-project-cmd": [

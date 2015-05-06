@@ -19,7 +19,7 @@
 	@endif
 
 	@if ($topic->note)
-		<div class="bg-warning">{!! bb_code(e($topic->note)) !!}</div>
+		<div class="bg-warning">{!! App::bbCode(e($topic->note)) !!}</div>
 	@endif
 
 
@@ -60,7 +60,7 @@
 						</ul>
 					</div>
 
-					<div class="message">{!! bb_code(e($post->text)) !!}</div>
+					<div class="message">{!! App::bbCode(e($post->text)) !!}</div>
 
 					@if (!empty($post->edit_user_id))
 						<div class="small text-muted"><span class="glyphicon glyphicon-pencil"></span> Отредактировано: <?= $post->user()->login ?> (<?= $post->updated_at ?>)</div>

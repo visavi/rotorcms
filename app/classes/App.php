@@ -144,6 +144,26 @@ class App
 	}
 
 	/**
+	 * Обработчик постраничной навигации
+	 * @param  integer $limit элементов на страницу
+	 * @param  integer $total всего элементов
+	 * @return array          массив подготовленных данных
+	 */
+	public static function paginate($limit, $total)
+	{
+		$current = Request::input('page');
+		if ($current < 1) $current = 1;
+
+		if ($total && $current * $limit >= $total) {
+			$current = ceil($total / $limit);
+		}
+
+		$offset = intval(($current * $limit) - $limit);
+
+		return compact('current', 'offset', 'limit', 'total');
+	}
+
+	/**
 	 * Навигация
 	 * @param  array   $crumbs массив ссылок
 	 * @param  boolean $return возвращать или выводить
@@ -308,7 +328,7 @@ class App
 		if (!file_exists($filename)) return 0;
 
 		$bytes = filesize($filename);
-		$size = array('B','kB','MB','GB','TB','PB','EB','ZB','YB');
+		$size = array('B','kB','MB','GB','TB');
 		$factor = floor((strlen($bytes) - 1) / 3);
 		return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)) . @$size[$factor];
 	}
@@ -316,7 +336,7 @@ class App
 	/**
 	 * Склонение чисел
 	 * @param  integer $num  число
-	 * @param  array   $forms массив склоняемых слов
+	 * @param  array   $forms массив склоняемых слов (один, два, много)
 	 * @return string  форматированная строка
 	 */
 	public static function plural($num, $forms)
@@ -340,6 +360,40 @@ class App
 	}
 
 	/**
+	 * Обработка BB-кодов
+	 * @param  string  $text  Необработанный текст
+	 * @param  boolean $parse Обрабатывать или вырезать код
+	 * @return string         Обработанный текст
+	 */
+	public static function bbCode($text, $parse = true)
+	{
+		static $list_smiles;
+
+		$bbcode = new BBCodeParser;
+
+		if ( ! $parse) return $bbcode->clear($text);
+
+		$text = $bbcode->parse($text);
+
+		if (empty($list_smiles)) {
+
+			if (!file_exists(STORAGE.'/temp/smiles.dat')) {
+				$smiles = Smile::all(array('order' => 'LENGTH(code) desc'));
+				$smiles = self::arrayAssoc($smiles, 'code', 'name');
+				file_put_contents(STORAGE.'/temp/smiles.dat', serialize($smiles));
+			}
+
+			$list_smiles = unserialize(file_get_contents(STORAGE."/temp/smiles.dat"));
+		}
+
+		foreach($list_smiles as $code => $smile) {
+			$text = str_replace($code, '<img src="/assets/img/smiles/'.$smile.'" alt="'.$code.'"> ', $text);
+		}
+
+		return $text;
+	}
+
+	/**
 	 * Метод обработки массивов
 	 * @param  array $array необработанный массив
 	 * @return array обработанный массив
@@ -360,19 +414,6 @@ class App
 			}
 		}
 		return $array_prepare;
-	}
-
-	/**
-	 * Определение браузера
-	 * @return string браузер и версия браузера
-	 */
-	public static function getUserAgent()
-	{
-		$browser = new Browser();
-		$brow = $browser->getBrowser();
-		$version = implode('.', array_slice(explode('.', $browser->getVersion()), 0, 2));
-
-		return $version == 'unknown' ? $brow : $brow.' '.$version;
 	}
 
 	/**

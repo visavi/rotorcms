@@ -41,41 +41,6 @@ function env($key, $default = null)
 }
 
 /**
- * Обработка BB-кодов
- * @param  string  $text  Необработанный текст
- * @param  boolean $parse Обрабатывать или вырезать код
- * @return string         Обработанный текст
- */
-function bb_code($text, $parse = true)
-{
-	static $list_smiles;
-
-	$bbcode = new BBCodeParser;
-
-	if ( ! $parse) return $bbcode->clear($text);
-
-	$text = $bbcode->parse($text);
-
-	if (empty($list_smiles)) {
-
-		if (!file_exists(STORAGE.'/temp/smiles.dat')) {
-
-			$smiles = Smile::all(array('order' => 'LENGTH(code) desc'));
-			$smiles = self::arrayAssoc($smiles, 'code', 'name');
-			file_put_contents(STORAGE.'/temp/smiles.dat', serialize($smiles));
-		}
-
-		$list_smiles = unserialize(file_get_contents(STORAGE."/temp/smiles.dat"));
-	}
-
-	foreach($list_smiles as $code => $smile) {
-		$text = str_replace($code, '<img src="/assets/img/smiles/'.$smile.'" alt="'.$code.'"> ', $text);
-	}
-
-	return $text;
-}
-
-/**
  *  Количество пользователей
  * @return integer Количество пользователей
  */
@@ -100,24 +65,4 @@ function count_guestbook()
 function count_forum()
 {
 	return Topic::count().'/'.Post::count();
-}
-
-/**
- * Обработчик постраничной навигации
- * @param  integer $limit элементов на страницу
- * @param  integer $total всего элементов
- * @return array          массив подготовленных данных
- */
-function getPage($limit, $total)
-{
-	$current = Request::input('page');
-	if ($current < 1) $current = 1;
-
-	if ($total && $current * $limit >= $total) {
-		$current = ceil($total / $limit);
-	}
-
-	$offset = intval(($current * $limit) - $limit);
-
-	return compact('current', 'offset', 'limit', 'total');
 }

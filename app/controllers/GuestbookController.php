@@ -8,7 +8,7 @@ Class GuestbookController Extends BaseController {
 	public function index()
 	{
 		$total = Guestbook::count();
-		$page = getPage(Setting::get('guestbook_per_page'), $total);
+		$page = App::paginate(Setting::get('guestbook_per_page'), $total);
 
 		$posts = Guestbook::all([
 			'offset' => $page['offset'],
@@ -30,7 +30,6 @@ Class GuestbookController Extends BaseController {
 		$guest->captcha = Request::input('captcha');
 		$guest->user_id = User::get('id');
 		$guest->text = Request::input('text');
-		$guest->brow = App::getUserAgent();
 
 		if ($guest->save()) {
 

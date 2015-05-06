@@ -24,7 +24,7 @@ Class ForumController Extends BaseController {
 		if (!$forum = Forum::find_by_id($id)) App::abort('default', 'Данного раздела не существует!');
 
 		$total = Topic::count(['conditions' => ['forum_id = ?', $id]]);
-		$page = getPage(Setting::get('topics_per_page'), $total);
+		$page = App::paginate(Setting::get('topics_per_page'), $total);
 
 		$topics = Topic::all([
 			'conditions' => ['forum_id = ?', $id],
@@ -60,7 +60,7 @@ Class ForumController Extends BaseController {
 		}
 
 		$total = Post::count(['conditions' => ['topic_id = ?', $id]]);
-		$page = getPage(Setting::get('posts_per_page'), $total);
+		$page = App::paginate(Setting::get('posts_per_page'), $total);
 
 		$posts = Post::all([
 			'conditions' => ['topic_id = ?', $id],
@@ -101,8 +101,6 @@ Class ForumController Extends BaseController {
 		$post->topic_id = $topic->id;
 		$post->user_id = User::get('id');
 		$post->text = Request::input('text');
-		$post->brow = App::getUserAgent();
-		//$post->ip = $ip;
 
 		if ($post->save()) {
 			App::setFlash('success', 'Сообщение успешно добавлено!');

@@ -38,7 +38,7 @@ Class UserController Extends BaseController {
 			$condition = ['level IN(?)', ['moder', 'admin']];
 		}
 
-		$page = getPage(Setting::get('users_per_page'), $total);
+		$page = App::paginate(Setting::get('users_per_page'), $total);
 
 		$users = User::all(array(
 			'conditions' => $condition,
