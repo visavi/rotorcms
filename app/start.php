@@ -29,7 +29,7 @@ $loader->register();
 include_once APP.'/routes.php';
 include_once APP.'/helpers.php';
 
-Dotenv::load(BASEDIR);
+Dotenv::load(BASEDIR, '.env.example');
 Patchwork\Utf8\Bootup::initAll();
 
 if (env('APP_DEBUG')) {
