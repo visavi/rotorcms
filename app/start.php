@@ -29,15 +29,6 @@ $loader->register();
 include_once APP.'/routes.php';
 include_once APP.'/helpers.php';
 
-Dotenv::load(BASEDIR, '.env.example');
-Patchwork\Utf8\Bootup::initAll();
-
-if (env('APP_DEBUG')) {
-	$whoops = new Whoops\Run;
-	$whoops->pushHandler(new Whoops\Handler\PrettyPageHandler);
-	$whoops->register();
-}
-
 /**
  * Регистрация классов
  */
@@ -49,7 +40,15 @@ $aliases = [
 	'Curl'        => 'Curl\Curl',
 ];
 
+if (!env('APP_ENV')) Dotenv::load(BASEDIR);
+Patchwork\Utf8\Bootup::initAll();
 AliasLoader::getInstance($aliases)->register();
+
+if (env('APP_DEBUG')) {
+	$whoops = new Whoops\Run;
+	$whoops->pushHandler(new Whoops\Handler\PrettyPageHandler);
+	$whoops->register();
+}
 
 /**
  * ActiveRecord initialize
