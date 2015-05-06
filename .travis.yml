@@ -13,7 +13,7 @@ matrix:
 
 before_script:
   - travis_retry composer install --no-interaction --prefer-source
+  - mysql -e 'create database test;'
 
 script:
   - vendor/bin/phpunit
-  - mysql -e 'create database test;'
