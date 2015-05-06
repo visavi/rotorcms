@@ -14,9 +14,6 @@ matrix:
 before_script:
   - travis_retry composer install --no-interaction --prefer-source
 
-
 script:
   - vendor/bin/phpunit
   - mysql -e 'create database test;'
-
-env: APP_ENV=test DB_HOST=127.0.0.1 DB_DATABASE=test DB_USERNAME=root DB_PASSWORD=
