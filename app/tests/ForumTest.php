@@ -11,7 +11,7 @@ class ForumTest extends PHPUnit_Framework_TestCase
 		{
 			$tables = file_get_contents(APP.'/database/migration/tables/tables.sql');
 
-			foreach (explode(';', $tables as $sql)
+			foreach (explode(';', $tables) as $sql)
 			{
 				if (trim($sql) != '')
 					$this->db->query($sql);
