@@ -17,6 +17,11 @@ before_script:
 
 script:
   - vendor/bin/phpunit
+  - mysql -e 'create database rotorcms_test;'
 
 env:
   - APP_ENV=test
+  - DB_HOST=127.0.0.1
+  - DB_DATABASE=rotorcms_test
+  - DB_USERNAME=root
+  - DB_PASSWORD=
