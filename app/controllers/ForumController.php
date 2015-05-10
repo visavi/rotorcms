@@ -101,6 +101,8 @@ Class ForumController Extends BaseController {
 		$post->topic_id = $topic->id;
 		$post->user_id = User::get('id');
 		$post->text = Request::input('text');
+		$post->ip = App::getClientIp();
+		$post->brow = App::getUserAgent();
 
 		if ($post->save()) {
 			App::setFlash('success', 'Сообщение успешно добавлено!');

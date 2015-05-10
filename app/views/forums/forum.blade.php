@@ -59,7 +59,8 @@
 			</h5>
 			<div>
 				@if ($topic->postLast()->user()->id)
-					Сообщение: {{ $topic->postLast()->user()->getLogin() }} ({{ Carbon::parse($topic->postLast()->created_at)->format('d.m.y / H:i') }})
+					{{ App::forumPagination($topic) }}
+					<div>Сообщение: {{ $topic->postLast()->user()->getLogin() }} ({{ Carbon::parse($topic->postLast()->created_at)->format('d.m.y / H:i') }})</div>
 				@endif
 			</div>
 		@endforeach

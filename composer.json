@@ -17,6 +17,7 @@
 		"altorouter/altorouter": "1.1.0",
 		"php-activerecord/php-activerecord": "dev-1.1-dev",
 		"mobiledetect/mobiledetectlib": "dev-master",
+		"cbschuld/browser.php": "dev-master",
 		"pclzip/pclzip": "dev-master",
 		"olamedia/nokogiri": "dev-master",
 		"ircmaxell/password-compat": "dev-master",

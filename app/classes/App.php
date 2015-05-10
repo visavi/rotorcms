@@ -143,6 +143,46 @@ class App
 		}
 	}
 
+	// ----------------------- Вывод страниц в форуме ------------------------//
+	public static function forumPagination($topic) {
+
+		if ($topic->postCount()) {
+
+			$pages = [];
+			$link = '/topic/'.$topic->id;
+
+			$pg_cnt = ceil($topic->postCount() / Setting::get('posts_per_page'));
+
+			for ($i = 1; $i <= 5; $i++) {
+				if ($i <= $pg_cnt) {
+					$pages[] = [
+						'page' => $i,
+						'title' => $i.' страница',
+						'name' => $i,
+					];
+				}
+			}
+
+			if (5 < $pg_cnt) {
+
+				if (6 < $pg_cnt) {
+					$pages[] = array(
+						'separator' => true,
+						'name' => ' ... ',
+					);
+				}
+
+				$pages[] = array(
+					'page' => $pg_cnt,
+					'title' => $pg_cnt.' страница',
+					'name' => $pg_cnt,
+				);
+			}
+
+			self::view('forums._pagination', compact('pages', 'link'));
+		}
+	}
+
 	/**
 	 * Обработчик постраничной навигации
 	 * @param  integer $limit элементов на страницу
@@ -391,6 +431,31 @@ class App
 		}
 
 		return $text;
+	}
+
+	/**
+	 * Определение браузера
+	 * @return string браузер и версия браузера
+	 */
+	public static function getUserAgent()
+	{
+		$browser = new Browser();
+		$brow = $browser->getBrowser();
+		$version = implode('.', array_slice(explode('.', $browser->getVersion()), 0, 2));
+		return $version == 'unknown' ? $brow : $brow.' '.$version;
+	}
+
+	/**
+	 * Определение IP пользователя
+	 * @return string IP пользователя
+	 */
+	public static function getClientIp()
+	{
+		$ip = Request::ip();
+
+		if ($ip == '::1') $ip = '127.0.0.1';
+
+		return $ip;
 	}
 
 	/**
