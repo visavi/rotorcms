@@ -12,7 +12,7 @@
 
 		<div class="col-sm-2">
 			@if (!$forum->closed)
-				<a class="btn btn-success" href="/forum/{{ $forum->id }}/create">Создать тему</a>
+				<a class="btn btn-success" href="/forum/create?forum={{ $forum->id }}">Создать тему</a>
 			@endif
 		</div>
 	</div>

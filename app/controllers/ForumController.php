@@ -81,11 +81,43 @@ Class ForumController Extends BaseController {
 	/**
 	 * Создание темы
 	 */
-	public function createTopic($id)
+	public function createTopic()
 	{
+		if (Request::isMethod('post')) {
+
+			$connection = Topic::connection();
+			$connection->transaction();
+
+			$topic = new Topic;
+			$topic->token = Request::input('token', true);
+			$topic->forum_id = Request::input('forum_id');
+			$topic->title = Request::input('title');
+			$topic->user_id = User::get('id');
+			$topic->save();
+
+			$post = new Post;
+			$post->token = Request::input('token', true);
+			$post->forum_id = Request::input('forum_id');
+			$post->topic_id = $topic->id;
+			$post->user_id = User::get('id');
+			$post->text = Request::input('text');
+			$post->ip = App::getClientIp();
+			$post->brow = App::getUserAgent();
+
+			if ($post->save()) {
+				$connection->commit();
+				App::setFlash('success', 'Тема успешно создана!');
+				App::redirect('/topic/'.$topic->id);
+			} else {
+				$connection->rollback();
+				App::setFlash('danger', $post->getErrors());
+				App::setInput($_POST);
+			}
+		}
+
 		$forums = Forum::getAll();
 
-		App::view('forums.new', compact('id', 'forums'));
+		App::view('forums.create', compact('forums'));
 	}
 
 	/**

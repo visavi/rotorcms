@@ -16,7 +16,7 @@
 					<label for="inputForumId">Форум</label>
 					<select class="form-control" id="inputForumId" name="forum_id">
 						@foreach ($forums as $key => $forum)
-							<?php $selected = ($key ==  App::getInput('forum_id')) ? ' selected' : ''; ?>
+							<?php $selected = ($key ==  App::getInput('forum_id', Request::input('forum'))) ? ' selected' : ''; ?>
 							<option value="{{ $key }}"{{ $selected }}>{{ $forum }}</option>
 						@endforeach
 					</select>
