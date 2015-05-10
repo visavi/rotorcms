@@ -1,5 +1,4 @@
 /vendor
-/app/storage
 /public/uploads
 .env
 .DS_Store
