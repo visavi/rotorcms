@@ -1,0 +1,25 @@
+#!/usr/bin/env php
+<?php
+
+require __DIR__ . '/app/bootstrap.php';
+
+$config = [
+	'paths' => [
+		'migrations' => 'app/migrations',
+	],
+	'environments' => [
+		'default_migration_table' => 'migrations',
+		'default_database' => 'default',
+		'default' => [
+			'adapter' => 'mysql',
+			'host' => $_ENV['DB_HOST'],
+			'name' => $_ENV['DB_DATABASE'],
+			'user' => $_ENV['DB_USERNAME'],
+			'pass' => $_ENV['DB_PASSWORD'],
+		]
+	]
+];
+
+$PHINX_DBHOST = '127.0.0.1';
+$app = require __DIR__ . '/vendor/robmorgan/phinx/app/phinx.php';
+$app->run();

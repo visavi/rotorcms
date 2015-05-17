@@ -8,8 +8,8 @@ php:
   - hhvm
 
 matrix:
-    allow_failures:
-        - php: 7.0
+  allow_failures:
+    - php: 7.0
 
 before_script:
   - travis_retry composer install --no-interaction --prefer-source
