@@ -79,6 +79,30 @@ Class ForumController Extends BaseController {
 	}
 
 	/**
+	 * Редактирование сообщения
+	 */
+	public function editPost($id)
+	{
+		if (!$post = Post::find_by_id_and_user_id($id, User::get('id'))) App::abort('default', 'Сообщение не найдено');
+
+		if ($post->created_at < Carbon::now()->subMinutes(10)) {
+			App::abort('default', 'Редактирование невозможно, прошло более 10 мин.');
+		}
+
+		if (Request::isMethod('post')) {
+
+			if ($post->save()) {
+				App::setFlash('success', 'Сообщение успешно изменено!');
+			} else {
+				App::setFlash('danger', $post->getErrors());
+				App::setInput($_POST);
+			}
+		}
+
+		App::view('forums.edit_post', compact('post'));
+	}
+
+	/**
 	 * Создание темы
 	 */
 	public function createTopic()
@@ -143,7 +167,10 @@ Class ForumController Extends BaseController {
 			App::setInput($_POST);
 		}
 
-		App::redirect('/topic/'.$id);
+		/* Последняя страница в теме */
+		$page = ceil($topic->postCount() / Setting::get('posts_per_page'));
+
+		App::redirect('/topic/'.$id.'?page='.$page);
 	}
 
 	/**

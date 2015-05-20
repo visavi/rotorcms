@@ -48,7 +48,7 @@
 						@endif
 
 						@if (User::check() && User::get('id') == $post->user_id && $post->created_at > Carbon::now()->subMinutes(10))
-							<li><a href="index.php?act=edit&amp;id={{ $post->id }}" data-toggle="tooltip" title="Редактировать"><span class="fa fa-pencil text-muted"></span></a></li>
+							<li><a href="/post/{{ $post->id }}/edit" data-toggle="tooltip" title="Редактировать"><span class="fa fa-pencil text-muted"></span></a></li>
 						@endif
 
 						<?php if (!empty($topics['is_moder'])): /* ?>

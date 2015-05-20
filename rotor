@@ -1,7 +1,7 @@
 #!/usr/bin/env php
 <?php
 
-require __DIR__ . '/app/bootstrap.php';
+require __DIR__.'/app/bootstrap.php';
 
 $config = [
 	'paths' => [
@@ -21,5 +21,5 @@ $config = [
 ];
 
 $PHINX_DBHOST = '127.0.0.1';
-$app = require __DIR__ . '/vendor/robmorgan/phinx/app/phinx.php';
+$app = require __DIR__.'/vendor/robmorgan/phinx/app/phinx.php';
 $app->run();
