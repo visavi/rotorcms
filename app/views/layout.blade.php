@@ -80,7 +80,7 @@
 						</li>
 
 					@else
-						<li class="{{ Request::is('login*') ? ' active' : '' }}"><a href="/login">Вход</a></li>
+						<li class="{{ Request::is('login*') ? ' active' : '' }}"><a href="/login?{{ App::returnUrl() }}">Вход</a></li>
 						<li class="{{ Request::is('register*') ? ' active' : '' }}"><a href="/register">Регистрация</a></li>
 					@endif
 				</ul>

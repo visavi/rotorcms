@@ -24,5 +24,5 @@
 		<div class="alert alert-danger">Данная тема закрыта для обсуждения!</div>
 	@endif
 @else
-	<div class="alert alert-danger">Авторизуйте или зарегистрируйте для добавления сообщения</div>
+	<div class="alert alert-danger">Авторизуйтесь или зарегистрируйтесь для добавления сообщения</div>
 @endif

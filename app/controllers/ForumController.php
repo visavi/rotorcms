@@ -91,8 +91,12 @@ Class ForumController Extends BaseController {
 
 		if (Request::isMethod('post')) {
 
+			$post->token = Request::input('token', true);
+			$post->text = Request::input('text');
+
 			if ($post->save()) {
 				App::setFlash('success', 'Сообщение успешно изменено!');
+				App::redirect('/topic/'.$post->topic()->id);
 			} else {
 				App::setFlash('danger', $post->getErrors());
 				App::setInput($_POST);

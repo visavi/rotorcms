@@ -59,17 +59,17 @@ function changeBookmark(el) {
 		success: function(data) {
 
 			if (data.status == 'error'){
-				$.notify("Ошибка изменения закладок!", "error");
+				$.notify('Ошибка изменения закладок!', 'error');
 				return false;
 			}
 
 			if (data.status == 'deleted'){
-				$.notify("Удалено из закладок!");
+				$.notify('Удалено из закладок!', 'warn');
 				$(el).text('В закладки');
 			}
 
 			if (data.status == 'added'){
-				$.notify("Добавлено в закладки!");
+				$.notify('Добавлено в закладки!');
 				$(el).text('Из закладок');
 			}
 		}

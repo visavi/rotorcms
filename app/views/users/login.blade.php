@@ -47,8 +47,8 @@
 		</div>
 		<div class="form-group">
 			<div class="col-sm-offset-3 col-sm-5">
-				<a class="btn btn-default" href="/recovery">Напомнить пароль</a>
-				<button type="submit" class="btn btn-primary col-lg-offset-2 pull-right">Войти</button>
+				<button type="submit" class="btn btn-primary">Войти</button>
+				<a href="/recovery" class="pull-right">Напомнить пароль</a>
 			</div>
 		</div>
 	</form>

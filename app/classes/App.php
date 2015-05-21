@@ -16,12 +16,12 @@ class App
 	 * Получает текущую страницу
 	 * @return string текущая страница
 	 */
-	public static function returnUrl($page, $url = null)
+	public static function returnUrl($url = null)
 	{
-		if (Request::path() == '/') return $page;
+		//if (Request::path() == '/') return $page;
 
 		$query = Request::has('return') ? Request::input('return') : Request::path();
-		return $page.'?return='.urlencode(is_null($url) ? $query : $url);
+		return 'return='.urlencode(is_null($url) ? $query : $url);
 	}
 
 	/**

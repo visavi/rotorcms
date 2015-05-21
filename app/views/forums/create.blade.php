@@ -42,6 +42,6 @@
 
 
 	@else
-		<div class="alert alert-danger">Авторизуйте или зарегистрируйте для создания темы</div>
+		<div class="alert alert-danger">Авторизуйтесь или зарегистрируйтесь для создания темы</div>
 	@endif
 @stop
