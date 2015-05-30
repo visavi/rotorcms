@@ -29,10 +29,10 @@ $router->map('POST', '/topic/[i:id]/create', 'ForumController@createPost');
 $router->map('GET|POST', '/forum/create', 'ForumController@createTopic');
 $router->map('GET|POST', '/post/[i:id]/edit', 'ForumController@editPost');
 
-$router->map('GET', '/news', 'news/index', 'news');
-$router->map('GET', '/news/page/[i:page]', 'news/index');
-$router->map('GET', '/news/rss', array('page' => 'news/rss'), 'news_rss');
+$router->map('GET', '/news', 'NewsController@index', 'news');
+$router->map('GET', '/news/rss', 'NewsController@rss', 'news_rss');
 
+$router->map('GET', '/admin', 'AdminController@index', 'admin');
 
 $router->map('GET', '/[guestbook|forum|news:link]/smiles/page/[i:page]', 'pages/smiles');
 $router->map('GET', '/[guestbook|forum|news:link]/smiles', 'pages/smiles');

@@ -3,12 +3,13 @@ class News extends BaseModel {
 
 	static $table_name = 'news';
 
-	static $has_many = array(
-		array('comments', 'foreign_key' => 'service_id', 'conditions' => array('type = ?', 'news'), 'order' => 'created_at DESC'),
-	);
+	static $has_many = [
+		['comments', 'foreign_key' => 'relate_id', 'conditions' => ['relate_type = ?', 'news'], 'order' => 'created_at DESC'],
+	];
+
 
 	static $has_one = array(
-		array('comment_count', 'foreign_key' => 'service_id', 'conditions' => array('type = ?', 'news'), 'select' => 'count(*) as count, service_id', 'class' => 'Comment'),
+		['comment_count', 'foreign_key' => 'relate_id', 'conditions' => ['relate_type = ?', 'news'], 'select' => 'count(*) as count, relate_id', 'class' => 'Comment'],
 	);
 
 	static $belongs_to = array(
@@ -21,5 +22,13 @@ class News extends BaseModel {
 	 */
 	public function commentCount() {
 		return $this->comment_count ? $this->comment_count->count : 0;
+	}
+
+	/**
+	 * Данные пользователя
+	 * @return object User модель пользователей
+	 */
+	public function user() {
+		return $this->user ? $this->user : new User;
 	}
 }

@@ -22,11 +22,11 @@
 				{!! App::textError('text') !!}
 			</div>
 			<div class="row">
-				<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4{{ App::hasError('captcha') }}">
+				<div class="col-xs-3{{ App::hasError('captcha') }}">
 					<input name="captcha" type="text" class="form-control" id="inputCaptcha" maxlength="6" placeholder="Проверочный код" required>
 					{!! App::textError('captcha') !!}
 				</div>
-				<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+				<div class="col-xs-4">
 					<img src="/captcha" id="captcha" onclick="this.src='/captcha?'+Math.random()" class="img-rounded" alt="" style="cursor: pointer;">
 				</div>
 
