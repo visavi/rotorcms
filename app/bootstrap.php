@@ -58,6 +58,8 @@ ActiveRecord\Config::initialize(function($cfg) {
 		'development' => 'mysql://'.env('DB_USERNAME').':'.env('DB_PASSWORD').'@'.env('DB_HOST').'/'.env('DB_DATABASE').';charset=utf8'
 	));
 
+	//$cfg->set_cache('memcache://localhost', ['expire' => 60]);
+
 	if (env('APP_DEBUG')) {
 		$conf = ['append' => false, 'lineFormat' => '[%3$s] %4$s [%1$s]'];
 		$logger = Log::singleton('file', STORAGE.'/mysql.dat', null, $conf);

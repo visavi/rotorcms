@@ -113,6 +113,8 @@ CREATE TABLE IF NOT EXISTS `setting` (
 
 
 INSERT INTO `setting` (`name`, `value`) VALUES
+('email', 'visavi.net@mail.ru'),
+('admin', 'Админ'),
 ('sitelink', 'rotorcms.ll'),
 ('sitename', 'Сайт на движке Rotor'),
 ('sitetitle', 'Rotor 5.0'),

@@ -8,6 +8,7 @@ Class NewsController Extends BaseController {
 	public function index()
 	{
 		$total = News::count();
+
 		$page = App::paginate(Setting::get('news_per_page'), $total);
 
 		$news_list = News::all([
