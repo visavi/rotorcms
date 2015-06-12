@@ -13,9 +13,13 @@ class News extends BaseModel {
 	];
 
 	static $belongs_to = [
-		array('user'),
+		['user'],
 	];
 
+	static $validates_size_of = [
+		['title', 'within' => [5, 50], 'too_short' => 'Слишком короткий заголовок, минимум %d симв.', 'too_long' => 'Слишком длинный заголовок, максимум %d симв.'],
+		['text', 'minimum' => 5, 'too_short' => 'Слишком короткий текст новости, минимум %d симв.'],
+	];
 	/**
 	 * Количество комментарий новости
 	 * @return integer количество комментарий новости

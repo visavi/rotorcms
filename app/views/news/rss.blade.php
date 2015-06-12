@@ -10,7 +10,6 @@
 	<pubDate>{{ Carbon::now()->toRssString() }}</pubDate>
 
 	@foreach($news_list as $news)
-
 		<item>
 			<title>{{ $news->title }}</title>
 			<link>http://{{ Setting::get('sitelink') }}/news/{{ $news->id }}</link>

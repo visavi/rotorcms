@@ -49,6 +49,7 @@
 			</div>
 			<div class="collapse navbar-collapse">
 				<ul class="nav navbar-nav">
+				<li class="{{ Request::is('news*') ? ' active' : '' }}"><a href="/news">Новости</a></li>
 				<li class="{{ Request::is('guestbook*') ? ' active' : '' }}"><a href="/guestbook">Гостевая</a></li>
 				<li class="{{ Request::is('forum*') ? ' active' : '' }}"><a href="/forum">Форум</a></li>
 				<li class="dropdown">

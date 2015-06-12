@@ -302,11 +302,11 @@ CREATE TABLE IF NOT EXISTS `logs` (
 
 
 CREATE TABLE IF NOT EXISTS `news` (
-  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` int(11) unsigned NOT NULL,
-  `title` varchar(100) NOT NULL,
+  `title` varchar(50) NOT NULL,
   `text` text NOT NULL,
-  `image` varchar(30) NULL DEFAULT NULL,
+  `image` varchar(50) NULL DEFAULT NULL,
   `updated_at` timestamp NOT NULL,
   `created_at` timestamp NOT NULL,
   PRIMARY KEY (`id`),
@@ -753,7 +753,7 @@ CREATE TABLE IF NOT EXISTS `socials` (
 CREATE TABLE IF NOT EXISTS `comments` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` int(11) unsigned NOT NULL,
-  `type` enum('news', 'blog', 'down', 'gallery') NOT NULL,
+  `relate_type` enum('news', 'blog', 'down', 'gallery') NOT NULL,
   `relate_id` int(11) unsigned NOT NULL,
   `text` text NOT NULL,
   `ip` varchar(15) NOT NULL,

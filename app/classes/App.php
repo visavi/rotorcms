@@ -379,7 +379,7 @@ class App
 	 * @param  array   $forms массив склоняемых слов (один, два, много)
 	 * @return string  форматированная строка
 	 */
-	public static function plural($num, $forms)
+	public static function plural($num, array $forms)
 	{
 		if ($num % 100 > 10 &&  $num % 100 < 15) return $num.' '.$forms[2];
 		if ($num % 10 == 1) return $num.' '.$forms[0];

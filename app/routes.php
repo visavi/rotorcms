@@ -30,6 +30,8 @@ $router->map('GET|POST', '/forum/create', 'ForumController@createTopic');
 $router->map('GET|POST', '/post/[i:id]/edit', 'ForumController@editPost');
 
 $router->map('GET', '/news', 'NewsController@index', 'news');
+$router->map('GET', '/news/[i:id]', 'NewsController@view', 'news_view');
+$router->map('GET|POST', '/news/create', 'NewsController@create');
 $router->map('GET', '/news/rss', 'NewsController@rss', 'news_rss');
 
 $router->map('GET', '/admin', 'AdminController@index', 'admin');

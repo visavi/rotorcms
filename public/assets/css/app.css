@@ -8,6 +8,11 @@
   pointer-events: auto;
 }
 
+.required {
+  color:#b94a48;
+  font-weight:bold
+}
+
 .touch-link {
   position: relative;
   display: block;
