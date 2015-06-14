@@ -44,7 +44,7 @@ function env($key, $default = null)
  *  Количество пользователей
  * @return integer Количество пользователей
  */
-function count_users()
+function usersCount()
 {
 	return User::count();
 }
@@ -53,7 +53,7 @@ function count_users()
  *  Количество сообщений в гостевой
  * @return integer сообщений в гостевой
  */
-function count_guestbook()
+function guestbookCount()
 {
 	return Guestbook::count();
 }
@@ -62,7 +62,16 @@ function count_guestbook()
  *  Количество сообщений в форума
  * @return integer сообщений в форуме
  */
-function count_forum()
+function forumCount()
 {
 	return Topic::count().'/'.Post::count();
+}
+
+/**
+ *  Количество новостей
+ * @return integer количество новостей
+ */
+function newsCount()
+{
+	return News::count();
 }

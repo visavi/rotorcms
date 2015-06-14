@@ -470,7 +470,7 @@ CREATE TABLE IF NOT EXISTS `spam` (
   `user_id` int(11) unsigned NOT NULL,
   `created_at` timestamp NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `section` (`section`),
+  KEY `relate_type` (`relate_type`),
   KEY `created_at` (`created_at`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
