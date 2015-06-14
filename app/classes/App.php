@@ -407,28 +407,12 @@ class App
 	 */
 	public static function bbCode($text, $parse = true)
 	{
-		static $list_smiles;
-
 		$bbcode = new BBCodeParser;
 
 		if ( ! $parse) return $bbcode->clear($text);
 
 		$text = $bbcode->parse($text);
-
-		if (empty($list_smiles)) {
-
-			if (!file_exists(STORAGE.'/temp/smiles.dat')) {
-				$smiles = Smile::all(array('order' => 'LENGTH(code) desc'));
-				$smiles = self::arrayAssoc($smiles, 'code', 'name');
-				file_put_contents(STORAGE.'/temp/smiles.dat', serialize($smiles));
-			}
-
-			$list_smiles = unserialize(file_get_contents(STORAGE."/temp/smiles.dat"));
-		}
-
-		foreach($list_smiles as $code => $smile) {
-			$text = str_replace($code, '<img src="/assets/img/smiles/'.$smile.'" alt="'.$code.'"> ', $text);
-		}
+		$text = $bbcode->parseSmiles($text);
 
 		return $text;
 	}

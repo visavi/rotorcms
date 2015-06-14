@@ -5,7 +5,7 @@ class BBCodeParser {
 	public $parsers = array(
 		'code' => array(
 			'pattern' => '/\[code\](.*?)\[\/code\]/s',
-			'callback' => 'highlight_code'
+			'callback' => 'highlightCode'
 		),
 		'bold' => array(
 			'pattern' => '/\[b\](.*?)\[\/b\]/s',
@@ -56,7 +56,7 @@ class BBCodeParser {
 		),
 /*		'image' => array(
 			'pattern' => '/\[img\](.*?)\[\/img\]/s',
-			'callback' => 'img_replace',
+			'callback' => 'imgReplace',
 		),
 		'orderedList' => array(
 			'pattern' => '/\[list=1\](.*?)\[\/list\]/s',
@@ -72,17 +72,17 @@ class BBCodeParser {
 		),*/
 		'spoiler' => array(
 			'pattern' => '/\[spoiler\](.*?)\[\/spoiler\]/s',
-			'callback' => 'spoiler_text',
+			'callback' => 'spoilerText',
 			'iterate' => 1,
 		),
 		'shortSpoiler' => array(
 			'pattern' => '/\[spoiler\=(.*?)\](.*?)\[\/spoiler\]/s',
-			'callback' => 'spoiler_text',
+			'callback' => 'spoilerText',
 			'iterate' => 1,
 		),
 		'hide' => array(
 			'pattern' => '/\[hide\](.*?)\[\/hide\]/s',
-			'callback' => 'hidden_text',
+			'callback' => 'hiddenText',
 		),
 		'youtube' => array(
 			'pattern' => '/\[youtube\](.*?)\[\/youtube\]/s',
@@ -122,7 +122,7 @@ class BBCodeParser {
 	 * @param  array $match ссылка на изображение
 	 * @return string картинка
 	 */
-	public function img_replace($match) {
+	public function imgReplace($match) {
 		if (preg_match('/[\w\-]+\.(jpg|png|gif|jpeg)/', $match[1])) {
 			return '<img src="'.$match[1].'" class="img-responsive img-message" alt="image">';
 		} else {
@@ -135,7 +135,7 @@ class BBCodeParser {
 	 * @param callable $match массив элементов
 	 * @return string текст с подсветкой
 	 */
-	public function highlight_code($match) {
+	public function highlightCode($match) {
 
 		//Чтобы bb-код и смайлы не работали внутри тега [code]
 		$match[1] = strtr($match[1], array(':' => '&#58;', '[' => '&#91;'));
@@ -148,7 +148,7 @@ class BBCodeParser {
 	 * @param callable $match массив элементов
 	 * @return string код спойлера
 	 */
-	public function spoiler_text($match) {
+	public function spoilerText($match) {
 
 		$title = (empty($match[1]) || !isset($match[2])) ? 'Развернуть для просмотра' : $match[1];
 		$text = (empty($match[2])) ? !isset($match[2]) ? $match[1] : 'Текст отсуствует' : $match[2];
@@ -164,13 +164,40 @@ class BBCodeParser {
 	 * @param callable $match массив элементов
 	 * @return string  скрытый код
 	 */
-	public function hidden_text($match) {
+	public function hiddenText($match) {
 
 		if (empty($match[1])) $match[1] = 'Текст отсутствует';
 
 		return '<div class="hiding">
 				<span class="strong">Скрытый контент:</span> '.(User::check() ? $match[1] : 'Для просмотра необходимо авторизоваться!').
 				'</div>';
+	}
+
+	/**
+	 * Обработка смайлов
+	 * @param  string  $text  Необработанный текст
+	 * @return string         Обработанный текст
+	 */
+	public function parseSmiles($source)
+	{
+		static $list_smiles;
+
+		if (empty($list_smiles)) {
+
+			if (!file_exists(STORAGE.'/temp/smiles.dat')) {
+				$smiles = Smile::all(array('order' => 'LENGTH(code) desc'));
+				$smiles = App::arrayAssoc($smiles, 'code', 'name');
+				file_put_contents(STORAGE.'/temp/smiles.dat', serialize($smiles));
+			}
+
+			$list_smiles = unserialize(file_get_contents(STORAGE."/temp/smiles.dat"));
+		}
+
+		foreach($list_smiles as $code => $smile) {
+			$source = str_replace($code, '<img src="/assets/img/smiles/'.$smile.'" alt="'.$code.'"> ', $source);
+		}
+
+		return $source;
 	}
 
 	/**
