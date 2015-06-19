@@ -470,7 +470,7 @@ CREATE TABLE IF NOT EXISTS `spam` (
   `user_id` int(11) unsigned NOT NULL,
   `created_at` timestamp NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `relate_type` (`relate_type`),
+  KEY `relate_type` (`relate_type`, `relate_id`),
   KEY `created_at` (`created_at`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -762,5 +762,5 @@ CREATE TABLE IF NOT EXISTS `comments` (
   `created_at` timestamp NOT NULL,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
-  KEY `type` (`type`, `service_id`)
+  KEY `relate_type` (`relate_type`, `relate_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
