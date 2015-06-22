@@ -41,4 +41,4 @@ RotorCMS 5.0 dev
 
 ### License
 
-The RotorCMS is open-sourced software licensed under the [GPL-3.0 license](http://opensource.org/licenses/gpl-3.0.html)
+The RotorCMS is open-sourced software licensed under the [GPL-3.0 license](http://opensource.org/licenses/GPL-3.0)

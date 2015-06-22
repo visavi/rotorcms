@@ -29,7 +29,9 @@
 		"illuminate/http": "~5.0",
 		"php-curl-class/php-curl-class": "~3.5",
 		"robmorgan/phinx": "0.4.*",
-		"vlucas/phpdotenv": "~1.1"
+		"vlucas/phpdotenv": "~1.1",
+		"visavi/flystring": "dev-master",
+		"visavi/compressor": "dev-master"
 	},
 	"require-dev": {
 		"filp/whoops": "~1.1",
