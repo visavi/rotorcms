@@ -30,8 +30,7 @@
 		"php-curl-class/php-curl-class": "~3.5",
 		"robmorgan/phinx": "0.4.*",
 		"vlucas/phpdotenv": "~1.1",
-		"visavi/flystring": "dev-master",
-		"visavi/compressor": "dev-master"
+		"visavi/compressor": "~1.1"
 	},
 	"require-dev": {
 		"filp/whoops": "~1.1",
