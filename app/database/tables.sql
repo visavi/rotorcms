@@ -1,9 +1,3 @@
-CREATE TABLE IF NOT EXISTS `migrations` (
-  `migration` varchar(255) NOT NULL,
-  `created_at` timestamp NOT NULL,
-   UNIQUE KEY `migration` (`migration`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
 CREATE TABLE IF NOT EXISTS `status` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `point` mediumint(8) unsigned NOT NULL,
