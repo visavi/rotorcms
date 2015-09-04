@@ -39,6 +39,10 @@ RotorCMS 5.0 dev
 
 Приятной Вам работы
 
+###Миграции
+
+Создание миграций `php rotor create CreateTestTable`
+
 ### License
 
 The RotorCMS is open-sourced software licensed under the [GPL-3.0 license](http://opensource.org/licenses/GPL-3.0)
