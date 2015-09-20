@@ -13,7 +13,7 @@ class CreateGuestTable extends AbstractMigration
 		$status->addColumn('user_id', 'integer', ['signed' => false, 'null' => true])
 			->addColumn('text', 'text')
 			->addColumn('ip', 'string', ['limit' => 15])
-			->addColumn('brow', 'string', array('limit' => 25))
+			->addColumn('brow', 'string', ['limit' => 25])
 			->addColumn('reply', 'text')
 			->addColumn('updated_at', 'timestamp')
 			->addColumn('created_at', 'timestamp')
