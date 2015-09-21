@@ -1,7 +1,7 @@
 <?php
 class Setting extends BaseModel {
 
-	static $table_name = 'setting';
+	static $table_name = 'settings';
 
 	/**
 	 * Получение настроек

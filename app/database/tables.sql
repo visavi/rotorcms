@@ -325,7 +325,7 @@ CREATE TABLE IF NOT EXISTS `topics` (
   KEY `locked` (`locked`),
   KEY `created_at` (`created_at`),
   FULLTEXT KEY `title` (`title`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 CREATE TABLE IF NOT EXISTS `posts` (
@@ -343,7 +343,7 @@ CREATE TABLE IF NOT EXISTS `posts` (
   KEY `user_id` (`user_id`),
   KEY `topic_id` (`topic_id`,`created_at`),
   FULLTEXT KEY `text` (`text`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 

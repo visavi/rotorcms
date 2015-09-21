@@ -9,8 +9,8 @@ class CreateGuestTable extends AbstractMigration
 	 */
 	public function change()
 	{
-		$status = $this->table('guest');
-		$status->addColumn('user_id', 'integer', ['signed' => false, 'null' => true])
+		$table = $this->table('guest');
+		$table->addColumn('user_id', 'integer', ['signed' => false, 'null' => true])
 			->addColumn('text', 'text')
 			->addColumn('ip', 'string', ['limit' => 15])
 			->addColumn('brow', 'string', ['limit' => 25])

@@ -10,8 +10,8 @@ class CreateStatusTable extends AbstractMigration
 	 */
 	public function change()
 	{
-		$status = $this->table('status');
-		$status->addColumn('point', 'integer', ['signed' => false])
+		$table = $this->table('status');
+		$table->addColumn('point', 'integer', ['signed' => false])
 			->addColumn('topoint', 'integer', ['signed' => false])
 			->addColumn('name', 'string', ['limit' => 50])
 			->addColumn('color', 'string', ['limit' => 10, 'null' => true])

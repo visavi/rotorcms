@@ -10,8 +10,8 @@ class CreateUsersTable extends AbstractMigration
 	 */
 	public function change()
 	{
-		$status = $this->table('users');
-		$status->addColumn('login', 'string', ['limit' => 20])
+		$table = $this->table('users');
+		$table->addColumn('login', 'string', ['limit' => 20])
 			->addColumn('password', 'string', ['limit' => 40])
 			->addColumn('email', 'string', ['limit' => 50])
 			->addColumn('gender', 'enum', ['values' => ['male', 'female']])
