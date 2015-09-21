@@ -10,7 +10,7 @@ INSERT INTO `status` (`id`, `point`, `topoint`, `name`, `color`) VALUES
 (9, 10000, 14999, 'Гуру', '#32608A'),
 (10, 15000, 100000, 'Легенда', '#ff0000');
 
-INSERT INTO `setting` (`name`, `value`) VALUES
+INSERT INTO `settings` (`name`, `value`) VALUES
 ('email', 'visavi.net@mail.ru'),
 ('admin', 'Админ'),
 ('sitelink', 'rotorcms.ll'),
