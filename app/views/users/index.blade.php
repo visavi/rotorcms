@@ -7,10 +7,9 @@
 
 	<h1>Список пользователей</h1>
 
+	<a class="touch-back{{ $list == 'all' ? ' bg-success' : '' }}" href="/users" style="margin-bottom: 5px;">Все <span class="badge">{{ $count['users'] }}</span></a> <a class="touch-back{{ $list == 'admins' ? ' bg-success' : '' }}" href="/users?list=admins">Администрация <span class="badge">{{ $count['admins'] }}</span></a>
+
 	@if ($users)
-
-		<a class="touch-back{{ $list == 'all' ? ' bg-success' : '' }}" href="/users">Все <span class="badge">{{ $count['users'] }}</span></a> <a class="touch-back{{ $list == 'admins' ? ' bg-success' : '' }}" href="/users?list=admins">Администрация <span class="badge">{{ $count['admins'] }}</span></a>
-
 		@foreach ($users as $key => $user)
 			<div class="media{{ strtolower($login) == strtolower($user->getLogin()) ? ' bg-success padding' : '' }}">
 				<div class="media-left">
