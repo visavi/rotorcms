@@ -34,7 +34,7 @@ class User extends BaseModel {
 	);
 
 	static $validates_inclusion_of = [
-		['level', 'in' => ['banned', 'user', 'moder', 'supermoder', 'admin', 'superamdin'], 'message' => 'Неверно указан уровень пользователя'],
+		['level', 'in' => ['banned', 'guest', 'user', 'moder', 'admin'], 'message' => 'Неверно указан уровень пользователя'],
 		['gender', 'in' => ['male', 'female'], 'message' => 'Неверно указан пол пользователя'],
 	];
 
