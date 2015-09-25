@@ -12,7 +12,7 @@ class CreateUsersTable extends AbstractMigration
 	{
 		$table = $this->table('users');
 		$table->addColumn('login', 'string', ['limit' => 20])
-			->addColumn('password', 'string', ['limit' => 40])
+			->addColumn('password', 'string', ['limit' => 128])
 			->addColumn('email', 'string', ['limit' => 50])
 			->addColumn('gender', 'enum', ['values' => ['male', 'female']])
 			->addColumn('level', 'enum', ['values' => ['banned', 'guest', 'user', 'moder', 'admin'], 'default' => 'guest'])
