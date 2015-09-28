@@ -11,7 +11,7 @@ class CreateNewsTable extends AbstractMigration
 	{
 		$table = $this->table('news');
 		$table->addColumn('user_id', 'integer', ['signed' => false])
-			->addColumn('city', 'string', ['limit' => 50])
+			->addColumn('title', 'string', ['limit' => 50])
 			->addColumn('text', 'text')
 			->addColumn('image', 'string', ['limit' => 50, 'null' => true])
 			->addColumn('updated_at', 'timestamp')
