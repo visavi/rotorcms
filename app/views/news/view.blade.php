@@ -19,7 +19,9 @@
 			<div>{!! App::bbCode(str_limit(e($news->text))) !!}</div>
 		</div>
 		<div>
-			<span class="fa fa-user"></span> <a href="/user/{{ $news->user()->getLogin() }}">{{ $news->user()->getLogin() }}</a>, <span class="fa fa-comment"></span> <a href="/news/{{ $news->id }}#comments">{{ App::plural($news->commentCount(), ['комментарий', 'комментария', 'комментариев']) }}</a>
+			<span class="fa fa-user"></span> <a href="/user/{{ $news->user()->getLogin() }}">{{ $news->user()->getLogin() }}</a>
 		</div>
 	</div>
+
+	{{ App::view('news._comments', compact('news')) }}
 @stop
