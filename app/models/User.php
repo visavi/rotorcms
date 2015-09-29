@@ -115,6 +115,30 @@ class User extends BaseModel {
 	}
 
 	/**
+	 * Возвращает пол пользователя
+	 * @return string пол пользователя
+	 */
+	public function getGender()
+	{
+		return $this->gender == 'male' ? 'Мужской' : 'Женский';
+	}
+
+	/**
+	 * Рейтинг пользователя
+	 * @return string рейтинг
+	 */
+	public function getRating()
+	{
+		if ($this->rating > 0) {
+			return '<span class="text-success strong">+'.$this->rating.'</span>';
+		} elseif ($this->rating < 0) {
+			return '<span class="text-danger strong">-'.$this->rating.'</span>';
+		} else {
+			return '<span class="strong">0</span>';
+		}
+	}
+
+	/**
 	 * Возвращает аватар пользователя
 	 * @return string аватар пользователя
 	 */
@@ -128,12 +152,26 @@ class User extends BaseModel {
 	}
 
 	/**
-	 * Статус
-	 * @return string статус
+	 * Уровень пользователя
+	 * @return string уровень
 	 */
 	public function getLevel()
 	{
 		return self::$levelList[$this->level];
+	}
+
+	/**
+	 * Статус пользователя
+	 * @return string статус
+	 */
+	public function getStatus()
+	{
+		if ($this->status) {
+			return 'Статус';
+		} else {
+			return 'Новичок';
+			//SELECT `users_login`, `users_status`, `status_name`, `status_color` FROM `users` LEFT JOIN `status` ON `users_point` BETWEEN `status_topoint` AND `status_point`
+		}
 	}
 
 	/**
