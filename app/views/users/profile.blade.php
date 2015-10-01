@@ -5,14 +5,14 @@
 
 @section('content')
 
-	<h1>{!!$user->getAvatar() !!} {{ $user->login }}</h1>
-
-	<div class="pull-right">
-		@if (User::get('id') == $user->id)
+	@if (User::get('id') == $user->id)
+		<div class="pull-right">
 			<a href="/user/edit" class="btn btn-sm btn-primary">Редактировать данные</a>
 			<a href="/user/password" class="btn btn-sm btn-success">Изменить пароль</a>
-		@endif
-	</div>
+		</div>
+	@endif
+
+	<h1>{!!$user->getAvatar() !!} {{ $user->login }}</h1>
 
 	<table class="table table-hover table-striped">
 		<tbody>

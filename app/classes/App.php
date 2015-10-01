@@ -436,10 +436,7 @@ class App
 	public static function getClientIp()
 	{
 		$ip = Request::ip();
-
-		if ($ip == '::1') $ip = '127.0.0.1';
-
-		return $ip;
+		return $ip == '::1' ? '127.0.0.1' : $ip;
 	}
 
 	/**

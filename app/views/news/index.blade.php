@@ -5,16 +5,13 @@
 
 @section('content')
 
-	<div class="row">
-		<div class="col-sm-10">
-			<h1>Новости сайта</h1>
+	@if (User::isAdmin())
+		<div class="pull-right">
+			<a class="btn btn-sm btn-success" href="/news/create">Добавить новость</a>
 		</div>
-		<div class="col-sm-2">
-			@if (User::isAdmin())
-				<a class="btn btn-success" href="/news/create">Добавить новость</a>
-			@endif
-		</div>
-	</div>
+	@endif
+
+	<h1>Новости сайта</h1>
 
 	@if ($news_list)
 		@foreach ($news_list as $news)
