@@ -16,6 +16,7 @@ $router->map('GET|POST', '/user/[edit|password:action]', 'UserController');
 $router->map('GET|POST', '/users', 'UserController@index');
 $router->map('GET', '/logout', 'UserController@logout', 'logout');
 $router->map('GET', '/user/[s:login]', 'UserController@view', 'profile');
+$router->map('POST', '/user/image', 'UserController@image');
 
 $router->map('GET', '/guestbook', 'GuestbookController@index', 'guestbook');
 $router->map('POST', '/guestbook/create', 'GuestbookController@create');

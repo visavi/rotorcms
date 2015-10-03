@@ -8,6 +8,7 @@ $(document).ready(function(){
 
 	$('[data-toggle="tooltip"]').tooltip();
 	$('[data-toggle="popover"]').popover()
+	$('input[type=file]').bootstrapFileInput();
 
 	// Скрывает поповеры по клику в любом месте
 	$('body').on('click', function (e) {
@@ -35,6 +36,43 @@ $(document).ready(function(){
 	});
 
 });
+
+$(document).ready(function() {
+	$('#inputImage').on('change', function() {
+		$('#uploadProfile').ajaxSubmit({
+			target:        '#result',
+			beforeSubmit:  showRequest,
+			success:       showResponse,
+			url:       '/user/image',
+			dataType:  'json'
+		});
+		return false;
+	});
+});
+
+// pre-submit callback
+function showRequest(formData, jqForm, options) {
+
+	$(jqForm).find('#spiner').show();
+
+	return true;
+}
+
+// post-submit callback
+function showResponse(responseText, statusText, xhr, $form)  {
+	// for normal html responses, the first argument to the success callback
+	// is the XMLHttpRequest object's responseText property
+
+	// if the ajaxForm method was passed an Options Object with the dataType
+	// property set to 'xml' then the first argument to the success callback
+	// is the XMLHttpRequest object's responseXML property
+
+	// if the ajaxForm method was passed an Options Object with the dataType
+	// property set to 'json' then the first argument to the success callback
+	// is the json data object returned by the server
+
+	$('#spiner').hide();
+}
 
 /*
  * Показывает или скрывает пароль при клике

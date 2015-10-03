@@ -122,6 +122,7 @@
 		<script src="/assets/js/jquery-1.11.3.min.js"></script>
 		<script src="/assets/js/jquery.form.min.js"></script>
 		<script src="/assets/js/bootstrap.min.js"></script>
+		<script src="/assets/js/bootstrap.file-input.js"></script>
 		<script src="/assets/js/notify.min.js"></script>
 		<script src="/assets/js/prettify.js"></script>
 		<script src="/assets/markitup/jquery.markitup.js"></script>
