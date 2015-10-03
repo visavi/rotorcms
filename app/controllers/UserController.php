@@ -71,9 +71,10 @@ Class UserController Extends BaseController {
 	{
 		if (!User::check()) App::abort(403);
 
+		$user = User::get();
+
 		if (Request::isMethod('post')) {
 
-			$user = User::get();
 			$user->token = Request::input('token', true);
 			$user->email = Request::input('email');
 			$user->gender = Request::input('gender');
@@ -99,12 +100,13 @@ Class UserController Extends BaseController {
 	{
 		if (!User::check()) App::abort(403);
 
+		$user = User::get();
+
 		if (Request::isMethod('post')) {
 
 			$old_password = Request::input('old_password');
 			$new_password = Request::input('new_password');
 
-			$user = User::get();
 			$user->old_password = $old_password;
 			$user->new_password = $new_password;
 			$user->updated_at = new Datetime;
@@ -321,6 +323,7 @@ Class UserController Extends BaseController {
 	public function image()
 	{
 		if (!Request::ajax() || !User::check()) App::redirect('/');
+		// Удаление и размер
 		$image = Request::file('image');
 
 		if ($image->isValid()) {
@@ -330,13 +333,15 @@ Class UserController Extends BaseController {
 
 			if (in_array($ext, ['jpeg', 'jpg', 'png', 'gif'])) {
 
-				$img = new SimpleImage($image->getPathName());
-				$img->best_fit(1280, 1280)->save('uploads/photos/'.$filename);
-				$img->best_fit(200, 200)->save('uploads/profile/'.$filename);
-				$img->best_fit(48, 48)->save('uploads/avatars/'.$filename);
-
 				$user = User::get();
-				$user->avatar = 'uploads/thumbs/'.$filename;
+				$user->deleteImages();
+
+				$img = new SimpleImage($image->getPathName());
+				$img->best_fit(1280, 1280)->save('uploads/users/photos/'.$filename);
+				$img->best_fit(200, 200)->save('uploads/users/thumbs/'.$filename);
+				$img->best_fit(48, 48)->save('uploads/users/avatars/'.$filename);
+
+				$user->avatar = $filename;
 				if ($user->save())
 					exit(json_encode(['status' => 'uploaded']));
 				else

@@ -8,6 +8,8 @@ $(document).ready(function(){
 
 	$('[data-toggle="tooltip"]').tooltip();
 	$('[data-toggle="popover"]').popover()
+
+	// Стилизованная кнопка загрузки файлов
 	$('input[type=file]').bootstrapFileInput();
 
 	// Скрывает поповеры по клику в любом месте
@@ -17,6 +19,15 @@ $(document).ready(function(){
 			&& $(e.target).parents('.popover.in').length === 0) {
 			$('[data-toggle="popover"]').popover('hide');
 		}
+	});
+
+	$("a.gallery").colorbox({rel: function(){
+		return $(this).data('group');
+	}, title: function(){
+		var url = $(this).attr('href');
+		return '<a href="' + url + '" target="_blank">Открыть</a>';
+	},
+		current: "Фото {current} из {total}",
 	});
 
 	// Украшения для главной страницы
@@ -37,24 +48,25 @@ $(document).ready(function(){
 
 });
 
-$(document).ready(function() {
-	$('#inputImage').on('change', function() {
-		$('#uploadProfile').ajaxSubmit({
-			target:        '#result',
-			beforeSubmit:  showRequest,
-			success:       showResponse,
-			url:       '/user/image',
-			dataType:  'json'
-		});
-		return false;
+function uploadAvatar() {
+
+	$('#uploadAvatar').ajaxSubmit({
+		target:        '#result',
+		beforeSubmit:  showRequest,
+		success:       showResponse,
+		url:       '/user/image',
+		dataType:  'json',
+		resetForm: true
 	});
-});
+
+	return false;
+}
+
 
 // pre-submit callback
 function showRequest(formData, jqForm, options) {
 
-	$(jqForm).find('#spiner').show();
-
+	$('#spiner').show();
 	return true;
 }
 
@@ -72,6 +84,7 @@ function showResponse(responseText, statusText, xhr, $form)  {
 	// is the json data object returned by the server
 
 	$('#spiner').hide();
+	return true;
 }
 
 /*

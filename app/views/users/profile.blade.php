@@ -17,6 +17,14 @@
 	<table class="table table-hover table-striped">
 		<tbody>
 			<tr>
+				<th>Фото</th>
+				<td>
+					@if ($user->avatar)
+						{!! $user->getPhoto() !!}
+					@endif
+				</td>
+			</tr>
+			<tr>
 				<th>Логин</th>
 				<td>{{ $user->login }}</td>
 			</tr>

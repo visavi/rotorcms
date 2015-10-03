@@ -145,10 +145,21 @@ class User extends BaseModel {
 	public function getAvatar()
 	{
 		if ($this->avatar) {
-			return '<img src="/'.$this->avatar.'" alt=""> ';
+			return '<img src="/uploads/users/avatars/'.$this->avatar.'" alt="" class="img-rounded"> ';
 		}
 
 		return '<img src="/assets/img/avatars/noavatar.png" alt=""> ';
+	}
+
+	/**
+	 * Возвращает фото пользователя
+	 * @return string фото пользователя
+	 */
+	public function getPhoto()
+	{
+		if ($this->avatar) {
+			return '<a href="/uploads/users/photos/'.$this->avatar.'" class="gallery"><img src="/uploads/users/thumbs/'.$this->avatar.'" alt=""></a>';
+		}
 	}
 
 	/**
@@ -241,5 +252,27 @@ class User extends BaseModel {
 		}
 
 		return false;
+	}
+
+	/**
+	 * Удаление сохраненных изображений
+	 * @return boolean результат выполнения
+	 */
+	public function deleteImages()
+	{
+		if ($this->avatar) {
+			if (file_exists(HOME.'/uploads/users/photos/'.$this->avatar)){
+				unlink(HOME.'/uploads/users/photos/'.$this->avatar);
+			}
+
+			if (file_exists(HOME.'/uploads/users/thumbs/'.$this->avatar)){
+				unlink(HOME.'/uploads/users/thumbs/'.$this->avatar);
+			}
+
+			if (file_exists(HOME.'/uploads/users/avatars/'.$this->avatar)){
+				unlink(HOME.'/uploads/users/avatars/'.$this->avatar);
+			}
+		}
+		return true;
 	}
 }

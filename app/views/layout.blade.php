@@ -19,6 +19,7 @@
 		<link href="/assets/css/bootstrap-theme.min.css" rel="stylesheet">
 		<link href="/assets/css/font-awesome.min.css" rel="stylesheet">
 		<link href="/assets/css/prettify.css" rel="stylesheet">
+		<link href="/assets/css/colorbox.css" rel="stylesheet">
 		<link href="/assets/markitup/markitup.css" rel="stylesheet">
 		<link href="/assets/css/app.css" rel="stylesheet">
 	@show
@@ -121,6 +122,7 @@
 	@section('scripts')
 		<script src="/assets/js/jquery-1.11.3.min.js"></script>
 		<script src="/assets/js/jquery.form.min.js"></script>
+		<script src="/assets/js/jquery.colorbox-min.js"></script>
 		<script src="/assets/js/bootstrap.min.js"></script>
 		<script src="/assets/js/bootstrap.file-input.js"></script>
 		<script src="/assets/js/notify.min.js"></script>
