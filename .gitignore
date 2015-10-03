@@ -1,5 +1,6 @@
 /vendor
 /app/storage
+/public/uploads
 /public/test
 .env
 .DS_Store
