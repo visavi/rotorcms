@@ -339,7 +339,7 @@ Class UserController Extends BaseController {
 				$img = new SimpleImage($image->getPathName());
 				$img->best_fit(1280, 1280)->save('uploads/users/photos/'.$filename);
 				$img->best_fit(200, 200)->save('uploads/users/thumbs/'.$filename);
-				$img->best_fit(48, 48)->save('uploads/users/avatars/'.$filename);
+				$img->thumbnail(48, 48)->save('uploads/users/avatars/'.$filename);
 
 				$user->avatar = $filename;
 				if ($user->save())
