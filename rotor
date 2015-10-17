@@ -1,12 +1,23 @@
 #!/usr/bin/env php
 <?php
 
+use Symfony\Component\Console\Application;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
+
 require __DIR__.'/app/bootstrap.php';
 
-$app = require __DIR__.'/vendor/robmorgan/phinx/app/phinx.php';
+//$app = require __DIR__.'/vendor/robmorgan/phinx/app/phinx.php';
 
-if($argv[1] == '-V' || $argv[1] == '--version') {
-	echo "RotorCMS by Vantuz - http://visavi.net. version 5.0 dev\n";
+class RotorApplication extends Phinx\Console\PhinxApplication
+{
+	public function doRun(InputInterface $input, OutputInterface $output)
+	{
+		$output->writeln('<info>RotorCMS by Vantuz - http://visavi.net.</info> version <comment>5.0 dev</comment>');
+		parent::doRun($input, $output);
+	}
 }
-
+$app = new RotorApplication;
+//$app->setName('RotorCMS by Vantuz - http://visavi.net.');
+//$app->setVersion('5.0 dev');
 $app->run();
