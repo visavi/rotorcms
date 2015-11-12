@@ -1,11 +1,9 @@
 @if (User::check())
-	<div class="well clearfix">
+	<div class="well well-sm clearfix col-sm-10">
 		<form action="/guestbook/create" method="post">
 			<input type="hidden" name="token" value="{{ $_SESSION['token'] }}">
-
-			<label for="markItUp">Сообщение:</label>
 			<div class="form-group{{ App::hasError('text') }}">
-				<textarea class="form-control" id="markItUp" rows="5" name="text" required>{{ App::getInput('text') }}</textarea>
+				<textarea class="form-control" id="markItUp" rows="3" name="text" placeholder="Текст сообщения" required>{{ App::getInput('text') }}</textarea>
 				{!! App::textError('text') !!}
 			</div>
 			<button type="submit" class="btn btn-primary pull-right">Написать</button>
@@ -13,12 +11,12 @@
 	</div>
 
 @else
-	<div class="well">
+	<div class="well well-sm clearfix col-sm-10">
 		<form action="/guestbook/create" method="post">
 			<input type="hidden" name="token" value="{{ $_SESSION['token'] }}" />
 			<div class="form-group{{ App::hasError('text') }}">
 				<label for="inputText">Сообщение:</label>
-				<textarea class="form-control" id="inputText" rows="5" name="text" placeholder="Текст сообщения" required>{{ App::getInput('text') }}</textarea>
+				<textarea class="form-control" id="inputText" rows="3" name="text" placeholder="Текст сообщения" required>{{ App::getInput('text') }}</textarea>
 				{!! App::textError('text') !!}
 			</div>
 			<div class="row">

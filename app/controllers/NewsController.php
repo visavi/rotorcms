@@ -60,6 +60,14 @@ Class NewsController Extends BaseController {
 	}
 
 	/**
+	 * Создание комментария
+	 */
+	public function createComment()
+	{
+		var_dump($_POST);
+	}
+
+	/**
 	 * RSS лента
 	 */
 	public function rss()

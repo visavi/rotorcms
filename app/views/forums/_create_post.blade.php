@@ -1,11 +1,10 @@
 @if (User::check())
 	@if(!$topic->closed)
 
-		<div class="well clearfix">
+		<div class="well well-sm clearfix col-sm-10">
 			<form action="/topic/{{ $topic->id }}/create" method="post">
 				<input type="hidden" name="token" value="{{ $_SESSION['token'] }}">
 
-				<label for="markItUp">Сообщение:</label>
 				<div class="form-group{{ App::hasError('text') }}">
 					<textarea class="form-control" id="markItUp" rows="5" name="text" required>{{ App::getInput('text') }}</textarea>
 					{!! App::textError('text') !!}

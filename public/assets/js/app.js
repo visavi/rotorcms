@@ -23,9 +23,6 @@ $(document).ready(function(){
 
 	$("a.gallery").colorbox({rel: function(){
 		return $(this).data('group');
-	}, title: function(){
-		var url = $(this).attr('href');
-		return '<a href="' + url + '" target="_blank">Открыть</a>';
 	},
 		current: "Фото {current} из {total}",
 	});
@@ -57,6 +54,21 @@ function uploadAvatar() {
 		url:       '/user/image',
 		dataType:  'json',
 		resetForm: true
+	});
+
+	return false;
+}
+
+
+function createNewsComment() {
+
+	$('#createComment').ajaxSubmit({
+		target:        '#result',
+		beforeSubmit:  showRequest,
+		success:       showResponse,
+		url:       '/news/comment',
+		dataType:  'json',
+		clearForm: true
 	});
 
 	return false;
