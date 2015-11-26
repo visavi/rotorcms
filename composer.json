@@ -43,7 +43,7 @@
 		]
 	},
 	"config": {
-		"preferred-install": "dist"
+		"preferred-install": "dev"
 	},
 	"minimum-stability": "stable"
 }
