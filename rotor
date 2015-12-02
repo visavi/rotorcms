@@ -14,11 +14,11 @@ class RotorApplication extends PhinxApplication
 {
 	public function doRun(InputInterface $input, OutputInterface $output)
 	{
-		$output->writeln('<info>RotorCMS by Vantuz - http://visavi.net.</info> version <comment>5.0 dev</comment>');
+		$output->writeln('<info>RotorCMS by Vantuz - http://visavi.net.</info> version <comment>5.0</comment>');
 		parent::doRun($input, $output);
 	}
 }
 $app = new RotorApplication;
 //$app->setName('RotorCMS by Vantuz - http://visavi.net.');
-//$app->setVersion('5.0 dev');
+//$app->setVersion('5.0');
 $app->run();

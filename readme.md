@@ -31,7 +31,7 @@ RotorCMS 5.0 dev
 
 7. Выполните миграции с помощью консольной команды `php rotor migrate`
 
-8. Вручную залейте данные из файла app/database/data.sql
+8. Выполните заполнение БД с помощью команды `php rotor seed:run` Вручную залейте данные из файла app/database/data.sql
 
 9. Зарегистрируйтесь и назначьте права `admin` в таблице users поле level
 
@@ -45,11 +45,17 @@ MySQL 5.6 необходим для полнотектового поиска в
 
 ### Миграции
 
+Текущий статус миграции `php rotor status`
+
 Создание миграций `php rotor create CreateTestTable`
 
-Выполнение миграций `php rotor migrate`
+Выполнение миграций `php rotor migrate` или `php rotor migrate -t 20110103081132` для отдельной миграции
 
-Откат последней миграции `php rotor rollback`
+Откат последней миграции `php rotor rollback` или `php rotor rollback -t 20120103083322` для отдельной миграции
+
+Создание сида `php rotor seed:create UserSeeder`
+
+Выполнение сида `php rotor seed:run` или `php rotor seed:run -s UserSeeder` для отдельного сида
 
 ### License
 

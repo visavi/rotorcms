@@ -2,6 +2,7 @@
 return [
 	'paths' => [
 		'migrations' => 'app/database/migrations',
+		'seeds' => 'app/database/seeds',
 	],
 	'environments' => [
 		'default_migration_table' => 'migrations',
