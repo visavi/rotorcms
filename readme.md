@@ -1,4 +1,4 @@
-RotorCMS 5.0 dev
+RotorCMS 5.0
 =========
 
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/visavi/rotorcms?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
@@ -31,7 +31,7 @@ RotorCMS 5.0 dev
 
 7. Выполните миграции с помощью консольной команды `php rotor migrate`
 
-8. Выполните заполнение БД с помощью команды `php rotor seed:run` Вручную залейте данные из файла app/database/data.sql
+8. Выполните заполнение БД с помощью команды `php rotor seed:run`
 
 9. Зарегистрируйтесь и назначьте права `admin` в таблице users поле level
 
