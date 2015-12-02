@@ -27,9 +27,9 @@
 		"altorouter/altorouter": "~1.1",
 		"swiftmailer/swiftmailer": "~5.4",
 		"abeautifulsite/simpleimage": "~2.5",
-		"php-curl-class/php-curl-class": "~3.5",
 		"ircmaxell/password-compat": "dev-master",
 		"mobiledetect/mobiledetectlib": "dev-master",
+		"php-curl-class/php-curl-class": "dev-master",
 		"php-activerecord/php-activerecord": "dev-1.1-dev"
 	},
 	"require-dev": {
