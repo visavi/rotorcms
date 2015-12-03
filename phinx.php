@@ -9,6 +9,8 @@ return [
 		'default_database' => 'default',
 		'default' => [
 			'adapter' => 'mysql',
+			'charset' => 'utf8',
+			'collation' => 'utf8_unicode_ci',
 			'host' => $_ENV['DB_HOST'],
 			'name' => $_ENV['DB_DATABASE'],
 			'user' => $_ENV['DB_USERNAME'],
