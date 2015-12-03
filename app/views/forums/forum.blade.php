@@ -5,18 +5,13 @@
 
 @section('content')
 
-	<div class="row">
-		<div class="col-sm-10">
-			<h1>{{ $forum->title }}</h1>
+	@if (!$forum->closed)
+		<div class="pull-right">
+			<a class="btn btn-success" href="/forum/create?forum={{ $forum->id }}">Создать тему</a>
 		</div>
+	@endif
 
-		<div class="col-sm-2">
-			@if (!$forum->closed)
-				<a class="btn btn-success" href="/forum/create?forum={{ $forum->id }}">Создать тему</a>
-			@endif
-		</div>
-	</div>
-
+	<h1>{{ $forum->title }}</h1>
 
 <?php /*if ($forum->children && empty($start)): ?>
 	<?php foreach ($forum->children as $subforum): ?>

@@ -36,7 +36,7 @@ Class ForumController Extends BaseController {
 
 		$crumbs = ['/forum' => 'Форум', $forum->title];
 		if ($forum->parent_id) {
-			array_splice($crumbs, 1, 0, ['/forum/'.$forum->parent_id => $forum->parent()->title]);
+			$crumbs = ['/forum' => 'Форум', '/forum/'.$forum->parent_id => $forum->parent()->title, $forum->title];
 		}
 
 		App::view('forums.forum', compact('forum', 'topics', 'page', 'crumbs'));
