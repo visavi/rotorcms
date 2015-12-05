@@ -7,11 +7,11 @@ Class ForumController Extends BaseController {
 	 */
 	public function index()
 	{
-		$forums = Forum::all(array(
-			'conditions' => array('parent_id = ?', 0),
+		$forums = Forum::all([
+			'conditions' => ['parent_id = ?', 0],
 			'order' => 'sort',
-			'include' => array('children', 'topic_last', 'topic_count'),
-		));
+			'include' => ['children'/* => ['through' => 'topic_count']*/, 'topic_last', 'topic_count'],
+		]);
 
 		App::view('forums.index', compact('forums'));
 	}
@@ -72,7 +72,7 @@ Class ForumController Extends BaseController {
 
 		$crumbs = ['/forum' => 'Форум', '/forum/'.$topic->forum()->id => $topic->forum()->title, $topic->title];
 		if ($topic->forum()->parent_id) {
-			array_splice($crumbs, 1, 0, ['/forum/'.$topic->forum()->parent_id => $topic->forum()->parent()->title]);
+			$crumbs = ['/forum' => 'Форум', '/forum/'.$topic->forum()->parent_id => $topic->forum()->parent()->title, '/forum/'.$topic->forum()->id => $topic->forum()->title, $topic->title];
 		}
 
 		App::view('forums.topic', compact('topic', 'posts', 'page', 'crumbs'));
@@ -196,7 +196,7 @@ Class ForumController Extends BaseController {
 				if ($bookmark = Bookmark::find_by_topic_id_and_user_id($topic_id, User::get('id'))) {
 
 					if ($bookmark->delete())
-						exit(json_encode(array('status' => 'deleted')));
+						exit(json_encode(['status' => 'deleted']));
 
 				} else {
 					$bookmark = new Bookmark;
@@ -206,7 +206,7 @@ Class ForumController Extends BaseController {
 					$bookmark->posts = $topic->postCount();
 
 					if ($bookmark->save())
-						exit(json_encode(array('status' => 'added')));
+						exit(json_encode(['status' => 'added']));
 				}
 			}
 		}

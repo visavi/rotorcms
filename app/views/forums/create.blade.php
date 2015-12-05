@@ -15,14 +15,20 @@
 				<div class="form-group{{ App::hasError('forum_id') }}">
 					<label for="inputForumId">Форум</label>
 					<select class="form-control" id="inputForumId" name="forum_id">
-						@foreach ($forums as $key => $forum)
-							<?php $selected = ($key ==  App::getInput('forum_id', Request::input('forum'))) ? ' selected' : ''; ?>
-							<option value="{{ $key }}"{{ $selected }}>{{ $forum }}</option>
+						@foreach ($forums as $forum)
+							<?php $selected = ($forum->id ==  App::getInput('forum_id', Request::input('forum'))) ? ' selected' : ''; ?>
+							<option value="{{ $forum->id }}"{{ $selected }}>{{ $forum->title }}</option>
+							@if ($forum->children)
+								@foreach($forum->children as $subforum)
+									<?php if ($subforum->closed) continue; ?>
+									<?php $selected = ($subforum->id ==  App::getInput('forum_id', Request::input('forum'))) ? ' selected' : ''; ?>
+									<option value="{{ $subforum->id }}"{{ $selected }}> - {{ $subforum->title }}</option>
+								@endforeach
+							@endif
 						@endforeach
 					</select>
 					{!! App::textError('forum_id') !!}
 				</div>
-
 
 				<div class="form-group{{ App::hasError('title') }}">
 					<label for="inputTitle">Название темы</label>

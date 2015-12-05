@@ -33,7 +33,7 @@
 		"php-activerecord/php-activerecord": "dev-1.1-dev"
 	},
 	"require-dev": {
-		"filp/whoops": "~1.1",
+		"filp/whoops": "dev-master",
 		"pear/log": "dev-master",
 		"phpunit/phpunit": "~4.0"
 	},

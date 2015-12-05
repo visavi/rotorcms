@@ -17,7 +17,7 @@ class Forum extends BaseModel {
 
 	static $has_one = [
 		['topic_last', 'order' => 'created_at', 'class' => 'Topic'],
-		['topic_count', 'select' => 'count(*) as count, forum_id', 'class' => 'Topic'],
+		['topic_count', 'select' => 'count(*) as count, forum_id', 'group' => 'forum_id', 'class' => 'Topic'],
 	];
 
 	/**
@@ -53,13 +53,13 @@ class Forum extends BaseModel {
 	}
 
 	/**
-	 * Список всех раздело
-	 * @return array ассоциативный массив регионов
+	 * Список всех разделов
+	 * @return array ассоциативный массив разделов
 	 */
 	public static function getAll()
 	{
-		$forums = self::all(['conditions' => ['parent_id = ? AND closed = ?', 0, 0], 'order' => 'sort', 'include' => ['children']]);
+		return self::all(['conditions' => ['parent_id = ? AND closed = ?', 0, 0], 'order' => 'sort', 'include' => ['children']]);
 
-		return App::arrayAssoc($forums, 'id', 'title');
+		//return App::arrayAssoc($forums, 'id', 'title');
 	}
 }
