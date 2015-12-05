@@ -4,13 +4,12 @@ class BaseModel extends ActiveRecord\Model
 {
 	/**
 	 * Возвращает все ошибки в виде строки
-	 * @param string $separator разделитель между ошибками
-	 * @return string ошибки в виде строки
+	 * @return array Список ошибок
 	 */
 	public function getErrors() {
 
-		if ($this->errors->size()) {
-			$result = array();
+		if ($this->errors && $this->errors->size()) {
+			$result = [];
 			$raw_errors = $this->errors->get_raw_errors();
 			foreach ($raw_errors as $attribute => $errors) {
 				foreach ($errors as $error) {
@@ -20,13 +19,13 @@ class BaseModel extends ActiveRecord\Model
 
 			return $result;
 		}
-		return false;
+		return [];
 	}
 
 	/**
 	 * Подсвечивает текстовый блок красным цветом
-	 * @param  string  $attribute имя поля
-	 * @return string класс ошибки
+	 * @param  string $attribute имя поля
+	 * @return string CSS-класс ошибки
 	 */
 	public function hasError($attribute)
 	{
@@ -35,8 +34,8 @@ class BaseModel extends ActiveRecord\Model
 
 	/**
 	 * Выводит блок с текстом ошибки
-	 * @param  string  $attribute имя поля
-	 * @return string  блоки ошибки
+	 * @param  string $attribute имя поля
+	 * @return string Блоки ошибки
 	 */
 	public function textError($attribute)
 	{

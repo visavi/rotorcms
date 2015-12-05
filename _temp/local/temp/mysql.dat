@@ -1,7 +1,0 @@
-[info] SHOW COLUMNS FROM `setting` [Apr 24 17:42:55]
-[info] SELECT * FROM `setting` [Apr 24 17:42:55]
-[info] SHOW COLUMNS FROM `users` [Apr 24 17:42:55]
-[info] SELECT * FROM `users` WHERE `id` IN(?) LIMIT 0,1 [Apr 24 17:42:55]
-[info] array (
-  0 => 1,
-) [Apr 24 17:42:55]

@@ -121,7 +121,7 @@ Class ForumController Extends BaseController {
 			$topic->forum_id = Request::input('forum_id');
 			$topic->title = Request::input('title');
 			$topic->user_id = User::get('id');
-			$topic->save();
+			$topicSave = $topic->save();
 
 			$post = new Post;
 			$post->token = Request::input('token', true);
@@ -132,13 +132,13 @@ Class ForumController Extends BaseController {
 			$post->ip = App::getClientIp();
 			$post->brow = App::getUserAgent();
 
-			if ($post->save()) {
+			if ($topicSave && $post->save()) {
 				$connection->commit();
 				App::setFlash('success', 'Тема успешно создана!');
 				App::redirect('/topic/'.$topic->id);
 			} else {
 				$connection->rollback();
-				App::setFlash('danger', $post->getErrors());
+				App::setFlash('danger', array_merge($post->getErrors(), $topic->getErrors()));
 				App::setInput($_POST);
 			}
 		}
