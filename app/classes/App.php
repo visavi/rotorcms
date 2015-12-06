@@ -421,9 +421,11 @@ class App
 	 * Определение браузера
 	 * @return string браузер и версия браузера
 	 */
-	public static function getUserAgent()
+	public static function getUserAgent($userAgent = null)
 	{
 		$browser = new Browser();
+		if ($userAgent) $browser->setUserAgent($userAgent);
+
 		$brow = $browser->getBrowser();
 		$version = implode('.', array_slice(explode('.', $browser->getVersion()), 0, 2));
 		return $version == 'unknown' ? $brow : $brow.' '.$version;

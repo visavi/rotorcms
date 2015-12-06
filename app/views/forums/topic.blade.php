@@ -5,21 +5,23 @@
 
 @section('content')
 
-	<h1>{{ $topic->title }}</h1>
-
 	@if (User::check())
-		<a href="#" onclick="return changeBookmark(this)" data-id="{{ $topic->id }}" data-token="{{ $_SESSION['token'] }}">{{ $topic->isBookmarked(User::get('id')) ? 'Из закладок' : 'В закладки' }}</a>
+		<div class="pull-right">
+			<a class="label label-info" href="#" onclick="return changeBookmark(this)" data-id="{{ $topic->id }}" data-token="{{ $_SESSION['token'] }}">{{ $topic->isBookmarked(User::get('id')) ? 'Из закладок' : 'В закладки' }}</a>
+		</div>
 	@endif
 
+	<h1>{{ $topic->title }}</h1>
+
 	@if ($topic->mods)
-		<div class="bg-success">
+		<div class="bg-success padding" style="margin-bottom: 10px">
 			Модераторы темы:
 			{{ $topic->getModerators() }}
 		</div>
 	@endif
 
 	@if ($topic->note)
-		<div class="bg-warning">{!! App::bbCode(e($topic->note)) !!}</div>
+		<div class="bg-warning padding" style="margin-bottom: 10px"><i class="fa fa-exclamation-triangle"></i> {!! App::bbCode(e($topic->note)) !!}</div>
 	@endif
 
 

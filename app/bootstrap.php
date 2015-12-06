@@ -61,7 +61,7 @@ ActiveRecord\Config::initialize(function($cfg) {
 	//$cfg->set_cache('memcache://localhost', ['expire' => 60]);
 
 	if (env('APP_DEBUG')) {
-		$conf = ['append' => false, 'lineFormat' => '[%3$s] %4$s [%1$s]'];
+		$conf = ['append' => false, 'mode' => '0666', 'lineFormat' => '[%3$s] %4$s [%1$s]'];
 		$logger = Log::singleton('file', STORAGE.'/mysql.dat', null, $conf);
 
 		$cfg->set_logger($logger);

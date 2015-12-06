@@ -35,6 +35,7 @@ class UsersSeeder extends AbstractSeed
 			];
 		}
 
+		User::connection()->query('TRUNCATE users');
 		$table = $this->table('users');
 		$table->insert($data)->save();
 	}
