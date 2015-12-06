@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>Rotorcms by visavi</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>Rotorcms</h1>
+        <h2>RotorCMS - функционально законченная система управления контентом с открытым кодом написанная на PHP</h2>
+        <a href="https://github.com/visavi/rotorcms" class="button"><small>View project on</small> GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>
+<a id="rotorcms-50" class="anchor" href="#rotorcms-50" aria-hidden="true"><span class="octicon octicon-link"></span></a>RotorCMS 5.0</h1>
+
+<p><a href="https://gitter.im/visavi/rotorcms?utm_source=badge&amp;utm_medium=badge&amp;utm_campaign=pr-badge&amp;utm_content=badge"><img src="https://badges.gitter.im/Join%20Chat.svg" alt="Gitter"></a>
+<a href="https://packagist.org/packages/visavi/rotorcms"><img src="https://poser.pugx.org/visavi/rotorcms/v/stable" alt="Latest Stable Version"></a>
+<a href="https://packagist.org/packages/visavi/rotorcms"><img src="https://poser.pugx.org/visavi/rotorcms/downloads" alt="Total Downloads"></a>
+<a href="https://packagist.org/packages/visavi/rotorcms"><img src="https://poser.pugx.org/visavi/rotorcms/v/unstable" alt="Latest Unstable Version"></a>
+<a href="https://packagist.org/packages/visavi/rotorcms"><img src="https://poser.pugx.org/visavi/rotorcms/license" alt="License"></a>
+<a href="https://travis-ci.org/visavi/rotorcms"><img src="https://travis-ci.org/visavi/rotorcms.svg" alt="Build Status"></a></p>
+
+<p>Добро пожаловать!
+Мы благодарим Вас за то, что Вы решили использовать наш скрипт для своего сайта. RotorCMS - функционально законченная система управления контентом с открытым кодом написанная на PHP. Она использует базу данных MySQL для хранения содержимого вашего сайта.</p>
+
+<p><strong>RotorCMS</strong> является гибкой, мощной и интуитивно понятной системой с минимальными требованиями к хостингу, высоким уровнем защиты и является превосходным выбором для построения сайта любой степени сложности</p>
+
+<p>Главной особенностью RotorCMS является низкая нагрузка на системные ресурсы и высокая скорость работы, даже при очень большой аудитории сайта нагрузка на сервер будет минимальной, и вы не будете испытывать каких-либо проблем с отображением информации.</p>
+
+<h3>
+<a id="Действия-при-первой-установке-движка-rotorcms" class="anchor" href="#%D0%94%D0%B5%D0%B9%D1%81%D1%82%D0%B2%D0%B8%D1%8F-%D0%BF%D1%80%D0%B8-%D0%BF%D0%B5%D1%80%D0%B2%D0%BE%D0%B9-%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B5-%D0%B4%D0%B2%D0%B8%D0%B6%D0%BA%D0%B0-rotorcms" aria-hidden="true"><span class="octicon octicon-link"></span></a>Действия при первой установке движка RotorCMS</h3>
+
+<ol>
+<li><p>Настройте сайт с учетом того что корневая директория <code>public</code>, а все остальное лежит ниже корня сайта и недоступно по прямому пути</p></li>
+<li><p>Установите и настройте менеджер зависимостей <a href="https://getcomposer.org/">Composer</a>. Его можно установить глобально и выполнить из консоли команду <code>composer update</code> или скачать архив composer.phar и выполнить команду php composer.phar update</p></li>
+<li><p>Установите rotorcms выполнив команду в консоле <code>composer create-project visavi/rotorcms .</code></p></li>
+<li><p>Создайте базу данных и пользователя для нее из панели управления на вашем сервере, во время установки скрипта необходимо будет вписать эти данные для соединения в файл .env</p></li>
+<li><p>Настройте конфигурационный файл .env, окружение, данные для доступа к БД, логин и email администратора и данные для отправки писем, sendmail или smtp</p></li>
+<li><p>Если устанавливаете CMS вручную, то переименуйте конфигурационный файл .env.example в .env (Файл не отслеживается git'ом, поэтому на сервере и на локальном сайте могут находиться 2 разных файла с разными окружениями APP_ENV=production, development или local)</p></li>
+<li><p>Выполните миграции с помощью консольной команды <code>php rotor migrate</code></p></li>
+<li><p>Выполните заполнение БД с помощью команды <code>php rotor seed:run</code></p></li>
+<li><p>Зарегистрируйтесь и назначьте права <code>admin</code> в таблице users поле level</p></li>
+</ol>
+
+<p>После завершения установки вы сможете посмотреть работу скрипта на главной странице вашего сайта</p>
+
+<h3>
+<a id="Требования" class="anchor" href="#%D0%A2%D1%80%D0%B5%D0%B1%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F" aria-hidden="true"><span class="octicon octicon-link"></span></a>Требования</h3>
+
+<p>Минимальная версия PHP необходимая для работы движка PHP 5.4 и MySQL 5.6</p>
+
+<p>MySQL 5.6 необходим для полнотектового поиска в БД, поэтому если версия ниже требуемой, индексы Fulltext не будут добавлены в некотрые таблицы. Позже их можно добавить вручную</p>
+
+<h3>
+<a id="Миграции-и-заполнение-БД" class="anchor" href="#%D0%9C%D0%B8%D0%B3%D1%80%D0%B0%D1%86%D0%B8%D0%B8-%D0%B8-%D0%B7%D0%B0%D0%BF%D0%BE%D0%BB%D0%BD%D0%B5%D0%BD%D0%B8%D0%B5-%D0%91%D0%94" aria-hidden="true"><span class="octicon octicon-link"></span></a>Миграции и заполнение БД</h3>
+
+<p>Текущий статус миграции <code>php rotor status</code></p>
+
+<p>Создание миграций <code>php rotor create CreateTestTable</code></p>
+
+<p>Выполнение миграций <code>php rotor migrate</code> или <code>php rotor migrate -t 20110103081132</code> для отдельной миграции</p>
+
+<p>Откат последней миграции <code>php rotor rollback</code> или <code>php rotor rollback -t 20120103083322</code> для отдельной миграции</p>
+
+<p>Создание сида <code>php rotor seed:create UserSeeder</code></p>
+
+<p>Выполнение сида <code>php rotor seed:run</code> или <code>php rotor seed:run -s UserSeeder</code> для отдельного сида</p>
+
+<h3>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h3>
+
+<p>The RotorCMS is open-sourced software licensed under the <a href="http://opensource.org/licenses/GPL-3.0">GPL-3.0 license</a></p>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/visavi/rotorcms/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/visavi/rotorcms/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/visavi/rotorcms"></a> is maintained by <a href="https://github.com/visavi">visavi</a>.</p>
+
+          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+            <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-71096615-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
