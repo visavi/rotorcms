@@ -93,11 +93,11 @@ class Topic extends BaseModel {
 	public function getIcon() {
 
 		if ($this->closed)
-			$icon = 'glyphicon-lock';
+			$icon = 'fa-lock';
 		elseif ($this->locked)
-			$icon = 'glyphicon-pushpin';
+			$icon = 'fa-thumb-tack';
 		else
-			$icon = 'glyphicon-folder-open';
+			$icon = 'fa-folder-open';
 
 		return $icon;
 	}

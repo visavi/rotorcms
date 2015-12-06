@@ -64,7 +64,7 @@ class SettingsSeeder extends AbstractSeed
 			],
 		];
 
-		$settings = $this->table('settings');
-		$settings->insert($data)->save();
+		$table = $this->table('settings');
+		$table->insert($data)->save();
 	}
 }

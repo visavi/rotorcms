@@ -9,26 +9,33 @@ class UsersSeeder extends AbstractSeed
 	 */
 	public function run()
 	{
-		$data = [
-			[
-				'login' => 'admin',
-				'password' => password_hash('admin', PASSWORD_BCRYPT),
-				'email' => 'admin@site.ru',
-				'gender' => 'male',
-				'level' => 'admin',
-				'created_at' => Carbon::now(),
-			],
-			[
-				'login' => 'demo',
-				'password' => password_hash('demo', PASSWORD_BCRYPT),
-				'email' => 'demo@site.ru',
-				'gender' => 'female',
-				'level' => 'user',
-				'created_at' => Carbon::now(),
-			],
-		];
+		$data = [];
+		$genders = ['male', 'female'];
+		$logins = ['admin', 'moder', 'user', 'guest', 'banned'];
 
-		$settings = $this->table('users');
-		$settings->insert($data)->save();
+		$faker = Faker\Factory::create('ru_RU');
+
+		foreach ($logins as $login) {
+
+			$gender = $genders[array_rand($genders)];
+
+			$data[] = [
+				'login' => $login,
+				'password' => password_hash($login, PASSWORD_BCRYPT),
+				'email' => $faker->freeEmail,
+				'gender' => $gender,
+				'level' => $login,
+				'name' => $faker->firstName($gender),
+				'country' => $faker->country,
+				'city' => $faker->city,
+				'info' => $faker->realText(rand(30, 100)),
+				'phone' => $faker->phoneNumber,
+				'birthday' => $faker->date('d-m-Y'),
+				'created_at' => $faker->dateTimeBetween('-3 year')->format('Y-m-d H:i:s'),
+			];
+		}
+
+		$table = $this->table('users');
+		$table->insert($data)->save();
 	}
 }

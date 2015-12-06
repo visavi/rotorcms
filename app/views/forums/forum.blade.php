@@ -45,9 +45,8 @@
 	@if ($topics)
 		@foreach ($topics as $topic)
 			<h5 id="topic_{{ $topic->id }}">
-
 				<a class="touch-link" href="/topic/{{ $topic->id }}">
-					<span class="glyphicon {{ $topic->getIcon() }}"></span>
+					<i class="fa {{ $topic->getIcon() }}"></i>
 					{{ $topic->title }}
 					<span class="badge">{{ $topic->postCount() }}</span>
 				</a>
