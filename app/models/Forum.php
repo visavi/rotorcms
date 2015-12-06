@@ -16,7 +16,7 @@ class Forum extends BaseModel {
 	];
 
 	static $has_one = [
-		['topic_last', 'order' => 'created_at', 'class' => 'Topic'],
+		['topic_last', 'order' => 'created_at', 'group' => 'forum_id', 'class' => 'Topic'],
 		['topic_count', 'select' => 'count(*) as count, forum_id', 'group' => 'forum_id', 'class' => 'Topic'],
 		['post_count', 'select' => 'count(*) as count, forum_id', 'group' => 'forum_id', 'class' => 'Post'],
 	];

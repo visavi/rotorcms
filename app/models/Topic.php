@@ -18,8 +18,8 @@ class Topic extends BaseModel {
 	];
 
 	static $has_one = [
-		['post_count', 'select' => 'count(*) as count, topic_id', 'class' => 'Post'],
-		['post_last', 'order' => 'created_at DESC', 'class' => 'Post'],
+		['post_count', 'select' => 'count(*) as count, topic_id', 'group' => 'topic_id', 'class' => 'Post'],
+		['post_last', 'order' => 'created_at DESC', 'group' => 'forum_id', 'class' => 'Post'],
 	];
 
 	/* Валидаторы */
