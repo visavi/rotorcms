@@ -10,7 +10,11 @@ Class ForumController Extends BaseController {
 		$forums = Forum::all([
 			'conditions' => ['parent_id = ?', 0],
 			'order' => 'sort',
-			'include' => ['children'/* => ['through' => 'topic_count']*/, 'topic_last', 'topic_count'],
+			'include' => [
+				'topic_count',
+				'children' => ['post_count', 'topic_count'],
+				'topic_last' => ['post_last' => ['user']]
+			],
 		]);
 
 		App::view('forums.index', compact('forums'));

@@ -18,6 +18,7 @@ class Forum extends BaseModel {
 	static $has_one = [
 		['topic_last', 'order' => 'created_at', 'class' => 'Topic'],
 		['topic_count', 'select' => 'count(*) as count, forum_id', 'group' => 'forum_id', 'class' => 'Topic'],
+		['post_count', 'select' => 'count(*) as count, forum_id', 'group' => 'forum_id', 'class' => 'Post'],
 	];
 
 	/**
@@ -50,6 +51,14 @@ class Forum extends BaseModel {
 	 */
 	public function topicCount() {
 		return $this->topic_count ? $this->topic_count->count : 0;
+	}
+
+	/**
+	 * Количество сообщений в разделе
+	 * @return integer количество тем в разделе
+	 */
+	public function postCount() {
+		return $this->post_count ? $this->post_count->count : 0;
 	}
 
 	/**

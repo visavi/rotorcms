@@ -33,7 +33,7 @@
 					<h5>
 						<i class="fa fa-folder-open"></i>
 						<a href="forum/{{ $subforum->id }}">{{ $subforum->title }}</a>
-						<span class="badge">{{ $subforum->topicCount() }}/{{ $subforum->topicLast()->postCount() }}</span>
+						<span class="badge">{{ $subforum->topicCount() }}/{{ $subforum->postCount() }}</span>
 					</h5>
 				@endforeach
 			@endif
