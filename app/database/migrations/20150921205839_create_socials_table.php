@@ -10,7 +10,7 @@ class CreateSocialsTable extends AbstractMigration
 	public function change()
 	{
 		$table = $this->table('socials');
-		$table->addColumn('user_id', 'integer', ['signed' => false])
+		$table->addColumn('user_id', 'integer')
 			->addColumn('network', 'string')
 			->addColumn('uid', 'string')
 			->addIndex('user_id')

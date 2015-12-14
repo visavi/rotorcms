@@ -10,9 +10,8 @@ class CreateBookmarksTable extends AbstractMigration
 	public function change()
 	{
 		$table = $this->table('bookmarks');
-		$table->addColumn('forum_id', 'integer', ['signed' => false])
-			->addColumn('topic_id', 'integer', ['signed' => false])
-			->addColumn('user_id', 'integer', ['signed' => false])
+		$table->addColumn('topic_id', 'integer')
+			->addColumn('user_id', 'integer')
 			->addColumn('posts', 'integer')
 			->addColumn('created_at', 'timestamp')
 			->addIndex('forum_id')

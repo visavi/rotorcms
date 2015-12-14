@@ -10,9 +10,9 @@ class CreatePostsTable extends AbstractMigration
 	public function change()
 	{
 		$table = $this->table('posts');
-		$table->addColumn('forum_id', 'integer', ['signed' => false])
-			->addColumn('topic_id', 'integer', ['signed' => false])
-			->addColumn('user_id', 'integer', ['signed' => false])
+		$table->addColumn('forum_id', 'integer')
+			->addColumn('topic_id', 'integer')
+			->addColumn('user_id', 'integer')
 			->addColumn('text', 'text')
 			->addColumn('ip', 'string', ['limit' => 15])
 			->addColumn('brow', 'string', ['limit' => 25])

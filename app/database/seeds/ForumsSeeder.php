@@ -32,7 +32,7 @@ class ForumsSeeder extends AbstractSeed
 		// Заполнение тем
 		$data = [];
 
-		for ($i = 0; $i < 50; $i++) {
+		for ($i = 0; $i < 100; $i++) {
 			$data[] = [
 				'forum_id' => rand(1, 15),
 				'user_id' => rand(1, 5),
@@ -51,7 +51,7 @@ class ForumsSeeder extends AbstractSeed
 		// Заполнение сообщений
 		$data = [];
 
-		for ($i = 0; $i < 500; $i++) {
+		for ($i = 0; $i < 1000; $i++) {
 			$data[] = [
 				'forum_id' => rand(1, 15),
 				'topic_id' => rand(1, 50),

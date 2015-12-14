@@ -10,7 +10,7 @@ class CreateNewsTable extends AbstractMigration
 	public function change()
 	{
 		$table = $this->table('news');
-		$table->addColumn('user_id', 'integer', ['signed' => false])
+		$table->addColumn('user_id', 'integer')
 			->addColumn('title', 'string', ['limit' => 50])
 			->addColumn('text', 'text')
 			->addColumn('image', 'string', ['limit' => 50, 'null' => true])

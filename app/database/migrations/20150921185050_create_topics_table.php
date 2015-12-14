@@ -12,8 +12,8 @@ class CreateTopicsTable extends AbstractMigration
 	public function change()
 	{
 		$table = $this->table('topics');
-		$table->addColumn('forum_id', 'integer', ['signed' => false])
-			->addColumn('user_id', 'integer', ['signed' => false])
+		$table->addColumn('forum_id', 'integer')
+			->addColumn('user_id', 'integer')
 			->addColumn('title', 'string', ['limit' => 50])
 			->addColumn('closed', 'boolean', ['default' => false])
 			->addColumn('locked', 'boolean', ['default' => false])
@@ -23,7 +23,7 @@ class CreateTopicsTable extends AbstractMigration
 			->addColumn('created_at', 'timestamp')
 			->addIndex('forum_id')
 			->addIndex('locked')
-			->addIndex('created_at')
+			->addIndex('updated_at')
 			->create();
 
 			// Удалить эту строку если версия MySQL ниже 5.6

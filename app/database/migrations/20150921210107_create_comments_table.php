@@ -10,9 +10,9 @@ class CreateCommentsTable extends AbstractMigration
 	public function change()
 	{
 		$table = $this->table('comments');
-		$table->addColumn('user_id', 'integer', ['signed' => false])
-			->addColumn('relate_type', 'enum', ['values' => ['news', 'blog', 'down', 'gallery']])
-			->addColumn('relate_id', 'integer', ['signed' => false])
+		$table->addColumn('user_id', 'integer')
+			->addColumn('relate_type', 'enum', ['values' => ['news']])
+			->addColumn('relate_id', 'integer')
 			->addColumn('text', 'text')
 			->addColumn('ip', 'string', ['limit' => 15])
 			->addColumn('brow', 'string', ['limit' => 25])
