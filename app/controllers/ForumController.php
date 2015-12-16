@@ -160,10 +160,11 @@ Class ForumController Extends BaseController {
 
 			if ($topicSave && $post->save()) {
 
-				$topic->post_last_id = $post->id;
-				$topic->save();
+				$post->topic->update_attribute('post_last_id', $post->id);
+				$post->topic->forum->update_attribute('topic_last_id', $topic->id);
 
 				$connection->commit();
+
 				App::setFlash('success', 'Тема успешно создана!');
 				App::redirect('/topic/'.$topic->id);
 			} else {
@@ -196,8 +197,8 @@ Class ForumController Extends BaseController {
 
 		if ($post->save()) {
 
-			$topic->post_last_id = $post->id;
-			$topic->save(false);
+			$post->topic->update_attribute('post_last_id', $post->id);
+			$post->topic->forum->update_attribute('topic_last_id', $topic->id);
 
 			App::setFlash('success', 'Сообщение успешно добавлено!');
 		} else {

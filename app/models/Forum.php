@@ -13,10 +13,10 @@ class Forum extends BaseModel {
 
 	static $belongs_to = [
 		['parent', 'foreign_key' => 'parent_id', 'class' => 'Forum'],
+		['topic_last', 'foreign_key' => 'topic_last_id', 'class' => 'Topic'],
 	];
 
 	static $has_one = [
-		['topic_last', 'order' => 'created_at', 'group' => 'forum_id', 'class' => 'Topic'],
 		['topic_count', 'select' => 'count(*) as count, forum_id', 'group' => 'forum_id', 'class' => 'Topic'],
 		['post_count', 'select' => 'count(*) as count, forum_id', 'group' => 'forum_id', 'class' => 'Post'],
 	];
