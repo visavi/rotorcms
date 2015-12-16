@@ -13,13 +13,13 @@ class Topic extends BaseModel {
 	];
 
 	static $belongs_to = [
-		['forum'],
-		['user'],
+		'forum',
+		'user',
+		['post_last', 'foreign_key' => 'post_last_id', 'class' => 'Post'],
 	];
 
 	static $has_one = [
 		['post_count', 'select' => 'count(*) as count, topic_id', 'group' => 'topic_id', 'class' => 'Post'],
-		['post_last', 'order' => 'created_at DESC', 'group' => 'forum_id', 'class' => 'Post'],
 	];
 
 	/* Валидаторы */
@@ -34,15 +34,15 @@ class Topic extends BaseModel {
 		['user_id', 'greater_than' => 0, 'only_integer' => true, 'message' => 'Пользователь не авторизован'],
 	];
 
-	public function validate() {
-
+	public function validate()
+	{
 		//  Проверка токена
 		if ($this->token && $this->token != $_SESSION['token']) {
 			$this->errors->add('token', 'Неверный идентификатор сессии, повторите действие!');
 		}
 
 		// Проверка существования раздела
-		if (!$this->forum) {
+		if (! $this->forum) {
 			$this->errors->add('forum', 'Раздела для новой темы не существует!');
 		}
 
@@ -58,7 +58,8 @@ class Topic extends BaseModel {
 	 * Количество сообщений в теме
 	 * @return integer количество сообщений в теме
 	 */
-	public function postCount() {
+	public function postCount()
+	{
 		return $this->post_count ? $this->post_count->count : 0;
 	}
 
@@ -66,7 +67,8 @@ class Topic extends BaseModel {
 	 * Последнее сообщение в теме
 	 * @return object Post модель сообщений
 	 */
-	public function postLast() {
+	public function postLast()
+	{
 		return $this->post_last ? $this->post_last : new Post;
 	}
 
@@ -74,7 +76,8 @@ class Topic extends BaseModel {
 	 * Данные пользователя
 	 * @return object User модель пользователей
 	 */
-	public function user() {
+	public function user()
+	{
 		return $this->user ? $this->user : new User;
 	}
 
@@ -82,7 +85,8 @@ class Topic extends BaseModel {
 	 * Данные форума
 	 * @return object Forum модель форума
 	 */
-	public function forum() {
+	public function forum()
+	{
 		return $this->forum ? $this->forum : new Forum;
 	}
 
@@ -90,8 +94,8 @@ class Topic extends BaseModel {
 	 * Выводит определенную иконку в зависимости от статуса
 	 * @return string Иконка топика
 	 */
-	public function getIcon() {
-
+	public function getIcon()
+	{
 		if ($this->closed)
 			$icon = 'fa-lock';
 		elseif ($this->locked)
@@ -106,8 +110,8 @@ class Topic extends BaseModel {
 	 * Список модераторов темы
 	 * @return string  список модераторов
 	 */
-	public function getModerators() {
-
+	public function getModerators()
+	{
 		$moderators = null;
 		$mods = explode(',', $this->mods);
 		//$topics['is_moder'] = (in_array($log, $topics['curator'])) ? 1 : 0;
@@ -124,7 +128,8 @@ class Topic extends BaseModel {
 	 * @param  integer  $user_id id пользователя
 	 * @return boolean  имеется ли тема в закладках
 	 */
-	public function isBookmarked($user_id) {
+	public function isBookmarked($user_id)
+	{
 		return Bookmark::exists([
 			'conditions' => ['topic_id = ? AND user_id = ?', $this->id, $user_id],
 		]);

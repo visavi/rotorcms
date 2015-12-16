@@ -19,6 +19,7 @@ class CreateTopicsTable extends AbstractMigration
 			->addColumn('locked', 'boolean', ['default' => false])
 			->addColumn('mods', 'string', ['limit' => 100, 'null' => true])
 			->addColumn('note', 'string', ['null' => true])
+			->addColumn('post_last_id', 'integer', ['null' => true])
 			->addColumn('updated_at', 'timestamp')
 			->addColumn('created_at', 'timestamp')
 			->addIndex('forum_id')

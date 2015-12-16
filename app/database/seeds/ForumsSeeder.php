@@ -9,6 +9,7 @@ class ForumsSeeder extends AbstractSeed
 	 */
 	public function run()
 	{
+		Forum::connection()->query('SET FOREIGN_KEY_CHECKS = 0');
 		$faker = Faker\Factory::create('ru_RU');
 
 		// Заполнение разделов
@@ -66,5 +67,7 @@ class ForumsSeeder extends AbstractSeed
 		Post::connection()->query('TRUNCATE posts');
 		$table = $this->table('posts');
 		$table->insert($data)->save();
+
+		Forum::connection()->query('SET FOREIGN_KEY_CHECKS = 1');
 	}
 }

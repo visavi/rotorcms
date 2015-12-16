@@ -4,11 +4,13 @@ use Phinx\Seed\AbstractSeed;
 
 class UsersSeeder extends AbstractSeed
 {
+	//public $priority = 100;
 	/**
 	 * Run Method.
 	 */
 	public function run()
 	{
+		User::connection()->query('SET FOREIGN_KEY_CHECKS = 0');
 		$data = [];
 		$genders = ['male', 'female'];
 		$logins = ['admin', 'moder', 'user', 'guest', 'banned'];
@@ -38,5 +40,7 @@ class UsersSeeder extends AbstractSeed
 		User::connection()->query('TRUNCATE users');
 		$table = $this->table('users');
 		$table->insert($data)->save();
+
+		Forum::connection()->query('SET FOREIGN_KEY_CHECKS = 1');
 	}
 }

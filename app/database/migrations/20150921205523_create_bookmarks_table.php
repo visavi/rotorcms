@@ -14,7 +14,6 @@ class CreateBookmarksTable extends AbstractMigration
 			->addColumn('user_id', 'integer')
 			->addColumn('posts', 'integer')
 			->addColumn('created_at', 'timestamp')
-			->addIndex('forum_id')
 			->addIndex('topic_id')
 			->addIndex('user_id')
 			->create();

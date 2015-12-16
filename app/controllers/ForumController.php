@@ -13,7 +13,7 @@ Class ForumController Extends BaseController {
 			'include' => [
 				'topic_count',
 				'children' => ['post_count', 'topic_count'],
-				'topic_last' => ['post_last' => ['user']]
+				'topic_last' => ['post_last' => ['user']],
 			],
 		]);
 
@@ -25,7 +25,7 @@ Class ForumController Extends BaseController {
 	 */
 	public function forum($id)
 	{
-		if (!$forum = Forum::find_by_id($id)) App::abort('default', 'Данного раздела не существует!');
+		if (! $forum = Forum::find_by_id($id)) App::abort('default', 'Данного раздела не существует!');
 
 		$total = Topic::count(['conditions' => ['forum_id = ?', $id]]);
 		$page = App::paginate(Setting::get('topics_per_page'), $total);
@@ -35,8 +35,30 @@ Class ForumController Extends BaseController {
 			'offset' => $page['offset'],
 			'limit' => $page['limit'],
 			'order' => 'updated_at desc',
-			'include' => ['forum', 'user'],
+			'include' => [
+				'forum',
+				'post_count',
+				'post_last' => ['user'],
+			],
 		]);
+
+/*		$topics = Topic::all([
+			'select' => 't.*, p.user_id post_user, p.created_at post_created',
+			'from' => 'topics as t',
+			'conditions' => ['t.forum_id = ?', $id],
+			'joins' => ['LEFT JOIN (
+					SELECT topic_id, MAX(created_at) AS max FROM posts
+					GROUP BY topic_id
+				) AS latest ON t.id = latest.topic_id
+				LEFT JOIN posts p ON p.created_at = latest.max
+				AND p.topic_id = latest.topic_id'],
+			'offset' => $page['offset'],
+			'limit' => $page['limit'],
+			'order' => 't.updated_at desc',
+			'include' => [
+				'forum',
+				'post_count',
+			],*/
 
 		$crumbs = ['/forum' => 'Форум', $forum->title];
 		if ($forum->parent_id) {
@@ -51,7 +73,7 @@ Class ForumController Extends BaseController {
 	 */
 	public function topic($id)
 	{
-		if (!$topic = Topic::find_by_id($id)) App::abort('default', 'Данной темы не существует!');
+		if (! $topic = Topic::find_by_id($id)) App::abort('default', 'Данной темы не существует!');
 
 		if (User::check()) {
 			$bookmark = Bookmark::find_by_topic_id_and_user_id($id, User::get('id'));
@@ -87,7 +109,7 @@ Class ForumController Extends BaseController {
 	 */
 	public function editPost($id)
 	{
-		if (!$post = Post::find_by_id_and_user_id($id, User::get('id'))) App::abort('default', 'Сообщение не найдено');
+		if (! $post = Post::find_by_id_and_user_id($id, User::get('id'))) App::abort('default', 'Сообщение не найдено');
 
 		if ($post->created_at < Carbon::now()->subMinutes(10)) {
 			App::abort('default', 'Редактирование невозможно, прошло более 10 мин.');
@@ -137,6 +159,10 @@ Class ForumController Extends BaseController {
 			$post->brow = App::getUserAgent();
 
 			if ($topicSave && $post->save()) {
+
+				$topic->post_last_id = $post->id;
+				$topic->save();
+
 				$connection->commit();
 				App::setFlash('success', 'Тема успешно создана!');
 				App::redirect('/topic/'.$topic->id);
@@ -157,7 +183,7 @@ Class ForumController Extends BaseController {
 	 */
 	public function createPost($id)
 	{
-		if (!$topic = Topic::find_by_id($id)) App::abort('default', 'Данной темы не существует!');
+		if (! $topic = Topic::find_by_id($id)) App::abort('default', 'Данной темы не существует!');
 
 		$post = new Post;
 		$post->token = Request::input('token', true);
@@ -169,6 +195,10 @@ Class ForumController Extends BaseController {
 		$post->brow = App::getUserAgent();
 
 		if ($post->save()) {
+
+			$topic->post_last_id = $post->id;
+			$topic->save(false);
+
 			App::setFlash('success', 'Сообщение успешно добавлено!');
 		} else {
 			App::setFlash('danger', $post->getErrors());
@@ -186,7 +216,7 @@ Class ForumController Extends BaseController {
 	 */
 	public function bookmark()
 	{
-		if (!Request::ajax()) App::redirect('/');
+		if (! Request::ajax()) App::redirect('/');
 
 		$token = Request::input('token', true);
 		$topic_id = Request::input('id');
@@ -205,7 +235,6 @@ Class ForumController Extends BaseController {
 				} else {
 					$bookmark = new Bookmark;
 					$bookmark->topic_id = $topic->id;
-					$bookmark->forum_id = $topic->forum_id;
 					$bookmark->user_id = User::get('id');
 					$bookmark->posts = $topic->postCount();
 

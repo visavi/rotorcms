@@ -4,22 +4,18 @@ class Post extends BaseModel {
 	public $token;
 	static $table_name = 'posts';
 
-	static $belongs_to = array(
-		array('forum'),
-		array('topic'),
-		array('user'),
-	);
+	static $belongs_to = ['forum', 'topic', 'user'];
 
 	/* Валидаторы */
-	static $validates_size_of = array(
+	static $validates_size_of = [
 		//$config['forumtextlength']
-		array('text', 'minimum' => 5, 'too_short' => 'Слишком короткое сообщение, минимум %d симв.'),
-		array('text', 'maximum' => 3000, 'too_long' => 'Слишком длинное сообщение, максимум %d симв.'),
-	);
+		['text', 'minimum' => 5, 'too_short' => 'Слишком короткое сообщение, минимум %d симв.'],
+		['text', 'maximum' => 3000, 'too_long' => 'Слишком длинное сообщение, максимум %d симв.'],
+	];
 
-	static $validates_numericality_of = array(
-		array('user_id', 'greater_than' => 0, 'only_integer' => true, 'message' => 'Пользователь не авторизован'),
-	);
+	static $validates_numericality_of = [
+		['user_id', 'greater_than' => 0, 'only_integer' => true, 'message' => 'Пользователь не авторизован'],
+	];
 
 
 	public function validate() {
@@ -30,12 +26,12 @@ class Post extends BaseModel {
 		}
 
 		// Проверка существования темы
-		if (!$this->topic) {
+		if (! $this->topic) {
 			$this->errors->add('topic', 'Темы для данного сообщения не существует!');
 		}
 
 		// Проверка существования раздела
-		if (!$this->forum) {
+		if (! $this->forum) {
 			$this->errors->add('forum', 'Раздела для данного сообщения не существует!');
 		}
 
