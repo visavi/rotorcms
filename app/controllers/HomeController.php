@@ -22,7 +22,7 @@ Class HomeController Extends BaseController {
 
 		$builder = new Gregwar\Captcha\CaptchaBuilder($phrase);
 		$builder->setBackgroundColor(mt_rand(220,255), mt_rand(220,255), mt_rand(220,255));
-		$builder->build()->output();
+		$builder->setDistortion(false)->build()->output();
 
 		$_SESSION['captcha'] = $builder->getPhrase();
 	}
