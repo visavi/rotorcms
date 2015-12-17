@@ -42,15 +42,15 @@ Class HomeController Extends BaseController {
 
 			$spam = Spam::first(['conditions' => ['relate_type = ? AND relate_id = ?', $relate_type, $relate_id]]);
 
-			if (!$spam) {
-				$spam = new Spam;
-				$spam->relate_type = $relate_type;
-				$spam->relate_id = $relate_id;
-				$spam->user_id = User::get('id');
-				if ($spam->save())
-					exit(json_encode(['status' => 'added']));
-			} else {
-				exit(json_encode(['status' => 'exists']));
+			if ($spam) exit(json_encode(['status' => 'exists']));
+
+			$spam = new Spam;
+			$spam->relate_type = $relate_type;
+			$spam->relate_id = $relate_id;
+			$spam->user_id = User::get('id');
+
+			if ($spam->save()) {
+				exit(json_encode(['status' => 'added']));
 			}
 		}
 
