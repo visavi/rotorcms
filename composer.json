@@ -25,6 +25,7 @@
 		"olamedia/nokogiri": "dev-master",
 		"cbschuld/browser.php": "dev-master",
 		"altorouter/altorouter": "~1.1",
+		"paragonie/random_compat": "~1.1",
 		"swiftmailer/swiftmailer": "~5.4",
 		"abeautifulsite/simpleimage": "~2.5",
 		"mobiledetect/mobiledetectlib": "dev-master",
