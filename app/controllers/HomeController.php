@@ -32,7 +32,7 @@ Class HomeController Extends BaseController {
 	 */
 	public function complaint ()
 	{
-		if (!Request::ajax()) App::redirect('/');
+		if (! Request::ajax()) App::redirect('/');
 
 		$token = Request::input('token', true);
 		$relate_type = Request::input('type');
@@ -72,12 +72,12 @@ Class HomeController Extends BaseController {
 			$captcha = Request::input('captcha');
 
 			$errors = [];
-			if (!App::isMail($email)) $errors['email'] = 'Неверный формат адреса email';
-			if (!$name) $errors['name'] = 'Небходимо заполнить имя отправителя';
-			if (!$message) $errors['message'] = 'Необходимо заполнить текст сообщения';
+			if (! App::isMail($email)) $errors['email'] = 'Неверный формат адреса email';
+			if (! $name) $errors['name'] = 'Небходимо заполнить имя отправителя';
+			if (! $message) $errors['message'] = 'Необходимо заполнить текст сообщения';
 			if ($captcha != $_SESSION['captcha']) $errors['captcha'] = 'Неверный проверочный код';
 
-			if (!$errors) {
+			if (! $errors) {
 				$message = nl2br(e($message));
 
 				$to = [env('SITE_EMAIL') => env('SITE_ADMIN')];

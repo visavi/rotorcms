@@ -5,6 +5,26 @@
 
 @section('content')
 
-	<h1>Админ-панель</h1>
+	<h1>Админпанель</h1>
+
+	<div class="content-block">
+		<div class="row">
+			{{-- Гостевая книга --}}
+			<div class="col-sm-6 col-lg-4">
+				@include('admin._guest', ['count' => Guestbook::count()])
+			</div>
+
+			{{-- Форум --}}
+			<div class="col-sm-6 col-lg-4">
+				@include('admin._forum', ['topicCount' => Topic::count(), 'postCount' => Post::count()])
+			</div>
+
+			{{-- Новости --}}
+			<div class="col-sm-6 col-lg-4">
+				@include('admin._news', ['count' => News::count()])
+			</div>
+
+		</div>
+	</div>
 
 @stop
