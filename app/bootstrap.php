@@ -17,15 +17,8 @@ define('PCLZIP_TEMPORARY_DIR', STORAGE.'/temp/');
 /**
  * Автозагрузка классов
  */
-include_once BASEDIR.'/vendor/autoload.php';
-
-$loader = new Composer\Autoload\ClassLoader();
-$loader->add('', APP.'/classes');
-$loader->add('', APP.'/controllers');
+$loader = require_once BASEDIR.'/vendor/autoload.php';
 $loader->register();
-
-include_once APP.'/routes.php';
-include_once APP.'/helpers.php';
 
 /**
  * Регистрация классов
