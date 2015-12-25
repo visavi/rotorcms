@@ -17,8 +17,7 @@ define('PCLZIP_TEMPORARY_DIR', STORAGE.'/temp/');
 /**
  * Автозагрузка классов
  */
-$loader = require_once BASEDIR.'/vendor/autoload.php';
-$loader->register();
+require_once BASEDIR.'/vendor/autoload.php';
 
 /**
  * Регистрация классов
