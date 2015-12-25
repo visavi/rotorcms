@@ -46,7 +46,10 @@
 
 	"autoload": {
 		"psr-4": {
-			"": ["app/classes/", "app/controllers/"]
+			"": [
+				"app/classes/",
+				"app/controllers/"
+			]
 		},
 		"files": [
 			"app/routes.php",
