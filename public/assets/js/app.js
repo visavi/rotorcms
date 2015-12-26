@@ -43,6 +43,15 @@ $(document).ready(function(){
 		spoiler.find('.spoiler-text:first').slideToggle();
 	});
 
+/*	$(".js-post").on('mouseover', function (e) {
+		console.log(e.target);
+		$(".js-menu", e.target).show();
+	});
+
+	$(".js-post").on('mouseout', function (e) {
+		console.log(e.target);
+		$(".js-menu", e.target).hide();
+	});*/
 });
 
 function uploadAvatar() {
@@ -171,6 +180,33 @@ function sendComplaint(el) {
 	return false;
 }
 
+/* Удаление сообщения в гостевой */
+function deleteGuestPost(el) {
+
+	if (!confirm('Вы действительно хотите удалить сообщение?')) return false;
+
+	$.ajax({
+		dataType: "JSON", type: "POST", url: "/guestbook/delete",
+		data: {id: $(el).data('id'), token: $(el).data('token')},
+		success: function(data) {
+			if (data.status == 'error'){
+				$.notify("Не удалось удалить сообщение!", "error");
+				return false;
+			}
+
+			if (data.status == 'ok'){
+				$.notify("Сообщение успешно удалено!");
+				$(el).closest('.js-post').hide('slow', function(){
+					$(el).remove();
+				});
+			}
+		}
+	});
+
+	return false;
+}
+
+/* Переход к форме ввода */
 function postJump() {
 
 	$('html, body').animate({

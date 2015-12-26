@@ -21,6 +21,7 @@ $router->map('POST', '/user/image', 'UserController@image');
 $router->map('GET', '/guestbook', 'GuestbookController@index', 'guestbook');
 $router->map('POST', '/guestbook/create', 'GuestbookController@create');
 $router->map('GET|POST', '/guestbook/[i:id]/edit', 'GuestbookController@edit');
+$router->map('POST', '/guestbook/delete', 'GuestbookController@delete');
 
 $router->map('GET', '/forum', 'ForumController@index', 'forum');
 $router->map('GET', '/forum/[i:id]', 'ForumController@forum');
@@ -38,8 +39,8 @@ $router->map('GET', '/news/rss', 'NewsController@rss', 'news_rss');
 
 $router->map('GET', '/admin', 'AdminController@index', 'admin');
 
-$router->map('GET', '/[guestbook|forum|news:link]/smiles/page/[i:page]', 'pages/smiles');
-$router->map('GET', '/[guestbook|forum|news:link]/smiles', 'pages/smiles');
-$router->map('GET', '/[guestbook|forum|news:link]/tags', 'pages/tags');
+//$router->map('GET', '/[guestbook|forum|news:link]/smiles/page/[i:page]', 'pages/smiles');
+//$router->map('GET', '/[guestbook|forum|news:link]/smiles', 'pages/smiles');
+//$router->map('GET', '/[guestbook|forum|news:link]/tags', 'pages/tags');
 
 Registry::set('router', $router->match());

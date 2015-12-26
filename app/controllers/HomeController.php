@@ -30,7 +30,7 @@ Class HomeController Extends BaseController {
 	/**
 	 * Отправка жалобы
 	 */
-	public function complaint ()
+	public function complaint()
 	{
 		if (! Request::ajax()) App::redirect('/');
 

@@ -10,7 +10,7 @@
 	@if ($posts)
 		@foreach ($posts as $post)
 
-			<div class="media">
+			<div class="media js-post">
 				<div class="media-left">
 					{!! $post->user()->getAvatar() !!}
 				</div>
@@ -37,6 +37,10 @@
 
 						@if (User::check() && User::get('id') == $post->user_id && $post->created_at > Carbon::now()->subMinutes(10))
 							<li><a href="/guestbook/{{ $post->id }}/edit" data-toggle="tooltip" title="Редактировать"><span class="fa fa-pencil text-muted"></span></a></li>
+						@endif
+
+						@if (User::isAdmin())
+							<li><a href="#" onclick="return deleteGuestPost(this)" data-type="guest" data-id="{{ $post->id }}" data-token="{{ $_SESSION['token'] }}" rel="nofollow" data-toggle="tooltip" title="Удалить"><span class="fa fa-times text-muted"></span></a></li>
 						@endif
 
 							<li class="text-muted date">{{ Carbon::parse($post->created_at)->format('d.m.y / H:i') }}</li>
