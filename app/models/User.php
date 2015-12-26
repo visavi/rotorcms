@@ -20,11 +20,8 @@ class User extends BaseModel {
 		'admin' => 'Администратор',
 	];
 
-	static $validates_presence_of = [
-		['login', 'message' => 'Необходимо заполнить логин пользователя'],
-	];
-
 	static $validates_size_of = [
+		['login', 'within' => [3, 20], 'too_short' => 'Слишком короткий логин, минимум %d симв.', 'too_long' => 'Слишком длинный логин, максимум %d симв.'],
 		['new_password', 'minimum' => 6, 'allow_null' => true, 'too_short' => 'Слишком короткий пароль, минимум %d симв.'],
 	];
 
@@ -39,6 +36,7 @@ class User extends BaseModel {
 	];
 
 	static $validates_format_of = [
+		['login', 'with' => '/^[a-z0-9_\-]+$/i', 'message' => 'Неверный формат логина (Разрешены символы [0-9a-z_-])'],
 		['email', 'with' => '/^([a-z0-9_\-\.])+\@([a-z0-9_\-\.])+(\.([a-z0-9])+)+$/', 'message' => 'Неверный формат адреса email'],
 		//['phone', 'with' => '/^\+[0-9]{11,12}$/', 'message' => 'Неверный формат номера телефона, пример +7 (900) 123-45-67'],
 	];
