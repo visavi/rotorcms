@@ -84,6 +84,16 @@ Class GuestbookController Extends BaseController {
 	}
 
 	/**
+	 * Ответ на сообщение для администрации
+	 */
+	public function reply()
+	{
+		if (! User::isAdmin()) App::abort(403);
+
+		App::view('guestbook.reply');
+	}
+
+	/**
 	 * Отправка жалобы
 	 */
 	public function delete()

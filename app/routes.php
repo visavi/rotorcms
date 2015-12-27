@@ -21,6 +21,7 @@ $router->map('POST', '/user/image', 'UserController@image');
 $router->map('GET', '/guestbook', 'GuestbookController@index', 'guestbook');
 $router->map('POST', '/guestbook/create', 'GuestbookController@create');
 $router->map('GET|POST', '/guestbook/[i:id]/edit', 'GuestbookController@edit');
+$router->map('GET|POST', '/guestbook/[i:id]/reply', 'GuestbookController@reply');
 $router->map('POST', '/guestbook/delete', 'GuestbookController@delete');
 
 $router->map('GET', '/forum', 'ForumController@index', 'forum');

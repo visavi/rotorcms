@@ -45,6 +45,8 @@
 
 						@if (User::isAdmin())
 							<li><a href="#" onclick="return deleteRecord(this, '/guestbook/delete', 'сообщение')" data-type="guest" data-id="{{ $post->id }}" data-token="{{ $_SESSION['token'] }}" rel="nofollow" data-toggle="tooltip" title="Удалить"><span class="fa fa-times text-muted"></span></a></li>
+
+							<li><a href="/guestbook/{{ $post->id }}/reply" data-toggle="tooltip" title="Личный ответ"><span class="fa fa-reply text-muted"></span></a></li>
 						@endif
 						</ul>
 					</div>

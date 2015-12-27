@@ -45,9 +45,9 @@ $(document).ready(function(){
 	});
 
 	$('.js-post').hover(function () {
-		$('.js-menu', this).show();
+		$('.js-menu', this).show(200);
 	}, function() {
-		$('.js-menu', this).hide();
+		$('.js-menu', this).hide(200);
 	});
 });
 

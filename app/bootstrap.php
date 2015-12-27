@@ -30,7 +30,7 @@ $aliases = [
 	'Curl'        => 'Curl\Curl',
 ];
 
-if (!env('APP_ENV')) Dotenv::load(BASEDIR);
+Dotenv::load(BASEDIR);
 Patchwork\Utf8\Bootup::initAll();
 AliasLoader::getInstance($aliases)->register();
 
