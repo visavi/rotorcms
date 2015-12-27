@@ -25,6 +25,10 @@
 						@endif
 
 						<ul class="list-inline small pull-right">
+							<li class="text-muted date">{{ Carbon::parse($post->created_at)->format('d.m.y / H:i') }}</li>
+						</ul>
+
+						<ul class="list-inline small pull-right js-menu" style="display: none;">
 
 						@if (User::check() && User::get('id') != $post->user_id)
 							<li><a href="#" onclick="return postReply('{{ $post->user()->getLogin() }}')" data-toggle="tooltip" title="Ответить"><span class="fa fa-reply text-muted"></span></a></li>
@@ -40,10 +44,8 @@
 						@endif
 
 						@if (User::isAdmin())
-							<li><a href="#" onclick="return deleteGuestPost(this)" data-type="guest" data-id="{{ $post->id }}" data-token="{{ $_SESSION['token'] }}" rel="nofollow" data-toggle="tooltip" title="Удалить"><span class="fa fa-times text-muted"></span></a></li>
+							<li><a href="#" onclick="return deleteRecord(this, '/guestbook/delete', 'сообщение')" data-type="guest" data-id="{{ $post->id }}" data-token="{{ $_SESSION['token'] }}" rel="nofollow" data-toggle="tooltip" title="Удалить"><span class="fa fa-times text-muted"></span></a></li>
 						@endif
-
-							<li class="text-muted date">{{ Carbon::parse($post->created_at)->format('d.m.y / H:i') }}</li>
 						</ul>
 					</div>
 

@@ -6,9 +6,9 @@ class Guestbook extends BaseModel {
 	public $token;
 	public $captcha;
 
-	static $belongs_to = array(
-		array('user'),
-	);
+	static $belongs_to = [
+		'user',
+	];
 
 	/**
 	 * Данные пользователя
@@ -19,10 +19,10 @@ class Guestbook extends BaseModel {
 	}
 
 	//$config['guesttextlength']
-	static $validates_size_of = array(
-		array('text', 'minimum' => 5, 'too_short' => 'Слишком короткий текст сообщения, минимум %d симв.'),
-		array('text', 'maximum' => 2000, 'too_long' => 'Слишком длинный текст сообщения, максимум %d симв.'),
- 	);
+	static $validates_size_of = [
+		['text', 'minimum' => 5, 'too_short' => 'Слишком короткий текст сообщения, минимум %d симв.'],
+		['text', 'maximum' => 2000, 'too_long' => 'Слишком длинный текст сообщения, максимум %d симв.'],
+ 	];
 
 	public function validate() {
 

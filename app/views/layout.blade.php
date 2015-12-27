@@ -125,6 +125,7 @@
 		<script src="/assets/js/jquery.colorbox-min.js"></script>
 		<script src="/assets/js/bootstrap.min.js"></script>
 		<script src="/assets/js/bootstrap.file-input.js"></script>
+		<script src="/assets/js/bootbox.min.js"></script>
 		<script src="/assets/js/notify.min.js"></script>
 		<script src="/assets/js/prettify.js"></script>
 		<script src="/assets/markitup/jquery.markitup.js"></script>

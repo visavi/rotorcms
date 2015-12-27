@@ -1,10 +1,11 @@
 $(document).ready(function(){
 
 	prettyPrint();
+	bootbox.setDefaults({ locale: 'ru' });
 
 	$('#markItUp').markItUp(mySettings);
 
-	$.notify.defaults({ className: "success" });
+	$.notify.defaults({ className: 'success' });
 
 	$('[data-toggle="tooltip"]').tooltip();
 	$('[data-toggle="popover"]').popover()
@@ -21,37 +22,33 @@ $(document).ready(function(){
 		}
 	});
 
-	$("a.gallery").colorbox({rel: function(){
+	$('a.gallery').colorbox({rel: function(){
 		return $(this).data('group');
 	},
-		current: "Фото {current} из {total}",
+		current: 'Фото {current} из {total}',
 	});
 
 	// Украшения для главной страницы
 	$('.index').on('mouseover', function (e) {
-		$(e.target).children('.fa').removeClass("fa-circle").addClass("fa-circle-o");
+		$(e.target).children('.fa').removeClass('fa-circle').addClass('fa-circle-o');
 	});
 
 	$('.index').on('mouseout', function (e) {
-		$(e.target).children('.fa').removeClass("fa-circle-o").addClass("fa-circle");
+		$(e.target).children('.fa').removeClass('fa-circle-o').addClass('fa-circle');
 	});
 
 	// Спойлер
-	$(".spoiler-title").click(function(){
+	$('.spoiler-title').click(function(){
 		var spoiler = $(this).parent();
-		spoiler.toggleClass("spoiler-open");
+		spoiler.toggleClass('spoiler-open');
 		spoiler.find('.spoiler-text:first').slideToggle();
 	});
 
-/*	$(".js-post").on('mouseover', function (e) {
-		console.log(e.target);
-		$(".js-menu", e.target).show();
+	$('.js-post').hover(function () {
+		$('.js-menu', this).show();
+	}, function() {
+		$('.js-menu', this).hide();
 	});
-
-	$(".js-post").on('mouseout', function (e) {
-		console.log(e.target);
-		$(".js-menu", e.target).hide();
-	});*/
 });
 
 function uploadAvatar() {
@@ -126,7 +123,7 @@ function revealPassword(el) {
 function changeBookmark(el) {
 
 	$.ajax({
-		dataType: "JSON", type: "POST", url: "/topic/bookmark",
+		dataType: 'JSON', type: 'POST', url: '/topic/bookmark',
 		data: {id: $(el).data('id'), token: $(el).data('token')},
 		success: function(data) {
 
@@ -152,57 +149,59 @@ function changeBookmark(el) {
 
 /* Отправка жалобы на спам */
 function sendComplaint(el) {
+	bootbox.confirm('Вы действительно хотите отправить жалобу?', function(result){
+		if (result) {
 
-	if (!confirm('Вы действительно хотите отправить жалобу?')) return false;
+			$.ajax({
+				dataType: 'JSON', type: 'POST', url: '/complaint',
+				data: {id: $(el).data('id'), type: $(el).data('type'), token: $(el).data('token')},
+				success: function(data) {
+					if (data.status == 'error'){
+						$.notify('Ошибка отправки жалобы!', 'error');
+						return false;
+					}
 
-	$.ajax({
-		dataType: "JSON", type: "POST", url: "/complaint",
-		data: {id: $(el).data('id'), type: $(el).data('type'), token: $(el).data('token')},
-		success: function(data) {
-			if (data.status == 'error'){
-				$.notify("Ошибка отправки жалобы!", "error");
-				return false;
-			}
+					if (data.status == 'added'){
+						$.notify('Жалоба успешно отправлена!');
+						$(el).replaceWith('<span class="fa fa-bell-slash-o"></span>');
+					}
 
-			if (data.status == 'added'){
-				$.notify("Жалоба успешно отправлена!");
-				$(el).replaceWith('<span class="fa fa-bell-slash-o"></span>');
-			}
+					if (data.status == 'exists'){
+						$.notify('Жалоба уже была отправлена!', 'info');
+						$(el).replaceWith('<span class="fa fa-bell-slash-o"></span>');
 
-			if (data.status == 'exists'){
-				$.notify("Жалоба уже была отправлена!", "info");
-				$(el).replaceWith('<span class="fa fa-bell-slash-o"></span>');
-
-			}
+					}
+				}
+			});
 		}
 	});
-
 	return false;
 }
 
 /* Удаление сообщения в гостевой */
-function deleteGuestPost(el) {
+function deleteRecord(el, url, record) {
+	bootbox.confirm('Вы действительно хотите удалить '+ record +'?', function(result){
+		if (result) {
 
-	if (!confirm('Вы действительно хотите удалить сообщение?')) return false;
+			$.ajax({
+				dataType: 'JSON', type: 'POST', url: url,
+				data: {id: $(el).data('id'), token: $(el).data('token')},
+				success: function(data) {
+					if (data.status == 'error'){
+						$.notify('Не удалось удалить запись!', 'error');
+						return false;
+					}
 
-	$.ajax({
-		dataType: "JSON", type: "POST", url: "/guestbook/delete",
-		data: {id: $(el).data('id'), token: $(el).data('token')},
-		success: function(data) {
-			if (data.status == 'error'){
-				$.notify("Не удалось удалить сообщение!", "error");
-				return false;
-			}
-
-			if (data.status == 'ok'){
-				$.notify("Сообщение успешно удалено!");
-				$(el).closest('.js-post').hide('slow', function(){
-					$(el).remove();
-				});
-			}
+					if (data.status == 'ok'){
+						$.notify('Запись успешно удалена!');
+						$(el).closest('.js-post').hide('slow', function(){
+							$(el).remove();
+						});
+					}
+				}
+			});
 		}
 	});
-
 	return false;
 }
 
