@@ -29,10 +29,9 @@ $aliases = [
 	'Utf8'        => 'Patchwork\Utf8',
 	'Curl'        => 'Curl\Curl',
 ];
-
-Dotenv::load(BASEDIR);
-Patchwork\Utf8\Bootup::initAll();
 AliasLoader::getInstance($aliases)->register();
+
+if (! env('APP_ENV')) Dotenv::load(BASEDIR);
 
 if (env('APP_DEBUG')) {
 	$whoops = new Whoops\Run;
