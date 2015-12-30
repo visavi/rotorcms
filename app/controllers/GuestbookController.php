@@ -59,8 +59,8 @@ Class GuestbookController Extends BaseController {
 	public function edit($id)
 	{
 		if (! User::check()) App::abort(403);
-
 		if (! $guest = Guestbook::find_by_id_and_user_id($id, User::get('id'))) App::abort('default', 'Сообщение не найдено!');
+		// TODOI Условие для админа
 
 		if ($guest->created_at < Carbon::now()->subMinutes(10)) {
 			App::abort('default', 'Редактирование невозможно, прошло более 10 мин.');
@@ -86,11 +86,27 @@ Class GuestbookController Extends BaseController {
 	/**
 	 * Ответ на сообщение для администрации
 	 */
-	public function reply()
+	public function reply($id)
 	{
 		if (! User::isAdmin()) App::abort(403);
+		if (! $guest = Guestbook::find_by_id($id)) App::abort('default', 'Сообщение не найдено!');
 
-		App::view('guestbook.reply');
+		if (Request::isMethod('post')) {
+			$guest->scenario = 'reply';
+			$guest->token = Request::input('token', true);
+			$guest->reply = Request::input('text');
+
+//var_dump($guest); exit;
+			if ($guest->save()) {
+				App::setFlash('success', 'Ответ успешно добавлен!');
+				App::redirect('/guestbook');
+			} else {
+				App::setFlash('danger', $guest->getErrors());
+				App::setInput($_POST);
+			}
+		}
+
+		App::view('guestbook.reply', compact('guest'));
 	}
 
 	/**

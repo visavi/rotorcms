@@ -39,14 +39,16 @@
 
 						@endif
 
-						@if (User::check() && User::get('id') == $post->user_id && $post->created_at > Carbon::now()->subMinutes(10))
+						@if (User::isAdmin() || (User::check() && User::get('id') == $post->user_id && $post->created_at > Carbon::now()->subMinutes(10)))
 							<li><a href="/guestbook/{{ $post->id }}/edit" data-toggle="tooltip" title="Редактировать"><span class="fa fa-pencil text-muted"></span></a></li>
 						@endif
 
 						@if (User::isAdmin())
-							<li><a href="#" onclick="return deleteRecord(this, '/guestbook/delete', 'сообщение')" data-type="guest" data-id="{{ $post->id }}" data-token="{{ $_SESSION['token'] }}" rel="nofollow" data-toggle="tooltip" title="Удалить"><span class="fa fa-times text-muted"></span></a></li>
+							@if (User::get('id') != $post->user_id)
+								<li><a href="/guestbook/{{ $post->id }}/reply" data-toggle="tooltip" title="Личный ответ"><span class="fa fa-comment text-muted"></span></a></li>
+							@endif
 
-							<li><a href="/guestbook/{{ $post->id }}/reply" data-toggle="tooltip" title="Личный ответ"><span class="fa fa-reply text-muted"></span></a></li>
+							<li><a href="#" onclick="return deleteRecord(this, '/guestbook/delete', 'сообщение')" data-type="guest" data-id="{{ $post->id }}" data-token="{{ $_SESSION['token'] }}" rel="nofollow" data-toggle="tooltip" title="Удалить"><span class="fa fa-times text-muted"></span></a></li>
 						@endif
 						</ul>
 					</div>

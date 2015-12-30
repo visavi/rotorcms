@@ -5,6 +5,8 @@ class Guestbook extends BaseModel {
 
 	public $token;
 	public $captcha;
+	public $scenario;
+
 
 	static $belongs_to = [
 		'user',
@@ -17,6 +19,10 @@ class Guestbook extends BaseModel {
 	public function user() {
 		return $this->user ? $this->user : new User;
 	}
+
+/*	static $validates_presence_of = [
+		['reply', 'message' => 'Необходимо заполнить ответ', 'scenario' => 'reply'],
+	];*/
 
 	//$config['guesttextlength']
 	static $validates_size_of = [
