@@ -12,7 +12,7 @@
 		}
 	],
 	"require": {
-		"php": ">=5.5.0",
+		"php": ">=5.5.9",
 		"nesbot/carbon": "~1.14",
 		"illuminate/http": "~5.0",
 		"robmorgan/phinx": "~0.5",
