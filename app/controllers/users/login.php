@@ -48,7 +48,7 @@ case 'login':
 		}
 
 		if (isset($_POST['token'])) {
-			User::socialLogin($_POST['token']);
+			User::socialAuth($_POST['token']);
 		}
 
 		App::view('users/login');

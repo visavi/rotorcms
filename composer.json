@@ -14,7 +14,8 @@
 	"require": {
 		"php": ">=5.5.9",
 		"nesbot/carbon": "~1.14",
-		"illuminate/http": "~5.0",
+		"illuminate/http": "~5.2",
+		"illuminate/database": "~5.2",
 		"robmorgan/phinx": "~0.5",
 		"vlucas/phpdotenv": "~1.1",
 		"visavi/compressor": "~1.1",
@@ -28,8 +29,7 @@
 		"swiftmailer/swiftmailer": "~5.4",
 		"abeautifulsite/simpleimage": "~2.5",
 		"mobiledetect/mobiledetectlib": "dev-master",
-		"php-curl-class/php-curl-class": "dev-master",
-		"php-activerecord/php-activerecord": "dev-1.1-dev"
+		"php-curl-class/php-curl-class": "dev-master"
 	},
 	"require-dev": {
 		"filp/whoops": "^2.0",
@@ -46,7 +46,8 @@
 		"psr-4": {
 			"": [
 				"app/classes/",
-				"app/controllers/"
+				"app/controllers/",
+				"app/models/"
 			]
 		},
 		"files": [

@@ -1,6 +1,7 @@
 <?php
 
 use Phinx\Seed\AbstractSeed;
+use Illuminate\Database\Capsule\Manager as Capsule;
 
 class SmilesSeeder extends AbstractSeed
 {
@@ -145,7 +146,8 @@ class SmilesSeeder extends AbstractSeed
 			['name' => 'boss.gif', 'code' => ':boss'],
 		];
 
-		Smile::connection()->query('TRUNCATE smiles');
+		Capsule::table('smiles')->truncate();
+
 		$table = $this->table('smiles');
 		$table->insert($data)->save();
 	}

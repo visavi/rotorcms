@@ -1,6 +1,7 @@
 <?php
 
 use Phinx\Seed\AbstractSeed;
+use Illuminate\Database\Capsule\Manager as Capsule;
 
 class GuestbookSeeder extends AbstractSeed
 {
@@ -9,7 +10,7 @@ class GuestbookSeeder extends AbstractSeed
 	 */
 	public function run()
 	{
-		Guestbook::connection()->query('SET FOREIGN_KEY_CHECKS = 0');
+		Capsule::statement('SET FOREIGN_KEY_CHECKS=0;');
 		$faker = Faker\Factory::create('ru_RU');
 
 		$data = [];
@@ -25,10 +26,11 @@ class GuestbookSeeder extends AbstractSeed
 			];
 		}
 
-		Guestbook::connection()->query('TRUNCATE guest');
-		$table = $this->table('guest');
+		Capsule::table('guestbook')->truncate();
+
+		$table = $this->table('guestbook');
 		$table->insert($data)->save();
 
-		Guestbook::connection()->query('SET FOREIGN_KEY_CHECKS = 1');
+		Capsule::statement('SET FOREIGN_KEY_CHECKS=1;');
 	}
 }

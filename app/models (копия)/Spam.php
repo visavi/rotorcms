@@ -1,6 +1,6 @@
 <?php
 class Spam extends BaseModel {
 
-	protected $table = 'spam';
+	static $table_name = 'spam';
 
 }

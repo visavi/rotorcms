@@ -1,20 +1,18 @@
 <?php
 class User extends BaseModel {
 
-	protected $fillable = ['reset_code'];
-/*
 	static $table_name = 'users';
 
 	public $captcha;
 	public $token;
 	public $old_password;
 	public $new_password;
-*/
+
 	/**
 	 * Список статусов
 	 * @var array список статусов
 	 */
-/*	public static $levelList = [
+	public static $levelList = [
 		'banned' => 'Забаненный',
 		'guest' => 'Зарегистрированный',
 		'user' => 'Пользователь',
@@ -41,12 +39,12 @@ class User extends BaseModel {
 		['login', 'with' => '/^[a-z0-9_\-]+$/i', 'message' => 'Неверный формат логина (Разрешены символы [0-9a-z_-])'],
 		['email', 'with' => '/^([a-z0-9_\-\.])+\@([a-z0-9_\-\.])+(\.([a-z0-9])+)+$/', 'message' => 'Неверный формат адреса email'],
 		//['phone', 'with' => '/^\+[0-9]{11,12}$/', 'message' => 'Неверный формат номера телефона, пример +7 (900) 123-45-67'],
-	];*/
+	];
 
 	/**
 	 * Валидация данных
 	 */
-/*	public function validate()
+	public function validate()
 	{
 		//if ($this->is_new_record()) {
 		//  Проверка капчи
@@ -63,23 +61,23 @@ class User extends BaseModel {
 			$this->errors->add('old_password', 'Старый пароль не совпадает');
 		}
 	}
-*/
+
 	/**
 	 * Метод вызываемый перед сохранением
 	 */
-/*	function before_save()
+	function before_save()
 	{
 		if ($this->new_password) {
 			$this->password = password_hash($this->new_password, PASSWORD_BCRYPT);
 		}
-	}*/
+	}
 
 	/**
 	 * Данные пользователя
 	 * @param  string $key название поля в таблице
 	 * @return string|object данные пользователя
 	 */
-	public static function getUser($key = null)
+	public static function get($key = null)
 	{
 		if (Registry::has('user')) {
 			$user = Registry::get('user');
@@ -93,7 +91,7 @@ class User extends BaseModel {
 	 */
 	public static function check()
 	{
-		return (self::getUser('id') !== null);
+		return (self::get('id') !== null);
 	}
 
 	/**
@@ -102,7 +100,7 @@ class User extends BaseModel {
 	 */
 	public static function isAdmin()
 	{
-		return in_array(self::getUser('level'), ['moder', 'admin']);
+		return in_array(self::get('level'), ['moder', 'admin']);
 	}
 
 	/**
@@ -113,11 +111,6 @@ class User extends BaseModel {
 	{
 		return $this->login ? $this->login : 'Гость';
 	}
-
-/*	public function getLoginAttribute($value)
-	{
-		return ucfirst($value);
-	}*/
 
 	/**
 	 * Возвращает пол пользователя
@@ -194,7 +187,7 @@ class User extends BaseModel {
 	 * Авторизация через социальные сети
 	 * @param string $token идентификатор Ulogin
 	 */
-	public static function socialAuth($token)
+	public static function socialLogin($token)
 	{
 		$curl = new Curl();
 		$network = $curl->get('http://ulogin.ru/token.php', [
@@ -225,12 +218,12 @@ class User extends BaseModel {
 	 * @param  boolean $remember Чужой компьютер
 	 * @return boolean           Результат авторизации
 	 */
-	public static function auth($login, $password, $remember = true)
+	public static function login($login, $password, $remember = true)
 	{
 		if (!empty($login) && !empty($password)) {
 			$field = strpos($login, '@') ? 'email' : 'login';
 
-			$user = User::where($field, $login)->first();
+			$user = User::first(array('conditions' => array("$field=?", $login)));
 
 			if ($user && password_verify($password, $user->password)) {
 
@@ -239,13 +232,13 @@ class User extends BaseModel {
 					setcookie('pass', md5($user->password.env('APP_KEY')), time() + 3600 * 24 * 365, '/', $_SERVER['HTTP_HOST'], null, true);
 				}
 
-				$user->update(['reset_code' => null]);
+				$user->update_attribute('reset_code', null);
 
 				$_SESSION['id'] = $user->id;
 				$_SESSION['pass'] = md5(env('APP_KEY').$user->password);
 
 				if (!empty($_SESSION['social'])) {
-					$social = new Social();
+					$social = new Social;
 					$social->user_id = $user->id;
 					$social->network = $_SESSION['social']->network;
 					$social->uid = $_SESSION['social']->uid;

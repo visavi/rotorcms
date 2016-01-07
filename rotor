@@ -14,7 +14,7 @@ class RotorApplication extends PhinxApplication
 {
 	public function doRun(InputInterface $input, OutputInterface $output)
 	{
-		$output->writeln('<info>RotorCMS by Vantuz - http://visavi.net.</info> version <comment>5.0</comment>');
+		$output->writeln('<info>RotorCMS by Vantuz - http://visavi.net.</info> version <comment>5.0.1</comment>');
 		parent::doRun($input, $output);
 	}
 }

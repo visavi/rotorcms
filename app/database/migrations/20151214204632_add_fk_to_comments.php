@@ -13,8 +13,6 @@ class AddFkToComments extends AbstractMigration
 		$table
 		->addForeignKey('user_id', 'users', 'id',
 			['delete'=> 'cascade', 'update' => 'restrict'])
-		->addForeignKey('relate_id', 'news', 'id',
-			['delete'=> 'cascade', 'update' => 'restrict'])
 		->update();
 	}
 }

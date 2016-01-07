@@ -13,10 +13,6 @@ class AddFkToSpam extends AbstractMigration
 		$table
 		->addForeignKey('user_id', 'users', 'id',
 			['delete'=> 'cascade', 'update' => 'restrict'])
-		->addForeignKey('relate_id', 'guest', 'id',
-			['delete'=> 'cascade', 'update' => 'restrict'])
-		->addForeignKey('relate_id', 'posts', 'id',
-			['delete'=> 'cascade', 'update' => 'restrict'])
 		->update();
 	}
 }

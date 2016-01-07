@@ -1,6 +1,7 @@
 <?php
 
 use Phinx\Seed\AbstractSeed;
+use Illuminate\Database\Capsule\Manager as Capsule;
 
 class UsersSeeder extends AbstractSeed
 {
@@ -10,7 +11,8 @@ class UsersSeeder extends AbstractSeed
 	 */
 	public function run()
 	{
-		User::connection()->query('SET FOREIGN_KEY_CHECKS = 0');
+		Capsule::statement('SET FOREIGN_KEY_CHECKS=0;');
+
 		$data = [];
 		$genders = ['male', 'female'];
 		$logins = ['admin', 'moder', 'user', 'guest', 'banned'];
@@ -37,10 +39,11 @@ class UsersSeeder extends AbstractSeed
 			];
 		}
 
-		User::connection()->query('TRUNCATE users');
+		Capsule::table('users')->truncate();
+
 		$table = $this->table('users');
 		$table->insert($data)->save();
 
-		Forum::connection()->query('SET FOREIGN_KEY_CHECKS = 1');
+		Capsule::statement('SET FOREIGN_KEY_CHECKS=1;');
 	}
 }

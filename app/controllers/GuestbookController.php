@@ -7,15 +7,13 @@ Class GuestbookController Extends BaseController {
 	 */
 	public function index()
 	{
-		$total = Guestbook::count();
-		$page = App::paginate(Setting::get('guestbook_per_page'), $total);
+		$page = App::paginate(Setting::get('guestbook_per_page'), Guestbook::count());
 
-		$posts = Guestbook::all([
-			'offset' => $page['offset'],
-			'limit' => $page['limit'],
-			'order' => 'created_at desc',
-			'include' => ['user'],
-		]);
+		$posts = Guestbook::with('user')
+			->orderBy('id', 'desc')
+			->offset($page['offset'])
+			->limit($page['limit'])
+			->get();
 
 		App::view('guestbook.index', compact('posts', 'page'));
 	}
@@ -25,10 +23,10 @@ Class GuestbookController Extends BaseController {
 	 */
 	public function create()
 	{
-		$guest = new Guestbook;
+		$guest = new Guestbook();
 		$guest->token = Request::input('token', true);
 		$guest->captcha = Request::input('captcha');
-		$guest->user_id = User::get('id');
+		$guest->user_id = User::getUser('id');
 		$guest->text = Request::input('text');
 		$guest->ip = App::getClientIp();
 		$guest->brow = App::getUserAgent();
@@ -37,7 +35,7 @@ Class GuestbookController Extends BaseController {
 
 			// Вынести в after_save
 			if (User::check()) {
-				$user = User::get();
+				$user = User::getUser();
 				$user->allguest = $user->allguest + 1;
 				$user->point = $user->point + 1;
 				$user->money = $user->money + 20;
@@ -59,10 +57,13 @@ Class GuestbookController Extends BaseController {
 	public function edit($id)
 	{
 		if (! User::check()) App::abort(403);
-		if (! $guest = Guestbook::find_by_id_and_user_id($id, User::get('id'))) App::abort('default', 'Сообщение не найдено!');
-		// TODOI Условие для админа
+		if (! $guest = Guestbook::find($id)) App::abort('default', 'Сообщение не найдено!');
 
-		if ($guest->created_at < Carbon::now()->subMinutes(10)) {
+		if (! User::isAdmin() && $guest->user_id != User::getUser('id')) {
+			App::abort('default', 'Редактирование невозможно, вы не автор данного сообщения!');
+		}
+
+		if (! User::isAdmin() && $guest->created_at < Carbon::now()->subMinutes(10)) {
 			App::abort('default', 'Редактирование невозможно, прошло более 10 мин.');
 		}
 
@@ -89,7 +90,7 @@ Class GuestbookController Extends BaseController {
 	public function reply($id)
 	{
 		if (! User::isAdmin()) App::abort(403);
-		if (! $guest = Guestbook::find_by_id($id)) App::abort('default', 'Сообщение не найдено!');
+		if (! $guest = Guestbook::find($id)) App::abort('default', 'Сообщение не найдено!');
 
 		if (Request::isMethod('post')) {
 			$guest->scenario = 'reply';
@@ -110,7 +111,7 @@ Class GuestbookController Extends BaseController {
 	}
 
 	/**
-	 * Отправка жалобы
+	 * Удаление сообщения
 	 */
 	public function delete()
 	{
@@ -118,7 +119,7 @@ Class GuestbookController Extends BaseController {
 		if (! User::isAdmin()) App::abort(403);
 
 		$id = Request::input('id');
-		$guest = Guestbook::find_by_id($id);
+		$guest = Guestbook::find($id);
 
 		exit(json_encode(['status' => $guest->delete() ? 'ok' : 'error']));
 

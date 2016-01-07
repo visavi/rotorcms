@@ -2,14 +2,14 @@
 
 use Phinx\Migration\AbstractMigration;
 
-class AddFkToGuest extends AbstractMigration
+class AddFkToGuestbook extends AbstractMigration
 {
 	/**
 	 * Change Method.
 	 */
 	public function change()
 	{
-		$table = $this->table('guest');
+		$table = $this->table('guestbook');
 		$table->addForeignKey('user_id', 'users', 'id',
 			['delete'=> 'set null', 'update' => 'restrict'])
 		->update();

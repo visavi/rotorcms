@@ -113,7 +113,7 @@ Class UserController Extends BaseController {
 
 			if ($user->save()) {
 
-				User::login($user->email, $new_password);
+				User::auth($user->email, $new_password);
 				App::setFlash('success', 'Пароль успешно изменен!');
 
 			} else {
@@ -161,7 +161,7 @@ Class UserController Extends BaseController {
 				App::sendMail($to, $subject, $body);
 
 				// Авторизация
-				User::login($email, $password);
+				User::auth($email, $password);
 
 				App::setFlash('success', 'Добро пожаловать, '.e($user->login).'! Вы успешно зарегистрированы!');
 				App::redirect('/');
@@ -174,7 +174,7 @@ Class UserController Extends BaseController {
 		}
 
 		if (Request::has('token')) {
-			User::socialLogin(Request::input('token'));
+			User::socialAuth(Request::input('token'));
 		}
 
 		App::view('users.register');
@@ -186,7 +186,6 @@ Class UserController Extends BaseController {
 	public function login()
 	{
 		$return = Request::input('return', '');
-
 		if (User::check()) App::redirect('/');
 
 		if (Request::has('login') && Request::has('password')) {
@@ -195,7 +194,7 @@ Class UserController Extends BaseController {
 			$password = Request::input('password');
 			$remember = Request::has('remember') ? 1 : 0;
 
-			if ($user = User::login($login, $password, $remember)) {
+			if ($user = User::auth($login, $password, $remember)) {
 				App::setFlash('success', 'Добро пожаловать, '.e($user->login).'!');
 				if ($return) { App::redirect($return); } else { App::redirect('/'); }
 			}
@@ -206,7 +205,7 @@ Class UserController Extends BaseController {
 		}
 
 		if (Request::has('token')) {
-			User::socialLogin(Request::input('token'));
+			User::socialAuth(Request::input('token'));
 		}
 
 		App::view('users.login');

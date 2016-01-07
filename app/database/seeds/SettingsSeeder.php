@@ -1,6 +1,7 @@
-<?php
+-<?php
 
 use Phinx\Seed\AbstractSeed;
+use Illuminate\Database\Capsule\Manager as Capsule;
 
 class SettingsSeeder extends AbstractSeed
 {
@@ -64,7 +65,8 @@ class SettingsSeeder extends AbstractSeed
 			],
 		];
 
-		Setting::connection()->query('TRUNCATE settings');
+		Capsule::table('settings')->truncate();
+
 		$table = $this->table('settings');
 		$table->insert($data)->save();
 	}

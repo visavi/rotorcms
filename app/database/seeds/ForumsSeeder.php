@@ -1,6 +1,7 @@
 <?php
 
 use Phinx\Seed\AbstractSeed;
+use Illuminate\Database\Capsule\Manager as Capsule;
 
 class ForumsSeeder extends AbstractSeed
 {
@@ -9,7 +10,7 @@ class ForumsSeeder extends AbstractSeed
 	 */
 	public function run()
 	{
-		Forum::connection()->query('SET FOREIGN_KEY_CHECKS = 0');
+		Capsule::statement('SET FOREIGN_KEY_CHECKS=0;');
 		$faker = Faker\Factory::create('ru_RU');
 
 		// Заполнение разделов
@@ -26,7 +27,8 @@ class ForumsSeeder extends AbstractSeed
 			];
 		}
 
-		Forum::connection()->query('TRUNCATE forums');
+		Capsule::table('forums')->truncate();
+
 		$table = $this->table('forums');
 		$table->insert($data)->save();
 
@@ -45,7 +47,8 @@ class ForumsSeeder extends AbstractSeed
 			];
 		}
 
-		Topic::connection()->query('TRUNCATE topics');
+		Capsule::table('topics')->truncate();
+
 		$table = $this->table('topics');
 		$table->insert($data)->save();
 
@@ -64,10 +67,11 @@ class ForumsSeeder extends AbstractSeed
 			];
 		}
 
-		Post::connection()->query('TRUNCATE posts');
+		Capsule::table('posts')->truncate();
+
 		$table = $this->table('posts');
 		$table->insert($data)->save();
 
-		Forum::connection()->query('SET FOREIGN_KEY_CHECKS = 1');
+		Capsule::statement('SET FOREIGN_KEY_CHECKS=1;');
 	}
 }

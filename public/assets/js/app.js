@@ -237,3 +237,14 @@ function postQuote(el){
 
 	return false;
 }
+
+/* Выход с сайта */
+function logout(el) {
+	if (bootbox.confirm('Вы уверены, что хотите выйти?', function(result){
+		if (result) {
+			window.location = $(el).attr("href");
+		}
+	}))
+
+	return false;
+}
