@@ -6,7 +6,15 @@
 @section('content')
 
 	<div class="media" id="post">
-		{!! $guest->user()->getAvatar() !!} <h4 class="author"><a href="/user/{{ $guest->user()->getLogin() }}">{{ $guest->user()->getLogin() }}</a></h4> <small>({{ Carbon::parse($guest->created_at)->format('d.m.y / H:i') }})</small>
+
+		{!! $guest->getUser()->getAvatar() !!}
+		@if ($guest->getUser()->login)
+			<h4 class="author"><a href="/user/{{ $guest->getUser()->getLogin() }}">{{ $guest->getUser()->getLogin() }}</a></h4>
+		@else
+			<h4 class="author">{{ $guest->getUser()->getLogin() }}</h4>
+		@endif
+		 <small>({{ Carbon::parse($guest->created_at)->format('d.m.y / H:i') }})</small>
+
 	</div>
 	<div class="message">{!! App::bbCode(e($guest->text)) !!}</div>
 	<div class="well clearfix">

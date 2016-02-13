@@ -14,7 +14,6 @@ session_start();
 if (!isset($_SESSION['token'])) $_SESSION['token'] = str_random(16);
 if (!isset($_SESSION['captcha'])) $_SESSION['captcha'] = null;
 
-//ActiveRecord\DateTime::$DEFAULT_FORMAT = 'd.m.y H:i';
 date_default_timezone_set('Europe/Moscow');
 setlocale(LC_TIME, 'rus','ru_RU.UTF-8','rus_RUS.UTF-8','ru_RU');
 
@@ -47,6 +46,6 @@ if (!empty($_SESSION['id']) && !empty($_SESSION['pass'])) {
 	if ($user && $_SESSION['pass'] == md5(env('APP_KEY').$user->password)) {
 		Registry::set('user', $user);
 	} else {
-		Registry::set('user', new User);
+		Registry::set('user', new User());
 	}
 }

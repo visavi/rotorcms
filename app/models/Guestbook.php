@@ -6,12 +6,10 @@ class Guestbook extends BaseModel {
 
 	public $token;
 	public $captcha;
-/*	public $scenario;
 
-
-	static $belongs_to = [
-		'user',
-	];*/
+public static $rules = array(
+        'text' => 'required|min:8'
+    );
 
 	/**
 	 * Связь с пользователями
@@ -29,14 +27,6 @@ class Guestbook extends BaseModel {
 	{
 		return $this->user ? $this->user : new User;
 	}
-
-	/**
-	 * Данные пользователя
-	 * @return object User модель пользователей
-	 */
-/*	public function user() {
-		return $this->user ? $this->user : new User;
-	}*/
 
 /*	static $validates_presence_of = [
 		['reply', 'message' => 'Необходимо заполнить ответ', 'scenario' => 'reply'],

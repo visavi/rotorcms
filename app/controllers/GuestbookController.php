@@ -7,15 +7,13 @@ Class GuestbookController Extends BaseController {
 	 */
 	public function index()
 	{
-		$page = App::paginate(Setting::get('guestbook_per_page'), Guestbook::count());
+		//$page = App::paginate(Setting::get('guestbook_per_page'), Guestbook::count());
 
 		$posts = Guestbook::with('user')
 			->orderBy('id', 'desc')
-			->offset($page['offset'])
-			->limit($page['limit'])
-			->get();
+			->paginate(Setting::get('guestbook_per_page'));
 
-		App::view('guestbook.index', compact('posts', 'page'));
+		App::view('guestbook.index', compact('posts'/*, 'page'*/));
 	}
 
 	/**
@@ -30,6 +28,8 @@ Class GuestbookController Extends BaseController {
 		$guest->text = Request::input('text');
 		$guest->ip = App::getClientIp();
 		$guest->brow = App::getUserAgent();
+
+		var_dump($guest->save()); exit;
 
 		if ($guest->save()) {
 
@@ -93,11 +93,10 @@ Class GuestbookController Extends BaseController {
 		if (! $guest = Guestbook::find($id)) App::abort('default', 'Сообщение не найдено!');
 
 		if (Request::isMethod('post')) {
-			$guest->scenario = 'reply';
+
 			$guest->token = Request::input('token', true);
 			$guest->reply = Request::input('text');
 
-//var_dump($guest); exit;
 			if ($guest->save()) {
 				App::setFlash('success', 'Ответ успешно добавлен!');
 				App::redirect('/guestbook');

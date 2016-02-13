@@ -68,7 +68,7 @@
 
 		@endforeach
 
-		{{ App::pagination($page) }}
+		{{ $posts->links() }}
 
 	@else
 		<div class="alert alert-danger">Сообщений нет, будь первым!</div>

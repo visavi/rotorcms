@@ -16,6 +16,7 @@
 		"nesbot/carbon": "~1.14",
 		"illuminate/http": "~5.2",
 		"illuminate/database": "~5.2",
+		"illuminate/pagination": "~5.2",
 		"robmorgan/phinx": "~0.5",
 		"vlucas/phpdotenv": "~1.1",
 		"visavi/compressor": "~1.1",

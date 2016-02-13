@@ -8,9 +8,11 @@
 #            Skype  :  vantuzilla             #
 #---------------------------------------------#
 use Illuminate\Database\Capsule\Manager as Capsule;
-use Illuminate\Container\Container as Container;
-use Illuminate\Support\Facades\Facade as Facade;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Container\Container;
+use Illuminate\Support\Facades\Facade;
+/*use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\DB;*/
+use Illuminate\Pagination\PaginationServiceProvider;
 
 define('STARTTIME', microtime(1));
 define('BASEDIR', dirname(__DIR__));
@@ -80,7 +82,7 @@ Facade::setFacadeApplication($app);
 
 $app['db'] = $app->share(function() {
 
-	$capsule = new Capsule;
+	$capsule = new Capsule();
 
 	$capsule->addConnection([
 		'driver'    => env('DB_DRIVER'),
@@ -100,3 +102,13 @@ $app['db'] = $app->share(function() {
 $app['db']->setAsGlobal();
 // Setup the Eloquent ORM...
 $app['db']->bootEloquent();
+
+$app['request'] = $app->share(function() {
+	return Illuminate\Http\Request::createFromGlobals();
+});
+
+
+$paginator = new PaginationServiceProvider($app);
+$paginator->register();
+
+
