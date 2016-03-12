@@ -70,13 +70,13 @@
 
 					@if (User::check())
 						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ User::getUser('login') }} <b class="caret"></b></a>
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ User::get('login') }} <b class="caret"></b></a>
 							<ul class="dropdown-menu">
 
 								@if (User::isAdmin())
 									<li><a href="/admin">Админ-панель</a></li>
 								@endif
-								<li><a href="/user/{{ User::getUser('login') }}">Профиль</a></li>
+								<li><a href="/user/{{ User::get('login') }}">Профиль</a></li>
 								<li><a href="/logout" onclick="return logout(this);">Выход</a></li>
 							</ul>
 						</li>

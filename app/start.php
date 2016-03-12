@@ -26,7 +26,7 @@ if (empty($_SESSION['id']) || empty($_SESSION['pass'])) {
 		$id = intval($_COOKIE['id']);
 		$pass = strval($_COOKIE['pass']);
 
-		if ($user = User::find($id)) {
+		if ($user = User::find_by_id($id)) {
 			if ($pass === md5($user->password.env('APP_KEY'))) {
 
 				$_SESSION['id'] = $user->id;
@@ -41,7 +41,7 @@ if (empty($_SESSION['id']) || empty($_SESSION['pass'])) {
  */
 if (!empty($_SESSION['id']) && !empty($_SESSION['pass'])) {
 
-	$user = User::find($_SESSION['id']);
+	$user = User::find_by_id($_SESSION['id']);
 
 	if ($user && $_SESSION['pass'] == md5(env('APP_KEY').$user->password)) {
 		Registry::set('user', $user);

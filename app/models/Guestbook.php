@@ -1,30 +1,22 @@
 <?php
 class Guestbook extends BaseModel {
 
-	protected $table = 'guestbook';
-	protected $fillable = ['user_id', 'text', 'ip', 'brow'];
+	static $table_name = 'guestbook';
 
 	public $token;
 	public $captcha;
+	public $scenario;
 
-public static $rules = array(
-        'text' => 'required|min:8'
-    );
 
-	/**
-	 * Связь с пользователями
-	 */
-	public function user()
-	{
-		return $this->belongsTo('User');
-	}
+	static $belongs_to = [
+		'user',
+	];
 
 	/**
 	 * Данные пользователя
 	 * @return object User модель пользователей
 	 */
-	public function getUser()
-	{
+	public function user() {
 		return $this->user ? $this->user : new User;
 	}
 
@@ -33,7 +25,7 @@ public static $rules = array(
 	];*/
 
 	//$config['guesttextlength']
-/*	static $validates_size_of = [
+	static $validates_size_of = [
 		['text', 'minimum' => 5, 'too_short' => 'Слишком короткий текст сообщения, минимум %d симв.'],
 		['text', 'maximum' => 2000, 'too_long' => 'Слишком длинный текст сообщения, максимум %d симв.'],
  	];
@@ -48,13 +40,13 @@ public static $rules = array(
 		if (!User::check() && $this->captcha != $_SESSION['captcha']) {
 			$this->errors->add('captcha', 'Неверный проверочный код');
 		}
-	}*/
+	}
 
 	/**
 	 * Функция вызываемая перед методом save
 	 */
-//	public function before_save()
-//	{
+	public function before_save()
+	{
 		//$this->text = antimat($this->text);
-//	}
+	}
 }

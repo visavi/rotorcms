@@ -65,7 +65,7 @@ class SettingsSeeder extends AbstractSeed
 			],
 		];
 
-		Capsule::table('settings')->truncate();
+		Setting::connection()->query('TRUNCATE settings');
 
 		$table = $this->table('settings');
 		$table->insert($data)->save();

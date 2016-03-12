@@ -146,7 +146,7 @@ class SmilesSeeder extends AbstractSeed
 			['name' => 'boss.gif', 'code' => ':boss'],
 		];
 
-		Capsule::table('smiles')->truncate();
+		Smile::connection()->query('TRUNCATE smiles');
 
 		$table = $this->table('smiles');
 		$table->insert($data)->save();

@@ -11,7 +11,7 @@ class UsersSeeder extends AbstractSeed
 	 */
 	public function run()
 	{
-		Capsule::statement('SET FOREIGN_KEY_CHECKS=0;');
+		User::connection()->query('SET FOREIGN_KEY_CHECKS = 0');
 
 		$data = [];
 		$genders = ['male', 'female'];
@@ -39,11 +39,11 @@ class UsersSeeder extends AbstractSeed
 			];
 		}
 
-		Capsule::table('users')->truncate();
+		User::connection()->query('TRUNCATE users');
 
 		$table = $this->table('users');
 		$table->insert($data)->save();
 
-		Capsule::statement('SET FOREIGN_KEY_CHECKS=1;');
+		Forum::connection()->query('SET FOREIGN_KEY_CHECKS = 1');
 	}
 }

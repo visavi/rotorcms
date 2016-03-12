@@ -1,7 +1,6 @@
 <?php
-use Illuminate\Database\Eloquent\Model as Eloquent;
 
-class BaseModel extends Eloquent
+class BaseModel extends ActiveRecord\Model
 {
 	/**
 	 * Возвращает все ошибки в виде строки

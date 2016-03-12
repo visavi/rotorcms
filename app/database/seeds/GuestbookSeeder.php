@@ -10,7 +10,7 @@ class GuestbookSeeder extends AbstractSeed
 	 */
 	public function run()
 	{
-		Capsule::statement('SET FOREIGN_KEY_CHECKS=0;');
+		Guestbook::connection()->query('SET FOREIGN_KEY_CHECKS = 0');
 		$faker = Faker\Factory::create('ru_RU');
 
 		$data = [];
@@ -26,11 +26,11 @@ class GuestbookSeeder extends AbstractSeed
 			];
 		}
 
-		Capsule::table('guestbook')->truncate();
+		Guestbook::connection()->query('TRUNCATE guest');
 
 		$table = $this->table('guestbook');
 		$table->insert($data)->save();
 
-		Capsule::statement('SET FOREIGN_KEY_CHECKS=1;');
+		Guestbook::connection()->query('SET FOREIGN_KEY_CHECKS = 1');
 	}
 }

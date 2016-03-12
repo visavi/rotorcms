@@ -113,7 +113,7 @@ Class UserController Extends BaseController {
 
 			if ($user->save()) {
 
-				User::auth($user->email, $new_password);
+				User::login($user->email, $new_password);
 				App::setFlash('success', 'Пароль успешно изменен!');
 
 			} else {
@@ -194,7 +194,7 @@ Class UserController Extends BaseController {
 			$password = Request::input('password');
 			$remember = Request::has('remember') ? 1 : 0;
 
-			if ($user = User::auth($login, $password, $remember)) {
+			if ($user = User::login($login, $password, $remember)) {
 				App::setFlash('success', 'Добро пожаловать, '.e($user->login).'!');
 				if ($return) { App::redirect($return); } else { App::redirect('/'); }
 			}
@@ -205,7 +205,7 @@ Class UserController Extends BaseController {
 		}
 
 		if (Request::has('token')) {
-			User::socialAuth(Request::input('token'));
+			User::socialLogin(Request::input('token'));
 		}
 
 		App::view('users.login');

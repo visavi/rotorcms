@@ -12,16 +12,16 @@
 
 			<div class="media js-post">
 				<div class="media-left">
-					{!! $post->getUser()->getAvatar() !!}
+					{!! $post->user()->getAvatar() !!}
 				</div>
 
 				<div class="media-body">
 					<div class="media-heading">
 
-						@if ($post->getUser()->login)
-							<h4 class="author"><a href="/user/{{ $post->getUser()->getLogin() }}">{{ $post->getUser()->getLogin() }}</a></h4>
+						@if ($post->user()->login)
+							<h4 class="author"><a href="/user/{{ $post->user()->getLogin() }}">{{ $post->user()->getLogin() }}</a></h4>
 						@else
-							<h4 class="author">{{ $post->getUser()->getLogin() }}</h4>
+							<h4 class="author">{{ $post->user()->getLogin() }}</h4>
 						@endif
 
 						<ul class="list-inline small pull-right">
@@ -30,8 +30,8 @@
 
 						<ul class="list-inline small pull-right js-menu" style="display: none;">
 
-						@if (User::check() && User::getUser('id') != $post->user_id)
-							<li><a href="#" onclick="return postReply('{{ $post->getUser()->getLogin() }}')" data-toggle="tooltip" title="Ответить"><span class="fa fa-reply text-muted"></span></a></li>
+						@if (User::check() && User::get('id') != $post->user_id)
+							<li><a href="#" onclick="return postReply('{{ $post->user()->getLogin() }}')" data-toggle="tooltip" title="Ответить"><span class="fa fa-reply text-muted"></span></a></li>
 
 							<li><a href="#" onclick="return postQuote(this)" data-toggle="tooltip" title="Цитировать"><span class="fa fa-quote-right text-muted"></span></a></li>
 
@@ -39,12 +39,12 @@
 
 						@endif
 
-						@if (User::isAdmin() || (User::check() && User::getUser('id') == $post->user_id && $post->created_at > Carbon::now()->subMinutes(10)))
+						@if (User::isAdmin() || (User::check() && User::get('id') == $post->user_id && $post->created_at > Carbon::now()->subMinutes(10)))
 							<li><a href="/guestbook/{{ $post->id }}/edit" data-toggle="tooltip" title="Редактировать"><span class="fa fa-pencil text-muted"></span></a></li>
 						@endif
 
 						@if (User::isAdmin())
-							@if (User::getUser('id') != $post->user_id)
+							@if (User::get('id') != $post->user_id)
 								<li><a href="/guestbook/{{ $post->id }}/reply" data-toggle="tooltip" title="Личный ответ"><span class="fa fa-comment text-muted"></span></a></li>
 							@endif
 
@@ -68,7 +68,7 @@
 
 		@endforeach
 
-		{{ $posts->links() }}
+		{{ App::pagination($page) }}
 
 	@else
 		<div class="alert alert-danger">Сообщений нет, будь первым!</div>

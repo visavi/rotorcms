@@ -7,13 +7,16 @@ Class GuestbookController Extends BaseController {
 	 */
 	public function index()
 	{
-		//$page = App::paginate(Setting::get('guestbook_per_page'), Guestbook::count());
+		$page = App::paginate(Setting::get('guestbook_per_page'), Guestbook::count());
 
-		$posts = Guestbook::with('user')
-			->orderBy('id', 'desc')
-			->paginate(Setting::get('guestbook_per_page'));
+		$posts = Guestbook::all([
+			'offset' => $page['offset'],
+			'limit' => $page['limit'],
+			'order' => 'created_at desc',
+			'include' => ['user'],
+		]);
 
-		App::view('guestbook.index', compact('posts'/*, 'page'*/));
+		App::view('guestbook.index', compact('posts', 'page'));
 	}
 
 	/**
@@ -24,7 +27,7 @@ Class GuestbookController Extends BaseController {
 		$guest = new Guestbook();
 		$guest->token = Request::input('token', true);
 		$guest->captcha = Request::input('captcha');
-		$guest->user_id = User::getUser('id');
+		$guest->user_id = User::get('id');
 		$guest->text = Request::input('text');
 		$guest->ip = App::getClientIp();
 		$guest->brow = App::getUserAgent();
@@ -35,7 +38,7 @@ Class GuestbookController Extends BaseController {
 
 			// Вынести в after_save
 			if (User::check()) {
-				$user = User::getUser();
+				$user = User::get();
 				$user->allguest = $user->allguest + 1;
 				$user->point = $user->point + 1;
 				$user->money = $user->money + 20;
@@ -57,7 +60,7 @@ Class GuestbookController Extends BaseController {
 	public function edit($id)
 	{
 		if (! User::check()) App::abort(403);
-		if (! $guest = Guestbook::find($id)) App::abort('default', 'Сообщение не найдено!');
+		if (! $guest = Guestbook::find_by_id($id)) App::abort('default', 'Сообщение не найдено!');
 
 		if (! User::isAdmin() && $guest->user_id != User::getUser('id')) {
 			App::abort('default', 'Редактирование невозможно, вы не автор данного сообщения!');
@@ -90,10 +93,11 @@ Class GuestbookController Extends BaseController {
 	public function reply($id)
 	{
 		if (! User::isAdmin()) App::abort(403);
-		if (! $guest = Guestbook::find($id)) App::abort('default', 'Сообщение не найдено!');
+		if (! $guest = Guestbook::find_by_id($id)) App::abort('default', 'Сообщение не найдено!');
 
 		if (Request::isMethod('post')) {
 
+			//$guest->scenario = 'reply';
 			$guest->token = Request::input('token', true);
 			$guest->reply = Request::input('text');
 
@@ -118,7 +122,7 @@ Class GuestbookController Extends BaseController {
 		if (! User::isAdmin()) App::abort(403);
 
 		$id = Request::input('id');
-		$guest = Guestbook::find($id);
+		$guest = Guestbook::find_by_id($id);
 
 		exit(json_encode(['status' => $guest->delete() ? 'ok' : 'error']));
 

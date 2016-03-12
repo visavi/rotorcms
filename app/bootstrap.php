@@ -7,13 +7,6 @@
 #              ICQ  :  36-44-66               #
 #            Skype  :  vantuzilla             #
 #---------------------------------------------#
-use Illuminate\Database\Capsule\Manager as Capsule;
-use Illuminate\Container\Container;
-use Illuminate\Support\Facades\Facade;
-/*use Illuminate\Support\Facades\Request;
-use Illuminate\Support\Facades\DB;*/
-use Illuminate\Pagination\PaginationServiceProvider;
-
 define('STARTTIME', microtime(1));
 define('BASEDIR', dirname(__DIR__));
 define('APP', BASEDIR.'/app');
@@ -49,11 +42,11 @@ if (env('APP_DEBUG')) {
 /**
  * ActiveRecord initialize
  */
-/*ActiveRecord\Config::initialize(function($cfg) {
+ActiveRecord\Config::initialize(function($cfg) {
 
 	$cfg->set_model_directory(APP.'/models');
 	$cfg->set_connections(array(
-		'development' => 'mysql://'.env('DB_USERNAME').':'.env('DB_PASSWORD').'@'.env('DB_HOST').'/'.env('DB_DATABASE').';charset=utf8'
+		'development' => env('DB_DRIVER').'://'.env('DB_USERNAME').':'.env('DB_PASSWORD').'@'.env('DB_HOST').'/'.env('DB_DATABASE').';charset=utf8'
 	));
 
 	//$cfg->set_cache('memcache://localhost', ['expire' => 60]);
@@ -65,50 +58,4 @@ if (env('APP_DEBUG')) {
 		$cfg->set_logger($logger);
 		$cfg->set_logging(true);
 	}
-});*/
-
-/**
-* Setup a new app instance container
-*
-* @var Illuminate\Container\Container
-*/
-$app = new Container();
-$app->singleton('app', 'Illuminate\Container\Container');
-
-/**
-* Set $app as FacadeApplication handler
-*/
-Facade::setFacadeApplication($app);
-
-$app['db'] = $app->share(function() {
-
-	$capsule = new Capsule();
-
-	$capsule->addConnection([
-		'driver'    => env('DB_DRIVER'),
-		'host'      => env('DB_HOST'),
-		'database'  => env('DB_DATABASE'),
-		'username'  => env('DB_USERNAME'),
-		'password'  => env('DB_PASSWORD'),
-		'charset'   => 'utf8',
-		'collation' => 'utf8_unicode_ci',
-		'prefix'    => '',
-	]);
-
-	return $capsule;
 });
-
-// Make the Capsule instance available globally via static methods...
-$app['db']->setAsGlobal();
-// Setup the Eloquent ORM...
-$app['db']->bootEloquent();
-
-$app['request'] = $app->share(function() {
-	return Illuminate\Http\Request::createFromGlobals();
-});
-
-
-$paginator = new PaginationServiceProvider($app);
-$paginator->register();
-
-

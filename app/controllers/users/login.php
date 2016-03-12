@@ -31,7 +31,7 @@ case 'login':
 					$_SESSION['pass'] = md5(env('APP_KEY').$user->password);
 
 					if (!empty($_SESSION['social'])) {
-						$social = new Social;
+						$social = new Social();
 						$social->user_id = $user->id;
 						$social->network = $_SESSION['social']['network'];
 						$social->uid = $_SESSION['social']['uid'];
@@ -48,7 +48,7 @@ case 'login':
 		}
 
 		if (isset($_POST['token'])) {
-			User::socialAuth($_POST['token']);
+			User::socialLogin($_POST['token']);
 		}
 
 		App::view('users/login');

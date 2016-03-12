@@ -10,7 +10,7 @@ class ForumsSeeder extends AbstractSeed
 	 */
 	public function run()
 	{
-		Capsule::statement('SET FOREIGN_KEY_CHECKS=0;');
+		Forum::connection()->query('SET FOREIGN_KEY_CHECKS = 0');
 		$faker = Faker\Factory::create('ru_RU');
 
 		// Заполнение разделов
@@ -27,7 +27,7 @@ class ForumsSeeder extends AbstractSeed
 			];
 		}
 
-		Capsule::table('forums')->truncate();
+		Forum::connection()->query('TRUNCATE forums');
 
 		$table = $this->table('forums');
 		$table->insert($data)->save();
@@ -47,7 +47,7 @@ class ForumsSeeder extends AbstractSeed
 			];
 		}
 
-		Capsule::table('topics')->truncate();
+		Topic::connection()->query('TRUNCATE topics');
 
 		$table = $this->table('topics');
 		$table->insert($data)->save();
@@ -67,11 +67,11 @@ class ForumsSeeder extends AbstractSeed
 			];
 		}
 
-		Capsule::table('posts')->truncate();
+		Post::connection()->query('TRUNCATE posts');
 
 		$table = $this->table('posts');
 		$table->insert($data)->save();
 
-		Capsule::statement('SET FOREIGN_KEY_CHECKS=1;');
+		Forum::connection()->query('SET FOREIGN_KEY_CHECKS = 1');
 	}
 }

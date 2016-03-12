@@ -7,11 +7,11 @@
 
 	<div class="media" id="post">
 
-		{!! $guest->getUser()->getAvatar() !!}
-		@if ($guest->getUser()->login)
-			<h4 class="author"><a href="/user/{{ $guest->getUser()->getLogin() }}">{{ $guest->getUser()->getLogin() }}</a></h4>
+		{!! $guest->user()->getAvatar() !!}
+		@if ($guest->user()->login)
+			<h4 class="author"><a href="/user/{{ $guest->user()->getLogin() }}">{{ $guest->user()->getLogin() }}</a></h4>
 		@else
-			<h4 class="author">{{ $guest->getUser()->getLogin() }}</h4>
+			<h4 class="author">{{ $guest->user()->getLogin() }}</h4>
 		@endif
 		 <small>({{ Carbon::parse($guest->created_at)->format('d.m.y / H:i') }})</small>
 
