@@ -101,7 +101,6 @@ Class UserController Extends BaseController {
 		if (!User::check()) App::abort(403);
 
 		$user = User::get();
-
 		if (Request::isMethod('post')) {
 
 			$old_password = Request::input('old_password');
@@ -112,6 +111,7 @@ Class UserController Extends BaseController {
 			$user->updated_at = new Datetime;
 
 			if ($user->save()) {
+var_dump($user); exit;
 
 				User::login($user->email, $new_password);
 				App::setFlash('success', 'Пароль успешно изменен!');
@@ -142,7 +142,7 @@ Class UserController Extends BaseController {
 			$password = Request::input('password');
 			$gender = Request::input('gender');
 
-			$user = new User;
+			$user = new User();
 			$user->captcha = $captcha;
 			$user->login = $login;
 			$user->new_password = $password;

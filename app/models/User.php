@@ -25,10 +25,10 @@ class User extends BaseModel {
 		['new_password', 'minimum' => 6, 'allow_null' => true, 'too_short' => 'Слишком короткий пароль, минимум %d симв.'],
 	];
 
-	static $validates_uniqueness_of = array(
+	static $validates_uniqueness_of = [
 		['login', 'message' => 'Пользователь с данным логином уже зарегистрирован'],
 		['email', 'message' => 'Пользователь с данным email уже зарегистрирован'],
-	);
+	];
 
 	static $validates_inclusion_of = [
 		['level', 'in' => ['banned', 'guest', 'user', 'moder', 'admin'], 'message' => 'Неверно указан уровень пользователя'],

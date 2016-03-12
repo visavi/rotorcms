@@ -32,8 +32,6 @@ Class GuestbookController Extends BaseController {
 		$guest->ip = App::getClientIp();
 		$guest->brow = App::getUserAgent();
 
-		var_dump($guest->save()); exit;
-
 		if ($guest->save()) {
 
 			// Вынести в after_save
