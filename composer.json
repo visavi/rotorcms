@@ -14,7 +14,7 @@
 	"require": {
 		"php": ">=5.5.9",
 		"nesbot/carbon": "~1.14",
-		"illuminate/http": "~5.3",
+		"illuminate/http": "~5.2",
 		"robmorgan/phinx": "~0.5",
 		"vlucas/phpdotenv": "~1.1",
 		"visavi/compressor": "~1.1",
@@ -46,8 +46,7 @@
 		"psr-4": {
 			"": [
 				"app/classes/",
-				"app/controllers/",
-				"app/models/"
+				"app/controllers/"
 			]
 		},
 		"files": [
