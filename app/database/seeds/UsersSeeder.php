@@ -5,7 +5,6 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 
 class UsersSeeder extends AbstractSeed
 {
-	//public $priority = 100;
 	/**
 	 * Run Method.
 	 */

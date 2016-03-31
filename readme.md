@@ -50,6 +50,10 @@ RotorCMS 5.0
 
 Выполнение сида `php rotor seed:run` или `php rotor seed:run -s UserSeeder` для отдельного сида
 
+```html
+Пока нет приоритета сидов, запустите сперва отдельный сид для пользователей написанный выше
+```
+
 ### License
 
 The RotorCMS is open-sourced software licensed under the [GPL-3.0 license](http://opensource.org/licenses/GPL-3.0)
