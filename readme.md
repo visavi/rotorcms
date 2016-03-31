@@ -51,9 +51,7 @@ RotorCMS 5.0
 Выполнение сида `php rotor seed:run` или `php rotor seed:run -s UsersSeeder` для отдельного сида
 
 ```html
-<font color="red">
 Пока нет приоритета сидов, запустите сперва отдельный сид для пользователей написанный выше
-</font>
 ```
 
 ### License
