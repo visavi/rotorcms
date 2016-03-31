@@ -48,11 +48,11 @@ RotorCMS 5.0
 
 Создание сида `php rotor seed:create UserSeeder`
 
-Выполнение сида `php rotor seed:run` или `php rotor seed:run -s UserSeeder` для отдельного сида
+Выполнение сида `php rotor seed:run` или `php rotor seed:run -s UsersSeeder` для отдельного сида
 
-```html
+<font color="red">
 Пока нет приоритета сидов, запустите сперва отдельный сид для пользователей написанный выше
-```
+</font>
 
 ### License
 

@@ -26,7 +26,7 @@ class GuestbookSeeder extends AbstractSeed
 			];
 		}
 
-		Guestbook::connection()->query('TRUNCATE guest');
+		Guestbook::connection()->query('TRUNCATE guestbook');
 
 		$table = $this->table('guestbook');
 		$table->insert($data)->save();
