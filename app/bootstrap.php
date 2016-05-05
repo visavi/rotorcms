@@ -13,6 +13,7 @@ define('APP', BASEDIR.'/app');
 define('HOME', BASEDIR.'/public');
 define('STORAGE', APP.'/storage');
 define('PCLZIP_TEMPORARY_DIR', STORAGE.'/temp/');
+define('VERSION', '5.0.1');
 
 /**
  * Автозагрузка классов
@@ -53,7 +54,7 @@ ActiveRecord\Config::initialize(function($cfg) {
 
 	if (env('APP_DEBUG')) {
 		$conf = ['append' => false, 'mode' => '0666', 'lineFormat' => '[%3$s] %4$s [%1$s]'];
-		$logger = Log::singleton('file', STORAGE.'/mysql.dat', null, $conf);
+		$logger = Log::singleton('file', STORAGE.'/queries.dat', null, $conf);
 
 		$cfg->set_logger($logger);
 		$cfg->set_logging(true);
