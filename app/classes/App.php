@@ -31,14 +31,14 @@ class App
 	 * @param  boolean $return выводить или возвращать код
 	 * @return string          сформированный код
 	 */
-	public static function view($view, $params = [], $return = false)
+	public static function view($template, $params = [], $return = false)
 	{
 		$blade = new Blade(APP.'/views', STORAGE.'/cache');
 
 		if ($return) {
-			return $blade->view()->make($view, $params)->render();
+			return $blade->view()->make($template, $params)->render();
 		} else {
-			echo $blade->view()->make($view, $params)->render();
+			echo $blade->view()->make($template, $params)->render();
 		}
 	}
 
@@ -58,7 +58,7 @@ class App
 			header($_SERVER["SERVER_PROTOCOL"].' 404 Not Found');
 		}
 
-		exit(App::view('errors.'.$code, compact('message')));
+		App::view('errors.'.$code, compact('message'));
 	}
 
 	/**
