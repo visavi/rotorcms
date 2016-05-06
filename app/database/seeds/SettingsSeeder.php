@@ -1,7 +1,6 @@
 -<?php
 
 use Phinx\Seed\AbstractSeed;
-use Illuminate\Database\Capsule\Manager as Capsule;
 
 class SettingsSeeder extends AbstractSeed
 {
