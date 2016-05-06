@@ -3,7 +3,5 @@
 /public/uploads
 /public/test
 .env
-.DS_Store
-Thumbs.db
 composer.phar
 composer.lock
