@@ -52,8 +52,6 @@ class Topic extends BaseModel {
 		}
 	}
 
-//TODO Антифлуд
-
 	/**
 	 * Количество сообщений в теме
 	 * @return integer количество сообщений в теме
