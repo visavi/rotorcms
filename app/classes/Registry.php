@@ -3,7 +3,7 @@ class Registry
 {
 	static private $_instance = null;
 
-	private $_registry = array();
+	private $registry = [];
 
 	static public function getInstance()
 	{
@@ -16,17 +16,17 @@ class Registry
 
 	static public function set($key, $object)
 	{
-		self::getInstance()->_registry[$key] = $object;
+		self::getInstance()->registry[$key] = $object;
 	}
 
 	static public function get($key)
 	{
-		return self::getInstance()->_registry[$key];
+		return self::getInstance()->registry[$key];
 	}
 
 	static public function has($name)
 	{
-		if ( ! isset(self::getInstance()->_registry[$name])) {
+		if ( ! isset(self::getInstance()->registry[$name])) {
 			return false;
 		}
 
@@ -36,7 +36,7 @@ class Registry
 	static public function remove($name)
 	{
 		if (self::has($name)) {
-			unset(self::getInstance()->_registry[$name]);
+			unset(self::getInstance()->registry[$name]);
 		}
 	}
 
