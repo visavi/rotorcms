@@ -64,7 +64,7 @@ Class NewsController Extends BaseController {
 	 */
 	public function createComment()
 	{
-		var_dump($_POST);
+
 	}
 
 	/**

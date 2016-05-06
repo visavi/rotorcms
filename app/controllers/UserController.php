@@ -111,7 +111,6 @@ Class UserController Extends BaseController {
 			$user->updated_at = new Datetime;
 
 			if ($user->save()) {
-var_dump($user); exit;
 
 				User::login($user->email, $new_password);
 				App::setFlash('success', 'Пароль успешно изменен!');
