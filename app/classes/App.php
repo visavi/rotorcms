@@ -18,8 +18,6 @@ class App
 	 */
 	public static function returnUrl($url = null)
 	{
-		//if (Request::path() == '/') return $page;
-
 		$query = Request::has('return') ? Request::input('return') : Request::path();
 		return 'return='.urlencode(is_null($url) ? $query : $url);
 	}
@@ -370,7 +368,8 @@ class App
 		$bytes = filesize($filename);
 		$size = array('B','kB','MB','GB','TB');
 		$factor = floor((strlen($bytes) - 1) / 3);
-		return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)) . @$size[$factor];
+		$unit = isset($size[$factor]) ? $size[$factor] : '';
+		return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)).$unit;
 	}
 
 	/**
