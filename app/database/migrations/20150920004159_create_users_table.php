@@ -65,7 +65,7 @@ class CreateUsersTable extends AbstractMigration
 			->addColumn('privacy', 'integer', ['limit' => MysqlAdapter::INT_TINY, 'signed' => false, 'default' => 0])
 			->addColumn('apikey', 'string', ['limit' => 32, 'null' => true])
 			->addColumn('updated_at', 'timestamp')
-			->addColumn('created_at', 'timestamp')
+			->addColumn('created_at', 'timestamp', ['null' => true])
 			->addIndex('login', ['unique' => true])
 			->addIndex('email', ['unique' => true])
 			->addIndex('level')

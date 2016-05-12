@@ -20,7 +20,7 @@ class CreateTopicsTable extends AbstractMigration
 			->addColumn('note', 'string', ['null' => true])
 			->addColumn('post_last_id', 'integer', ['null' => true])
 			->addColumn('updated_at', 'timestamp')
-			->addColumn('created_at', 'timestamp')
+			->addColumn('created_at', 'timestamp', ['null' => true])
 			->addIndex('forum_id')
 			->addIndex('locked')
 			->addIndex('updated_at')

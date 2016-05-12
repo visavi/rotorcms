@@ -15,7 +15,7 @@ class CreateNewsTable extends AbstractMigration
 			->addColumn('text', 'text')
 			->addColumn('image', 'string', ['limit' => 50, 'null' => true])
 			->addColumn('updated_at', 'timestamp')
-			->addColumn('created_at', 'timestamp')
+			->addColumn('created_at', 'timestamp', ['null' => true])
 			->addIndex('created_at')
 			->create();
 	}

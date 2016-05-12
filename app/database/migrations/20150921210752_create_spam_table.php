@@ -14,7 +14,7 @@ class CreateSpamTable extends AbstractMigration
 			->addColumn('relate_type', 'enum', ['values' => ['Guestbook', 'Post']])
 			->addColumn('relate_id', 'integer')
 			->addColumn('updated_at', 'timestamp')
-			->addColumn('created_at', 'timestamp')
+			->addColumn('created_at', 'timestamp', ['null' => true])
 			->addIndex(['relate_type', 'relate_id'])
 			->addIndex('created_at')
 			->create();

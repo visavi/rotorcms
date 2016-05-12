@@ -17,7 +17,7 @@ class CreatePostsTable extends AbstractMigration
 			->addColumn('ip', 'string', ['limit' => 15])
 			->addColumn('brow', 'string', ['limit' => 25])
 			->addColumn('updated_at', 'timestamp')
-			->addColumn('created_at', 'timestamp')
+			->addColumn('created_at', 'timestamp', ['null' => true])
 			->addIndex('forum_id')
 			->addIndex(['topic_id', 'created_at'])
 			->addIndex('user_id')

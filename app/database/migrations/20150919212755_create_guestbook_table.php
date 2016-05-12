@@ -16,7 +16,7 @@ class CreateGuestbookTable extends AbstractMigration
 			->addColumn('brow', 'string', ['limit' => 25])
 			->addColumn('reply', 'text')
 			->addColumn('updated_at', 'timestamp')
-			->addColumn('created_at', 'timestamp')
+			->addColumn('created_at', 'timestamp', ['null' => true])
 			->addIndex('created_at')
 			->create();
 	}

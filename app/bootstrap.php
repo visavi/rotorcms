@@ -54,7 +54,7 @@ ActiveRecord\Config::initialize(function($cfg) {
 
 	if (env('APP_DEBUG')) {
 		$conf = ['append' => false, 'mode' => '0666', 'lineFormat' => '[%3$s] %4$s [%1$s]'];
-		$logger = Log::singleton('file', STORAGE.'/queries.dat', null, $conf);
+		$logger = Log::singleton('file', STORAGE.'/temp/queries.dat', null, $conf);
 
 		$cfg->set_logger($logger);
 		$cfg->set_logging(true);

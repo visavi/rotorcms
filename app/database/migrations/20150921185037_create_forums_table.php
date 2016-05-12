@@ -18,7 +18,7 @@ class CreateForumsTable extends AbstractMigration
 			->addColumn('closed', 'boolean', ['default' => false])
 			->addColumn('topic_last_id', 'integer', ['null' => true])
 			->addColumn('updated_at', 'timestamp')
-			->addColumn('created_at', 'timestamp')
+			->addColumn('created_at', 'timestamp', ['null' => true])
 			->create();
 	}
 }
