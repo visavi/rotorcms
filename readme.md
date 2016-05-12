@@ -55,6 +55,20 @@ RotorCMS 5.0
 Пока нет приоритета сидов, запустите сперва отдельный сид для пользователей написанный выше
 ```
 
+###Настройки nginx
+
+Чтобы пути обрабатывались правильно необходимо настроить конфиги сайта
+
+В секции server -> location необходимо заменить строку
+
+```
+try_files $uri $uri/ =404
+
+на
+
+try_files $uri $uri/ /index.php?$query_string;
+```
+
 ### License
 
 The RotorCMS is open-sourced software licensed under the [GPL-3.0 license](http://opensource.org/licenses/GPL-3.0)
