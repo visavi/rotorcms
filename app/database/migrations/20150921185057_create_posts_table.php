@@ -13,7 +13,7 @@ class CreatePostsTable extends AbstractMigration
 		$table->addColumn('forum_id', 'integer')
 			->addColumn('topic_id', 'integer')
 			->addColumn('user_id', 'integer')
-			->addColumn('text', 'text')
+			->addColumn('text', 'text', ['null' => true])
 			->addColumn('ip', 'string', ['limit' => 15])
 			->addColumn('brow', 'string', ['limit' => 25])
 			->addColumn('updated_at', 'timestamp')

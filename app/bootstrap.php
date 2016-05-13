@@ -60,3 +60,5 @@ ActiveRecord\Config::initialize(function($cfg) {
 		$cfg->set_logging(true);
 	}
 });
+
+ActiveRecord\Connection::$datetime_format = 'Y-m-d H:i:s';

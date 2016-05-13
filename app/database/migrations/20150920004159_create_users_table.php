@@ -18,7 +18,7 @@ class CreateUsersTable extends AbstractMigration
 			->addColumn('level', 'enum', ['values' => ['banned', 'guest', 'user', 'moder', 'admin'], 'default' => 'guest'])
 			->addColumn('reset_code', 'string', ['limit' => 50, 'null' => true])
 			->addColumn('name', 'string', ['limit' => 20, 'null' => true])
-			->addColumn('country', 'string', ['limit' => 30, 'null' => true])
+			->addColumn('country', 'string', ['limit' => 40, 'null' => true])
 			->addColumn('city', 'string', ['limit' => 50, 'null' => true])
 			->addColumn('info', 'text', ['null' => true])
 			->addColumn('phone', 'string', ['limit' => 20, 'null' => true])

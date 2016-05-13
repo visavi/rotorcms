@@ -13,7 +13,7 @@ class CreateCommentsTable extends AbstractMigration
 		$table->addColumn('user_id', 'integer')
 			->addColumn('relate_type', 'enum', ['values' => ['News']])
 			->addColumn('relate_id', 'integer')
-			->addColumn('text', 'text')
+			->addColumn('text', 'text', ['null' => true])
 			->addColumn('ip', 'string', ['limit' => 15])
 			->addColumn('brow', 'string', ['limit' => 25])
 			->addColumn('updated_at', 'timestamp')
