@@ -45,7 +45,7 @@
 
 							<li><a href="#" onclick="return postQuote(this)" data-toggle="tooltip" title="Цитировать"><span class="fa fa-quote-right text-muted"></span></a></li>
 
-							<li><a href="#" onclick="return sendComplaint(this)" data-type="guest" data-id="{{ $post->id }}" data-token="{{ $_SESSION['token'] }}" rel="nofollow" data-toggle="tooltip" title="Жалоба"><span class="fa fa-bell text-muted"></span></a></li>
+							<li><a href="#" onclick="return sendComplaint(this)" data-type="Post" data-id="{{ $post->id }}" data-token="{{ $_SESSION['token'] }}" rel="nofollow" data-toggle="tooltip" title="Жалоба"><span class="fa fa-bell text-muted"></span></a></li>
 
 						@endif
 
