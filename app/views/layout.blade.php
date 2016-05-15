@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<meta name="description" content="@yield('description', Setting::get('description'))">
 	<meta name="keywords" content="@yield('keywords', Setting::get('keywords'))">
 	<meta name="author" content="Vantuz (visavi.net@mail.ru)">
@@ -16,12 +16,16 @@
 
 	@section('styles')
 		<link href="/assets/css/bootstrap.min.css" rel="stylesheet">
-		<link href="/assets/css/bootstrap-theme.min.css" rel="stylesheet">
+		<!-- <link href="/assets/css/bootstrap-theme.min.css" rel="stylesheet"> -->
 		<link href="/assets/css/font-awesome.min.css" rel="stylesheet">
 		<link href="/assets/css/prettify.css" rel="stylesheet">
 		<link href="/assets/css/colorbox.css" rel="stylesheet">
 		<link href="/assets/markitup/markitup.css" rel="stylesheet">
 		<link href="/assets/css/app.css" rel="stylesheet">
+		<link href="/assets/css/style.css" rel="stylesheet" />
+
+		<!-- Theme skin -->
+		<link id="t-colors" href="/assets/css/skins/default.css" rel="stylesheet" />
 	@show
 
 	<link rel="image_src" href="/assets/img/images/icon.png">
@@ -36,88 +40,94 @@
 </head>
 <body>
 
-	<!-- Fixed navbar -->
-	<div class="navbar navbar-default navbar-static-top" role="navigation">
-		<div class="container">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-					<span class="sr-only">Toggle navigation</span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand text-uppercase" href="/">{{ Setting::get('sitetitle') }}</a>
-			</div>
-			<div class="collapse navbar-collapse">
-				<ul class="nav navbar-nav">
-				<li class="{{ Request::is('news*') ? ' active' : '' }}"><a href="/news">Новости</a></li>
-				<li class="{{ Request::is('guestbook*') ? ' active' : '' }}"><a href="/guestbook">Гостевая</a></li>
-				<li class="{{ Request::is('forum*') ? ' active' : '' }}"><a href="/forum">Форум</a></li>
-				<li class="dropdown">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
-					<ul class="dropdown-menu">
-						<li><a href="#">Action</a></li>
-						<li><a href="#">Another action</a></li>
-						<li><a href="#">Something else here</a></li>
-						<li class="divider"></li>
-						<li class="dropdown-header">Nav header</li>
-						<li><a href="#">Separated link</a></li>
-						<li><a href="#">One more separated link</a></li>
-					</ul>
-				</li>
-				</ul>
-				<ul class="nav navbar-nav navbar-right">
-
-					@if (User::check())
+<div id="wrapper">
+	<!-- start header -->
+	<header>
+		<div class="navbar navbar-default navbar-static-top">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="/"><img src="/assets/img/logo.png" alt="" /></a>
+				</div>
+				<div class="navbar-collapse collapse ">
+					<ul class="nav navbar-nav">
+						<li class="{{ Request::is('news*') ? ' active' : '' }}"><a href="/news">Новости</a></li>
+						<li class="{{ Request::is('guestbook*') ? ' active' : '' }}"><a href="/guestbook">Гостевая</a></li>
+						<li class="{{ Request::is('forum*') ? ' active' : '' }}"><a href="/forum">Форум</a></li>
 						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ User::get('login') }} <b class="caret"></b></a>
+							<a href="#" class="dropdown-toggle " data-toggle="dropdown" data-hover="dropdown" data-delay="0" data-close-others="false">Features <i class="fa fa-angle-down"></i></a>
 							<ul class="dropdown-menu">
-
-								@if (User::isAdmin())
-									<li><a href="/admin">Админ-панель</a></li>
-								@endif
-								<li><a href="/user/{{ User::get('login') }}">Профиль</a></li>
-								<li><a href="/logout" onclick="return logout(this);">Выход</a></li>
+								<li><a href="typography.html">Typography</a></li>
+								<li><a href="components.html">Components</a></li>
+								<li><a href="pricing-box.html">Pricing box</a></li>
+								<li class="dropdown-submenu">
+									<a href="#" class="dropdown-toggle " data-toggle="dropdown" data-hover="dropdown">Pages</a>
+									<ul class="dropdown-menu">
+										<li><a href="fullwidth.html">Full width</a></li>
+										<li><a href="right-sidebar.html">Right sidebar</a></li>
+										<li><a href="left-sidebar.html">Left sidebar</a></li>
+										<li><a href="comingsoon.html">Coming soon</a></li>
+										<li><a href="search-result.html">Search result</a></li>
+										<li><a href="404.html">404</a></li>
+										<li><a href="register.html">Register</a></li>
+										<li><a href="login.html">Login</a></li>
+									</ul>
+								</li>
 							</ul>
 						</li>
 
-					@else
-						<li class="{{ Request::is('login*') ? ' active' : '' }}"><a href="/login?{{ App::returnUrl() }}">Вход</a></li>
-						<li class="{{ Request::is('register*') ? ' active' : '' }}"><a href="/register">Регистрация</a></li>
-					@endif
-				</ul>
-			</div><!--/.nav-collapse -->
-		</div>
-	</div>
+						@if (User::check())
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="0" data-close-others="false">{{ User::get('login') }} <i class="fa fa-angle-down"></i></a>
+								<ul class="dropdown-menu">
 
-	<!-- Begin page content -->
+									@if (User::isAdmin())
+										<li><a href="/admin">Админ-панель</a></li>
+									@endif
+									<li><a href="/user/{{ User::get('login') }}">Профиль</a></li>
+									<li><a href="/logout" onclick="return logout(this);">Выход</a></li>
+								</ul>
+							</li>
+
+						@else
+							<li class="{{ Request::is('login*') ? ' active' : '' }}"><a href="/login?{{ App::returnUrl() }}">Вход</a></li>
+							<li class="{{ Request::is('register*') ? ' active' : '' }}"><a href="/register">Регистрация</a></li>
+						@endif
+					</ul>
+				</div>
+			</div>
+		</div>
+	</header>
+	<!-- end header -->
+	<section id="inner-headline">
+		@yield('breadcrumbs')
+	</section>
+
+	<section id="content">
 	<div class="container">
-		<div class="row main">
-		<?php /*App::render('includes/note', compact('php_self')); */?>
+		<div class="row">
 
 			<div class="col-lg-12">
 				{{ App::getFlash() }}
 			</div>
 
-			<div class="col-lg-9">
-				@yield('breadcrumbs')
+			<div class="col-lg-8">
 				@yield('content')
 			</div>
-
-			<div class="col-lg-3">
+			<div class="col-lg-4">
 				@include('right')
 			</div>
 		</div>
 	</div>
-
-	<div class="footer">
-		<div class="container">
-		<?php /*
-			<div class="pull-left"><?= show_online() ?></div>
-			<div class="pull-right"><?= show_counter() ?></div>
-				{{ perfomance() }}*/?>
-		</div>
-	</div>
+	</section>
+	<footer>
+		@include('footer')
+	</footer>
+</div>
 
 	@section('scripts')
 		<script src="/assets/js/jquery-1.11.3.min.js"></script>
@@ -131,6 +141,7 @@
 		<script src="/assets/markitup/jquery.markitup.js"></script>
 		<script src="/assets/markitup/markitup.set.js"></script>
 		<script src="/assets/js/app.js"></script>
+		<script src="js/custom.js"></script>
 	@show
 </body>
 </html>
