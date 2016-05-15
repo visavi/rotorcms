@@ -3,7 +3,7 @@
 		<form action="/guestbook/create" method="post">
 			<input type="hidden" name="token" value="{{ $_SESSION['token'] }}">
 			<div class="form-group{{ App::hasError('text') }}">
-				<textarea class="form-control" id="markItUp" rows="3" name="text" placeholder="Текст сообщения" required>{{ App::getInput('text') }}</textarea>
+				<textarea class="form-control" id="markItUp" rows="5" name="text" placeholder="Текст сообщения" required>{{ App::getInput('text') }}</textarea>
 				{!! App::textError('text') !!}
 			</div>
 			<button type="submit" class="btn btn-primary pull-right">Написать</button>
@@ -16,7 +16,7 @@
 			<input type="hidden" name="token" value="{{ $_SESSION['token'] }}" />
 			<div class="form-group{{ App::hasError('text') }}">
 				<label for="inputText">Сообщение:</label>
-				<textarea class="form-control" id="inputText" rows="3" name="text" placeholder="Текст сообщения" required>{{ App::getInput('text') }}</textarea>
+				<textarea class="form-control" id="inputText" rows="5" name="text" placeholder="Текст сообщения" required>{{ App::getInput('text') }}</textarea>
 				{!! App::textError('text') !!}
 			</div>
 			<div class="row">
