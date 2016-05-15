@@ -141,7 +141,6 @@
 		<script src="/assets/markitup/jquery.markitup.js"></script>
 		<script src="/assets/markitup/markitup.set.js"></script>
 		<script src="/assets/js/app.js"></script>
-		<script src="js/custom.js"></script>
 	@show
 </body>
 </html>
