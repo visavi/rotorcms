@@ -8,6 +8,7 @@ RotorCMS 5.0
 [![License](https://poser.pugx.org/visavi/rotorcms/license)](https://packagist.org/packages/visavi/rotorcms)
 [![Build Status](https://travis-ci.org/visavi/rotorcms.svg)](https://travis-ci.org/visavi/rotorcms)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/6e564370-eb46-45ee-923d-4be20c5df1be/mini.png)](https://insight.sensiolabs.com/projects/6e564370-eb46-45ee-923d-4be20c5df1be)
+[![Dependency Status](https://www.versioneye.com/user/projects/573cc369ce8d0e00360bcf3e/badge.svg)](https://www.versioneye.com/user/projects/573cc369ce8d0e00360bcf3e)
 
 **RotorCMS** является гибкой, мощной и интуитивно понятной системой с минимальными требованиями к хостингу, высоким уровнем защиты и является превосходным выбором для построения сайта любой степени сложности
 
