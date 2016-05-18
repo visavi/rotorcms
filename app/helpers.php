@@ -17,9 +17,10 @@
 function env($key, $default = null)
 {
 	$value = getenv($key);
-	if ($value === false) return value($default);
-	switch (strtolower($value))
-	{
+	if ($value === false) {
+		return value($default);
+	}
+	switch (strtolower($value)) {
 		case 'true':
 		case '(true)':
 			return true;
@@ -33,8 +34,7 @@ function env($key, $default = null)
 		case '(null)':
 			return;
 	}
-	if (starts_with($value, '"') && str_finish($value, '"'))
-	{
+	if (strlen($value) > 1 && starts_with($value, '"') && str_finish($value, '"')) {
 		return substr($value, 1, -1);
 	}
 	return $value;

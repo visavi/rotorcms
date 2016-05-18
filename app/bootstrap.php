@@ -32,7 +32,10 @@ $aliases = [
 ];
 AliasLoader::getInstance($aliases)->register();
 
-if (! env('APP_ENV')) Dotenv::load(BASEDIR);
+if (! env('APP_ENV')) {
+	$dotenv = new Dotenv\Dotenv(BASEDIR);
+	$dotenv->load();
+}
 
 if (env('APP_DEBUG')) {
 	$whoops = new Whoops\Run;
