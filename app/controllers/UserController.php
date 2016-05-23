@@ -156,7 +156,7 @@ Class UserController Extends BaseController {
 				App::sendMail($to, $subject, $body);
 
 				// Авторизация
-				User::auth($email, $password);
+				User::login($email, $password);
 
 				App::setFlash('success', 'Добро пожаловать, '.e($user->login).'! Вы успешно зарегистрированы!');
 				App::redirect('/');
