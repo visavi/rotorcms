@@ -56,7 +56,7 @@ class App
 			header($_SERVER["SERVER_PROTOCOL"].' 404 Not Found');
 		}
 
-		App::view('errors.'.$code, compact('message'));
+		exit(App::view('errors.'.$code, compact('message')));
 	}
 
 	/**
