@@ -15,11 +15,12 @@ class CategoriesSeeder extends AbstractSeed
 		$data = [];
 
 		for ($i = 0; $i < 10; $i++) {
+			$name = $faker->realText(rand(25, 35));
 			$data[] = [
 				'sort' => $i,
 				'parent_id' => 0,
-				'name' => $faker->realText(rand(25, 35)),
-				'slug' => $faker->slug,
+				'name' => $name,
+				'slug' => App::slugify($name),
 				'description' => $faker->realText(rand(200, 500)),
 				'created_at' => $faker->dateTimeBetween('-1 month')->format('Y-m-d H:i:s'),
 			];
