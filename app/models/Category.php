@@ -8,7 +8,5 @@ class Category extends BaseModel {
 	public static function getAll()
 	{
 		return self::all(['conditions' => ['parent_id = ?', 0], 'order' => 'sort']);
-
-		//return App::arrayAssoc($forums, 'id', 'title');
 	}
 }

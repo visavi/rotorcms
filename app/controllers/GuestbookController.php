@@ -95,7 +95,7 @@ Class GuestbookController Extends BaseController {
 
 		if (Request::isMethod('post')) {
 
-			//$guest->scenario = 'reply';
+			$guest->scenario = 'reply';
 			$guest->token = Request::input('token', true);
 			$guest->reply = Request::input('text');
 

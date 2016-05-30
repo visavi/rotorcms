@@ -68,7 +68,5 @@ class Forum extends BaseModel {
 	public static function getAll()
 	{
 		return self::all(['conditions' => ['parent_id = ? AND closed = ?', 0, 0], 'order' => 'sort', 'include' => ['children']]);
-
-		//return App::arrayAssoc($forums, 'id', 'title');
 	}
 }
