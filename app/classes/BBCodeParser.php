@@ -47,7 +47,7 @@ class BBCodeParser {
 			'iterate' => 3,
 		],
 		'http' => [
-			'pattern' => '%\b(([\w-]+://?|www[.])[^\s()<>]+(?:\([\w\d]+\)|([^[:punct:]\s]|/)))%s',
+			'pattern' => '%\b((?<!(=|]))([\w-]+://?|www[.])[^\s()<>]+(?:\([\w\d]+\)|([^[:punct:]\s]|/)))%s',
 			'replace' => '<a href="$1">$1</a>',
 		],
 		'link' => [
@@ -58,11 +58,11 @@ class BBCodeParser {
 			'pattern' => '/\[url\=(.*?)\](.*?)\[\/url\]/s',
 			'replace' => '<a href="$1">$2</a>',
 		],
-/*		'image' => [
+		'image' => [
 			'pattern' => '/\[img\](.*?)\[\/img\]/s',
 			'callback' => 'imgReplace',
 		],
-		'orderedList' => [
+		/*'orderedList' => [
 			'pattern' => '/\[list=1\](.*?)\[\/list\]/s',
 			'replace' => '<ol>$1</ol>',
 		],
@@ -189,7 +189,7 @@ class BBCodeParser {
 		if (empty($list_smiles)) {
 
 			if (! file_exists(STORAGE.'/temp/smiles.dat')) {
-				$smiles = Smile::all(['order' => 'LENGTH(code) desc']);
+				$smiles = Smile::all(['order' => 'CHAR_LENGTH(code) desc']);
 				$smiles = App::arrayAssoc($smiles, 'code', 'name');
 				file_put_contents(STORAGE.'/temp/smiles.dat', serialize($smiles));
 			}
