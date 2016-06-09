@@ -41,7 +41,7 @@ mySettings = {
 		]},
 
 		{title:'По центру', name:'<i class="fa fa-align-center"></i>', className:"bb-center", openWith:'[center]', closeWith:'[/center]'},
-		{title:'Спойлер', name:'<i class="fa fa-text-height"></i>', className:"bb-spoiler", openWith:'[spoiler=[![Заголовок спойлера]!]]', closeWith:'[/spoiler]'},
+		{title:'Спойлер', name:'<i class="fa fa-text-height"></i>', className:"bb-spoiler", openWith:'[spoiler=[![Заголовок спойлера]!]]', closeWith:'[/spoiler]', placeHolder:'Текст ссылки...'},
 
 		//{separator:'---------------' },
 		//{name:'OrderedList', className:"bb-orderedlist", openWith:'[*]', multiline:true, openBlockWith:'[list=1]\n', closeBlockWith:'\n[/list]'},
