@@ -11,7 +11,7 @@
 		<ul class="cat">
 			<?php $categories = Category::getAll(); ?>
 			@foreach ($categories as $category)
-				<li><i class="fa fa-angle-right"></i><a href="/category/{{ $category->slug }}">{{ $category->name }}</a><span> ({{ $category->sort }})</span></li>
+				<li><i class="fa fa-angle-right"></i><a href="/category/{{ $category->slug }}">{{ $category->name }}</a> <span>({{ $category->sort }})</span></li>
 			@endforeach
 		</ul>
 	</div>

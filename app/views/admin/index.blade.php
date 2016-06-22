@@ -27,4 +27,6 @@
 		</div>
 	</div>
 
+	<p><a href="/category">Управление категориями</a></p>
+	<p><a href="/category/create">Создать категорию</a></p>
 @stop

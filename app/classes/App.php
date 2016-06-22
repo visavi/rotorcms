@@ -511,9 +511,9 @@ class App
 			'Б' => 'B',    'Ю' => 'YU', 'Ү' => 'U',  'Қ' => 'K',    'Ғ' => 'G',
 			'Щ' => 'SHCH', 'І' => 'I',  'Ї' => 'YI', 'Є' => 'YE',   'Ґ' => 'G',
 		];
-		foreach ($matrix as $from => $to)  {
-			$title = mb_eregi_replace($from, $to, $title);
-		}
+
+		$title = strtr($title, $matrix);
+
 		$pattern = '![^'.preg_quote($separator).'\pL\pN\s]+!u';
 		$title = preg_replace($pattern, '', mb_strtolower($title));
 		$flip = $separator == '-' ? '_' : '-';

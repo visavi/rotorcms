@@ -48,12 +48,12 @@ class User extends BaseModel {
 	{
 		//if ($this->is_new_record()) {
 		//  Проверка капчи
-		if ($this->captcha && $this->captcha != $_SESSION['captcha']) {
+		if ($this->captcha && $this->captcha !== $_SESSION['captcha']) {
 			$this->errors->add('captcha', 'Неверный проверочный код');
 		}
 		//}
 		//
-		if ($this->token && $this->token != $_SESSION['token']) {
+		if ($this->token && $this->token !== $_SESSION['token']) {
 			$this->errors->add('token', 'Неверный идентификатор сессии, повторите действие!');
 		}
 

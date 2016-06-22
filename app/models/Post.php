@@ -21,7 +21,7 @@ class Post extends BaseModel {
 	public function validate() {
 
 		//  Проверка токена
-		if ($this->token && $this->token != $_SESSION['token']) {
+		if ($this->token && $this->token !== $_SESSION['token']) {
 			$this->errors->add('token', 'Неверный идентификатор сессии, повторите действие!');
 		}
 

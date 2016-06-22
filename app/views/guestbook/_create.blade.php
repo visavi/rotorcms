@@ -1,5 +1,5 @@
 @if (User::check())
-	<div class="well well-sm clearfix col-sm-10">
+	<div class="well well-sm clearfix">
 		<form action="/guestbook/create" method="post">
 			<input type="hidden" name="token" value="{{ $_SESSION['token'] }}">
 			<div class="form-group{{ App::hasError('text') }}">
@@ -11,7 +11,7 @@
 	</div>
 
 @else
-	<div class="well well-sm clearfix col-sm-10">
+	<div class="well well-sm clearfix">
 		<form action="/guestbook/create" method="post">
 			<input type="hidden" name="token" value="{{ $_SESSION['token'] }}" />
 			<div class="form-group{{ App::hasError('text') }}">

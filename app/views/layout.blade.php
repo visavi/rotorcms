@@ -27,6 +27,7 @@
 		<!-- Theme skin -->
 		<link id="t-colors" href="/assets/css/skins/default.css" rel="stylesheet" />
 	@show
+	@stack('styles')
 
 	<link rel="image_src" href="/assets/img/images/icon.png">
 	<link rel="alternate" href="/news/rss" title="RSS News" type="application/rss+xml">
@@ -142,6 +143,7 @@
 		<script src="/assets/markitup/markitup.set.js"></script>
 		<script src="/assets/js/app.js"></script>
 	@show
+	@stack('scripts')
 </body>
 </html>
 

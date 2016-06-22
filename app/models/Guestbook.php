@@ -23,14 +23,13 @@ class Guestbook extends BaseModel {
 		['text', 'maximum' => 2000, 'too_long' => 'Слишком длинный текст сообщения, максимум %d симв.'],
  	];
 
-	public function validate() {
-
-		//  Проверка токена
-		if ($this->token && $this->token != $_SESSION['token']) {
+	public function validate()
+	{
+		if ($this->token && $this->token !== $_SESSION['token']) {
 			$this->errors->add('token', 'Неверный идентификатор сессии, повторите действие!');
 		}
 
-		if (!User::check() && $this->captcha != $_SESSION['captcha']) {
+		if (!User::check() && $this->captcha !== $_SESSION['captcha']) {
 			$this->errors->add('captcha', 'Неверный проверочный код');
 		}
 	}

@@ -38,6 +38,12 @@ $router->map('GET|POST', '/news/create', 'NewsController@create');
 $router->map('POST', '/news/comment', 'NewsController@createComment');
 $router->map('GET', '/news/rss', 'NewsController@rss', 'news_rss');
 
+
+$router->map('GET', '/category', 'CategoryController@index');
+$router->map('GET|POST', '.category/create', 'CategoryController@create');
+$router->map('GET|POST', '/category/[i:id]/edit', 'CategoryController@edit');
+$router->map('GET', '/category/[i:id]/delete', 'CategoryController@delete');
+
 $router->map('GET', '/admin', 'AdminController@index', 'admin');
 
 //$router->map('GET', '/[guestbook|forum|news:link]/smiles/page/[i:page]', 'pages/smiles');

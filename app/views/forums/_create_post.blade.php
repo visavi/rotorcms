@@ -1,7 +1,7 @@
 @if (User::check())
 	@if(!$topic->closed)
 
-		<div class="well well-sm clearfix col-sm-10">
+		<div class="well well-sm clearfix">
 			<form action="/topic/{{ $topic->id }}/create" method="post">
 				<input type="hidden" name="token" value="{{ $_SESSION['token'] }}">
 
