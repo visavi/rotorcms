@@ -20,6 +20,10 @@ class Category extends BaseModel {
 		['parent_id', 'in' => 'Category:id', 'allow_empty' => true, 'message' => 'Родительская категория не найдена'],
 	];
 
+	static $validates_uniqueness_of = [
+		['slug', 'message' => 'Ссылка на категорию должна быть уникальной'],
+	];
+
 	public function validate()
 	{
 		if ($this->token && $this->token !== $_SESSION['token']) {
@@ -37,7 +41,7 @@ class Category extends BaseModel {
 	}
 
 	/**
-	 * Функция вызываемая перед методом save
+	 * Установки ссылки на категорию
 	 */
 	public function set_slug($slug)
 	{

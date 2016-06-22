@@ -21,13 +21,25 @@
 		</tr>
 	</thead>
 	<tbody>
-		@foreach ($categories as $category)
-			<tr>
+		@foreach ($categories[0] as $key => $category)
+			<tr class="js-record">
 				<td>{{ $category->sort }}</td>
-				<td>{{ $category->name }}</td>
+				<td><strong><a href="{{ $category->slug }}">{{ $category->name }}</a></strong></td>
 				<td>{{ $category->slug }}</td>
-				<td><a href="/category/{{ $category->id }}/edit"><i class="fa fa-edit"></i></a> <a href="/category/{{ $category->id }}/delete?token={{ $_SESSION['token'] }}"><i class="fa fa-trash"></i></a></td>
+				<td class="text-center"><a href="/category/{{ $category->id }}/edit"><i class="fa fa-edit"></i></a> <a href="#" onclick="return deleteRecord(this, '/category/delete')" data-type="guest" data-id="{{ $category->id }}" data-token="{{ $_SESSION['token'] }}"><i class="fa fa-trash"></i></a></td>
 			</tr>
+
+			@if (isset($categories[$key]))
+				@foreach ($categories[$key] as $subcategory)
+					<tr class="info js-record">
+						<td>{{ $subcategory->sort }}</td>
+						<td><a href="{{ $subcategory->slug }}">{{ $subcategory->name }}</a></td>
+						<td>{{ $subcategory->slug }}</td>
+						<td class="text-center"><a href="/category/{{ $subcategory->id }}/edit"><i class="fa fa-edit"></i></a> <a onclick="return deleteRecord(this, '/category/delete')" data-type="guest" data-id="{{ $subcategory->id }}" data-token="{{ $_SESSION['token'] }}"><i class="fa fa-trash"></i></a></td>
+					</tr>
+				@endforeach
+			@endif
+
 		@endforeach
 	</tbody>
 </table>

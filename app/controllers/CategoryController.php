@@ -9,7 +9,15 @@ Class CategoryController Extends BaseController {
 	{
 		if (!User::isAdmin()) App::abort('403');
 
-		$categories = Category::all(['order' => 'sort']);
+		$categoriesAll = Category::all(['order' => 'sort']);
+
+		$categories = [];
+
+		foreach ($categoriesAll as $category) {
+			$id = $category->id;
+			$parent = $category->parent_id;
+			$categories[$parent][$id] = $category;
+		}
 
 		App::view('categories.index', compact('categories'));
 	}
@@ -81,21 +89,23 @@ Class CategoryController Extends BaseController {
 	/**
 	 * Удаление категории
 	 */
-	public function delete($id)
+	public function delete()
 	{
+		if (! Request::ajax()) App::redirect('/');
 		if (! User::isAdmin()) App::abort(403);
-		if (! $category = Category::find_by_id($id)) App::abort('default', 'Категория не найдена!');
 
-		$category->token = Request::input('token', true);
+		$id = Request::input('id');
+		if ($category = Category::find_by_id($id)) {
 
-		if ($category->is_valid()) {
+			$category->token = Request::input('token', true);
 
-			$category->delete();
-			App::setFlash('success', 'Категория успешно удалена!');
-		} else {
-			App::setFlash('danger', $category->getErrors());
+			if ($category->is_valid()) {
+
+				$category->delete();
+				exit(json_encode(['status' => 'ok']));
+			}
 		}
 
-		App::redirect('/category');
+		exit(json_encode(['status' => 'error']));
 	}
 }

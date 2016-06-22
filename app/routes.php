@@ -42,7 +42,7 @@ $router->map('GET', '/news/rss', 'NewsController@rss', 'news_rss');
 $router->map('GET', '/category', 'CategoryController@index');
 $router->map('GET|POST', '.category/create', 'CategoryController@create');
 $router->map('GET|POST', '/category/[i:id]/edit', 'CategoryController@edit');
-$router->map('GET', '/category/[i:id]/delete', 'CategoryController@delete');
+$router->map('POST', '/category/delete', 'CategoryController@delete');
 
 $router->map('GET', '/admin', 'AdminController@index', 'admin');
 

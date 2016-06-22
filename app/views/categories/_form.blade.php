@@ -39,7 +39,6 @@
 		<div class="col-sm-5">
 		<select class="form-control" id="inputParent" name="parent">
 			<option value="0">Основная категория</option>
-			<option value="111">Основная категория</option>
 			@foreach ($categories as $data)
 				@continue($data->id == $category->id)
 

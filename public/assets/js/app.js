@@ -179,8 +179,8 @@ function sendComplaint(el) {
 }
 
 /* Удаление сообщения в гостевой */
-function deleteRecord(el, url, record) {
-	bootbox.confirm('Вы действительно хотите удалить '+ record +'?', function(result){
+function deleteRecord(el, url) {
+	bootbox.confirm('Вы действительно хотите удалить запись?', function(result){
 		if (result) {
 
 			$.ajax({
@@ -194,7 +194,7 @@ function deleteRecord(el, url, record) {
 
 					if (data.status == 'ok'){
 						$.notify('Запись успешно удалена!');
-						$(el).closest('.js-post').hide('slow', function(){
+						$(el).closest('.js-record').hide('slow', function(){
 							$(el).remove();
 						});
 					}

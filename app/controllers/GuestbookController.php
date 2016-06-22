@@ -126,6 +126,8 @@ Class GuestbookController Extends BaseController {
 			$guest->token = Request::input('token', true);
 
 			if ($guest->is_valid()) {
+
+				$guest->delete();
 				exit(json_encode(['status' => 'ok']));
 			}
 		}
