@@ -51,4 +51,11 @@ class Category extends BaseModel {
 
 		$this->assign_attribute('slug', $slug);
 	}
+
+	public function before_destroy()
+	{
+		//$this->errors->add('token', 'Неверный идентификатор сессии, повторите действие!');
+		//$this->errors->add('token3', 'Неверный идентификатор сессии, повторите действие!');
+		//return false;
+	}
 }

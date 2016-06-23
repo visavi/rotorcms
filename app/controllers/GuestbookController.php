@@ -119,19 +119,20 @@ Class GuestbookController Extends BaseController {
 		if (! Request::ajax()) App::redirect('/');
 		if (! User::isAdmin()) App::abort(403);
 
+		$errors = '';
 		$id = Request::input('id');
 
 		if ($guest = Guestbook::find_by_id($id)) {
 
 			$guest->token = Request::input('token', true);
 
-			if ($guest->is_valid()) {
-
-				$guest->delete();
+			if ($guest->is_valid() && $guest->delete()) {
 				exit(json_encode(['status' => 'ok']));
+			} else {
+				$errors = $guest->getErrorsText();
 			}
 		}
 
-		exit(json_encode(['status' => 'error']));
+		exit(json_encode(['status' => 'error', 'errors' => $errors]));
 	}
 }

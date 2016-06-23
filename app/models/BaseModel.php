@@ -6,8 +6,8 @@ class BaseModel extends ActiveRecord\Model
 	 * Возвращает все ошибки в виде строки
 	 * @return array Список ошибок
 	 */
-	public function getErrors() {
-
+	public function getErrors()
+	{
 		if ($this->errors && $this->errors->size()) {
 			$result = [];
 			$raw_errors = $this->errors->get_raw_errors();
@@ -20,6 +20,16 @@ class BaseModel extends ActiveRecord\Model
 			return $result;
 		}
 		return [];
+	}
+
+	public function getErrorsText()
+	{
+		$result = [];
+		foreach ($this->getErrors() as $error) {
+			$result[] = $error;
+		}
+
+		return implode('<br />', $result);
 	}
 
 	/**

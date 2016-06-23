@@ -10,7 +10,7 @@
 	@if ($posts)
 		@foreach ($posts as $post)
 
-			<div class="media js-record">
+			<div class="media js-post js-record">
 				<div class="media-left">
 					{!! $post->user()->getAvatar() !!}
 				</div>

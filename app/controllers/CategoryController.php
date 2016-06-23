@@ -94,18 +94,20 @@ Class CategoryController Extends BaseController {
 		if (! Request::ajax()) App::redirect('/');
 		if (! User::isAdmin()) App::abort(403);
 
+		$errors = '';
 		$id = Request::input('id');
+
 		if ($category = Category::find_by_id($id)) {
 
 			$category->token = Request::input('token', true);
 
-			if ($category->is_valid()) {
-
-				$category->delete();
+			if ($category->is_valid() && $category->delete()) {
 				exit(json_encode(['status' => 'ok']));
+			} else {
+				$errors = $category->getErrorsText();
 			}
 		}
 
-		exit(json_encode(['status' => 'error']));
+		exit(json_encode(['status' => 'error', 'errors' => $errors]));
 	}
 }

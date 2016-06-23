@@ -5,7 +5,10 @@ $(document).ready(function(){
 
 	$('#markItUp').markItUp(mySettings);
 
-	$.notify.defaults({ className: 'success' });
+	toastr.options = {
+		"progressBar": true,
+		"positionClass": "toast-top-full-width",
+	}
 
 	$('[data-toggle="tooltip"]').tooltip();
 	$('[data-toggle="popover"]').popover()
@@ -105,9 +108,12 @@ function showResponse(responseText, statusText, xhr, $form)  {
 	return true;
 }
 
-/*
- * Показывает или скрывает пароль при клике
- */
+/* Вывод уведомлений */
+function notify(type, title, message, optionsOverride) {
+	return toastr[type](message, title, optionsOverride);
+}
+
+/* Показывает или скрывает пароль при клике */
 function revealPassword(el) {
 
 	if ($(el).prev('.eye').attr('type') == 'password') {
@@ -128,17 +134,17 @@ function changeBookmark(el) {
 		success: function(data) {
 
 			if (data.status == 'error'){
-				$.notify('Ошибка изменения закладок!', 'error');
+				notify('error', 'Ошибка изменения закладок!');
 				return false;
 			}
 
 			if (data.status == 'deleted'){
-				$.notify('Удалено из закладок!', 'warn');
+				notify('warning', 'Удалено из закладок!');
 				$(el).text('В закладки');
 			}
 
 			if (data.status == 'added'){
-				$.notify('Добавлено в закладки!');
+				notify('success', 'Добавлено в закладки!');
 				$(el).text('Из закладок');
 			}
 		}
@@ -157,17 +163,17 @@ function sendComplaint(el) {
 				data: {id: $(el).data('id'), type: $(el).data('type'), token: $(el).data('token')},
 				success: function(data) {
 					if (data.status == 'error'){
-						$.notify('Ошибка отправки жалобы!', 'error');
+						notify('error', 'Ошибка отправки жалобы!');
 						return false;
 					}
 
 					if (data.status == 'added'){
-						$.notify('Жалоба успешно отправлена!');
+						notify('success', 'Жалоба успешно отправлена!');
 						$(el).replaceWith('<span class="fa fa-bell-slash-o"></span>');
 					}
 
 					if (data.status == 'exists'){
-						$.notify('Жалоба уже была отправлена!', 'info');
+						notify('warning', 'Жалоба уже была отправлена!');
 						$(el).replaceWith('<span class="fa fa-bell-slash-o"></span>');
 
 					}
@@ -188,12 +194,12 @@ function deleteRecord(el, url) {
 				data: {id: $(el).data('id'), token: $(el).data('token')},
 				success: function(data) {
 					if (data.status == 'error'){
-						$.notify('Не удалось удалить запись!', 'error');
+						notify('error', 'Не удалось удалить запись!', data.errors);
 						return false;
 					}
 
 					if (data.status == 'ok'){
-						$.notify('Запись успешно удалена!');
+						notify('success', 'Запись успешно удалена!');
 						$(el).closest('.js-record').hide('slow', function(){
 							$(el).remove();
 						});
