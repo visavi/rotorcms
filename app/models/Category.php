@@ -52,10 +52,14 @@ class Category extends BaseModel {
 		$this->assign_attribute('slug', $slug);
 	}
 
+	/**
+	 * Метод вызываемый перед удалением
+	 */
 	public function before_destroy()
 	{
-		//$this->errors->add('token', 'Неверный идентификатор сессии, повторите действие!');
-		//$this->errors->add('token3', 'Неверный идентификатор сессии, повторите действие!');
-		//return false;
+		if (self::exists(['parent_id' => $this->id])) {
+			$this->errors->add('parent_id', 'Запрещено удалять категории имеющие подкатегории!'.$this->parent_id);
+			return false;
+		}
 	}
 }
