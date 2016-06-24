@@ -186,7 +186,7 @@ Class ForumController Extends BaseController {
 	{
 		if (! $topic = Topic::find_by_id($id)) App::abort('default', 'Данной темы не существует!');
 
-		$post = new Post;
+		$post = new Post();
 		$post->token = Request::input('token', true);
 		$post->forum_id = $topic->forum()->id;
 		$post->topic_id = $topic->id;

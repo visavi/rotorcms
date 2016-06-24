@@ -3,7 +3,7 @@
 class BaseModel extends ActiveRecord\Model
 {
 	/**
-	 * Возвращает все ошибки в виде строки
+	 * Возвращает все ошибки в виде массива
 	 * @return array Список ошибок
 	 */
 	public function getErrors()
@@ -22,6 +22,10 @@ class BaseModel extends ActiveRecord\Model
 		return [];
 	}
 
+	/**
+	 * Сокращенный вывод ошибок
+	 * @return string список ошибок
+	 */
 	public function getErrorsText()
 	{
 		$result = [];

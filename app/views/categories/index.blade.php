@@ -11,6 +11,8 @@
 
 	<h1>Список категорий</h1>
 
+	@if ($categories)
+
 	<table class="table table-hover">
 		<thead>
 			<tr>
@@ -21,14 +23,14 @@
 			</tr>
 		</thead>
 		<tbody>
-			@foreach ($categories[0] as $key => $category)
+			@foreach ($categories as $category)
 				<tr class="js-record">
 					<td>{{ $category->sort }}</td>
 					<td><strong><a href="{{ $category->slug }}">{{ $category->name }}</a></strong></td>
 					<td>{{ $category->slug }}</td>
 					<td class="text-center">
 						<a href="/category/{{ $category->id }}/edit"><i class="fa fa-edit"></i></a>
-						@if (! isset($categories[$key]))
+						@if (! $category->children)
 							<a href="#" onclick="return deleteRecord(this, '/category/delete')" data-type="guest" data-id="{{ $category->id }}" data-token="{{ $_SESSION['token'] }}"><i class="fa fa-trash"></i></a>
 						@else
 							<i class="fa fa-trash"></i>
@@ -36,8 +38,8 @@
 					</td>
 				</tr>
 
-				@if (isset($categories[$key]))
-					@foreach ($categories[$key] as $subcategory)
+				@if ($category->children)
+					@foreach ($category->children as $subcategory)
 						<tr class="info js-record">
 							<td>{{ $subcategory->sort }}</td>
 							<td><a href="{{ $subcategory->slug }}">{{ $subcategory->name }}</a></td>
@@ -51,4 +53,7 @@
 		</tbody>
 	</table>
 
+	@else
+		<div class="alert alert-danger">Категории новостей еще не созданы!</div>
+	@endif
 @stop

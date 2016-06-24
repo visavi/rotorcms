@@ -7,19 +7,25 @@ class News extends BaseModel {
 		['comments', 'foreign_key' => 'relate_id', 'conditions' => ['relate_type = ?', 'news'], 'order' => 'created_at DESC'],
 	];
 
-
 	static $has_one = [
 		['comment_count', 'foreign_key' => 'relate_id', 'conditions' => ['relate_type = ?', 'news'], 'select' => 'count(*) as count, relate_id', 'class' => 'Comment'],
 	];
 
 	static $belongs_to = [
-		['user'],
+		'forum',
+		'user',
 	];
 
 	static $validates_size_of = [
 		['title', 'within' => [5, 50], 'too_short' => 'Слишком короткий заголовок, минимум %d симв.', 'too_long' => 'Слишком длинный заголовок, максимум %d симв.'],
 		['text', 'minimum' => 5, 'too_short' => 'Слишком короткий текст новости, минимум %d симв.'],
 	];
+
+	static $validates_existence_of = [
+		['category_id', 'in' => 'Category:id', 'message' => 'Категория новостей не найдена'],
+	];
+
+
 	/**
 	 * Количество комментарий новости
 	 * @return integer количество комментарий новости

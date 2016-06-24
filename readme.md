@@ -60,7 +60,9 @@ RotorCMS 5.0
 
 ###Настройки nginx
 
-Чтобы пути обрабатывались правильно необходимо настроить конфиги сайта
+Чтобы пути обрабатывались правильно необходимо настроить сайт
+
+В секцию server добавить следующую запись: `rewrite ^/(.*)/$ /$1 permanent;` необходимую для удаление слешей в конце пути
 
 В секции server -> location необходимо заменить строку
 
@@ -70,6 +72,19 @@ try_files $uri $uri/ =404
 на
 
 try_files $uri $uri/ /index.php?$query_string;
+```
+###Настройки apache
+
+Создайте файл .htaccess и пропишите в него следующий код
+
+```
+<IfModule mod_rewrite.c>
+	RewriteEngine On
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteRule ^(.*)/$ /$1 [L,R=301]
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteRule ^ index.php [L]
+</IfModule>
 ```
 
 ### License

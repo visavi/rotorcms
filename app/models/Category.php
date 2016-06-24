@@ -3,6 +3,25 @@ class Category extends BaseModel {
 
 	public $token;
 
+	/**
+	 * Связи
+	 */
+	static $has_many = [
+		['news', 'order' => 'created_at DESC'],
+		['children', 'foreign_key' => 'parent_id', 'order' => 'sort DESC', 'class' => 'Category'],
+	];
+
+	static $belongs_to = [
+		['parent', 'foreign_key' => 'parent_id', 'class' => 'Category'],
+	];
+
+	static $has_one = [
+		['news_count', 'select' => 'count(*) as count, category_id', 'group' => 'category_id', 'class' => 'News'],
+	];
+
+	/**
+	 * Правила валидации
+	 */
 	static $validates_size_of = [
 		['name', 'within' => [5, 50], 'too_short' => 'Слишком короткое название, минимум %d симв.', 'too_long' => 'Слишком длинное название, максимум %d симв.'],
 		['slug', 'within' => [5, 50], /*'allow_blank' => true,*/ 'too_short' => 'Слишком короткая ссылка, минимум %d симв.', 'too_long' => 'Слишком длинная ссылка, максимум %d симв.'],
@@ -17,7 +36,7 @@ class Category extends BaseModel {
 	];
 
 	static $validates_existence_of = [
-		['parent_id', 'in' => 'Category:id', 'allow_empty' => true, 'message' => 'Родительская категория не найдена'],
+		['parent_id', 'in' => 'category:id', 'allow_empty' => true, 'message' => 'Родительская категория не найдена'],
 	];
 
 	static $validates_uniqueness_of = [

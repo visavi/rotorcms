@@ -41,6 +41,7 @@ Class NewsController Extends BaseController {
 		if (Request::isMethod('post')) {
 
 			$news = new News;
+			$news->category_id = Request::input('category_id');
 			$news->user_id = User::get('id');
 			$news->title = Request::input('title');
 			$news->text = Request::input('text');
@@ -56,15 +57,35 @@ Class NewsController Extends BaseController {
 			}
 		}
 
-		App::view('news.create');
+		$categories = Category::getAll();
+		App::view('news.create', compact('categories'));
 	}
 
 	/**
 	 * Создание комментария
 	 */
-	public function createComment()
+	public function createComment($id)
 	{
+		if (! $news = News::find_by_id($id)) App::abort('default', 'Данной новости не существует!');
 
+		$comment = new Comment();
+		$comment->token = Request::input('token', true);
+		$comment->user_id = User::get('id');
+		$comment->relate_type = 'News';
+		$comment->relate_id = $id;
+		$comment->text = Request::input('text');
+		$comment->ip = App::getClientIp();
+		$comment->brow = App::getUserAgent();
+
+		if ($comment->save()) {
+
+			App::setFlash('success', 'Сообщение успешно добавлено!');
+		} else {
+			App::setFlash('danger', $comment->getErrors());
+			App::setInput($_POST);
+		}
+
+		App::redirect('/news/'.$id);
 	}
 
 	/**

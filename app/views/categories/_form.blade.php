@@ -34,19 +34,19 @@
 		</div>
 	</div>
 
-	<div class="form-group{{ App::hasError('parent') }}">
-		<label for="inputParent" class="col-sm-2 control-label">Родительская категория <span class="required">*</span></label>
+	<div class="form-group{{ App::hasError('parent_id') }}">
+		<label for="inputParentId" class="col-sm-2 control-label">Родительская категория <span class="required">*</span></label>
 		<div class="col-sm-5">
-		<select class="form-control" id="inputParent" name="parent">
+		<select class="form-control" id="inputParentId" name="parent_id">
 			<option value="0">Основная категория</option>
 			@foreach ($categories as $data)
 				@continue($data->id == $category->id)
 
-				<?php $selected = ($data->id == App::getInput('parent', $category->parent_id)) ? ' selected' : ''; ?>
+				<?php $selected = ($data->id == App::getInput('parent_id', $category->parent_id)) ? ' selected' : ''; ?>
 				<option value="{{ $data->id }}"{{ $selected }}>{{ $data->name }}</option>
 			@endforeach
-
 		</select>
+		{!! App::textError('parent_id') !!}
 		</div>
 	</div>
 

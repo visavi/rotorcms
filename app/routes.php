@@ -2,7 +2,7 @@
 
 $router = new AltoRouter();
 
-$router->addMatchTypes(array('s' => '[0-9A-Za-z-_]++'));
+$router->addMatchTypes(['u' => '[0-9A-Za-z-_]++', 'c' => '[0-9a-z-_]++']);
 
 $router->map('GET', '/', 'HomeController@index', 'home');
 $router->map('GET', '/captcha', 'HomeController@captcha', 'captcha');
@@ -15,7 +15,7 @@ $router->map('GET|POST', '/reset', 'UserController@reset', 'reset');
 $router->map('GET|POST', '/user/[edit|password:action]', 'UserController');
 $router->map('GET|POST', '/users', 'UserController@index');
 $router->map('GET', '/logout', 'UserController@logout', 'logout');
-$router->map('GET', '/user/[s:login]', 'UserController@view', 'profile');
+$router->map('GET', '/user/[u:login]', 'UserController@view', 'profile');
 $router->map('POST', '/user/image', 'UserController@image');
 
 $router->map('GET', '/guestbook', 'GuestbookController@index', 'guestbook');
@@ -46,8 +46,13 @@ $router->map('POST', '/category/delete', 'CategoryController@delete');
 
 $router->map('GET', '/admin', 'AdminController@index', 'admin');
 
-//$router->map('GET', '/[guestbook|forum|news:link]/smiles/page/[i:page]', 'pages/smiles');
-//$router->map('GET', '/[guestbook|forum|news:link]/smiles', 'pages/smiles');
-//$router->map('GET', '/[guestbook|forum|news:link]/tags', 'pages/tags');
+/*
+$router->map('GET', '/[guestbook|forum|news:link]/smiles/page/[i:page]', 'pages/smiles');
+$router->map('GET', '/[guestbook|forum|news:link]/smiles', 'pages/smiles');
+$router->map('GET', '/[guestbook|forum|news:link]/tags', 'pages/tags');
+*/
+
+$router->map('GET', '/[c:category]', 'CategoryController@viewCategory', 'category');
+$router->map('GET', '/[c:category]/[c:news]', 'CategoryController@viewNews');
 
 Registry::set('router', $router->match());

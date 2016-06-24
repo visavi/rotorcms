@@ -9,15 +9,13 @@ Class CategoryController Extends BaseController {
 	{
 		if (!User::isAdmin()) App::abort('403');
 
-		$categoriesAll = Category::all(['order' => 'sort']);
-
-		$categories = [];
-
-		foreach ($categoriesAll as $category) {
-			$id = $category->id;
-			$parent = $category->parent_id;
-			$categories[$parent][$id] = $category;
-		}
+		$categories = Category::all([
+			'conditions' => ['parent_id = ?', 0],
+			'order' => 'sort',
+			'include' => [
+				'children',
+			],
+		]);
 
 		App::view('categories.index', compact('categories'));
 	}
@@ -34,7 +32,7 @@ Class CategoryController Extends BaseController {
 		if (Request::isMethod('post')) {
 
 			$category->token = Request::input('token', true);
-			$category->parent_id = Request::input('parent');
+			$category->parent_id = Request::input('parent_id');
 			$category->name = Request::input('name');
 			$category->slug = Request::input('slug');
 			$category->description = Request::input('description');
@@ -67,7 +65,7 @@ Class CategoryController Extends BaseController {
 		if (Request::isMethod('post')) {
 
 			$category->token = Request::input('token', true);
-			$category->parent_id = Request::input('parent');
+			$category->parent_id = Request::input('parent_id');
 			$category->name = Request::input('name');
 			$category->slug = Request::input('slug');
 			$category->description = Request::input('description');

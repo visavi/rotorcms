@@ -11,6 +11,18 @@
 
 	<form class="well form-horizontal" role="form" method="post" enctype="multipart/form-data">
 
+		<div class="form-group{{ App::hasError('category_id') }}">
+			<label for="inputCategoryId" class="col-sm-2 control-label">Категория <span class="required">*</span></label>
+			<div class="col-sm-5">
+				<select class="form-control" id="inputCategoryId" name="category_id">
+					@foreach ($categories as $data)
+						<option value="{{ $data->id }}">{{ $data->name }}</option>
+					@endforeach
+				</select>
+				{!! App::textError('category_id') !!}
+			</div>
+		</div>
+
 		<div class="form-group{{ App::hasError('title') }}">
 			<label for="inputTitle" class="col-sm-2 control-label">Заголовок <span class="required">*</span></label>
 			<div class="col-sm-6">
