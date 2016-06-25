@@ -44,9 +44,25 @@ Class NewsController Extends BaseController {
 			$news->category_id = Request::input('category_id');
 			$news->user_id = User::get('id');
 			$news->title = Request::input('title');
+			$news->slug = '';
 			$news->text = Request::input('text');
 
-			//$news->image = Request::input('company_name');
+			$image = Request::file('image');
+			if ($image->isValid()) {
+
+				$ext = $image->getClientOriginalExtension();
+				$filename = uniqid(mt_rand()).'.'.$ext;
+
+				if (in_array($ext, ['jpeg', 'jpg', 'png', 'gif'])) {
+					$img = new SimpleImage($image->getPathName());
+					$img->best_fit(1280, 1280)->save('uploads/news/images/'.$filename);
+					$img->best_fit(200, 200)->save('uploads/news/thumbs/'.$filename);
+				}
+
+				$news->image = $filename;
+			}
+
+
 
 			if ($news->save()) {
 				App::setFlash('success', 'Новость успешно создана!');
@@ -72,7 +88,7 @@ Class NewsController Extends BaseController {
 		$comment->token = Request::input('token', true);
 		$comment->user_id = User::get('id');
 		$comment->relate_type = 'News';
-		$comment->relate_id = $id;
+		$comment->relate_id = $news->id;
 		$comment->text = Request::input('text');
 		$comment->ip = App::getClientIp();
 		$comment->brow = App::getUserAgent();

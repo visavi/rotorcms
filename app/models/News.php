@@ -12,7 +12,7 @@ class News extends BaseModel {
 	];
 
 	static $belongs_to = [
-		'forum',
+		'category',
 		'user',
 	];
 
@@ -55,5 +55,15 @@ class News extends BaseModel {
 		$this->text = str_replace('<img src="', '<img src="http://'.Setting::get('sitelink'), $this->text);
 
 		return $this->text;
+	}
+
+	/**
+	 * Метод вызываемый после сохранения
+	 */
+	public function after_save()
+	{
+		$slug = App::slugify($this->title);
+		$this->slug = $this->id.'-'.$slug;
+		$this->save();
 	}
 }

@@ -323,9 +323,10 @@ Class UserController Extends BaseController {
 		if ($image->isValid()) {
 
 			$ext = $image->getClientOriginalExtension();
-			$filename = uniqid(mt_rand()).'.'.$ext;
 
 			if (in_array($ext, ['jpeg', 'jpg', 'png', 'gif'])) {
+
+				$filename = uniqid(mt_rand()).'.'.$ext;
 
 				$user = User::get();
 				$user->deleteImages();
