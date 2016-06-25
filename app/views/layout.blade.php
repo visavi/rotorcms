@@ -22,6 +22,7 @@
 		<link href="/assets/css/colorbox.css" rel="stylesheet">
 		<link href="/assets/markitup/markitup.css" rel="stylesheet">
 		<link href="/assets/css/toastr.min.css" rel="stylesheet">
+		<link href="/assets/css/bootstrap-tagsinput.css" rel="stylesheet">
 		<link href="/assets/css/app.css" rel="stylesheet">
 		<link href="/assets/css/style.css" rel="stylesheet" />
 
@@ -139,6 +140,7 @@
 		<script src="/assets/js/bootstrap.file-input.js"></script>
 		<script src="/assets/js/bootbox.min.js"></script>
 		<script src="/assets/js/toastr.min.js"></script>
+		<script src="/assets/js/bootstrap-tagsinput.min.js"></script>
 		<script src="/assets/js/prettify.js"></script>
 		<script src="/assets/markitup/jquery.markitup.js"></script>
 		<script src="/assets/markitup/markitup.set.js"></script>

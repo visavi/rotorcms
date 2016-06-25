@@ -24,9 +24,11 @@ Class NewsController Extends BaseController {
 	/**
 	 * Просмотр новости
 	 */
-	public function view($id)
+	public function view($category, $slug)
 	{
-		if (!$news = News::find_by_id($id)) App::abort('default', 'Новость не найдена');
+		list($id, $slug) = explode('-', $slug);
+		if (! $category = Category::find_by_slug($category)) App::abort('default', 'Категория не найдена');
+		if (! $news = News::find_by_id($id)) App::abort('default', 'Новость не найдена');
 
 		App::view('news.view', compact('news'));
 	}
@@ -48,7 +50,7 @@ Class NewsController Extends BaseController {
 			$news->text = Request::input('text');
 
 			$image = Request::file('image');
-			if ($image->isValid()) {
+			if ($image && $image->isValid()) {
 
 				$ext = $image->getClientOriginalExtension();
 				$filename = uniqid(mt_rand()).'.'.$ext;
@@ -61,8 +63,6 @@ Class NewsController Extends BaseController {
 
 				$news->image = $filename;
 			}
-
-
 
 			if ($news->save()) {
 				App::setFlash('success', 'Новость успешно создана!');

@@ -39,6 +39,15 @@
 			</div>
 		</div>
 
+		<div class="form-group{{ App::hasError('text') }}">
+			<label for="markItUp" class="col-sm-2 control-label">Теги <span class="required">*</span></label>
+			<div class="col-sm-10">
+				<div class="help-block">Введите минимум 2 тега через запятую</div>
+				<input name="tags" data-role="tagsinput" type="text" class="form-control" id="inputTitle"  maxlength="50" placeholder="Теги" value="{{ App::getInput('tags') }}">
+				{!! App::textError('text') !!}
+			</div>
+		</div>
+
 		<div class="form-group">
 			<label for="inputImage" class="col-sm-2 control-label">Картинка</label>
 			<div class="col-sm-10">

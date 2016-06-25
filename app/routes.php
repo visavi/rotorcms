@@ -53,7 +53,7 @@ $router->map('GET', '/[guestbook|forum|news:link]/smiles', 'pages/smiles');
 $router->map('GET', '/[guestbook|forum|news:link]/tags', 'pages/tags');
 */
 
-$router->map('GET', '/[slug:category]', 'CategoryController@viewCategory', 'category');
-$router->map('GET', '/[slug:category]/[slug:news]', 'CategoryController@viewNews');
+$router->map('GET', '/[slug:category]', 'NewsController@view');
+$router->map('GET', '/[slug:category]/[slug:news]', 'NewsController@view');
 
 Registry::set('router', $router->match());
