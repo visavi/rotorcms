@@ -23,8 +23,8 @@
 		<link href="/assets/markitup/markitup.css" rel="stylesheet">
 		<link href="/assets/css/toastr.min.css" rel="stylesheet">
 		<link href="/assets/css/bootstrap-tagsinput.css" rel="stylesheet">
-		<link href="/assets/css/app.css" rel="stylesheet">
 		<link href="/assets/css/style.css" rel="stylesheet" />
+		<link href="/assets/css/app.css" rel="stylesheet">
 
 		<!-- Theme skin -->
 		<link id="t-colors" href="/assets/css/skins/default.css" rel="stylesheet" />
@@ -141,6 +141,7 @@
 		<script src="/assets/js/bootbox.min.js"></script>
 		<script src="/assets/js/toastr.min.js"></script>
 		<script src="/assets/js/bootstrap-tagsinput.min.js"></script>
+		<script src="/assets/js/bootstrap3-typeahead.min.js"></script>
 		<script src="/assets/js/prettify.js"></script>
 		<script src="/assets/markitup/jquery.markitup.js"></script>
 		<script src="/assets/markitup/markitup.set.js"></script>

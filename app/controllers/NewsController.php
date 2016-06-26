@@ -26,7 +26,7 @@ Class NewsController Extends BaseController {
 	 */
 	public function view($category, $slug)
 	{
-		list($id, $slug) = explode('-', $slug);
+		$id = current(explode('-', $slug));
 		if (! $category = Category::find_by_slug($category)) App::abort('default', 'Категория не найдена');
 		if (! $news = News::find_by_id($id)) App::abort('default', 'Новость не найдена');
 
@@ -117,5 +117,14 @@ Class NewsController Extends BaseController {
 
 		header("Content-type:application/rss+xml; charset=utf-8");
 		App::view('news.rss', compact('news_list'));
+	}
+
+	/**
+	 * Теги
+	 */
+	public function tags()
+	{
+		$query = Request::input('query');
+		exit(json_encode(['gu', 'ued', 'ala', 'ala3', 'alra', 'xxx', 'S3ES3ES']));
 	}
 }

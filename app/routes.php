@@ -38,7 +38,7 @@ $router->map('GET', '/news/[i:id]', 'NewsController@view', 'news_view');
 $router->map('GET|POST', '/news/create', 'NewsController@create');
 $router->map('POST', '/news/comment', 'NewsController@createComment');
 $router->map('GET', '/news/rss', 'NewsController@rss', 'news_rss');
-
+$router->map('POST', '/news/tags', 'NewsController@tags');
 
 $router->map('GET', '/category', 'CategoryController@index');
 $router->map('GET|POST', '.category/create', 'CategoryController@create');

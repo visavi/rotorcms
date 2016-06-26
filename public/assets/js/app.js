@@ -52,6 +52,40 @@ $(document).ready(function(){
 	}, function() {
 		$('.js-menu', this).hide(200);
 	});
+
+	/* Автокомплит и обработка тегов */
+	$('.js-autocomplete').tagsinput({
+		maxTags: 10,
+		maxChars: 20,
+		cancelConfirmKeysOnEmpty: false,
+		typeahead: {
+			minLength: 2,
+			select: function () {
+				var val = this.$menu.find('.active').data('value');
+				this.$element.data('active', val);
+				if(this.autoSelect || val) {
+					var newVal = this.updater(val);
+					this.$element.val('').change();
+					this.afterSelect(newVal);
+				}
+				return this.hide();
+			},
+
+			source: function(query) {
+				var result = null;
+				$.ajax({
+					type: 'POST', url: '/news/tags',
+					data: {query: query},
+					dataType: "JSON",
+					async: false,
+					success: function(data) {
+						result = data;
+					}
+				});
+				return result;
+			}
+		}
+	});
 });
 
 function uploadAvatar() {
