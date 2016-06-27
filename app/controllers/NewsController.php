@@ -70,7 +70,7 @@ Class NewsController Extends BaseController {
 
 					foreach ($tags as $tag) {
 						$tag = Tag::create(['name' => $tag]);
-						$news->create_news_tags(['tag_id' => $tag->id]);
+						$tag->create_news_tags(['news_id' => $news->id]);
 					}
 				}
 
@@ -134,6 +134,21 @@ Class NewsController Extends BaseController {
 	public function tags()
 	{
 		$query = Request::input('query');
-		exit(json_encode(['gu', 'ued', 'ala', 'ala3', 'alra', 'xxx', 'S3ES3ES']));
+
+		$tags = Tag::all([
+			'conditions' => ['`name` LIKE ?', '%'.$query.'%'],
+			'select' => 'count(*) as cnt, name',
+			'group' => 'name',
+			'order' => 'cnt DESC',
+			'limit' => 10
+		]);
+
+		$sortTags = [];
+		foreach ($tags as $tag) {
+			//$sortTags[] = ['name' => $tag->name, 'count' => $tag->cnt];
+			$sortTags[] = $tag->name;
+		}
+
+		exit(json_encode($sortTags));
 	}
 }

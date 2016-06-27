@@ -57,6 +57,7 @@ $(document).ready(function(){
 	$('.js-autocomplete').tagsinput({
 		maxTags: 10,
 		maxChars: 20,
+		trimValue: true,
 		cancelConfirmKeysOnEmpty: false,
 		typeahead: {
 			minLength: 2,
@@ -83,7 +84,10 @@ $(document).ready(function(){
 					}
 				});
 				return result;
-			}
+			},
+/*			displayText: function (item) {
+				return item.name + ' - ' + '<span class="text-info">'+item.count+'</span>';
+			}*/
 		}
 	});
 });
