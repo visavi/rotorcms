@@ -60,13 +60,22 @@ Class NewsController Extends BaseController {
 					$img->best_fit(1280, 1280)->save('uploads/news/images/'.$filename);
 					$img->best_fit(200, 200)->save('uploads/news/thumbs/'.$filename);
 				}
-
 				$news->image = $filename;
 			}
 
 			if ($news->save()) {
+
+				if ($tags = Request::input('tags')) {
+					$tags = array_map('trim', explode(',', $tags));
+
+					foreach ($tags as $tag) {
+						$tag = Tag::create(['name' => $tag]);
+						$news->create_news_tags(['tag_id' => $tag->id]);
+					}
+				}
+
 				App::setFlash('success', 'Новость успешно создана!');
-				App::redirect('/news/'.$news->id);
+				App::redirect('/'.$news->category->slug.'/'.$news->slug);
 			} else {
 				App::setFlash('danger', $news->getErrors());
 				App::setInput($_POST);

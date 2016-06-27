@@ -4,6 +4,8 @@ class News extends BaseModel {
 	static $table_name = 'news';
 
 	static $has_many = [
+		'news_tags',
+		['tags', 'through' => 'news_tags'],
 		['comments', 'foreign_key' => 'relate_id', 'conditions' => ['relate_type = ?', 'news'], 'order' => 'created_at DESC'],
 	];
 
@@ -42,6 +44,20 @@ class News extends BaseModel {
 	public function user()
 	{
 		return $this->user ? $this->user : new User;
+	}
+
+	/**
+	 * Вывод тегов
+	 * @return string список тегов
+	 */
+	public function tags()
+	{
+		$tags = [];
+		foreach ($this->tags as $tag) {
+			$tags[] = $tag->name;
+		}
+
+		return implode(', ', $tags);
 	}
 
 	/**

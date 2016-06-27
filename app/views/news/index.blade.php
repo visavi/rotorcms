@@ -21,7 +21,9 @@
 		<div class="post-heading">
 			<h3><a href="/{{ $news->category->slug }}/{{ $news->slug }}">{{ $news->title }}</a></h3>
 		</div>
-		<img src="/uploads/news/images/{{ $news->image }}" alt="" class="img-responsive" />
+		@if ($news->image)
+			<img src="/uploads/news/images/{{ $news->image }}" alt="" class="img-responsive" />
+		@endif
 	</div>
 	<p>
 		 {!! App::bbCode(str_limit(e($news->text))) !!}
