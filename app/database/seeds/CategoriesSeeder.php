@@ -20,7 +20,7 @@ class CategoriesSeeder extends AbstractSeed
 				'sort' => $i,
 				'parent_id' => 0,
 				'name' => $name,
-				'slug' => App::slugify($name),
+				'slug' => str_slug($name),
 				'description' => $faker->realText(rand(200, 500)),
 				'created_at' => $faker->dateTimeBetween('-1 month')->format('Y-m-d H:i:s'),
 			];

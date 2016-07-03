@@ -78,7 +78,7 @@ class News extends BaseModel {
 	 */
 	public function after_save()
 	{
-		$slug = App::slugify($this->title);
+		$slug = str_slug($this->title);
 		$this->slug = $this->id.'-'.$slug;
 		$this->save();
 	}

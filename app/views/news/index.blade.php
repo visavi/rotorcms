@@ -26,7 +26,7 @@
 		@endif
 	</div>
 	<p>
-		 {!! App::bbCode(str_limit(e($news->text), 1000)) !!}
+		 {!! App::bbCode(e(App::cropStr($news->text, 1000))) !!}
 	</p>
 	<div class="bottom-article">
 		<ul class="meta-post">

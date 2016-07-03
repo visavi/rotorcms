@@ -65,7 +65,7 @@ class Category extends BaseModel {
 	public function set_slug($slug)
 	{
 		if (empty($slug)) {
-			$slug = App::slugify($this->name);
+			$slug = str_slug($this->name);
 		}
 
 		$this->assign_attribute('slug', $slug);

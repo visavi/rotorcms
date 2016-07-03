@@ -489,7 +489,7 @@ class App
  	 * @param  string $separator Разделитель слов
  	 * @return string            Текст после преобразования
  	 */
-	public static function slugify($title, $separator = '-')
+/*	public static function slugify($title, $separator = '-')
 	{
 		$matrix = [
 			'й' => 'i',    'ц' => 'c',  'у' => 'u',  'к' => 'k',    'е' => 'e',
@@ -520,5 +520,15 @@ class App
 		$title = preg_replace('!['.preg_quote($flip).']+!u', $separator, $title);
 		$title = preg_replace('!['.preg_quote($separator).'\s]+!u', $separator, $title);
 		return trim($title, $separator);
+	}*/
+
+	/**
+	 * Обрезка строк по символам
+	 * @param  string  $str  Строка
+	 * @param  integer $size количество символов
+	 * @return string        обработанная строка
+	 */
+	public static function cropStr($str, $size){
+		return mb_substr($str, 0, mb_strrpos(mb_substr($str, 0, $size, 'utf-8'), ' ', 'utf-8'), 'utf-8');
 	}
 }
